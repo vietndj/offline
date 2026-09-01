@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { content } from '../content';
+import { ChevronDown, HelpCircle } from 'lucide-react';
 
 export const FaqSection: React.FC = () => {
+  const { faqs } = content;
   const [openIdx, setOpenIdx] = useState<number | null>(0);
 
   const toggle = (idx: number) => {
@@ -9,36 +11,45 @@ export const FaqSection: React.FC = () => {
   };
 
   return (
-    <section id="faq" className="py-16 md:py-24 bg-[#0d0d0f] text-white border-t border-white/10">
+    <section id="faq" className="py-20 md:py-28 bg-[#09090b] text-white relative">
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-14">
-          <span className="text-xs font-bold font-mono uppercase tracking-widest text-amber-400 block mb-2">
-            CÂU HỎI THƯỜNG GẶP
-          </span>
-          <h2 className="text-2xl sm:text-4xl font-bold font-serif text-white">
-            Giải Đáp Thắc Mắc Trước Khi Tham Gia
+        {/* Header */}
+        <div className="text-center max-w-2xl mx-auto mb-14">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-xs font-mono font-semibold uppercase tracking-wider mb-4">
+            <HelpCircle className="w-3.5 h-3.5" />
+            <span>GIẢI ĐÁP THẮC MẮC</span>
+          </div>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white mb-4">
+            Câu Hỏi Thường Gặp (FAQ)
           </h2>
         </div>
 
-        <div className="space-y-3">
-          {content.faqs.map((faq, idx) => {
+        {/* Accordion Items */}
+        <div className="space-y-3.5">
+          {faqs.map((faq, idx) => {
             const isOpen = openIdx === idx;
             return (
               <div
                 key={idx}
-                className="rounded-xl border border-white/10 bg-[#111113] overflow-hidden transition-colors"
+                className={`rounded-2xl border transition-colors overflow-hidden ${
+                  isOpen ? 'border-amber-500/40 bg-zinc-900/80' : 'border-zinc-800 bg-zinc-900/40 hover:border-zinc-700'
+                }`}
               >
                 <button
                   onClick={() => toggle(idx)}
-                  className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-semibold text-sm sm:text-base text-white hover:text-amber-400 transition-colors cursor-pointer"
+                  className="w-full px-5 py-4.5 text-left flex items-center justify-between gap-4 cursor-pointer"
                 >
-                  <span>{faq.q}</span>
-                  <span className="text-amber-400 font-mono text-lg shrink-0">
-                    {isOpen ? '−' : '+'}
+                  <span className="font-sans font-semibold text-white text-sm sm:text-base leading-snug">
+                    {faq.q}
                   </span>
+                  <ChevronDown
+                    className={`w-4 h-4 text-amber-400 shrink-0 transition-transform duration-200 ${
+                      isOpen ? 'rotate-180' : ''
+                    }`}
+                  />
                 </button>
                 {isOpen && (
-                  <div className="px-4 sm:px-5 pb-5 text-xs sm:text-sm text-white/70 leading-relaxed border-t border-white/5 pt-3 animate-fade-in">
+                  <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-zinc-300 leading-relaxed border-t border-zinc-800/60 font-sans">
                     {faq.a}
                   </div>
                 )}

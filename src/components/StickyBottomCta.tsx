@@ -1,27 +1,29 @@
 import React from 'react';
-import { content } from '../content';
+import { ArrowRight, Sparkles } from 'lucide-react';
 
-interface StickyBottomCtaProps {
+interface StickyProps {
   onOpenRegister: () => void;
 }
 
-export const StickyBottomCta: React.FC<StickyBottomCtaProps> = ({ onOpenRegister }) => {
+export const StickyBottomCta: React.FC<StickyProps> = ({ onOpenRegister }) => {
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-[#09090b]/95 backdrop-blur-lg border-t border-white/10 p-3 shadow-2xl">
-      <div className="flex items-center justify-between gap-3 max-w-md mx-auto">
+    <div className="fixed bottom-0 left-0 right-0 z-40 bg-[#09090b]/95 backdrop-blur-md border-t border-zinc-800 p-3 sm:hidden shadow-2xl">
+      <div className="flex items-center justify-between gap-3">
         <div className="flex flex-col">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-amber-400 font-mono">
-            {content.event.capacity}
+          <span className="text-[11px] font-mono text-amber-400 font-semibold flex items-center gap-1">
+            <Sparkles className="w-3 h-3" />
+            OFFLINE HÀ NỘI
           </span>
-          <span className="text-xs font-medium text-white/80">
-            {content.event.dates.split('(')[0]}
+          <span className="text-xs font-sans font-bold text-white">
+            Giới hạn ≤ 30 Học Viên
           </span>
         </div>
         <button
           onClick={onOpenRegister}
-          className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-black font-black text-xs uppercase tracking-wide shadow-lg shadow-orange-500/25 active:scale-95 transition-transform"
+          className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-zinc-950 font-sans font-bold text-xs shadow-md flex items-center gap-1.5 cursor-pointer shrink-0"
         >
-          {content.hero.ctaButton}
+          <span>GIỮ CHỖ</span>
+          <ArrowRight className="w-3.5 h-3.5" />
         </button>
       </div>
     </div>

@@ -1,51 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
-import { Footer } from './components/Footer';
-import { StickyBottomCta } from './components/StickyBottomCta';
-import { RegisterModal } from './components/RegisterModal';
 import { HeroSection } from './sections/HeroSection';
 import { ProofSection } from './sections/ProofSection';
+import { BannerCta } from './sections/BannerCta';
 import { GrowthChartSection } from './sections/GrowthChartSection';
 import { PainSection } from './sections/PainSection';
 import { CurriculumSection } from './sections/CurriculumSection';
 import { ShowcaseSection } from './sections/ShowcaseSection';
+import { CaseStudySection } from './sections/CaseStudySection';
 import { TargetSection } from './sections/TargetSection';
 import { InstructorSection } from './sections/InstructorSection';
 import { RegisterSection } from './sections/RegisterSection';
 import { FaqSection } from './sections/FaqSection';
+import { Footer } from './components/Footer';
+import { StickyBottomCta } from './components/StickyBottomCta';
+import { RegisterModal } from './components/RegisterModal';
 import { SuccessPage } from './pages/SuccessPage';
 
 export const App: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const isSuccessPage = window.location.pathname === '/success';
 
-  // Simple routing for /success and /checkout
-  const pathname = window.location.pathname;
-  if (pathname === '/success' || pathname === '/checkout') {
+  if (isSuccessPage) {
     return <SuccessPage />;
   }
 
-  const openRegister = () => {
-    setIsModalOpen(true);
-  };
-
   return (
-    <div className="min-h-screen bg-[#09090b] text-white font-sans selection:bg-amber-400 selection:text-black">
-      <Navbar onOpenRegister={openRegister} />
+    <div className="min-h-screen bg-[#09090b] text-white selection:bg-amber-500 selection:text-zinc-950">
+      <Navbar onOpenRegister={() => setModalOpen(true)} />
       <main>
-        <HeroSection onOpenRegister={openRegister} />
+        <HeroSection onOpenRegister={() => setModalOpen(true)} />
         <ProofSection />
+        <BannerCta onOpenRegister={() => setModalOpen(true)} title="Đăng Ký Giữ Chỗ Sớm — Chỉ Còn 5 Suất Cuối Cùng" badge="ƯU ĐÃI KHÓA HỌC OFFLINE" />
         <GrowthChartSection />
         <PainSection />
-        <CurriculumSection onOpenRegister={openRegister} />
+        <BannerCta onOpenRegister={() => setModalOpen(true)} title="Thực Hành Cầm Tay Chỉ Việc 1-1 Cùng Thầy Nguyễn Đức Việt" badge="PHÒNG STUDIO CHUẨN FEDU" />
+        <CurriculumSection />
         <ShowcaseSection />
+        <CaseStudySection />
         <TargetSection />
         <InstructorSection />
+        <BannerCta onOpenRegister={() => setModalOpen(true)} title="Đóng Gói Chuyên Môn Của Bạn Thành Cỗ Máy Video Marketing Ngay Hôm Nay" badge="SĨ SỐ ≤ 30 HỌC VIÊN" />
         <RegisterSection />
         <FaqSection />
       </main>
       <Footer />
-      <StickyBottomCta onOpenRegister={openRegister} />
-      <RegisterModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <StickyBottomCta onOpenRegister={() => setModalOpen(true)} />
+      <RegisterModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
     </div>
   );
 };

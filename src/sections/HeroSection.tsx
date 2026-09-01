@@ -1,100 +1,87 @@
 import React from 'react';
 import { content } from '../content';
+import { Calendar, MapPin, Users, Sparkles, ArrowRight } from 'lucide-react';
 
-interface HeroSectionProps {
+interface HeroProps {
   onOpenRegister: () => void;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister }) => {
-  return (
-    <section id="hero" className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden bg-[#09090b] text-white">
-      {/* Background glow accents */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-b from-orange-500/15 to-transparent rounded-full blur-3xl pointer-events-none" />
+export const HeroSection: React.FC<HeroProps> = ({ onOpenRegister }) => {
+  const { hero } = content;
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10 text-center">
-        {/* Tags Bar */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
-          {content.hero.tags.map((tag, idx) => (
+  return (
+    <section id="hero" className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-[#09090b] text-white">
+      {/* Background Ambient Glows */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] md:w-[900px] h-[350px] bg-gradient-to-tr from-amber-500/15 via-orange-500/10 to-transparent blur-[120px] pointer-events-none rounded-full" />
+      <div className="absolute top-10 right-10 w-[300px] h-[300px] bg-amber-500/10 blur-[100px] pointer-events-none rounded-full" />
+
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10 text-center">
+        {/* Badge */}
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs font-mono font-semibold tracking-wider uppercase mb-8 shadow-sm">
+          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+          <span>{hero.badge}</span>
+        </div>
+
+        {/* Headline */}
+        <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-medium tracking-tight text-white leading-[1.18] mb-6">
+          {hero.headline}
+        </h1>
+
+        {/* Subheadline */}
+        <p className="font-sans text-base sm:text-lg md:text-xl text-zinc-300 leading-relaxed max-w-3xl mx-auto mb-10">
+          {hero.subheadline}
+        </p>
+
+        {/* 5 Feature Tags */}
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-2.5 mb-10 max-w-2xl mx-auto">
+          {hero.tags.map((tag, idx) => (
             <span
               key={idx}
-              className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-amber-300 text-[11px] font-bold font-mono tracking-wider uppercase"
+              className="px-3 py-1.5 rounded-lg border border-zinc-700/60 bg-zinc-800/60 text-zinc-300 text-xs font-mono font-medium tracking-wide shadow-xs"
             >
               {tag}
             </span>
           ))}
         </div>
 
-        {/* Location & Format Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 text-xs font-bold font-mono tracking-widest uppercase mb-6">
-          <span className="w-2 h-2 rounded-full bg-orange-400 animate-ping" />
-          {content.event.badge} · {content.event.location.split('(')[0].trim()}
-        </div>
-
-        {/* Headline */}
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.15] mb-6 font-serif max-w-4xl mx-auto">
-          <span>{content.hero.headlinePrefix}</span>
-          <br className="hidden sm:inline" />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-400 to-amber-500">
-            {' '}{content.hero.headlineHighlight}
-          </span>
-        </h1>
-
-        {/* Subtitle */}
-        <p className="text-sm sm:text-base md:text-lg text-white/75 leading-relaxed max-w-2xl mx-auto mb-10">
-          {content.hero.subtitle}
-        </p>
-
-        {/* Meta Grid (3 cards) */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 max-w-2xl mx-auto mb-10 text-left">
-          <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-            <span className="block text-[10px] font-bold uppercase tracking-wider text-amber-400 font-mono mb-0.5">
-              Thời Gian
-            </span>
-            <span className="text-sm font-bold text-white block">
-              2 Ngày Thực Chiến
-            </span>
-            <span className="text-xs text-white/50">
-              {content.event.time}
-            </span>
-          </div>
-
-          <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-            <span className="block text-[10px] font-bold uppercase tracking-wider text-amber-400 font-mono mb-0.5">
-              Địa Điểm
-            </span>
-            <span className="text-sm font-bold text-white block">
-              Hà Nội (Trực Tiếp)
-            </span>
-            <span className="text-xs text-white/50">
-              Gửi định vị qua Zalo
-            </span>
-          </div>
-
-          <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-            <span className="block text-[10px] font-bold uppercase tracking-wider text-amber-400 font-mono mb-0.5">
-              Quy Mô Sĩ Số
-            </span>
-            <span className="text-sm font-bold text-white block">
-              {content.event.capacity}
-            </span>
-            <span className="text-xs text-white/50">
-              Cầm tay chỉ việc 100%
-            </span>
-          </div>
-        </div>
-
-        {/* Action Button */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
+        {/* CTA Button */}
+        <div className="flex flex-col items-center gap-3 mb-12">
           <button
             onClick={onOpenRegister}
-            className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-amber-400 via-orange-500 to-amber-500 text-black font-black text-sm uppercase tracking-wider shadow-xl shadow-orange-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+            className="w-full sm:w-auto px-8 py-4.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-zinc-950 font-sans font-bold text-base sm:text-lg shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 transition-all duration-200 transform hover:-translate-y-0.5 flex items-center justify-center gap-3 cursor-pointer"
           >
-            {content.hero.ctaButton}
+            <span>{hero.cta}</span>
+            <ArrowRight className="w-5 h-5" />
           </button>
+          <p className="text-xs text-zinc-400 font-mono tracking-tight">
+            ⚡ {hero.ctaNote}
+          </p>
         </div>
-        <p className="text-xs text-white/50 mt-3 font-mono">
-          ⚡ {content.hero.guaranteeNote}
-        </p>
+
+        {/* 3 Meta Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 max-w-3xl mx-auto pt-6 border-t border-zinc-800/80">
+          {hero.meta.map((item, idx) => (
+            <div
+              key={idx}
+              className="p-4 rounded-xl border border-zinc-800/70 bg-zinc-900/50 backdrop-blur-xs text-left flex flex-col justify-between hover:border-zinc-700 transition-colors"
+            >
+              <div className="flex items-center gap-2 mb-1.5">
+                {idx === 0 && <Calendar className="w-4 h-4 text-amber-400" />}
+                {idx === 1 && <MapPin className="w-4 h-4 text-orange-400" />}
+                {idx === 2 && <Users className="w-4 h-4 text-amber-400" />}
+                <span className="text-[11px] font-mono font-semibold tracking-wider text-zinc-400 uppercase">
+                  {item.label}
+                </span>
+              </div>
+              <div className="font-sans font-semibold text-white text-base mb-0.5">
+                {item.value}
+              </div>
+              <div className="text-xs text-zinc-400 leading-normal">
+                {item.desc}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

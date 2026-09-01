@@ -1,81 +1,163 @@
 import React from 'react';
 import { content } from '../content';
+import { TrendingUp, ArrowDown, Sparkles } from 'lucide-react';
 
 export const ProofSection: React.FC = () => {
+  const { proof } = content;
+
   return (
-    <section className="py-16 md:py-20 bg-black text-white border-t border-white/10 relative overflow-hidden">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
-        {/* Badge */}
-        <div className="text-center mb-6">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/15 text-white/80 text-xs font-bold font-mono tracking-widest uppercase">
-            <span className="w-2 h-2 rounded-full bg-orange-400" />
-            {content.proof.badge}
-          </span>
-        </div>
-
-        {/* Big Numbers */}
-        <div className="text-center mb-10">
-          <div className="text-3xl sm:text-5xl md:text-6xl font-black font-serif tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-400 to-rose-400 mb-2">
-            {content.proof.revenue}
+    <section id="ket-qua" className="py-20 md:py-28 bg-[#0c0d10] border-t border-zinc-800/80 text-white relative">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-orange-500/30 bg-orange-500/10 text-orange-400 text-xs font-mono font-semibold uppercase tracking-wider mb-4">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>{proof.badge}</span>
           </div>
-          <p className="text-sm sm:text-base text-white/80 max-w-xl mx-auto">
-            Chỉ sau <span className="text-amber-400 font-bold font-mono">{content.proof.days}</span> vừa hoàn thiện nội dung và vừa triển khai bán khóa học trên các kênh hoàn toàn mới.
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white mb-4">
+            {proof.headline}
+          </h2>
+          <div className="inline-block px-5 py-2.5 rounded-2xl bg-gradient-to-r from-emerald-500/20 via-emerald-500/10 to-transparent border border-emerald-500/30 mb-4">
+            <span className="font-mono text-2xl sm:text-4xl font-bold text-emerald-400 tracking-tight">
+              {proof.revenue}
+            </span>
+          </div>
+          <p className="text-sm sm:text-base font-mono text-zinc-400 mb-2">
+            🔥 {proof.timeline} · <span className="text-amber-400 font-semibold">{proof.dailyPeak}</span>
           </p>
-          <p className="text-xs sm:text-sm text-orange-400 font-mono font-bold mt-2">
-            Đạt đỉnh doanh số {content.proof.dailyPeak}
+          <p className="font-sans text-sm sm:text-base text-zinc-300 max-w-2xl mx-auto leading-relaxed">
+            {proof.description}
           </p>
         </div>
 
-        {/* Grid Visual Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="p-6 rounded-2xl bg-[#111113] border border-white/10 flex flex-col justify-between">
-            <div>
-              <span className="text-amber-400 text-xs font-bold font-mono uppercase tracking-wider block mb-2">
-                01. KỊCH BẢN CHUYỂN ĐỔI
-              </span>
-              <h4 className="text-base font-bold text-white mb-2">Nói Trúng Nỗi Đau Khách Hàng</h4>
-              <p className="text-xs text-white/60 leading-relaxed">
-                Không dạy nói vu vơ. Kịch bản được thiết kế theo phễu tâm lý: Chạm đúng ngượng miệng → Gỡ thắt mắc → Kêu gọi hành động.
-              </p>
+        {/* 1:1 Gallery Layout - Exact Match to Original Landing Page */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start mb-12">
+          {/* Left Column: Revenue Dashboard connected to Offline Class Photo */}
+          <div className="lg:col-span-7 flex flex-col gap-4">
+            {/* 1. Revenue Dashboard Card */}
+            <div className="p-3.5 rounded-2xl border border-zinc-800 bg-zinc-900/70 shadow-xl overflow-hidden group">
+              <div className="flex items-center justify-between px-3 py-2 border-b border-zinc-800/80 mb-3">
+                <span className="text-xs font-mono text-zinc-400 font-medium flex items-center gap-1.5">
+                  <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
+                  Báo cáo doanh thu thực tế (75 ngày)
+                </span>
+                <span className="text-[11px] font-mono text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                  +912.936.999đ
+                </span>
+              </div>
+              <div className="rounded-xl overflow-hidden bg-black/40 border border-zinc-800/60">
+                <img
+                  src={proof.dashboardImg}
+                  alt="Dashboard doanh thu 912 triệu"
+                  className="w-full h-auto object-cover transform group-hover:scale-[1.01] transition-transform duration-300"
+                  loading="lazy"
+                />
+              </div>
             </div>
-            <div className="mt-4 pt-3 border-t border-white/5 text-[11px] text-amber-300/80 font-mono">
-              ✓ Hook 3 giây giữ người xem
+
+            {/* Connecting Arrow Icon */}
+            <div className="flex justify-center -my-2 relative z-10">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-b from-amber-500 to-orange-500 text-zinc-950 flex items-center justify-center shadow-md">
+                <ArrowDown className="w-4 h-4 stroke-[2.5]" />
+              </div>
+            </div>
+
+            {/* 2. Offline Class Photo */}
+            <div className="p-3.5 rounded-2xl border border-zinc-800 bg-zinc-900/70 shadow-xl overflow-hidden group">
+              <div className="flex items-center justify-between px-3 py-2 border-b border-zinc-800/80 mb-3">
+                <span className="text-xs font-mono text-zinc-400 font-medium">
+                  Lớp học viên Offline thực hành cầm tay chỉ việc
+                </span>
+                <span className="text-[11px] font-mono text-amber-400 font-semibold">
+                  Studio FEDU Hà Nội
+                </span>
+              </div>
+              <div className="rounded-xl overflow-hidden bg-black/40 border border-zinc-800/60">
+                <img
+                  src={proof.offlineClassImg}
+                  alt="Lớp học viên thực tế"
+                  className="w-full h-auto object-cover transform group-hover:scale-[1.01] transition-transform duration-300"
+                  loading="lazy"
+                />
+              </div>
             </div>
           </div>
 
-          <div className="p-6 rounded-2xl bg-[#111113] border border-white/10 flex flex-col justify-between">
-            <div>
-              <span className="text-orange-400 text-xs font-bold font-mono uppercase tracking-wider block mb-2">
-                02. SETUP 2 GÓC MÁY
-              </span>
-              <h4 className="text-base font-bold text-white mb-2">Góc Nhìn Chuyên Nghiệp</h4>
-              <p className="text-xs text-white/60 leading-relaxed">
-                Tận dụng 2 điện thoại cá nhân, bố trí góc chính diện và góc nghiêng 45 độ. Video nhìn như talkshow đắt tiền mà không tốn chi phí thuê studio.
-              </p>
+          {/* Right Column: 2 Mobile Mockups (Fanpage + TikTok Channel) */}
+          <div className="lg:col-span-5 grid grid-cols-2 gap-4">
+            <div className="p-3 rounded-2xl border border-zinc-800 bg-zinc-900/70 shadow-xl flex flex-col justify-between">
+              <div className="text-[11px] font-mono text-zinc-400 font-medium mb-2 truncate">
+                📱 Fanpage Tăng Trưởng
+              </div>
+              <div className="rounded-xl overflow-hidden bg-black/50 border border-zinc-800/70">
+                <img
+                  src={proof.mockups.fanpage}
+                  alt="Mockup Fanpage"
+                  className="w-full h-auto object-cover"
+                  loading="lazy"
+                />
+              </div>
             </div>
-            <div className="mt-4 pt-3 border-t border-white/5 text-[11px] text-orange-300/80 font-mono">
-              ✓ Cắt nhịp mượt, che lỗi nói vấp
-            </div>
-          </div>
 
-          <div className="p-6 rounded-2xl bg-[#111113] border border-white/10 flex flex-col justify-between">
-            <div>
-              <span className="text-rose-400 text-xs font-bold font-mono uppercase tracking-wider block mb-2">
-                03. DỰNG VIDEO THỰC CHIẾN
-              </span>
-              <h4 className="text-base font-bold text-white mb-2">Làm Ra Video Ngay Tại Lớp</h4>
-              <p className="text-xs text-white/60 leading-relaxed">
-                Thầy Việt ngồi cạnh sửa trực tiếp từng nhịp cắt, chèn sub động, hiệu ứng âm thanh và xuất video chuẩn HD trước khi về nhà.
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-white/5 text-[11px] text-rose-300/80 font-mono">
-              ✓ Xuất video hoàn chỉnh mang về
+            <div className="p-3 rounded-2xl border border-zinc-800 bg-zinc-900/70 shadow-xl flex flex-col justify-between">
+              <div className="text-[11px] font-mono text-zinc-400 font-medium mb-2 truncate">
+                📱 Kênh TikTok Xây Mới
+              </div>
+              <div className="rounded-xl overflow-hidden bg-black/50 border border-zinc-800/70">
+                <img
+                  src={proof.mockups.tiktok}
+                  alt="Mockup TikTok"
+                  className="w-full h-auto object-cover"
+                  loading="lazy"
+                />
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-center text-xs text-white/60 max-w-2xl mx-auto">
-          {content.proof.note}
+        {/* 3 Bottom Mobile Mockups Row (TikTok Stats, Facebook Reels, Viral TikTok Video) */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="p-3 rounded-2xl border border-zinc-800 bg-zinc-900/50 shadow-md">
+            <div className="text-[11px] font-mono text-zinc-400 font-medium mb-2">
+              📊 Phân tích số liệu TikTok
+            </div>
+            <div className="rounded-xl overflow-hidden bg-black/40 border border-zinc-800/60">
+              <img
+                src={proof.mockups.tiktokStats}
+                alt="Phân tích số liệu TikTok"
+                className="w-full h-auto object-cover"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <div className="p-3 rounded-2xl border border-zinc-800 bg-zinc-900/50 shadow-md">
+            <div className="text-[11px] font-mono text-zinc-400 font-medium mb-2">
+              🎬 Facebook Reels Chuyển Đổi
+            </div>
+            <div className="rounded-xl overflow-hidden bg-black/40 border border-zinc-800/60">
+              <img
+                src={proof.mockups.fbReels}
+                alt="Facebook Reels"
+                className="w-full h-auto object-cover"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <div className="p-3 rounded-2xl border border-zinc-800 bg-zinc-900/50 shadow-md">
+            <div className="text-[11px] font-mono text-zinc-400 font-medium mb-2">
+              🔥 Video TikTok Triệu View
+            </div>
+            <div className="rounded-xl overflow-hidden bg-black/40 border border-zinc-800/60">
+              <img
+                src={proof.mockups.tiktokVideo}
+                alt="Video TikTok Viral"
+                className="w-full h-auto object-cover"
+                loading="lazy"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -1,32 +1,33 @@
 import React from 'react';
-import { content } from '../content';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#09090b] text-white border-t border-white/10 py-12 px-4 sm:px-6">
-      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-        <div>
-          <div className="flex items-center justify-center md:justify-start gap-2.5 mb-2">
-            <div className="w-6 h-6 rounded bg-amber-400 flex items-center justify-center text-black font-black text-xs">
-              F
+    <footer className="py-12 bg-[#08080a] border-t border-zinc-800/80 text-zinc-400 text-xs">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left mb-8">
+          <div>
+            <div className="font-sans font-bold text-base text-white mb-1">
+              FEDU · Học Thiết Kế & Video Marketing Online / Offline
             </div>
-            <span className="font-bold text-sm tracking-wider uppercase font-mono">
-              {content.site.brand} — {content.event.name}
-            </span>
+            <p className="text-zinc-400 leading-normal">
+              Đồng hành cùng chuyên gia, giảng viên và người làm giáo dục xây kênh chuyển đổi bền vững.
+            </p>
           </div>
-          <p className="text-xs text-white/50 max-w-md">
-            Đào tạo kỹ năng thực chiến bởi thầy Nguyễn Đức Việt. Bản quyền thuộc hệ sinh thái FEDU.vn
-          </p>
+          <div className="flex flex-col sm:flex-row items-center gap-4 text-xs font-mono">
+            <span>Hotline / Zalo: <strong className="text-amber-400">0934.688.632</strong></span>
+            <span>Email: <strong className="text-zinc-300">vietndj@gmail.com</strong></span>
+          </div>
         </div>
 
-        <div className="flex flex-col md:items-end gap-1 text-xs text-white/70 font-mono">
-          <p>Hotline / Zalo: <span className="text-amber-400 font-bold">0934.688.632</span></p>
-          <p>Email: <span className="text-white/90">vietndj@gmail.com</span></p>
-          <p>Địa điểm đào tạo: <span className="text-white/90">Hà Nội</span></p>
+        <div className="pt-6 border-t border-zinc-900 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-zinc-400 font-mono">
+          <div>
+            © {new Date().getFullYear()} FEDU.VN — Đứng lớp trực tiếp bởi Thầy Nguyễn Đức Việt.
+          </div>
+          <div className="flex gap-4">
+            <a href="#hero" className="hover:text-zinc-300 transition">Về đầu trang</a>
+            <a href="#dang-ky" className="hover:text-zinc-300 transition">Đăng ký giữ chỗ</a>
+          </div>
         </div>
-      </div>
-      <div className="max-w-5xl mx-auto mt-8 pt-6 border-t border-white/5 text-center text-[11px] text-white/40 font-mono">
-        © {new Date().getFullYear()} FEDU.vn — All rights reserved. Khóa học thực chiến không cam kết ảo.
       </div>
     </footer>
   );

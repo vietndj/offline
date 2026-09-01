@@ -1,171 +1,181 @@
 import React, { useState } from 'react';
-import { content } from '../content';
+import { X, ArrowRight, CheckCircle2, Loader2, Sparkles } from 'lucide-react';
 
-interface RegisterModalProps {
+interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
-  const [formData, setFormData] = useState({
-    fullName: '',
-    phone: '',
-    email: '',
-    occupation: '',
-    reason: ''
-  });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+export const RegisterModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+  const [fullName, setFullName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [occupation, setOccupation] = useState('');
+  const [reason, setReason] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.fullName.trim() || formData.fullName.trim().length < 2) {
-      setError('Vui lòng nhập họ và tên đầy đủ.');
-      return;
-    }
-    if (!formData.phone.trim() || !/^0[3-9][0-9]{8}$/.test(formData.phone.trim())) {
-      setError('Vui lòng nhập số điện thoại hợp lệ (10 số, bắt đầu bằng số 0).');
+    if (!fullName.trim() || !phone.trim()) {
+      setErrorMsg('Vui lòng nhập đầy đủ Họ tên và Số điện thoại');
       return;
     }
 
-    setLoading(true);
-    setError('');
+    setIsSubmitting(true);
+    setErrorMsg('');
 
     try {
       const res = await fetch('/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          fullName: formData.fullName.trim(),
-          phone: formData.phone.trim(),
-          email: formData.email.trim(),
-          occupation: formData.occupation.trim(),
-          reason: formData.reason.trim(),
+          fullName: fullName.trim(),
+          phone: phone.trim(),
+          email: email.trim(),
+          occupation: occupation.trim(),
+          reason: reason.trim(),
           source: 'offline.fedu.vn (Modal)'
         })
       });
 
-      if (!res.ok) {
-        throw new Error('Có lỗi xảy ra khi lưu thông tin. Vui lòng thử lại.');
+      const data = await res.json();
+      if (res.ok && data.success) {
+        const queryParams = new URLSearchParams({
+          name: fullName.trim(),
+          phone: phone.trim()
+        });
+        window.location.href = `/success?${queryParams.toString()}`;
+      } else {
+        setErrorMsg(data.error || 'Có lỗi xảy ra, vui lòng thử lại.');
       }
-
-      sessionStorage.setItem('offline_lead', JSON.stringify({
-        fullName: formData.fullName.trim(),
-        phone: formData.phone.trim()
-      }));
-
-      window.location.href = '/success';
-    } catch (err: any) {
-      setError(err.message || 'Lỗi kết nối máy chủ.');
-      setLoading(false);
+    } catch (err) {
+      console.error(err);
+      setErrorMsg('Lỗi kết nối máy chủ. Vui lòng thử lại.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
-      <div className="relative w-full max-w-lg bg-[#111113] border border-white/15 rounded-2xl shadow-2xl p-6 sm:p-8 text-white max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="relative w-full max-w-lg rounded-2xl bg-[#0e0f13] border border-zinc-800 p-6 sm:p-8 shadow-2xl text-white">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-white/50 hover:text-white text-xl p-1 font-mono"
+          className="absolute top-4 right-4 p-1.5 rounded-lg bg-zinc-800/60 hover:bg-zinc-700 text-zinc-400 hover:text-white transition cursor-pointer"
         >
-          ✕
+          <X className="w-5 h-5" />
         </button>
 
-        <div className="text-center mb-6">
-          <span className="inline-block px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 text-[11px] font-bold uppercase tracking-widest font-mono mb-2">
-            GIỮ CHỖ LỚP OFFLINE HÀ NỘI
-          </span>
-          <h3 className="text-xl sm:text-2xl font-bold font-serif text-white">
-            Đăng Ký Khóa Học Video Marketing
+        {/* Modal Header */}
+        <div className="mb-6">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-xs font-mono font-semibold uppercase tracking-wider mb-2">
+            <Sparkles className="w-3 h-3" />
+            <span>ĐĂNG KÝ GIỮ CHỖ OFFLINE</span>
+          </div>
+          <h3 className="font-serif text-2xl font-medium text-white">
+            Khóa Học Video Marketing 2 Ngày
           </h3>
-          <p className="text-xs text-white/60 mt-1">
-            Số lượng giới hạn tối đa 30 học viên. Tư vấn viên FEDU sẽ gọi điện xác nhận.
+          <p className="text-xs text-zinc-400 font-sans mt-1">
+            Gặp mặt trực tiếp tại Hà Nội · Kèm cặp 1-1 bởi Thầy Nguyễn Đức Việt.
           </p>
         </div>
 
-        {error && (
-          <div className="p-3 mb-4 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs leading-relaxed">
-            {error}
-          </div>
-        )}
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-3.5">
+          {errorMsg && (
+            <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-xs">
+              {errorMsg}
+            </div>
+          )}
 
-        <form onSubmit={handleSubmit} className="space-y-4 text-left">
           <div>
-            <label className="block text-xs font-semibold text-white/80 uppercase font-mono mb-1">
-              Họ Và Tên <span className="text-rose-400">*</span>
+            <label className="block text-xs font-mono text-zinc-300 mb-1">
+              HỌ VÀ TÊN <span className="text-amber-400">*</span>
             </label>
             <input
               type="text"
               required
-              placeholder="VD: Nguyễn Văn Nam"
-              value={formData.fullName}
-              onChange={e => setFormData({ ...formData, fullName: e.target.value })}
-              className="w-full px-3.5 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/30 text-sm focus:outline-none focus:border-amber-400 transition-colors"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              placeholder="Ví dụ: Nguyễn Văn Nam"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 focus:border-amber-500 text-sm text-white placeholder-zinc-500 outline-none"
             />
           </div>
 
-          <div>
-            <label className="block text-xs font-semibold text-white/80 uppercase font-mono mb-1">
-              Số Điện Thoại / Zalo <span className="text-rose-400">*</span>
-            </label>
-            <input
-              type="tel"
-              required
-              placeholder="VD: 0987654321"
-              value={formData.phone}
-              onChange={e => setFormData({ ...formData, phone: e.target.value })}
-              className="w-full px-3.5 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/30 text-sm focus:outline-none focus:border-amber-400 transition-colors"
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label className="block text-xs font-mono text-zinc-300 mb-1">
+                SỐ ĐIỆN THOẠI / ZALO <span className="text-amber-400">*</span>
+              </label>
+              <input
+                type="tel"
+                required
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="0912345678"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 focus:border-amber-500 text-sm text-white placeholder-zinc-500 outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-mono text-zinc-300 mb-1">
+                EMAIL
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="nam@gmail.com"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 focus:border-amber-500 text-sm text-white placeholder-zinc-500 outline-none"
+              />
+            </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-white/80 uppercase font-mono mb-1">
-              Email
-            </label>
-            <input
-              type="email"
-              placeholder="VD: namnguyen@gmail.com"
-              value={formData.email}
-              onChange={e => setFormData({ ...formData, email: e.target.value })}
-              className="w-full px-3.5 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/30 text-sm focus:outline-none focus:border-amber-400 transition-colors"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-white/80 uppercase font-mono mb-1">
-              Lĩnh vực / Nghề nghiệp
+            <label className="block text-xs font-mono text-zinc-300 mb-1">
+              NGHỀ NGHIỆP / LĨNH VỰC
             </label>
             <input
               type="text"
-              placeholder="VD: Giảng viên, Coach, Chủ trung tâm tiếng Anh..."
-              value={formData.occupation}
-              onChange={e => setFormData({ ...formData, occupation: e.target.value })}
-              className="w-full px-3.5 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/30 text-sm focus:outline-none focus:border-amber-400 transition-colors"
+              value={occupation}
+              onChange={(e) => setOccupation(e.target.value)}
+              placeholder="Giảng viên / Bác sĩ / Coach..."
+              className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 focus:border-amber-500 text-sm text-white placeholder-zinc-500 outline-none"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-white/80 uppercase font-mono mb-1">
-              Nút thắt lớn nhất khi làm video
+            <label className="block text-xs font-mono text-zinc-300 mb-1">
+              NÚT THẮT BẠN MUỐN GIẢI QUYẾT?
             </label>
             <textarea
               rows={2}
-              placeholder="VD: Ngại nói trước ống kính, kịch bản lan man, dựng video mất thời gian..."
-              value={formData.reason}
-              onChange={e => setFormData({ ...formData, reason: e.target.value })}
-              className="w-full px-3.5 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/30 text-sm focus:outline-none focus:border-amber-400 transition-colors resize-none"
+              value={reason}
+              onChange={(e) => setReason(e.target.value)}
+              placeholder="Setup 2 góc quay / Kịch bản One-line..."
+              className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 focus:border-amber-500 text-sm text-white placeholder-zinc-500 outline-none resize-none"
             />
           </div>
 
           <button
             type="submit"
-            disabled={loading}
-            className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-black font-black text-sm uppercase tracking-wider shadow-lg shadow-orange-500/25 hover:opacity-95 active:scale-98 transition-all cursor-pointer"
+            disabled={isSubmitting}
+            className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-zinc-950 font-bold text-sm shadow-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70"
           >
-            {loading ? 'Đang gửi thông tin...' : 'XÁC NHẬN ĐĂNG KÝ GIỮ CHỖ'}
+            {isSubmitting ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Đang gửi thông tin...</span>
+              </>
+            ) : (
+              <>
+                <span>XÁC NHẬN ĐĂNG KÝ</span>
+                <ArrowRight className="w-4 h-4" />
+              </>
+            )}
           </button>
         </form>
       </div>

@@ -1,53 +1,62 @@
 import React from 'react';
 import { content } from '../content';
+import { CheckCircle2, XCircle, Users } from 'lucide-react';
 
 export const TargetSection: React.FC = () => {
+  const { targetAudience } = content;
+
   return (
-    <section className="py-16 md:py-24 bg-[#0d0d0f] text-white border-t border-white/10">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-16">
-          <span className="text-xs font-bold font-mono uppercase tracking-widest text-amber-400 block mb-2">
-            {content.targetAudience.badge}
-          </span>
-          <h2 className="text-2xl sm:text-4xl font-bold font-serif text-white max-w-2xl mx-auto leading-tight">
-            {content.targetAudience.title}
+    <section className="py-20 md:py-28 bg-[#0c0d10] border-t border-zinc-800/80 text-white relative">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+        {/* Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-xs font-mono font-semibold uppercase tracking-wider mb-4">
+            <Users className="w-3.5 h-3.5" />
+            <span>{targetAudience.badge}</span>
+          </div>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white mb-4">
+            {targetAudience.headline}
           </h2>
-          <p className="text-xs sm:text-sm text-white/60 mt-3 max-w-xl mx-auto">
-            Chúng tôi chọn lọc học viên để đảm bảo 100% người tham gia đều tạo ra kết quả thực tế.
-          </p>
         </div>
 
+        {/* 2 Columns: Fit vs Not Fit */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Suitable */}
-          <div className="p-6 sm:p-8 rounded-2xl bg-emerald-950/20 border border-emerald-500/30">
-            <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm font-mono uppercase tracking-wider mb-6 pb-3 border-b border-emerald-500/20">
-              <span className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center text-xs">✓</span>
-              RẤT PHÙ HỢP NẾU BẠN LÀ:
+          {/* Fit Column (Green Callout) */}
+          <div className="p-6 rounded-2xl border border-emerald-500/30 bg-emerald-950/10 shadow-lg">
+            <div className="flex items-center gap-2 mb-5 pb-3 border-b border-emerald-500/20 text-emerald-400 font-mono text-sm font-bold">
+              <CheckCircle2 className="w-5 h-5" />
+              <span>RẤT PHÙ HỢP NẾU BẠN LÀ:</span>
             </div>
-            <ul className="space-y-4">
-              {content.targetAudience.suitable.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-white/80 leading-relaxed">
-                  <span className="text-emerald-400 font-bold shrink-0 mt-0.5">✓</span>
-                  <span>{item}</span>
-                </li>
+            <div className="space-y-4">
+              {targetAudience.fit.map((item, idx) => (
+                <div key={idx} className="flex items-start gap-3 text-xs sm:text-sm">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-white font-sans">{item.title}:</strong>{' '}
+                    <span className="text-zinc-300 leading-relaxed">{item.desc}</span>
+                  </div>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
 
-          {/* Unsuitable */}
-          <div className="p-6 sm:p-8 rounded-2xl bg-rose-950/20 border border-rose-500/30">
-            <div className="flex items-center gap-2 text-rose-400 font-bold text-sm font-mono uppercase tracking-wider mb-6 pb-3 border-b border-rose-500/20">
-              <span className="w-5 h-5 rounded-full bg-rose-500/20 flex items-center justify-center text-xs">✕</span>
-              KHÔNG PHÙ HỢP VỚI:
+          {/* Not Fit Column (Red Callout) */}
+          <div className="p-6 rounded-2xl border border-red-500/30 bg-red-950/10 shadow-lg">
+            <div className="flex items-center gap-2 mb-5 pb-3 border-b border-red-500/20 text-red-400 font-mono text-sm font-bold">
+              <XCircle className="w-5 h-5" />
+              <span>KHÔNG PHÙ HỢP NẾU BẠN:</span>
             </div>
-            <ul className="space-y-4">
-              {content.targetAudience.unsuitable.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-white/80 leading-relaxed">
-                  <span className="text-rose-400 font-bold shrink-0 mt-0.5">✕</span>
-                  <span>{item}</span>
-                </li>
+            <div className="space-y-4">
+              {targetAudience.notFit.map((item, idx) => (
+                <div key={idx} className="flex items-start gap-3 text-xs sm:text-sm">
+                  <XCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-white font-sans">{item.title}:</strong>{' '}
+                    <span className="text-zinc-300 leading-relaxed">{item.desc}</span>
+                  </div>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
       </div>

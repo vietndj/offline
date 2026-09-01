@@ -1,109 +1,102 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { content } from '../content';
+import { Calendar, Clock, CheckCircle2, Sparkles } from 'lucide-react';
 
-interface CurriculumSectionProps {
-  onOpenRegister: () => void;
-}
+export const CurriculumSection: React.FC = () => {
+  const { curriculum } = content;
+  const [activeDay, setActiveDay] = useState(0);
 
-export const CurriculumSection: React.FC<CurriculumSectionProps> = ({ onOpenRegister }) => {
+  const currentDay = curriculum.days[activeDay];
+
   return (
-    <section id="lo-trinh" className="py-16 md:py-24 bg-[#0d0d0f] text-white border-t border-white/10">
+    <section id="lo-trinh" className="py-20 md:py-28 bg-[#09090b] text-white relative">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-16">
-          <span className="text-xs font-bold font-mono uppercase tracking-widest text-amber-400 block mb-2">
-            LỘ TRÌNH ĐÀO TẠO 2 NGÀY
-          </span>
-          <h2 className="text-2xl sm:text-4xl font-bold font-serif text-white max-w-2xl mx-auto leading-tight">
-            Cầm Tay Chỉ Việc — Làm Ra Video Ngay Tại Lớp
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-14">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-orange-500/30 bg-orange-500/10 text-orange-400 text-xs font-mono font-semibold uppercase tracking-wider mb-4">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>{curriculum.badge}</span>
+          </div>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white mb-4 leading-[1.2]">
+            {curriculum.headline}
           </h2>
-          <p className="text-xs sm:text-sm text-white/60 mt-3 max-w-xl mx-auto">
-            Không học lý thuyết suông. Học đến đâu thực hành ngay trên máy tính và điện thoại của bạn đến đó.
+          <p className="font-sans text-sm sm:text-base text-zinc-300 leading-relaxed max-w-2xl mx-auto">
+            {curriculum.subheadline}
           </p>
         </div>
 
-        {/* Day 1 & Day 2 Cards */}
-        <div className="space-y-8 mb-12">
-          {/* Day 1 */}
-          <div className="p-6 sm:p-8 rounded-2xl bg-[#111113] border border-white/15 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
-            <div className="flex items-center gap-3 mb-4">
-              <span className="px-3.5 py-1 rounded-full bg-amber-400 text-black font-black text-xs uppercase font-mono">
-                NGÀY 1
-              </span>
-              <span className="text-xs text-amber-400/80 font-mono tracking-wider">
-                09:00 – 17:00 (Thứ 7)
-              </span>
-            </div>
-
-            <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 font-serif">
-              {content.curriculum.day1.title}
-            </h3>
-            <p className="text-xs sm:text-sm text-amber-300/90 font-medium mb-3">
-              {content.curriculum.day1.subtitle}
-            </p>
-            <p className="text-xs text-white/60 mb-6 leading-relaxed">
-              {content.curriculum.day1.desc}
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-              {content.curriculum.day1.items.map((item, idx) => (
-                <div key={idx} className="p-3.5 rounded-xl bg-white/5 border border-white/5 flex items-start gap-2.5">
-                  <span className="text-amber-400 font-bold text-xs font-mono shrink-0 mt-0.5">0{idx + 1}.</span>
-                  <span className="text-xs text-white/80 leading-relaxed">{item}</span>
+        {/* Day Selector Tabs */}
+        <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto mb-10">
+          {curriculum.days.map((day, idx) => {
+            const isActive = idx === activeDay;
+            return (
+              <button
+                key={idx}
+                onClick={() => setActiveDay(idx)}
+                className={`p-4 rounded-xl border text-center transition-all duration-200 cursor-pointer ${
+                  isActive
+                    ? 'bg-gradient-to-r from-amber-500/20 to-orange-500/20 border-amber-500/60 text-white shadow-lg'
+                    : 'bg-zinc-900/60 border-zinc-800 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200'
+                }`}
+              >
+                <div className={`font-mono text-sm font-bold ${isActive ? 'text-amber-400' : 'text-zinc-400'}`}>
+                  {day.day}
                 </div>
-              ))}
-            </div>
-
-            <div className="p-4 rounded-xl bg-amber-400/10 border border-amber-400/20 text-xs text-amber-300 leading-relaxed font-medium">
-              🎯 <strong>Đầu ra Ngày 1:</strong> {content.curriculum.day1.outcome}
-            </div>
-          </div>
-
-          {/* Day 2 */}
-          <div className="p-6 sm:p-8 rounded-2xl bg-[#111113] border border-white/15 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full blur-2xl pointer-events-none" />
-            <div className="flex items-center gap-3 mb-4">
-              <span className="px-3.5 py-1 rounded-full bg-orange-500 text-black font-black text-xs uppercase font-mono">
-                NGÀY 2
-              </span>
-              <span className="text-xs text-orange-400/80 font-mono tracking-wider">
-                09:00 – 17:00 (Chủ Nhật)
-              </span>
-            </div>
-
-            <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 font-serif">
-              {content.curriculum.day2.title}
-            </h3>
-            <p className="text-xs sm:text-sm text-orange-300/90 font-medium mb-3">
-              {content.curriculum.day2.subtitle}
-            </p>
-            <p className="text-xs text-white/60 mb-6 leading-relaxed">
-              {content.curriculum.day2.desc}
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-              {content.curriculum.day2.items.map((item, idx) => (
-                <div key={idx} className="p-3.5 rounded-xl bg-white/5 border border-white/5 flex items-start gap-2.5">
-                  <span className="text-orange-400 font-bold text-xs font-mono shrink-0 mt-0.5">0{idx + 1}.</span>
-                  <span className="text-xs text-white/80 leading-relaxed">{item}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="p-4 rounded-xl bg-orange-500/10 border border-orange-500/20 text-xs text-orange-300 leading-relaxed font-medium">
-              🎯 <strong>Đầu ra Ngày 2:</strong> {content.curriculum.day2.outcome}
-            </div>
-          </div>
+                <div className="text-xs text-zinc-400 mt-0.5">{day.date}</div>
+              </button>
+            );
+          })}
         </div>
 
-        {/* CTA */}
-        <div className="text-center">
-          <button
-            onClick={onOpenRegister}
-            className="px-8 py-4 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-black font-black text-sm uppercase tracking-wider shadow-lg shadow-orange-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
-          >
-            ĐĂNG KÝ THAM GIA LỚP HỌC NGAY
-          </button>
+        {/* Active Day Detail Card */}
+        <div className="p-6 sm:p-8 rounded-2xl border border-zinc-800 bg-zinc-900/70 shadow-xl">
+          {/* Day Theme Header */}
+          <div className="pb-6 border-b border-zinc-800 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <div className="inline-flex items-center gap-1.5 text-xs font-mono text-amber-400 font-semibold mb-1">
+                <Calendar className="w-3.5 h-3.5" />
+                <span>CHỦ ĐỀ NGÀY HỌC</span>
+              </div>
+              <h3 className="font-serif text-xl sm:text-2xl font-medium text-white">
+                {currentDay.theme}
+              </h3>
+            </div>
+            <div className="p-3 rounded-xl bg-zinc-950/60 border border-zinc-800 text-xs text-zinc-300 max-w-md">
+              💡 {currentDay.summary}
+            </div>
+          </div>
+
+          {/* Module List (Timeline) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {currentDay.modules.map((mod, idx) => (
+              <div
+                key={idx}
+                className="p-5 rounded-xl border border-zinc-800/80 bg-zinc-950/50 hover:border-zinc-700 transition-colors flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center gap-1.5 text-xs font-mono text-amber-400 font-semibold mb-2">
+                    <Clock className="w-3.5 h-3.5" />
+                    <span>{mod.time}</span>
+                  </div>
+                  <h4 className="font-sans text-base font-semibold text-white mb-2 leading-snug">
+                    {mod.title}
+                  </h4>
+                  <p className="text-xs text-zinc-300 mb-4 leading-relaxed">
+                    {mod.desc}
+                  </p>
+                </div>
+
+                <div className="space-y-1.5 pt-3 border-t border-zinc-900">
+                  {mod.bullets.map((b, bIdx) => (
+                    <div key={bIdx} className="flex items-center gap-2 text-xs text-zinc-400">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                      <span>{b}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

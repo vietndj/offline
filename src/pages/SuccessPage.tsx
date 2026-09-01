@@ -1,85 +1,56 @@
-import React, { useEffect, useState } from 'react';
-import { content } from '../content';
+import React from 'react';
+import { CheckCircle2, ArrowLeft, Calendar, MapPin, Users, PhoneCall } from 'lucide-react';
 
 export const SuccessPage: React.FC = () => {
-  const [lead, setLead] = useState<{ fullName?: string; phone?: string }>({});
-
-  useEffect(() => {
-    const raw = sessionStorage.getItem('offline_lead');
-    if (raw) {
-      try {
-        setLead(JSON.parse(raw));
-      } catch {}
-    }
-  }, []);
+  const urlParams = new URLSearchParams(window.location.search);
+  const name = urlParams.get('name') || 'Anh/Chị';
+  const phone = urlParams.get('phone') || '';
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-white flex flex-col justify-between font-sans">
-      {/* Header */}
-      <header className="border-b border-white/10 px-6 py-4 flex items-center justify-between">
-        <a href="/" className="text-xs font-bold text-white/70 hover:text-white font-mono flex items-center gap-1">
-          ← Quay lại trang chủ
-        </a>
-        <span className="font-mono text-xs font-bold text-amber-400 uppercase tracking-widest">
-          {content.site.brand}
-        </span>
-      </header>
+    <div className="min-h-screen bg-[#09090b] text-white flex flex-col items-center justify-center p-4">
+      <div className="max-w-xl w-full rounded-2xl border border-zinc-800 bg-zinc-900/80 p-8 sm:p-10 shadow-2xl text-center relative overflow-hidden">
+        {/* Glow */}
+        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-64 h-64 bg-emerald-500/20 blur-3xl rounded-full pointer-events-none" />
 
-      {/* Main Content */}
-      <main className="max-w-xl mx-auto px-4 py-12 text-center">
-        <div className="w-16 h-16 rounded-full bg-emerald-500/20 border-2 border-emerald-400 flex items-center justify-center mx-auto mb-6 text-2xl text-emerald-400 animate-bounce">
-          ✓
+        <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mx-auto mb-6">
+          <CheckCircle2 className="w-8 h-8" />
         </div>
 
-        <span className="inline-block px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 text-xs font-bold font-mono uppercase tracking-widest mb-3">
-          ĐĂNG KÝ THÀNH CÔNG!
-        </span>
-
-        <h1 className="text-2xl sm:text-4xl font-bold font-serif mb-4 text-white">
-          Cảm ơn bạn, {lead.fullName || 'Học viên'}!
+        <h1 className="font-serif text-2xl sm:text-3xl font-medium text-white mb-3">
+          Đăng Ký Giữ Chỗ Thành Công!
         </h1>
-
-        <p className="text-xs sm:text-sm text-white/70 leading-relaxed mb-8">
-          Hệ thống FEDU đã ghi nhận thông tin đăng ký giữ chỗ khóa học <strong className="text-white">{content.event.name}</strong> của bạn.
+        <p className="font-sans text-sm text-zinc-300 leading-relaxed mb-8">
+          Chúc mừng <strong className="text-amber-400">{name}</strong> đã hoàn tất đăng ký khóa học <strong>Video Marketing Offline 2 Ngày Tại Hà Nội</strong> cùng Thầy Nguyễn Đức Việt.
         </p>
 
-        <div className="p-6 rounded-2xl bg-[#111113] border border-amber-400/30 text-left space-y-3 mb-8 shadow-xl">
-          <h4 className="text-xs font-bold font-mono uppercase tracking-wider text-amber-400">
-            CÁC BƯỚC TIẾP THEO:
-          </h4>
-          <p className="text-xs text-white/80 leading-relaxed">
-            1. Tư vấn viên của FEDU sẽ gọi điện trực tiếp tới số <strong className="text-amber-300 font-mono">{lead.phone || 'của bạn'}</strong> trong thời gian sớm nhất để xác nhận thông tin.
-          </p>
-          <p className="text-xs text-white/80 leading-relaxed">
-            2. Chúng tôi sẽ thêm bạn vào nhóm Zalo lớp học để gửi định vị địa điểm cụ thể tại Hà Nội và tài liệu chuẩn bị trước buổi học.
-          </p>
-          <p className="text-xs text-white/80 leading-relaxed">
-            3. Hãy chuẩn bị sẵn 1 chiếc laptop và điện thoại cá nhân để thực hành làm video ngay tại lớp!
-          </p>
+        {/* Info Box */}
+        <div className="p-4 rounded-xl border border-zinc-800 bg-zinc-950/60 text-left text-xs space-y-2.5 mb-8">
+          <div className="flex items-center gap-2 text-zinc-300">
+            <Calendar className="w-4 h-4 text-amber-400" />
+            <span>Thời gian: <strong>2 Ngày Thứ 7 & Chủ Nhật (08:30 - 17:30)</strong></span>
+          </div>
+          <div className="flex items-center gap-2 text-zinc-300">
+            <MapPin className="w-4 h-4 text-orange-400" />
+            <span>Địa điểm: <strong>Studio FEDU Hà Nội</strong> (Địa chỉ chi tiết gửi qua Zalo)</span>
+          </div>
+          <div className="flex items-center gap-2 text-zinc-300">
+            <PhoneCall className="w-4 h-4 text-emerald-400" />
+            <span>Số điện thoại xác nhận: <strong>{phone || 'Đã lưu trên hệ thống'}</strong></span>
+          </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-          <a
-            href="https://zalo.me/0934688632"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-black font-black text-xs uppercase tracking-wider shadow-lg shadow-orange-500/20"
-          >
-            Nhắn Zalo Thầy Việt (0934.688.632)
-          </a>
-          <a
-            href="/"
-            className="w-full sm:w-auto px-6 py-3 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs uppercase tracking-wider font-mono transition-colors"
-          >
-            Về Trang Chủ
-          </a>
-        </div>
-      </main>
+        <p className="text-xs text-zinc-400 mb-8 leading-relaxed">
+          Ban tổ chức FEDU sẽ liên hệ qua Zalo/Điện thoại trong vòng 24h để gửi tài liệu chuẩn bị và xác nhận lịch học.
+        </p>
 
-      {/* Footer */}
-      <footer className="border-t border-white/5 py-6 text-center text-xs text-white/40 font-mono">
-        © {new Date().getFullYear()} FEDU.vn — Hotline: 0934.688.632
-      </footer>
+        <a
+          href="/"
+          className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-sans text-xs font-semibold transition"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>Quay lại trang chủ</span>
+        </a>
+      </div>
     </div>
   );
 };
