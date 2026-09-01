@@ -1,124 +1,136 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { content } from '../content';
-import { TrendingUp, CheckCircle2, XCircle } from 'lucide-react';
+import { TrendingUp, CheckCircle, XCircle } from 'lucide-react';
 
 export const GrowthChartSection: React.FC = () => {
   const { chart } = content;
-  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
-  // Chart coordinates mapping (Width: 600, Height: 260)
-  const maxVal = 100;
-  const pointsMarketing = chart.data.map((d, i) => ({
-    x: 50 + (i * 100),
-    y: 220 - ((d.marketing / maxVal) * 180),
-    val: d.marketing,
-    month: d.month
-  }));
+  // Custom SVG Area Chart Data Points
+  // Data: normal: [18, 20, 30, 35, 48, 52], marketing: [20, 28, 64, 56, 75, 90]
+  const width = 800;
+  const height = 300;
+  const padding = 40;
 
-  const pointsNormal = chart.data.map((d, i) => ({
-    x: 50 + (i * 100),
-    y: 220 - ((d.normal / maxVal) * 180),
-    val: d.normal,
-    month: d.month
-  }));
+  const pointsNormal = chart.data.map((d, i) => {
+    const x = padding + (i * (width - 2 * padding)) / (chart.data.length - 1);
+    const y = height - padding - (d.normal / 100) * (height - 2 * padding);
+    return { x, y, val: d.normal, month: d.month };
+  });
 
-  const pathMarketing = `M ${pointsMarketing.map(p => `${p.x},${p.y}`).join(' L ')}`;
-  const pathNormal = `M ${pointsNormal.map(p => `${p.x},${p.y}`).join(' L ')}`;
-  const areaMarketing = `M ${pointsMarketing[0].x},220 L ${pointsMarketing.map(p => `${p.x},${p.y}`).join(' L ')} L ${pointsMarketing[pointsMarketing.length - 1].x},220 Z`;
+  const pointsMarketing = chart.data.map((d, i) => {
+    const x = padding + (i * (width - 2 * padding)) / (chart.data.length - 1);
+    const y = height - padding - (d.marketing / 100) * (height - 2 * padding);
+    return { x, y, val: d.marketing, month: d.month };
+  });
+
+  const pathNormal = pointsNormal.reduce((acc, p, i) => `${acc} ${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`, '');
+  const pathMarketing = pointsMarketing.reduce((acc, p, i) => `${acc} ${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`, '');
+
+  const areaMarketing = `${pathMarketing} L ${pointsMarketing[pointsMarketing.length - 1].x} ${height - padding} L ${pointsMarketing[0].x} ${height - padding} Z`;
 
   return (
-    <section className="py-20 md:py-28 bg-[#09090b] text-white relative">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-xs font-mono font-semibold uppercase tracking-wider mb-4">
+    <section id="growth" className="py-24 px-4 bg-[#09090b] border-t border-zinc-800/80 relative">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono tracking-widest uppercase mb-4">
             <TrendingUp className="w-3.5 h-3.5" />
-            <span>{chart.badge}</span>
+            {chart.badge}
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white mb-5 leading-[1.2]">
+          <h2 className="text-3xl md:text-5xl font-serif font-medium text-white mb-6 tracking-tight leading-tight">
             {chart.headline}
           </h2>
-          <p className="font-sans text-sm sm:text-base text-zinc-300 leading-relaxed">
+          <p className="text-zinc-400 text-base md:text-lg leading-relaxed">
             {chart.description}
           </p>
         </div>
 
-        {/* SVG Interactive Area Chart */}
-        <div className="p-5 sm:p-7 rounded-2xl border border-zinc-800 bg-zinc-900/60 shadow-xl mb-12">
-          <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-zinc-800 mb-6">
-            <div className="flex items-center gap-4 text-xs font-mono">
-              <div className="flex items-center gap-1.5 text-emerald-400">
-                <span className="w-3 h-3 rounded-full bg-emerald-400 inline-block shadow-sm shadow-emerald-400/50" />
-                <span className="font-semibold">Video Marketing FEDU (Tăng trưởng X10)</span>
+        {/* Interactive Chart Container */}
+        <div className="bg-zinc-900/90 rounded-3xl p-6 md:p-10 border border-zinc-800 mb-16 shadow-2xl relative overflow-hidden">
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+            <div className="flex items-center gap-6 text-xs font-mono">
+              <div className="flex items-center gap-2 text-emerald-400">
+                <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-md shadow-emerald-500/50" />
+                <span className="font-semibold">Video Marketing Thực Chiến (Tăng trưởng X10)</span>
               </div>
-              <div className="flex items-center gap-1.5 text-amber-500">
-                <span className="w-3 h-3 rounded-full bg-amber-500 inline-block shadow-sm shadow-amber-500/50" />
-                <span>Video tự phát thông thường</span>
+              <div className="flex items-center gap-2 text-orange-400">
+                <div className="w-3 h-3 rounded-full bg-orange-500/80" />
+                <span>Video Tự Phát (Bản Năng)</span>
               </div>
             </div>
-            <span className="text-[11px] font-mono text-zinc-400">Đơn vị: Chỉ số chuyển đổi & Doanh thu</span>
+            <div className="text-xs text-zinc-400 font-mono">
+              Đơn vị: Chỉ số hiệu quả tổng hợp (%)
+            </div>
           </div>
 
-          {/* SVG Chart Container */}
           <div className="w-full overflow-x-auto">
-            <svg viewBox="0 0 600 250" className="w-full h-auto min-w-[500px]">
-              <defs>
-                <linearGradient id="marketingGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#10b981" stopOpacity="0.3" />
-                  <stop offset="100%" stopColor="#10b981" stopOpacity="0.0" />
-                </linearGradient>
-              </defs>
+            <div className="min-w-[650px]">
+              <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-auto overflow-visible">
+                <defs>
+                  <linearGradient id="marketingGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#10b981" stopOpacity="0.25" />
+                    <stop offset="100%" stopColor="#10b981" stopOpacity="0.0" />
+                  </linearGradient>
+                </defs>
 
-              {/* Grid Lines */}
-              {[40, 100, 160, 220].map((y, idx) => (
-                <line key={idx} x1="40" y1={y} x2="560" y2={y} stroke="#27272a" strokeDasharray="3 3" />
-              ))}
+                {/* Grid horizontal lines */}
+                {[0, 25, 50, 75, 100].map((level) => {
+                  const y = height - padding - (level / 100) * (height - 2 * padding);
+                  return (
+                    <g key={level}>
+                      <line x1={padding} y1={y} x2={width - padding} y2={y} stroke="#27272a" strokeDasharray="3 3" />
+                      <text x={padding - 10} y={y + 4} fill="#71717a" fontSize="10" textAnchor="end" fontFamily="monospace">
+                        {level}%
+                      </text>
+                    </g>
+                  );
+                })}
 
-              {/* Marketing Fill Area */}
-              <path d={areaMarketing} fill="url(#marketingGrad)" />
+                {/* Area under Marketing curve */}
+                <path d={areaMarketing} fill="url(#marketingGradient)" />
 
-              {/* Lines */}
-              <path d={pathNormal} fill="none" stroke="#f59e0b" strokeWidth="2.5" strokeDasharray="4 4" />
-              <path d={pathMarketing} fill="none" stroke="#10b981" strokeWidth="3" />
+                {/* Lines */}
+                <path d={pathNormal} fill="none" stroke="#f97316" strokeWidth="2.5" strokeDasharray="4 4" />
+                <path d={pathMarketing} fill="none" stroke="#10b981" strokeWidth="3.5" />
 
-              {/* Points */}
-              {pointsNormal.map((p, idx) => (
-                <circle key={`norm-${idx}`} cx={p.x} cy={p.y} r="4" fill="#f59e0b" />
-              ))}
-              {pointsMarketing.map((p, idx) => (
-                <g key={`mkt-${idx}`} className="cursor-pointer" onMouseEnter={() => setHoveredIdx(idx)} onMouseLeave={() => setHoveredIdx(null)}>
-                  <circle cx={p.x} cy={p.y} r={hoveredIdx === idx ? "7" : "5"} fill="#10b981" stroke="#09090b" strokeWidth="2" />
-                  <text x={p.x} y={p.y - 12} textAnchor="middle" fill="#34d399" fontSize="11" fontFamily="monospace" fontWeight="bold">
-                    {p.val}
-                  </text>
-                </g>
-              ))}
+                {/* Marketing Points */}
+                {pointsMarketing.map((p, i) => (
+                  <g key={`m-${i}`} className="group">
+                    <circle cx={p.x} cy={p.y} r="5" fill="#10b981" stroke="#09090b" strokeWidth="2" className="transition-all group-hover:r-7" />
+                    <text x={p.x} y={p.y - 12} fill="#34d399" fontSize="11" fontWeight="bold" textAnchor="middle" fontFamily="monospace">
+                      {p.val}%
+                    </text>
+                    <text x={p.x} y={height - padding + 20} fill="#a1a1aa" fontSize="11" textAnchor="middle" fontFamily="monospace">
+                      {p.month}
+                    </text>
+                  </g>
+                ))}
 
-              {/* X Axis Labels */}
-              {chart.data.map((d, idx) => (
-                <text key={`lbl-${idx}`} x={50 + (idx * 100)} y="240" textAnchor="middle" fill="#a1a1aa" fontSize="11" fontFamily="monospace">
-                  {d.month}
-                </text>
-              ))}
-            </svg>
+                {/* Normal Points */}
+                {pointsNormal.map((p, i) => (
+                  <circle key={`n-${i}`} cx={p.x} cy={p.y} r="4" fill="#f97316" stroke="#09090b" strokeWidth="2" />
+                ))}
+              </svg>
+            </div>
           </div>
         </div>
 
-        {/* 2-Column Comparison Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* 3 Comparison Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {chart.bullets.map((b, idx) => (
-            <div key={idx} className="p-4.5 rounded-xl border border-zinc-800 bg-zinc-900/50 flex flex-col justify-between">
-              <h4 className="font-sans font-semibold text-white text-sm mb-3.5 border-b border-zinc-800 pb-2">
-                {b.title}
-              </h4>
-              <div className="space-y-3 text-xs">
-                <div className="flex items-start gap-2 text-zinc-400 bg-red-500/5 p-2.5 rounded-lg border border-red-500/10">
-                  <XCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
-                  <span><strong>Tự phát:</strong> {b.normal}</span>
-                </div>
-                <div className="flex items-start gap-2 text-zinc-200 bg-emerald-500/10 p-2.5 rounded-lg border border-emerald-500/20">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <span><strong>FEDU:</strong> {b.marketing}</span>
+            <div key={idx} className="bg-zinc-900/60 rounded-2xl p-6 border border-zinc-800/80 flex flex-col justify-between">
+              <div>
+                <h4 className="text-base font-semibold text-white mb-4">
+                  {b.title}
+                </h4>
+                <div className="space-y-3 text-xs mb-4">
+                  <div className="flex items-start gap-2 text-rose-300 bg-rose-950/30 p-3 rounded-xl border border-rose-900/30">
+                    <XCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                    <span><strong>Tự làm:</strong> {b.normal}</span>
+                  </div>
+                  <div className="flex items-start gap-2 text-emerald-300 bg-emerald-950/30 p-3 rounded-xl border border-emerald-900/30">
+                    <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <span><strong>Có cấu trúc:</strong> {b.marketing}</span>
+                  </div>
                 </div>
               </div>
             </div>

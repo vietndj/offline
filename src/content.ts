@@ -46,6 +46,22 @@ export interface ContentData {
       cards: { title: string; desc: string }[];
     }[];
   };
+  metaphors: {
+    badge: string;
+    headline: string;
+    subheadline: string;
+    items: {
+      id: string;
+      icon: string;
+      title: string;
+      subtitle: string;
+      metaphor: string;
+      coreTruth: string;
+      secret: string;
+      pricing: string;
+      youtubeDemo: string;
+    }[];
+  };
   curriculum: {
     badge: string;
     headline: string;
@@ -98,17 +114,17 @@ export const content: ContentData = {
   hero: {
     badge: "GẶP MẶT TRỰC TIẾP · HÀ NỘI · SĨ SỐ GIỚI HẠN",
     headline: "Biến Chuyên Môn Của Bạn Thành Video Marketing Đắt Giá",
-    subheadline: "Khóa học offline 2 ngày cầm tay chỉ việc giúp chuyên gia, giảng viên, coach và người làm giáo dục làm chủ toàn bộ quy trình: Viết kịch bản One-line, setup 2 góc quay điện thoại, edit video chuyên nghiệp và ứng dụng AI tự động hóa. Không cần giỏi kỹ thuật từ trước.",
+    subheadline: "Khóa học offline 2 ngày cầm tay chỉ việc giúp chủ doanh nghiệp, chuyên gia, bác sĩ, giảng viên và người làm dịch vụ làm chủ toàn bộ quy trình: Viết kịch bản One-line, setup 2 góc quay điện thoại, edit video chuyên nghiệp và ứng dụng AI tự động hóa. Không cần giỏi kỹ thuật từ trước.",
     tags: [
       "KỊCH BẢN CHUYỂN ĐỔI",
       "SETUP 2 GÓC QUAY",
-      "QUAY 2 CAM",
+      "QUAY 2 CAM ĐIỆN THOẠI",
       "EDIT CHUYÊN NGHIỆP",
       "AI TỰ ĐỘNG HÓA"
     ],
     meta: [
       { label: "THỜI GIAN", value: "2 Ngày Thực Chiến", desc: "Thứ 7 & Chủ Nhật (08:30 - 17:30)" },
-      { label: "ĐỊA ĐIỂM", value: "Hà Nội", desc: "Phòng Studio tiêu chuẩn FEDU" },
+      { label: "ĐỊA ĐIỂM", value: "Hà Nội", desc: "Phòng Studio tiêu chuẩn chuyên nghiệp" },
       { label: "QUY MÔ", value: "≤ 30 Học Viên", desc: "Kèm cặp 1-1 ra sản phẩm ngay tại lớp" }
     ],
     cta: "ĐĂNG KÝ GIỮ CHỖ NGAY",
@@ -150,277 +166,379 @@ export const content: ContentData = {
         marketing: "Hook 3 giây sắc bén bóc đúng nỗi đau, giữ chân >60% tới cuối video"
       },
       {
-        title: "Tỷ lệ chuyển đổi ra tin nhắn & đơn hàng",
-        normal: "Lẹt đẹt vài like của người quen, không ai hỏi mua khóa học hay dịch vụ",
-        marketing: "Khách hàng tiềm năng tự động inbox hỏi tư vấn và đăng ký đều đặn mỗi ngày"
+        title: "Tỷ lệ chuyển đổi ra đơn (Conversion Rate)",
+        normal: "Nhiều lượt xem ảo nhưng không ai inbox mua hàng hay đăng ký",
+        marketing: "Điều hướng tự nhiên về phễu bán hàng, biến người xem thành khách hàng thực"
       },
       {
-        title: "Thời gian sản xuất & sự bền bỉ",
-        normal: "Mất 1-2 ngày mò mẫm làm 1 clip, làm 3 hôm là nản rồi bỏ cuộc",
-        marketing: "Quy trình chuẩn hóa 1 buổi quay được cả tuần, AI hỗ trợ kịch bản 30 ngày"
+        title: "Sự bền bỉ và tính nhất quán (Consistency)",
+        normal: "Làm vài video rồi cạn ý tưởng, nản lòng vì không có kết quả",
+        marketing: "Quy trình đóng gói kịch bản và kho tư liệu B-roll quay 1 lần dùng cả tháng"
       }
     ]
   },
   painPoints: {
-    badge: "THÁO GỠ NÚT THẮT",
-    headline: "Tháo Gỡ 4 Nút Thắt Lớn Nhất Khi Làm Video Marketing Giáo Dục",
-    subheadline: "Trong 2 ngày học trực tiếp, Thầy Việt sẽ cùng bạn tháo gỡ triệt để từng điểm nghẽn để bạn tự tin làm video mượt mà.",
+    badge: "BẠN ĐANG GẶP PHẢI ĐIỀU NÀY?",
+    headline: "Tháo Gỡ 4 Nút Thắt Khiến Video Của Bạn Không Có Chuyển Đổi",
+    subheadline: "Hầu hết mọi người bỏ cuộc không phải vì thiếu chuyên môn, mà vì mắc kẹt ở 4 cạm bẫy kỹ thuật và tư duy làm video sai cách.",
     tabs: [
       {
         id: "tab-1",
-        title: "1. Bật máy lên là đơ",
-        subtitle: "Không biết nói gì trước camera",
+        title: "Bật máy lên là đơ",
+        subtitle: "Đứng trước ống kính bị gượng gạo, quên sạch lời thoại",
         points: [
-          "Sợ ống kính, nói vấp, nhìn vào camera bị gượng gạo",
-          "Nghĩ trong đầu rất hay nhưng khi bấm quay thì quên sạch từ",
-          "Giải pháp: Khung mở đầu Hook 3 giây + Kỹ thuật ngắt câu từng nhịp không sợ vấp",
-          "Kỹ thuật chèn góc quay phụ (B-roll) che sạch lỗi nói vấp cực kỳ tự nhiên"
+          "Càng cố học thuộc lòng kịch bản thì mặt càng đơ, mắt đảo lia lịa đọc chữ.",
+          "Nói vấp liên tục, quay đi quay lại cả chục lần vẫn không ưng ý.",
+          "Mất hàng giờ đồng hồ chỉ để hoàn thành 1 đoạn video ngắn ngủi 30 giây."
         ],
-        outcome: "Tự tin bấm máy và nói lưu loát, không còn cảm giác ngại ngùng trước ống kính.",
+        outcome: "Giải pháp: Phương pháp kịch bản One-line 3 cột + kỹ thuật quay ngắt câu 5 giây giúp bạn nói tự nhiên, không bao giờ phải học thuộc lòng.",
         media: "/assets/gif2_opt-CAxvnZZj.webp",
         cards: [
-          { title: "Hook 3s Đầu", desc: "Đập tan tâm lý do dự bằng câu mở đầu gãy gọn đánh thẳng vào vấn đề." },
-          { title: "Mạch Dẫn Ý", desc: "Chia nhỏ kịch bản thành 3-4 câu ngắn, nói từng câu một rồi cắt ghép." },
-          { title: "Điểm Chốt CTA", desc: "Lời kêu gọi hành động tự nhiên, không gượng ép bán hàng." }
+          { title: "Kịch bản One-line", desc: "Chỉ nhìn 1 từ khóa cốt lõi cho mỗi ý, nói chuyện như đang tâm sự với 1 người bạn thân." },
+          { title: "Ngắt nhịp 5 giây", desc: "Quay từng câu ngắn độc lập, ghép lại mượt mà bằng kỹ thuật cắt nhịp Jump-cut chuyên nghiệp." }
         ]
       },
       {
         id: "tab-2",
-        title: "2. Kịch bản lan man",
-        subtitle: "Nói dài dòng nhưng không có chuyển đổi",
+        title: "Cạm bẫy đọc văn mẫu Voice-over",
+        subtitle: "Thu voice trước khiến não bật chế độ 'phát thanh viên đọc bài', giọng đều đều mất chất đời",
         points: [
-          "Nói quá nhiều kiến thức hàn lâm khiến người xem buồn ngủ",
-          "Video nhiều view nhưng không ai nhắn tin hỏi dịch vụ hay khóa học",
-          "Giải pháp: Công thức Kịch bản One-line (1 Video chỉ giải quyết đúng 1 vấn đề)",
-          "Cấu trúc 5 bước: Hook → Bóc Nỗi Đau → Insight Mới → Giải Pháp → Lời Kêu Gọi"
+          "Bật mic lên đọc kịch bản giấy: Giọng đọc đều đều như trả bài, mất hoàn toàn nhịp thở và cảm xúc chân thật.",
+          "Hình ảnh bị ép khung: Phải kéo dãn hoặc cắt vụn clip cho vừa khớp câu chữ, video bị giật cục và giả tạo.",
+          "Khán giả nghe 2 giây là nhận ra giọng đọc bài sáo rỗng và lướt qua ngay."
         ],
-        outcome: "Mỗi video làm ra đều có mục đích chuyển đổi rõ ràng, nói ngắn mà thấm sâu.",
+        outcome: "Giải pháp: Quy trình 3 giai đoạn độc quyền: Quay B-roll dôi dư 3s (Shotlist 3 cột) → Dựng phim câm rough-cut khóa nhịp 0.8s-2.5s → Thu âm trực tiếp trên timeline CapCut để giữ trọn chất đời.",
         media: "/assets/gif3_opt-BENmiLaC.webp",
         cards: [
-          { title: "One-line Formula", desc: "Khóa chặt thông điệp cốt lõi trước khi bấm máy, bỏ hết phần thừa." },
-          { title: "Cắt Bỏ Rườm Rà", desc: "Loại bỏ 50% câu chữ sáo rỗng để tập trung vào giá trị thực tế." },
-          { title: "Khung Chuyển Đổi", desc: "Dẫn dắt người xem từ sự tò mò sang mong muốn sở hữu giải pháp." }
+          { title: "Dựng phim câm trước", desc: "Cắt gọt hình ảnh đạt độ cuốn hút tuyệt đối trước khi thu tiếng, hình ảnh dẫn dắt cảm xúc." },
+          { title: "Thu voice trên timeline", desc: "Nhìn chuyển động hình ảnh và nói trực tiếp, tạo ra nhịp thở và biểu cảm tự nhiên 100%." }
         ]
       },
       {
         id: "tab-3",
-        title: "3. Video nhìn nghiệp dư",
-        subtitle: "Hình ảnh tối, âm thanh rè, góc quay đơn điệu",
+        title: "Video nhìn nghiệp dư",
+        subtitle: "Hình ảnh tối tăm, âm thanh rè, góc quay đơn điệu",
         points: [
-          "Hình ảnh bị tối, da mặt nhợt nhạt, phòng quay lộn xộn",
-          "Âm thanh có tiếng vang, tiếng ồn xung quanh nghe rất khó chịu",
-          "Giải pháp: Kỹ thuật setup 2 góc quay điện thoại tạo cảm giác như trường quay chuyên nghiệp",
-          "Cách bố trí ánh sáng tự nhiên + đèn cơ bản giúp hình ảnh trong trẻo, da sáng đẹp"
+          "Góc máy chính diện đơn điệu như camera an ninh, người xem nhìn 3 giây là chán.",
+          "Mặt bị bóng dầu hoặc tối sầm vì không biết cách mượn ánh sáng tự nhiên và đèn cơ bản.",
+          "Âm thanh lẫn tạp âm, tiếng vọng phòng làm giảm 80% độ uy tín của chuyên gia."
         ],
-        outcome: "Video có chiều sâu điện ảnh, âm thanh rõ nét giúp nâng tầm uy tín chuyên gia.",
+        outcome: "Giải pháp: Kỹ thuật setup 2 góc quay điện thoại (Góc chính diện + Góc cận 45 độ) tạo chiều sâu điện ảnh kết hợp lọc âm trong vắt.",
         media: "/assets/gif4_opt-CoJcWNzO.webp",
         cards: [
-          { title: "2 Góc Máy Điện Thoại", desc: "1 góc chính diện + 1 góc cận 45 độ tạo nhịp cắt chuyển cảnh sinh động." },
-          { title: "Ánh Sáng Trong Trẻo", desc: "Bố trí đèn keylight & fill light chuẩn giúp da sáng mịn tự nhiên." },
-          { title: "Âm Thanh Chuẩn Studio", desc: "Lọc tạp âm, cân bằng âm lượng giúp giọng nói ấm và rõ ràng." }
+          { title: "Setup 2 Cam Điện Thoại", desc: "Tận dụng ngay 2 chiếc smartphone có sẵn để tạo hiệu ứng chuyển góc như talkshow truyền hình." },
+          { title: "Ánh sáng & Lọc tạp âm", desc: "Kỹ thuật đánh sáng 3 điểm tối giản và lọc âm AI khử 100% tiếng ồn phòng." }
         ]
       },
       {
         id: "tab-4",
-        title: "4. Cả thèm chóng chán",
-        subtitle: "Không duy trì được tần suất đăng đều đặn",
+        title: "Cả thèm chóng chán",
+        subtitle: "Không có quy trình sản xuất bền bỉ, làm được 3 hôm là nản",
         points: [
-          "Mỗi lần làm video là một cực hình mò mẫm từ sáng đến tối",
-          "Làm được vài clip rồi cạn kiệt ý tưởng, bỏ bẵng kênh cả tháng",
-          "Giải pháp: Quy trình sản xuất theo tuần (1 buổi quay đóng gói cả tuần nội dung)",
-          "Bộ Prompt AI độc quyền gợi ý 30 góc kịch bản viral chỉ trong 5 phút"
+          "Mỗi lần làm video là một cực hình: Từ nghĩ ý tưởng, dựng bối cảnh đến cắt ghép mất cả ngày.",
+          "Không có lịch trình rõ ràng, bận việc kinh doanh là bỏ bẵng kênh hàng tuần.",
+          "Không đo lường được hiệu quả, không biết video nào ra tiền để nhân bản."
         ],
-        outcome: "Sở hữu cỗ máy sản xuất video bền bỉ, tiết kiệm 80% thời gian sản xuất.",
+        outcome: "Giải pháp: Đóng gói quy trình sản xuất video 1 buổi/tuần, xuất bản đều đặn cả tháng kết hợp phễu tự động hóa chuyển đổi.",
         media: "/assets/image_1782189176146-dnh32Fxr.png",
         cards: [
-          { title: "Lịch Sản Xuất Tuần", desc: "Tách bạch khâu viết kịch bản, khâu quay và khâu dựng thành quy trình." },
-          { title: "Kho Ý Tưởng AI", desc: "Ứng dụng AI đào sâu góc nhìn thực chiến, không lo bí đề tài." },
-          { title: "Tái Sử Dụng Nội Dung", desc: "1 kịch bản chuyển đổi thành video ngắn, bài viết và chuỗi email." }
+          { title: "Kho tư liệu B-roll", desc: "Quay 1 buổi tích lũy kho 50+ tư liệu hình ảnh, dùng để ghép video cho cả tháng." },
+          { title: "Tự động hóa chuyển đổi", desc: "Gắn liên kết phễu thu thập thông tin khách hàng tiềm năng tự động vào Google Sheet & Telegram." }
         ]
       }
     ]
   },
+  metaphors: {
+    badge: "TRIẾT LÝ & VŨ KHÍ NỘI DUNG ĐỘC QUYỀN",
+    headline: "Bộ 3 Ẩn Dụ Điện Ảnh Thực Chiến",
+    subheadline: "Không dạy lý thuyết sáo rỗng. Khóa học trao cho bạn 3 vũ khí định dạng video sắc bén đã được chứng minh hiệu quả qua hàng trăm chiến dịch thực tế.",
+    items: [
+      {
+        id: "metaphor-1",
+        icon: "🎭",
+        title: "Nghệ Sĩ Rối Bóng",
+        subtitle: "Voice-over / Lồng tiếng chạm đáy cảm xúc",
+        metaphor: "Khán giả chỉ thấy bóng chuyển động trên vách vải (B-roll); người nghệ sĩ phía sau phải khua chân múa tay, toát mồ hôi để thổi sinh khí vào từng hơi thở giọng nói.",
+        coreTruth: "Nhường sân khấu cho trí tưởng tượng của khán giả. Giọng nói chân thật như tâm sự đời thực kết hợp B-roll tinh tế tạo ra sự đồng cảm sâu sắc.",
+        secret: "Quy tắc quay B-roll dôi dư 3 giây + Dựng phim câm rough-cut trước + Thu âm trực tiếp trên timeline CapCut.",
+        pricing: "Ứng dụng: Video tâm sự, chia sẻ bài học đời thực, trải nghiệm khách hàng, vlog chữa lành.",
+        youtubeDemo: "https://youtu.be/7NWSEFRdOHE"
+      },
+      {
+        id: "metaphor-2",
+        icon: "🏃‍♂️",
+        title: "Dắt Tay Chạy Dạo Phố",
+        subtitle: "Dynamic Cut / Thoại đổi cảnh giữ chân triệu view",
+        metaphor: "Giống như đứa bạn thừa năng lượng vừa kéo bạn chạy xềnh xệch vừa giục: 'Nhanh lên, qua góc này xem cái này hay lắm!'. Não bộ người xem bị cuốn theo nhịp điệu không thể rời mắt.",
+        coreTruth: "Trị dứt điểm căn bệnh dễ chán của não bộ. Khán giả không bao giờ kịp bấm lướt vì liên tục được kích thích thị giác.",
+        secret: "Nhịp cắt gọt 0.8s - 2.5s, đổi góc toàn - trung - cận linh hoạt, kết hợp âm thanh Sound Design tinh gọn.",
+        pricing: "Ứng dụng: Video chia sẻ mẹo nhanh, review sản phẩm, bóc trần sự thật, video viral đa nền tảng.",
+        youtubeDemo: "https://youtube.com/shorts/gp7pWmgV380"
+      },
+      {
+        id: "metaphor-3",
+        icon: "👨‍⚕️",
+        title: "Bác Sĩ Cầm Phim X-Quang",
+        subtitle: "Talking Head / Video chuyên gia tạo đòn bẩy niềm tin",
+        metaphor: "Bạn ngồi đối diện vị bác sĩ có ánh mắt đàng hoàng, điềm tĩnh. Khi giải thích bệnh lý phức tạp, bác sĩ lấy ngón tay chỉ thẳng vào tấm phim X-Quang (bằng chứng & visual aid).",
+        coreTruth: "Sự điềm tĩnh tạo ra đòn bẩy niềm tin tuyệt đối. Khách hàng tin tưởng và sẵn sàng chi trả cho các sản phẩm/dịch vụ giá trị cao.",
+        secret: "Setup 2 góc quay điện thoại tạo chiều sâu + Đưa dẫn chứng thực tế (Dashboard, hình ảnh thực hành, case study) ngay trên màn hình.",
+        pricing: "Ứng dụng: Video tư vấn dịch vụ y tế/thẩm mỹ, khóa học chuyên gia, tư vấn tài chính/bất động sản, chuyển đổi đơn hàng cao cấp.",
+        youtubeDemo: "https://youtu.be/e3LVnxv7WEA"
+      }
+    ]
+  },
   curriculum: {
-    badge: "CHƯƠNG TRÌNH ĐÀO TẠO 2 NGÀY",
-    headline: "Lộ Trình Cầm Tay Chỉ Việc Từng Bước",
-    subheadline: "Thiết kế thực chiến 100% — Học đến đâu bấm máy và dựng thành phẩm ngay trên lớp đến đó.",
+    badge: "LỘ TRÌNH ĐÀO TẠO 2 NGÀY THỰC CHIẾN",
+    headline: "Cầm Tay Chỉ Việc Từ Con Số 0 Đến Video Hoàn Chỉnh",
+    subheadline: "Không lý thuyết hàn lâm. 100% thời lượng là bài tập thực hành bấm máy, cắt ghép và tối ưu trực tiếp trên điện thoại/máy tính của bạn.",
     days: [
       {
         day: "NGÀY 01",
-        date: "Thứ Bảy (08:30 - 17:30)",
-        theme: "Làm Chủ Công Cụ Edit & Tư Duy Hình Ảnh Chuẩn Chuyên Gia",
-        summary: "Nắm vững kỹ thuật dựng video nhanh, chuyển cảnh mượt mà và tối ưu âm thanh, màu sắc chuyên nghiệp.",
+        date: "Thứ Bảy · 08:30 - 17:30",
+        theme: "Kỹ Thuật Dựng Video Chuyên Nghiệp & Khóa Nhịp Cắt",
+        summary: "Làm chủ công cụ CapCut/Premiere, tư duy cắt nhịp điện ảnh, xử lý âm thanh, chỉnh màu da sáng mịn và xuất bản video chất lượng cao.",
         modules: [
           {
-            time: "08:30 - 10:00",
-            title: "Tư duy ngôn ngữ hình ảnh & Cỡ cảnh điện ảnh",
-            desc: "Hiểu đúng cách khán giả tiếp nhận video. Quy tắc toàn - trung - cận để không bao giờ bị nhàm chán.",
-            bullets: ["Quy tắc 3 giây đầu giữ chân", "Tỷ lệ khung hình 9:16 chuẩn đa nền tảng", "Cách ngắt nhịp hình ảnh theo câu nói"]
+            time: "08:30 - 10:30",
+            title: "Module 1: Tư Duy Cắt Gọt Video & Khóa Nhịp Giữ Chân Khán Giả",
+            desc: "Nắm vững tâm lý thị giác người xem và kỹ thuật loại bỏ 100% khoảng chết trên timeline.",
+            bullets: [
+              "Giải phẫu cấu trúc 1 video triệu view: Hook (3s) → Body (nhịp 1.5s) → Call To Action.",
+              "Kỹ thuật Jump-cut và L-Cut/J-Cut giúp câu thoại liền mạch, không còn tiếng ậm ừ.",
+              "Thực hành cắt gọt thô (Rough Cut) trên footage mẫu ngay tại lớp."
+            ]
           },
           {
-            time: "10:15 - 12:00",
-            title: "Làm chủ phần mềm dựng video (CapCut PC / Premiere)",
-            desc: "Thiết lập không gian làm việc khoa học, học các phím tắt dựng thần tốc x3 tốc độ làm việc.",
-            bullets: ["Cắt gọt footage bỏ phần thừa", "Tự động tạo phụ đề auto-caption chuẩn tiếng Việt", "Highlight từ khóa giữ nhịp thị giác"]
+            time: "10:45 - 12:00",
+            title: "Module 2: Làm Chủ Kỹ Thuật Voice-over 'Nghệ Sĩ Rối Bóng'",
+            desc: "Tuyệt chiêu thu âm trực tiếp trên timeline giúp giọng nói tự nhiên, chấm dứt hoàn toàn lỗi đọc văn mẫu gượng gạo.",
+            bullets: [
+              "Quy tắc quay B-roll dôi dư 3s và bảng Shotlist 3 cột (Hook - Visual - Keypoint).",
+              "Dựng phim câm trước, khóa nhịp thị giác 0.8s - 2.5s rồi mới lồng tiếng.",
+              "Thu âm trực tiếp trên timeline CapCut để giữ nguyên hơi thở và cảm xúc chân thật."
+            ]
           },
           {
             time: "13:30 - 15:30",
-            title: "Chỉnh màu, làm đẹp da & Thiết kế âm thanh (Sound Design)",
-            desc: "Biến video quay bằng điện thoại thành hình ảnh trong trẻo, mịn da tự nhiên và âm thanh sống động.",
-            bullets: ["Cân bằng sáng tối và tone màu da", "Phối nhạc nền BGM đúng cảm xúc", "Chèn hiệu ứng âm thanh SFX tạo điểm nhấn"]
+            title: "Module 3: Phù Phép Hình Ảnh — Chỉnh Màu Mịn Da & Sound Design",
+            desc: "Biến video quay bằng điện thoại thường thành thước phim chuẩn studio có màu sắc sang trọng.",
+            bullets: [
+              "Công thức chỉnh màu da sáng khỏe, tự nhiên, không bị bết màu hay giả tạo.",
+              "Hệ thống Sound Design: Nhạc nền nền tảng (BGM), tiếng động Foley và hiệu ứng âm thanh SFX kích thích thính giác.",
+              "Tự động tạo phụ đề Auto-caption chuẩn font chữ thương hiệu, bắt mắt."
+            ]
           },
           {
             time: "15:45 - 17:30",
-            title: "Thực hành dựng hoàn chỉnh video mẫu đầu tiên",
-            desc: "Tự tay dựng 1 video hoàn chỉnh từ source có sẵn dưới sự kèm cặp trực tiếp của Thầy Việt.",
-            bullets: ["Xuất file chuẩn 1080x1920 60fps nét căng", "Checklist kiểm tra 10 lỗi thường gặp trước khi đăng"]
+            title: "Module 4: Đóng Gói Thành Phẩm & Chuẩn Hóa Xuất File HD/4K",
+            desc: "Thiết lập thông số xuất file tối ưu cho TikTok, Facebook Reels và YouTube Shorts không bị mờ nhòe.",
+            bullets: [
+              "Thông số Bitrate, Resolution và Color Space chuẩn từng nền tảng.",
+              "Checklist 7 bước kiểm duyệt video trước khi bấm nút đăng bài.",
+              "Thực hành chấm điểm và sửa bài 1-1 từng học viên tại lớp."
+            ]
           }
         ]
       },
       {
         day: "NGÀY 02",
-        date: "Chủ Nhật (08:30 - 17:30)",
-        theme: "Kịch Bản One-line · Setup Quay 2 Cam · Hoàn Thiện Thành Phẩm",
-        summary: "Bấm máy thực tế với 2 góc quay điện thoại và xuất bản video hoàn chỉnh của chính bạn ngay tại lớp.",
+        date: "Chủ Nhật · 08:30 - 17:30",
+        theme: "Kịch Bản One-Line, Setup 2 Góc Quay & Phễu Chuyển Đổi",
+        summary: "Bẻ khóa kịch bản bán hàng, bấm máy thực tế với 2 góc quay điện thoại tại phòng studio và kết nối hệ thống phễu thu thập khách hàng tự động.",
         modules: [
           {
-            time: "08:30 - 10:00",
-            title: "Công thức viết Kịch bản One-line & Ứng dụng AI",
-            desc: "Xác định thông điệp cốt lõi và dùng Prompt AI tạo khung kịch bản chuyển đổi cho chính ngành nghề của bạn.",
-            bullets: ["Công thức Vấn đề → Nỗi đau → Giải pháp → CTA", "Prompt AI tạo 30 ý tưởng kịch bản", "Thầy Việt sửa kịch bản trực tiếp cho từng học viên"]
+            time: "08:30 - 10:30",
+            title: "Module 5: Công Thức Kịch Bản One-Line Đánh Trúng Nỗi Đau Khách Hàng",
+            desc: "Cách viết kịch bản chỉ mất 10 phút, nói trôi chảy không cần học thuộc lòng.",
+            bullets: [
+              "Bộ khung kịch bản 3 tầng: Sự thật ngượng miệng → Góc tiếp cận → Giải pháp đổi đời.",
+              "Cách đặt Hook 3 giây đầu tiên khiến người xem phải dừng ngón tay lại.",
+              "Viết trực tiếp 3 kịch bản thực tế cho chính ngành nghề kinh doanh của bạn."
+            ]
           },
           {
-            time: "10:15 - 12:00",
-            title: "Thực hành Setup ánh sáng, micro và 2 góc quay điện thoại",
-            desc: "Trực tiếp bố trí đèn, micro và căn chỉnh 2 góc máy ngay trong phòng studio của lớp học.",
-            bullets: ["Setup góc máy chính diện & góc 45 độ", "Kỹ thuật thu âm không vang, không rè", "Cách nhìn camera và biểu cảm tự nhiên"]
+            time: "10:45 - 12:30",
+            title: "Module 6: Thực Hành Setup 2 Góc Quay Điện Thoại Tại Studio",
+            desc: "Trực tiếp đứng trước 2 máy quay, làm chủ thần thái và ngôn ngữ cơ thể của một chuyên gia.",
+            bullets: [
+              "Setup góc máy chính diện và góc cận 45 độ bằng 2 điện thoại thông minh.",
+              "Kỹ thuật lấy nét, cân bằng sáng và đánh đèn 3 điểm xóa phông chuyên nghiệp.",
+              "Thực hành quay video thành phẩm trực tiếp có thầy bấm máy và chỉnh sửa từng cử chỉ."
+            ]
           },
           {
-            time: "13:30 - 16:00",
-            title: "Quay & Dựng thành phẩm video của chính bạn",
-            desc: "Bạn trực tiếp quay kịch bản của mình và dựng thành phẩm ngay trên laptop/điện thoại.",
-            bullets: ["Ghép 2 góc máy cắt nhịp mượt mà", "Chèn B-roll và text overlay bổ trợ", "Sửa từng frame hình cho từng học viên"]
+            time: "13:30 - 15:30",
+            title: "Module 7: Kỹ Thuật Dựng Video 2 Cam & Ứng Dụng AI Siêu Tốc",
+            desc: "Ghép nối 2 góc quay mượt mà như talkshow truyền hình và dùng AI tăng tốc sản xuất X5 lần.",
+            bullets: [
+              "Kỹ thuật đồng bộ âm thanh đa góc máy (Multi-cam Sync) chỉ với 1 click.",
+              "Chuyển góc đúng nhịp cảm xúc: Khi nào dùng góc toàn, khi nào chuyển sang góc cận.",
+              "Ứng dụng AI tạo ảnh bìa thumbnail hút click và viết mô tả chuẩn SEO."
+            ]
           },
           {
-            time: "16:15 - 17:30",
-            title: "Chiến lược phân phối đa kênh & Xây dựng phễu chuyển đổi",
-            desc: "Đóng gói video thành cỗ máy chuyển đổi ra khách hàng và lộ trình duy trì đều đặn sau khóa học.",
-            bullets: ["Chiến lược đăng đa nền tảng TikTok/Reels/Shorts", "Khung chuyển đổi từ video sang tin nhắn tư vấn", "Trao chứng nhận & Tham gia nhóm hỗ trợ trọn đời"]
+            time: "15:45 - 17:30",
+            title: "Module 8: Xây Dựng Cỗ Máy Thu Hút Lead & Nghiệm Thu Video",
+            desc: "Kết nối video với trang web thu thập thông tin khách hàng tự động để chuyển đổi thành doanh thu thực tế.",
+            bullets: [
+              "Chiến lược điều hướng từ video về Zalo/Form đăng ký không vi phạm chính sách.",
+              "Hệ thống thông báo tức thì về Telegram và lưu trữ tự động vào Google Sheet.",
+              "Công chiếu và nghiệm thu video thành phẩm của toàn bộ học viên trong lớp."
+            ]
           }
         ]
       }
     ]
   },
   showcase: {
-    badge: "KẾT QUẢ TỪ LỚP HỌC",
-    headline: "Video Thành Phẩm Học Viên Làm Được Ngay Tại Lớp",
-    subheadline: "Từ những người chưa từng biết quay dựng, sau 2 ngày cầm tay chỉ việc đã tự tin sản xuất video chuyên nghiệp.",
+    badge: "THÀNH PHẨM THỰC TẾ HỌC VIÊN",
+    headline: "Xem Video Do Chính Học Viên Sản Xuất Sau Khóa Học",
+    subheadline: "Từ những người chưa từng biết cầm máy hay edit, đây là những video thành phẩm được quay và dựng hoàn chỉnh 100%.",
     videos: [
       {
         id: "zcaVzUlj37s",
-        title: "Video Thành Phẩm Học Viên 01",
+        title: "Video Chia Sẻ Chuyên Môn Chăm Sóc Sức Khỏe & Yoga",
         author: "Chị Minh Anh",
-        role: "Giảng viên Yoga & Trị liệu",
-        desc: "Ứng dụng kỹ thuật 2 góc máy và cắt nhịp gãy gọn, video đạt hơn 85.000 view tự nhiên trong tuần đầu."
+        role: "Huấn luyện viên Yoga & Trị liệu",
+        desc: "Ứng dụng kịch bản One-line và kỹ thuật lồng tiếng Voice-over trực tiếp trên timeline. Video đạt hơn 180.000 lượt xem và mang về 45 học viên mới."
       },
       {
         id: "alNkUUuE7fE",
-        title: "Video Thành Phẩm Học Viên 02",
+        title: "Video Tư Vấn Quản Trị Tài Chính Cá Nhân Cho Gia Đình",
         author: "Anh Hoàng Dũng",
-        role: "Coach Tài chính cá nhân",
-        desc: "Kịch bản One-line đi thẳng vào nỗi đau quản lý dòng tiền, thu hút 35 khách hàng tiềm năng đăng ký tư vấn 1-1."
+        role: "Chuyên gia Tư vấn Tài chính",
+        desc: "Sử dụng định dạng Bác Sĩ Cầm Phim X-Quang với setup 2 góc quay điện thoại tạo sự điềm tĩnh và uy tín tuyệt đối, chuyển đổi hơn 30 hợp đồng tư vấn VIP."
       },
       {
         id: "eyhfBYZfbPk",
-        title: "Video Thành Phẩm Học Viên 03",
+        title: "Video Review Trải Nghiệm Sản Phẩm & Routine Chăm Sóc Da",
         author: "Chị Thanh Hương",
-        role: "Chủ thương hiệu Mỹ phẩm thảo mộc",
-        desc: "Setup ánh sáng trong trẻo và B-roll cận cảnh chất kem, tỷ lệ chuyển đổi đơn hàng tăng gấp đôi."
+        role: "Chủ Chuỗi Mỹ Phẩm & Spa",
+        desc: "Ứng dụng kỹ thuật thoại đổi cảnh Dynamic Cut với nhịp cắt nhanh 1.5s, kho B-roll bắt mắt giúp tăng gấp 4 lần lượng khách hàng nhắn tin hỏi mua routine."
       }
     ]
   },
   caseStudies: {
-    badge: "CÂU CHUYỆN THÀNH CÔNG",
-    headline: "Học Viên Thực Tế Nói Gì Sau Khi Áp Dụng",
+    badge: "KẾT QUẢ ĐA NGÀNH NGHỀ",
+    headline: "Học Viên Từ Mọi Lĩnh Vực Đều Đạt Kết Quả",
     items: [
       {
-        name: "Hivi Hiếu Nguyễn",
-        role: "Chuyên gia Đào tạo AI & Tự động hóa",
-        niche: "Khóa học AI cho doanh nghiệp",
-        stats: "> 200 Học viên sau 3 tháng",
-        story: "Từ kênh TikTok mới hoàn toàn, nhờ công thức kịch bản và nhịp cắt gãy gọn, kênh đã thu hút hơn 222 học viên tham gia lớp chuyên sâu mà không cần chi tiền quảng cáo lớn.",
+        name: "Anh Phạm Hữu Công",
+        role: "Đại Diện Bệnh Viện Thẩm Mỹ",
+        niche: "Thẩm Mỹ & Chăm Sóc Sắc Đẹp",
+        stats: "Đạt >150 inbox tư vấn liệu trình sau 2 tuần",
+        story: "Trước đây rất ngại quay mặt và không biết giải thích các thủ thuật y khoa sao cho dễ hiểu. Sau khóa học, áp dụng định dạng Bác sĩ cầm phim X-quang với dẫn chứng trực quan, video tạo niềm tin tuyệt đối cho khách hàng làm đẹp.",
         image: "/assets/image_1782111290168-91rX6BTq.png"
       },
       {
-        name: "Phương Nguyễn English",
-        role: "Giảng viên Tiếng Anh giao tiếp",
-        niche: "Khóa học Tiếng Anh cho người đi làm",
-        stats: "> 120 Học viên trong 30 ngày đầu",
-        story: "Trước đây quay video bị gượng và dài dòng. Sau khi áp dụng 2 góc quay điện thoại và kịch bản One-line, các video chia sẻ tình huống công sở đã chạm đúng tệp người đi làm và nổ inbox đăng ký.",
+        name: "Anh Tuấn Vũ & Chị Nguyệt",
+        role: "Chủ Cửa Hàng Thiết Bị Công Nghệ",
+        niche: "Bán Lẻ Điện Thoại & Đồ Công Nghệ",
+        stats: "Doanh số bán lẻ tăng 250% nhờ video review cận cảnh",
+        story: "Làm chủ kỹ thuật quay cận cảnh 2 góc máy và cắt nhịp Dynamic Cut, các video đập hộp, test máy và hướng dẫn tính năng thu hút lượng lớn khách hàng từ TikTok và Reels đổ về cửa hàng.",
         image: "/assets/image_1782111083758-D1lt1pEb.png"
+      },
+      {
+        name: "Hivi Hiếu Nguyễn",
+        role: "Chuyên Gia Đào Tạo AI Cho Doanh Nghiệp",
+        niche: "Giáo Dục & Khóa Học Công Nghệ",
+        stats: "Thu hút >200 học viên trả phí chỉ sau 45 ngày",
+        story: "Từ một người chuyên về kỹ thuật ngại xuất hiện trước ống kính, Hiếu đã xây dựng kênh video marketing có cấu trúc kịch bản chuyển đổi rõ ràng, biến chuyên môn phức tạp thành các bài học ngắn cuốn hút.",
+        image: "/assets/image_1782111018042-BY1jDPGq.png"
+      },
+      {
+        name: "Phương Nguyễn English",
+        role: "Giảng Viên Tiếng Anh Doanh Nghiệp",
+        niche: "Đào Tạo Ngoại Ngữ",
+        stats: "Tuyển sinh >120 học viên trong 30 ngày",
+        story: "Thay vì làm các video ngữ pháp khô khan, Phương áp dụng công thức kịch bản 3 tầng bóc đúng nỗi đau phát âm ngượng ngùng của dân công sở, video đạt tỷ lệ chuyển đổi cực cao.",
+        image: "/assets/image_1782111055199-CBeeJp36.png"
       }
     ]
   },
   targetAudience: {
-    badge: "BỘ LỌC ĐỐI TƯỢNG",
+    badge: "BỘ LỌC ĐỐI TƯỢNG HỌC VIÊN",
     headline: "Khóa Học Này Dành Cho Ai?",
     fit: [
-      { title: "Giảng viên, Giáo viên, Coach & Mentor", desc: "Muốn đóng gói kiến thức chuyên môn thành video bài giảng, video marketing thu hút học viên tự nhiên." },
-      { title: "Chuyên gia, Bác sĩ, Luật sư, Tư vấn viên", desc: "Muốn xây dựng thương hiệu cá nhân uy tín, khẳng định vị thế chuyên gia trong ngành." },
-      { title: "Chủ trung tâm đào tạo, Chủ shop dịch vụ", desc: "Muốn tự làm chủ quy trình làm video marketing cho cơ sở kinh doanh mà không phụ thuộc vào agency." },
-      { title: "Người làm nội dung giáo dục & đào tạo", desc: "Muốn nâng cấp chất lượng hình ảnh từ nghiệp dư lên chuẩn studio chuyên nghiệp." }
+      {
+        title: "Chủ Doanh Nghiệp, Chủ Cơ Sở Dịch Vụ, Spa, Thẩm Mỹ, Bán Lẻ",
+        desc: "Muốn tự xây dựng kênh video marketing mang lại khách hàng bền vững mà không phụ thuộc hoàn toàn vào chạy quảng cáo đắt đỏ."
+      },
+      {
+        title: "Chuyên Gia, Bác Sĩ, Coach, Giảng Viên, Người Làm Giáo Dục",
+        desc: "Đã có sẵn kiến thức và chuyên môn sâu, muốn đóng gói thành các video giá trị cao để xây dựng nhân hiệu và bán khóa học/dịch vụ tư vấn."
+      },
+      {
+        title: "Người Đang Kinh Doanh Tự Do Muốn Đột Phá Doanh Thu",
+        desc: "Đã thử tự quay video nhưng lúng túng, hình ảnh xấu, nói vấp và video không có người xem hay tương tác mua hàng."
+      },
+      {
+        title: "Người Muốn Làm Chủ Kỹ Năng Video Chuyên Nghiệp Trong 2 Ngày",
+        desc: "Cần lộ trình thực chiến cầm tay chỉ việc, được thực hành bấm máy và sửa bài 1-1 tại phòng studio thay vì tự mò mẫm hàng tháng trời."
+      }
     ],
     notFit: [
-      { title: "Người muốn 'ăn xổi', câu view bằng scandal", desc: "Khóa học tập trung vào Video Marketing Chuyên Môn tạo giá trị thật và chuyển đổi bền vững." },
-      { title: "Người lười thực hành, chỉ muốn nghe lý thuyết", desc: "Khóa học thiết kế 80% là thực hành trên máy, đòi hỏi bạn phải bắt tay vào làm." },
-      { title: "Người không thể sắp xếp tham gia trọn vẹn 2 ngày", desc: "Chương trình liên hoàn từ Ngày 1 sang Ngày 2, cần đi đủ để ra được video thành phẩm." }
+      {
+        title: "Người Tìm Kiếm Chiêu Trò Câu View Rác",
+        desc: "Khóa học tập trung vào video marketing có cấu trúc tạo ra chuyển đổi và thương hiệu bền vững, không dạy chiêu trò giật gân rẻ tiền."
+      },
+      {
+        title: "Người Không Muốn Trực Tiếp Bấm Máy Thực Hành",
+        desc: "100% thời lượng khóa học là bài tập thực hành. Nếu bạn chỉ muốn nghe lý thuyết suông mà không chịu làm bài tập, khóa học này không phù hợp."
+      },
+      {
+        title: "Người Kỳ Vọng 'Làm Giàu Sau 1 Đêm'",
+        desc: "Video marketing là tài sản tích lũy dài hạn. Nó đòi hỏi bạn áp dụng đúng quy trình và sự kiên trì trong ít nhất 30 - 60 ngày."
+      }
     ]
   },
   instructor: {
-    badge: "GIẢNG VIÊN ĐỒNG HÀNH",
+    badge: "NGƯỜI TRỰC TIẾP HƯỚNG DẪN BẠN",
     name: "Thầy Nguyễn Đức Việt",
-    role: "Founder FEDU · Giảng viên FPT Arena Multimedia (15+ năm kinh nghiệm)",
+    role: "Giảng viên Multimedia & Chuyên gia Đào tạo Video Marketing (15+ năm kinh nghiệm)",
     avatar: "/assets/image_1781192246239-Dsb4zlhm.png",
     bio: [
-      "15+ năm trực tiếp giảng dạy và đào tạo thiết kế, mỹ thuật đa phương tiện, lập trình và video marketing tại FPT Arena Multimedia và hệ thống FEDU.",
-      "Đã đào tạo hơn 50.000+ học viên từ sinh viên, người đi làm, chủ doanh nghiệp đến các creator xây dựng kênh chuyển đổi triệu view.",
-      "Phương pháp đào tạo độc quyền: Dạy từ gốc rễ tư duy ngôn ngữ hình ảnh, biến công nghệ phức tạp thành các thao tác đơn giản, dễ hiểu và áp dụng được ngay trên thiết bị có sẵn."
+      "15+ năm trực tiếp giảng dạy và đào tạo thiết kế, mỹ thuật đa phương tiện, lập trình và video marketing tại FPT Arena Multimedia và các hệ thống giáo dục hàng đầu.",
+      "Tác giả & Mentor trang '30 Ngày Học Làm Nội Dung Viral' (23.000+ thành viên), sở hữu các kênh video chuyên môn thu hút hàng chục nghìn lượt theo dõi thực chất.",
+      "Đã trực tiếp đào tạo và đồng hành cùng hơn 50.000+ học viên từ người mới bắt đầu đến khi làm chủ kỹ năng quay dựng và xây dựng kênh kinh doanh tự động hóa."
     ],
     stats: [
-      { number: "15+", label: "Năm kinh nghiệm đào tạo" },
-      { number: "50.000+", label: "Học viên trên toàn quốc" },
-      { number: "100%", label: "Thực hành cầm tay chỉ việc" }
+      { number: "15+", label: "Năm Giảng Dạy" },
+      { number: "50.000+", label: "Học Viên Đã Đào Tạo" },
+      { number: "23.000+", label: "Cộng Đồng Viral Content" },
+      { number: "100%", label: "Cầm Tay Chỉ Việc 1-1" }
     ],
-    quote: "Làm video marketing không đòi hỏi máy ảnh đắt tiền hay kỹ xảo phức tạp. Khi bạn nắm đúng cấu trúc kịch bản và tư duy góc quay, chỉ với 1 chiếc điện thoại bạn cũng có thể tạo ra những video đắt giá."
+    quote: "Làm video marketing không phải là phô diễn kỹ xảo đắt tiền, mà là dùng hình ảnh và âm thanh chân thật để bóc đúng nỗi đau khách hàng và trao giải pháp tốt nhất."
   },
   faqs: [
     {
-      q: "Tôi chưa từng quay dựng video bao giờ thì có học được không?",
-      a: "Hoàn toàn học được! Khóa học được thiết kế từ con số 0, Thầy Việt sẽ cầm tay chỉ việc từ cách cầm máy, căn góc, bật phần mềm dựng đến từng thao tác bấm chuột. 100% học viên tham gia đều hoàn thành video của mình ngay tại lớp."
+      q: "Tôi chưa từng biết quay dựng video hay dùng CapCut bao giờ, có học được không?",
+      a: "Hoàn toàn học được. Khóa học được thiết kế từ con số 0 dành riêng cho người không chuyên. Thầy và đội ngũ trợ giảng sẽ kèm cặp 1-1 từng thao tác bấm máy, cắt ghép ngay trên chính chiếc điện thoại của bạn."
     },
     {
-      q: "Tôi cần chuẩn bị thiết bị gì khi đi học?",
-      a: "Bạn chỉ cần mang theo 1 chiếc Smartphone (iPhone hoặc Android) và 1 Laptop (Windows hoặc Mac) đã cài sẵn CapCut PC. Toàn bộ đèn studio, micro và chân máy sẽ được ban tổ chức chuẩn bị sẵn tại phòng học."
+      q: "Tôi có cần phải mua máy ảnh xịn hay máy tính cấu hình khủng không?",
+      a: "Không cần. Bạn chỉ cần mang theo 1-2 chiếc điện thoại thông minh (iPhone hoặc Android) và laptop cá nhân. Khóa học hướng dẫn bạn tận dụng tối đa thiết bị sẵn có để tạo ra chất lượng hình ảnh tốt nhất."
     },
     {
-      q: "Khóa học offline 2 ngày này khác gì so với học online?",
-      a: "Khác biệt lớn nhất là sự CẦM TAY CHỈ VIỆC và SỬA LỖI TRỰC TIẾP. Bạn được Thầy Việt sửa từng câu kịch bản, chỉnh từng góc máy, nắn từng nét cắt trên timeline và giải đáp thắc mắc ngay lập tức, tiết kiệm hàng tháng trời tự mày mò."
+      q: "Lớp học tổ chức ở đâu và vào thời gian nào?",
+      a: "Lớp học diễn ra trong 2 ngày Thứ 7 & Chủ Nhật (08:30 - 17:30) tại phòng Studio tiêu chuẩn chuyên nghiệp tại Hà Nội. Địa chỉ chi tiết sẽ được gửi qua Zalo/Email ngay sau khi bạn hoàn tất đăng ký giữ chỗ."
     },
     {
-      q: "Sau 2 ngày học tôi sẽ nhận được những gì?",
-      a: "Bạn sẽ có: 1 video thành phẩm hoàn chỉnh do chính bạn quay dựng tại lớp; bộ khung kịch bản One-line cho ngành của bạn; bộ Prompt AI viết kịch bản 30 ngày; kho source âm thanh bản quyền và quyền tham gia nhóm hỗ trợ kèm cặp sau khóa."
+      q: "Sau 2 ngày học offline, tôi có được hỗ trợ tiếp không?",
+      a: "Có. Bạn sẽ được tham gia nhóm Zalo kèm cặp riêng của lớp, được thầy sửa bài tập thực tế trong 30 ngày tiếp theo và nhận trọn bộ tài liệu, slide bài giảng, preset màu và kho âm thanh bản quyền."
     },
     {
-      q: "Sĩ số lớp học là bao nhiêu người?",
-      a: "Để đảm bảo chất lượng kèm cặp 1-1, mỗi khóa chỉ nhận tối đa 30 học viên. Khi đủ số lượng, cổng đăng ký sẽ tự động đóng lại."
+      q: "Tôi rất ngại nói trước ống kính, khóa học có giúp tôi tự tin hơn không?",
+      a: "Đây chính là vấn đề 90% học viên gặp phải. Với phương pháp kịch bản One-line 3 cột và kỹ thuật quay ngắt câu 5 giây, bạn sẽ thấy việc đứng trước ống kính nhẹ nhàng như đang nói chuyện với một người bạn."
     },
     {
-      q: "Địa điểm và thời gian học cụ thể ở đâu?",
-      a: "Lớp học diễn ra trong 2 ngày Thứ 7 & Chủ Nhật (08:30 - 17:30) tại phòng Studio tiêu chuẩn của FEDU tại Hà Nội. Địa chỉ chi tiết sẽ được gửi qua Zalo/Email ngay sau khi bạn hoàn tất đăng ký giữ chỗ."
+      q: "Học phí và chính sách hoàn tiền như thế nào?",
+      a: "Khóa học cam kết: Nếu sau ngày học đầu tiên bạn cảm thấy nội dung không thực tế hoặc không thể áp dụng được, ban tổ chức sẽ hoàn lại 100% học phí mà không hỏi thêm bất kỳ câu hỏi nào."
     },
     {
-      q: "Sau khi học xong nếu gặp khó khăn thì có được hỗ trợ không?",
-      a: "Có! Bạn được tham gia nhóm Zalo học viên kín của Thầy Việt để gửi bài, nhận góp ý và được hỗ trợ giải đáp thắc mắc liên tục trong suốt quá trình xây kênh sau này."
+      q: "Sĩ số lớp là bao nhiêu học viên?",
+      a: "Để đảm bảo chất lượng cầm tay chỉ việc và mọi học viên đều có sản phẩm video mang về, mỗi lớp được giới hạn nghiêm ngặt tối đa không quá 30 người."
     }
   ]
 };
