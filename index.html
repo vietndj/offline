@@ -7,11 +7,53 @@
     <meta name="description" content="Khóa học offline 2 ngày tại Hà Nội do thầy Nguyễn Đức Việt (Founder FEDU) trực tiếp hướng dẫn: Viết kịch bản One-line, setup 2 góc quay điện thoại, edit video chuyên nghiệp và ứng dụng AI tự động hóa." />
     <meta name="robots" content="index, follow" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Preconnect & Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/aeonik" rel="stylesheet" />
+    <link href="https://fonts.cdnfonts.com/css/acta" rel="stylesheet" />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Aeonik"', '"Inter"', 'system-ui', 'sans-serif'],
+              serif: ['"Noe Display"', '"SVN-Acta"', '"Acta"', 'serif'],
+              mono: ['"JetBrains Mono"', 'monospace']
+            }
+          }
+        }
+      }
+    </script>
   </head>
-  <body className="bg-[#09090b] text-white">
+  <body class="bg-[#09090b] text-white">
+    <div id="error-display" style="display:none; color: #ff3b30; background: #1a0f0f; padding: 24px; font-family: monospace; border: 2px solid #ff3b30; border-radius: 12px; position: fixed; top: 20px; left: 20px; right: 20px; z-index: 999999; box-shadow: 0 10px 30px rgba(0,0,0,0.5); line-height: 1.5; font-size: 14px; max-height: 80vh; overflow-y: auto;">
+      <h3 style="margin-top:0; font-size: 18px; border-bottom: 1px solid rgba(255,59,48,0.3); padding-bottom: 8px; margin-bottom: 12px;">🔴 Lỗi Khởi Chạy (Runtime Error)</h3>
+      <pre id="error-message" style="white-space: pre-wrap; word-break: break-all; margin: 0; color: #ff8c82;"></pre>
+    </div>
+    <script>
+      window.addEventListener('error', function(e) {
+        var display = document.getElementById('error-display');
+        var message = document.getElementById('error-message');
+        if (display && message) {
+          display.style.display = 'block';
+          message.textContent = e.message + '\nTại: ' + e.filename + ':' + e.lineno + ':' + e.colno + '\n\nChi tiết:\n' + (e.error ? e.error.stack : 'N/A');
+        }
+      });
+      window.addEventListener('unhandledrejection', function(e) {
+        var display = document.getElementById('error-display');
+        var message = document.getElementById('error-message');
+        if (display && message) {
+          display.style.display = 'block';
+          message.textContent = 'Unhandled Promise Rejection: ' + e.reason + '\n\nChi tiết:\n' + (e.reason && e.reason.stack ? e.reason.stack : 'N/A');
+        }
+      });
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
