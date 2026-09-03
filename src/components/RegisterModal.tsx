@@ -155,7 +155,7 @@ export const RegisterModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               rows={2}
               value={reason}
               onChange={(e) => setReason(e.target.value)}
-              placeholder="Setup 2 góc quay / Kịch bản One-line..."
+              placeholder="Setup 2 góc quay / Kịch bản chuyển đổi..."
               className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 focus:border-amber-500 text-sm text-white placeholder-zinc-500 outline-none resize-none"
             />
           </div>

@@ -9,8 +9,8 @@ interface BannerProps {
 
 export const BannerCta: React.FC<BannerProps> = ({ 
   onOpenRegister, 
-  title = "Làm Chủ Kỹ Năng Video Marketing 2 Ngày Thực Chiến Cùng Thầy Việt",
-  badge = "SĨ SỐ GIỚI HẠN ≤ 30 HỌC VIÊN" 
+  title = "Làm chủ kỹ năng video marketing 2 ngày thực chiến cùng thầy Việt",
+  badge = "SĨ SỐ GIỚI HẠN ≤ 40 HỌC VIÊN" 
 }) => {
   return (
     <section className="py-12 bg-gradient-to-r from-amber-500/10 via-orange-500/15 to-amber-500/10 border-y border-amber-500/20 text-white relative overflow-hidden">
@@ -20,7 +20,7 @@ export const BannerCta: React.FC<BannerProps> = ({
             <Sparkles className="w-3.5 h-3.5" />
             <span>{badge}</span>
           </div>
-          <h3 className="font-serif text-xl sm:text-2xl font-medium text-white tracking-tight">
+          <h3 className="font-serif text-xl sm:text-2xl font-medium text-white tracking-tight [text-wrap:balance]">
             {title}
           </h3>
         </div>

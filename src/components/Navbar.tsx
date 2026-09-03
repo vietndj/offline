@@ -19,7 +19,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRegister }) => {
 
   const navLinks = [
     { label: 'Kết Quả', href: '#proof' },
-    { label: 'Vũ Khí Video', href: '#metaphors' },
+    { label: '4 Định Dạng', href: '#metaphors' },
     { label: '4 Nút Thắt', href: '#pain-points' },
     { label: 'Lộ Trình 2 Ngày', href: '#curriculum' },
     { label: 'Video Học Viên', href: '#showcase' },

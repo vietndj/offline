@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './sections/HeroSection';
 import { ProofSection } from './sections/ProofSection';
+import { DefinitionSection } from './sections/DefinitionSection';
 import { GrowthChartSection } from './sections/GrowthChartSection';
 import { MetaphorsSection } from './sections/MetaphorsSection';
 import { PainSection } from './sections/PainSection';
@@ -43,13 +44,13 @@ export function App() {
       <main>
         <HeroSection onOpenRegister={() => setModalOpen(true)} />
         <ProofSection />
+        <DefinitionSection onOpenRegister={() => setModalOpen(true)} />
         <GrowthChartSection />
         <MetaphorsSection onOpenRegister={() => setModalOpen(true)} />
         <PainSection />
         <CurriculumSection onOpenRegister={() => setModalOpen(true)} />
-        <BannerCta onOpenRegister={() => setModalOpen(true)} title="Thực Hành Cầm Tay Chỉ Việc 1-1 Cùng Thầy Nguyễn Đức Việt" badge="PHÒNG STUDIO CHUYÊN NGHIỆP" />
+        <BannerCta onOpenRegister={() => setModalOpen(true)} title="Thực hành cầm tay chỉ việc 1-1 cùng Nguyễn Đức Việt" badge="PHÒNG STUDIO CHUYÊN NGHIỆP" />
         <ShowcaseSection />
-        <CaseStudySection />
         <TargetSection />
         <InstructorSection />
         <RegisterSection />

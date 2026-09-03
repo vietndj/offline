@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle, Calendar, MapPin, Users, ArrowLeft, PhoneCall } from 'lucide-react';
+import { CheckCircle, Calendar, MapPin, Users, ArrowLeft } from 'lucide-react';
 
 interface SuccessPageProps {
   onBackHome: () => void;
@@ -39,11 +39,7 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({ onBackHome }) => {
           </div>
           <div className="flex items-center gap-3 text-zinc-300">
             <Users className="w-4 h-4 text-orange-400 shrink-0" />
-            <span>Quy mô: <strong>Sĩ số giới hạn ≤ 30 người</strong></span>
-          </div>
-          <div className="flex items-center gap-3 text-zinc-300">
-            <PhoneCall className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>Hotline hỗ trợ: <strong>0934.688.632 (Thầy Nguyễn Đức Việt)</strong></span>
+            <span>Quy mô: <strong>Sĩ số giới hạn ≤ 40 học viên</strong></span>
           </div>
         </div>
 

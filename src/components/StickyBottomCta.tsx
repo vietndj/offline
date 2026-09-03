@@ -15,7 +15,7 @@ export const StickyBottomCta: React.FC<StickyProps> = ({ onOpenRegister }) => {
             OFFLINE HÀ NỘI
           </span>
           <span className="text-xs font-sans font-bold text-white">
-            Giới hạn ≤ 30 Học Viên
+            Giới hạn ≤ 40 Học Viên
           </span>
         </div>
         <button

@@ -54,127 +54,174 @@ export const RegisterSection: React.FC = () => {
   };
 
   return (
-    <section id="dang-ky" className="py-20 md:py-28 bg-[#0c0d10] border-t border-zinc-800/80 text-white relative">
+    <section id="dang-ky" className="py-24 px-4 bg-[#09090b] border-y border-zinc-800/80 text-white relative">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* Left Column: Perks & Value Stack */}
           <div className="lg:col-span-5 flex flex-col justify-between">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-xs font-mono font-semibold uppercase tracking-wider mb-4">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>ĐĂNG KÝ GIỮ CHỖ</span>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 text-orange-400 text-xs sm:text-sm font-mono font-bold uppercase tracking-wide mb-5">
+                <span className="w-2 h-2 rounded-full bg-orange-500 inline-block animate-pulse" />
+                <span>ĐĂNG KÝ THAM GIA CHƯƠNG TRÌNH OFFLINE</span>
               </div>
-              <h2 className="font-serif text-3xl sm:text-4xl font-medium tracking-tight text-white mb-4">
-                Nhận Vé Tham Dự Offline 2 Ngày Tại Hà Nội
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-8 leading-[1.2] [text-wrap:balance]">
+                Biến kiến thức của bạn thành <span className="text-orange-500">Video Marketing & doanh số thật</span>
               </h2>
-              <p className="font-sans text-xs sm:text-sm text-zinc-300 leading-relaxed mb-6">
-                Chỉ nhận tối đa 30 học viên mỗi đợt. Điền thông tin bên cạnh để được hỗ trợ xếp lớp và nhận trọn bộ quà tặng độc quyền.
-              </p>
             </div>
 
-            {/* Included Perks */}
-            <div className="space-y-3 pt-6 border-t border-zinc-800 text-xs">
-              <div className="flex items-start gap-2.5 text-zinc-300">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>Bộ khung kịch bản One-line điền-vào-chỗ-trống cho ngành của bạn</span>
+            {/* Metadata (Thời gian, Địa điểm, Quy mô) */}
+            <div className="space-y-5 mb-8">
+              <div className="flex items-start gap-3.5">
+                <div className="w-5 h-5 text-red-400 shrink-0 mt-0.5 font-mono">📅</div>
+                <div>
+                  <div className="text-[11px] uppercase tracking-wider text-zinc-400 font-mono font-bold">THỜI GIAN</div>
+                  <div className="text-base font-bold text-white">19–20/09/2026</div>
+                  <div className="text-xs text-zinc-400">2 ngày offline thực chiến</div>
+                </div>
               </div>
-              <div className="flex items-start gap-2.5 text-zinc-300">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>Kho source video mẫu + 500+ hiệu ứng âm thanh SFX bản quyền</span>
+
+              <div className="flex items-start gap-3.5">
+                <div className="w-5 h-5 text-red-400 shrink-0 mt-0.5 font-mono">📍</div>
+                <div>
+                  <div className="text-[11px] uppercase tracking-wider text-zinc-400 font-mono font-bold">ĐỊA ĐIỂM</div>
+                  <div className="text-base font-bold text-white">Hà Nội</div>
+                  <div className="text-xs text-zinc-400">Chi tiết cập nhật trong nhóm Zalo</div>
+                </div>
               </div>
-              <div className="flex items-start gap-2.5 text-zinc-300">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>Bộ Prompt AI viết kịch bản 30 ngày tự động hóa</span>
+
+              <div className="flex items-start gap-3.5">
+                <div className="w-5 h-5 text-red-400 shrink-0 mt-0.5 font-mono">👥</div>
+                <div>
+                  <div className="text-[11px] uppercase tracking-wider text-zinc-400 font-mono font-bold">QUY MÔ</div>
+                  <div className="text-base font-bold text-white">Tối đa 40 người</div>
+                  <div className="text-xs text-zinc-400">Để đảm bảo chất lượng thực hành</div>
+                </div>
               </div>
-              <div className="flex items-start gap-2.5 text-zinc-300">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>Quyền tham gia nhóm kín hỗ trợ sửa bài trọn đời sau khóa học</span>
+            </div>
+
+            {/* Bao gồm: */}
+            <div className="pt-6 border-t border-zinc-800/80">
+              <div className="text-xs uppercase font-mono font-bold text-zinc-400 tracking-wider mb-3.5">
+                BAO GỒM:
+              </div>
+              <div className="space-y-2.5 text-sm sm:text-[15px] font-sans">
+                <div className="flex items-center gap-2.5 text-zinc-300">
+                  <CheckCircle2 className="w-4 h-4 text-red-500 shrink-0" />
+                  <span>Tài liệu & template thực hành</span>
+                </div>
+                <div className="flex items-center gap-2.5 text-zinc-300">
+                  <CheckCircle2 className="w-4 h-4 text-red-500 shrink-0" />
+                  <span>Source video mẫu để edit tại lớp</span>
+                </div>
+                <div className="flex items-center gap-2.5 text-zinc-300">
+                  <CheckCircle2 className="w-4 h-4 text-red-500 shrink-0" />
+                  <span>Thực hành quay/edit video trực tiếp</span>
+                </div>
+                <div className="flex items-center gap-2.5 text-zinc-300">
+                  <CheckCircle2 className="w-4 h-4 text-red-500 shrink-0" />
+                  <span>Cộng đồng hỗ trợ sau khóa học</span>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Right Column: In-page Form */}
           <div className="lg:col-span-7">
-            <div className="p-6 sm:p-8 rounded-2xl border border-zinc-800 bg-zinc-900/80 shadow-2xl backdrop-blur-sm">
+            <div className="p-8 sm:p-10 rounded-3xl border border-zinc-800/80 bg-zinc-900/90 shadow-2xl backdrop-blur-sm">
+              <div className="mb-6">
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Điền thông tin để giữ chỗ</h3>
+                <p className="text-xs sm:text-sm text-zinc-400">
+                  Team TopExpert sẽ liên hệ xác nhận lịch học, học phí và hướng dẫn chuẩn bị trước khóa qua điện thoại/Zalo.
+                </p>
+              </div>
+
               <form onSubmit={handleSubmit} className="space-y-4">
                 {errorMsg && (
-                  <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-xs">
+                  <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm font-sans">
                     {errorMsg}
                   </div>
                 )}
 
                 <div>
-                  <label className="block text-xs font-mono font-medium text-zinc-300 mb-1.5">
-                    HỌ VÀ TÊN <span className="text-amber-400">*</span>
+                  <label className="block text-xs sm:text-sm font-sans font-medium text-zinc-200 mb-1.5">
+                    Họ và tên <span className="text-orange-500">*</span>
                   </label>
                   <input
                     type="text"
                     required
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    placeholder="Ví dụ: Nguyễn Văn Nam"
-                    className="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-zinc-800 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 text-sm text-white placeholder-zinc-500 outline-none transition"
+                    placeholder="Nguyễn Văn A"
+                    className="w-full px-4 py-3 rounded-xl bg-zinc-800/80 border border-zinc-700/80 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 text-sm sm:text-base text-white placeholder-zinc-500 outline-none transition"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-mono font-medium text-zinc-300 mb-1.5">
-                      SỐ ĐIỆN THOẠI / ZALO <span className="text-amber-400">*</span>
+                    <label className="block text-xs sm:text-sm font-sans font-medium text-zinc-200 mb-1.5">
+                      Số điện thoại <span className="text-orange-500">*</span>
                     </label>
                     <input
                       type="tel"
                       required
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      placeholder="Ví dụ: 0912345678"
-                      className="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-zinc-800 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 text-sm text-white placeholder-zinc-500 outline-none transition"
+                      placeholder="09xx xxx xxx"
+                      className="w-full px-4 py-3 rounded-xl bg-zinc-800/80 border border-zinc-700/80 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 text-sm sm:text-base text-white placeholder-zinc-500 outline-none transition"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-mono font-medium text-zinc-300 mb-1.5">
-                      EMAIL (NHẬN TÀI LIỆU)
+                    <label className="block text-xs sm:text-sm font-sans font-medium text-zinc-200 mb-1.5">
+                      Email <span className="text-orange-500">*</span>
                     </label>
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="nam.nguyen@gmail.com"
-                      className="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-zinc-800 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 text-sm text-white placeholder-zinc-500 outline-none transition"
+                      placeholder="email@example.com"
+                      className="w-full px-4 py-3 rounded-xl bg-zinc-800/80 border border-zinc-700/80 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 text-sm sm:text-base text-white placeholder-zinc-500 outline-none transition"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono font-medium text-zinc-300 mb-1.5">
-                    NGHỀ NGHIỆP / LĨNH VỰC CỦA BẠN
+                  <label className="block text-xs sm:text-sm font-sans font-medium text-zinc-200 mb-1.5">
+                    Nghề nghiệp / Lĩnh vực <span className="text-zinc-500 text-xs">(tuỳ chọn)</span>
                   </label>
                   <input
                     type="text"
                     value={occupation}
                     onChange={(e) => setOccupation(e.target.value)}
-                    placeholder="Ví dụ: Giảng viên Tiếng Anh / Coach Tài chính / Chủ Shop..."
-                    className="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-zinc-800 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 text-sm text-white placeholder-zinc-500 outline-none transition"
+                    placeholder="VD: Giảng viên, Coach, Chủ trung tâm..."
+                    className="w-full px-4 py-3 rounded-xl bg-zinc-800/80 border border-zinc-700/80 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 text-sm sm:text-base text-white placeholder-zinc-500 outline-none transition"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono font-medium text-zinc-300 mb-1.5">
-                    NÚT THẮT LỚN NHẤT KHI LÀM VIDEO BẠN MUỐN GIẢI QUYẾT?
+                  <label className="block text-xs sm:text-sm font-sans font-medium text-zinc-200 mb-1.5">
+                    Lý do bạn muốn tham gia? <span className="text-zinc-500 text-xs">(tuỳ chọn)</span>
                   </label>
                   <textarea
                     rows={2}
                     value={reason}
                     onChange={(e) => setReason(e.target.value)}
-                    placeholder="Ví dụ: Chưa biết setup 2 góc máy / Nói hay bị vấp..."
-                    className="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-zinc-800 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 text-sm text-white placeholder-zinc-500 outline-none transition resize-none"
+                    placeholder="Bạn đang gặp khó khăn gì trong việc xây nhân hiệu?"
+                    className="w-full px-4 py-3 rounded-xl bg-zinc-800/80 border border-zinc-700/80 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 text-sm sm:text-base text-white placeholder-zinc-500 outline-none transition resize-none"
                   />
+                </div>
+
+                {/* Box lưu ý */}
+                <div className="p-3.5 rounded-xl bg-orange-950/30 border border-orange-600/40 text-xs text-zinc-300 flex items-start gap-2.5">
+                  <span className="text-orange-500 shrink-0 font-bold">⚠️</span>
+                  <span className="leading-relaxed">
+                    <strong className="text-orange-400">[Lưu ý]</strong> Đây không phải chương trình miễn phí. Bạn sẽ được tư vấn học phí trước khi xác nhận chỗ.
+                  </span>
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-zinc-950 font-sans font-bold text-base shadow-lg shadow-orange-500/25 transition-all duration-200 transform hover:-translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="w-full py-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-zinc-950 font-sans font-bold text-base sm:text-lg shadow-xl shadow-orange-500/25 transition-all duration-200 transform hover:-translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (
                     <>
@@ -182,15 +229,12 @@ export const RegisterSection: React.FC = () => {
                       <span>Đang gửi thông tin...</span>
                     </>
                   ) : (
-                    <>
-                      <span>XÁC NHẬN ĐĂNG KÝ GIỮ CHỖ</span>
-                      <ArrowRight className="w-5 h-5" />
-                    </>
+                    <span>ĐĂNG KÝ GIỮ CHỖ</span>
                   )}
                 </button>
 
-                <p className="text-[11px] text-zinc-400 text-center font-mono">
-                  🔒 Thông tin của bạn được bảo mật tuyệt đối và tự động lưu giữ chỗ.
+                <p className="text-xs text-zinc-400 text-center font-sans">
+                  Thông tin của bạn được bảo mật tuyệt đối.
                 </p>
               </form>
             </div>
