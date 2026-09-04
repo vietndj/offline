@@ -646,7 +646,7 @@ export const CONTENT: ContentData = {
       "AI TỰ ĐỘNG HÓA"
     ],
     meta: [
-      { id: "time", label: "THỜI GIAN", value: "2 Ngày Thực Chiến", desc: "Thứ 7 & Chủ Nhật (08:30 - 17:30)" },
+      { id: "time", label: "THỜI GIAN", value: "2 Ngày Thực Chiến", desc: "Thứ 7 & Chủ Nhật (09:00 - 17:00)" },
       { id: "location", label: "ĐỊA ĐIỂM", value: "Hà Nội", desc: "Phòng Studio tiêu chuẩn chuyên nghiệp" },
       { id: "capacity", label: "QUY MÔ", value: "≤ 40 Học Viên", desc: "Kèm cặp 1-1 ra sản phẩm ngay tại lớp" }
     ],
@@ -1271,13 +1271,13 @@ export const CONTENT: ContentData = {
     days: [
       {
         dayNumber: "01",
-        timeRange: "08:30 – 17:30",
+        timeRange: "09:00 – 17:00",
         title: "Bẻ Khóa Kịch Bản 3 Tầng 4 Bước · Dựng Phim Câm · Xuất Xưởng Video Đầu Tay",
         badgeCount: "12 Module Thực Hành Cầm Tay Chỉ Việc",
         goal: "Mục tiêu Ngày 1 là phá tan hoàn toàn nỗi sợ viết kịch bản và sợ công nghệ. Buổi sáng làm chủ tư duy 3 Tầng & kịch bản 4 Bước để tự viết kịch bản 60s không học vẹt; buổi chiều tự tay quay B-roll và dùng CapCut dựng xong 01 video Voice-over hoàn chỉnh mang về máy.",
         morning: {
           sessionName: "Ca sáng",
-          time: "08:30 – 12:00",
+          time: "09:00 – 12:00",
           title: "Kịch bản thế nào để video marketing đánh trúng tim can người xem?",
           items: [
             "Phân định video giáo dục vs. video giải trí: Vì sao 90% video chuyên gia bị lướt qua sau 3s? Hiểu đúng luật chơi video marketing tạo ra tiền.",
@@ -1290,7 +1290,7 @@ export const CONTENT: ContentData = {
         },
         afternoon: {
           sessionName: "Ca chiều",
-          time: "13:30 – 17:30",
+          time: "13:30 – 17:00",
           title: "Quay và dựng video đầu tiên thế nào?",
           items: [
             "Quy trình 'Dựng phim câm trước khi thu voice': Cắt gọt hình ảnh B-roll đạt độ cuốn hút trước, sau đó nhìn timeline thu tiếng để giữ trọn nhịp thở tự nhiên.",
@@ -1304,13 +1304,13 @@ export const CONTENT: ContentData = {
       },
       {
         dayNumber: "02",
-        timeRange: "08:30 – 17:30",
+        timeRange: "09:00 – 17:00",
         title: "Làm Chủ 4 Định Dạng Quay · Ngoại Cảnh Thiên Nhiên · Bơm Đòn Bẩy AI Xây Kênh Solo",
         badgeCount: "12 Module Thực Chiến Nâng Cao",
         goal: "Mục tiêu Ngày 2 là giúp học viên làm chủ trọn vẹn 4 định dạng quay video chuyển đổi, tự tin đứng trước máy quay trong studio và ngoài trời, đồng thời cài đặt bộ 3 trợ lý AI độc quyền để một mình tự vận hành kênh đều đặn mỗi ngày.",
         morning: {
           sessionName: "Ca sáng",
-          time: "08:30 – 12:00",
+          time: "09:00 – 12:00",
           title: "Có những cách quay video nào hiệu quả, giúp mình tự nhiên không bị đơ?",
           items: [
             "Bản đồ 4 Định dạng Video cốt lõi: Voice-over thao tác tay, Walk & Talk ngoại cảnh, Talking Head 2 cam chuyên gia và Storytelling chuỗi hành động.",
@@ -1323,7 +1323,7 @@ export const CONTENT: ContentData = {
         },
         afternoon: {
           sessionName: "Ca chiều",
-          time: "13:30 – 17:30",
+          time: "13:30 – 17:00",
           title: "Biết edit rồi, làm thế nào để video xem cuốn hút và dùng AI làm hộ mỗi ngày?",
           items: [
             "Nghệ thuật nén nhịp 0.8s–2.5s: Bí quyết cứ mỗi 2-3s đổi góc máy hoặc đổi cỡ cảnh một lần, giữ người xem không thể rời mắt đến giây cuối.",
@@ -1611,7 +1611,7 @@ export const CONTENT: ContentData = {
       },
       {
         q: "Lớp học tổ chức ở đâu và vào thời gian nào?",
-        a: "Lớp học diễn ra trong 2 ngày Thứ 7 & Chủ Nhật (08:30 - 17:30) tại phòng Studio tiêu chuẩn chuyên nghiệp tại Hà Nội. Địa chỉ chi tiết sẽ được gửi qua Zalo/Email ngay sau khi bạn hoàn tất đăng ký giữ chỗ."
+        a: "Lớp học diễn ra trong 2 ngày Thứ 7 & Chủ Nhật (09:00 - 17:00) tại phòng Studio tiêu chuẩn chuyên nghiệp tại Hà Nội. Địa chỉ chi tiết sẽ được gửi qua Zalo/Email ngay sau khi bạn hoàn tất đăng ký giữ chỗ."
       },
       {
         q: "Sau 2 ngày học offline, tôi có được hỗ trợ tiếp không?",
@@ -1671,7 +1671,7 @@ export const CONTENT: ContentData = {
     headline: "Chào Mừng Bạn Đến Với Khóa Học Video Marketing!",
     description: "Thông tin đăng ký của bạn đã được ghi nhận vào hệ thống. Đội ngũ tổ chức khóa học sẽ liên hệ qua Zalo/Điện thoại trong vòng 24h để gửi tài liệu chuẩn bị và xác nhận lịch học.",
     summary: {
-      time: { label: "Thời gian: ", value: "2 Ngày Thứ 7 & Chủ Nhật (08:30 - 17:30)" },
+      time: { label: "Thời gian: ", value: "2 Ngày Thứ 7 & Chủ Nhật (09:00 - 17:00)" },
       location: { label: "Địa điểm: ", value: "Studio Chuyên Nghiệp Hà Nội", note: " (Địa chỉ chi tiết gửi qua Zalo)" },
       scale: { label: "Quy mô: ", value: "Sĩ số giới hạn ≤ 40 học viên" }
     },

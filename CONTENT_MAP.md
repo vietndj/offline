@@ -43,7 +43,7 @@ Khi mở khóa học đợt tiếp theo (ví dụ: ngày 26–27/09/2026 tại T
 2. Tìm khối `hero.meta`:
    ```typescript
    meta: [
-     { id: "time", label: "THỜI GIAN", value: "2 Ngày Thực Chiến", desc: "Thứ 7 & Chủ Nhật (08:30 - 17:30)" },
+     { id: "time", label: "THỜI GIAN", value: "2 Ngày Thực Chiến", desc: "Thứ 7 & Chủ Nhật (09:00 - 17:00)" },
      { id: "location", label: "ĐỊA ĐIỂM", value: "Hà Nội", desc: "Phòng Studio tiêu chuẩn chuyên nghiệp" },
      { id: "capacity", label: "QUY MÔ", value: "≤ 40 Học Viên", desc: "Kèm cặp 1-1 ra sản phẩm ngay tại lớp" }
    ]
@@ -59,7 +59,7 @@ Khi mở khóa học đợt tiếp theo (ví dụ: ngày 26–27/09/2026 tại T
 4. Tìm khối `successPage.summary`:
    ```typescript
    summary: {
-     time: { label: "Thời gian: ", value: "2 Ngày Thứ 7 & Chủ Nhật (08:30 - 17:30)" },
+     time: { label: "Thời gian: ", value: "2 Ngày Thứ 7 & Chủ Nhật (09:00 - 17:00)" },
      location: { label: "Địa điểm: ", value: "Studio Chuyên Nghiệp Hà Nội", note: " (Địa chỉ chi tiết gửi qua Zalo)" },
      scale: { label: "Quy mô: ", value: "Sĩ số giới hạn ≤ 40 học viên" }
    }
