@@ -13,7 +13,7 @@ export const MetaphorsSection: React.FC<MetaphorsSectionProps> = ({ onOpenRegist
   return (
     <section id="metaphors" className="py-24 px-4 bg-[#f8fafc] text-zinc-900 border-y border-zinc-200/80 relative overflow-hidden">
       <div className="max-w-6xl mx-auto relative z-10">
-        <div className="text-center max-w-4xl mx-auto mb-16">
+        <div className="text-center max-w-4xl mx-auto mb-16 reveal reveal-up">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 border border-orange-200 text-orange-800 text-xs sm:text-sm font-mono font-bold tracking-widest uppercase mb-4 shadow-xs">
             <Sparkles className="w-4 h-4 text-orange-600" />
             <span>{metaphors.badge}</span>
@@ -31,7 +31,8 @@ export const MetaphorsSection: React.FC<MetaphorsSectionProps> = ({ onOpenRegist
           {metaphors.items.map((item, idx) => (
             <div
               key={item.id}
-              className="bg-white rounded-3xl p-5 sm:p-6 border border-zinc-200 hover:border-orange-500/50 transition-all duration-300 flex flex-col justify-between group shadow-md hover:shadow-xl"
+              className="bg-white rounded-3xl p-5 sm:p-6 border border-zinc-200 hover:border-orange-500/50 transition-all duration-300 flex flex-col justify-between group shadow-md hover:shadow-xl reveal reveal-up"
+              style={{ transitionDelay: `${idx * 120}ms` }}
             >
               <div>
                 {/* Embedded Video Player */}

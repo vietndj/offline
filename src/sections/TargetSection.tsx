@@ -9,7 +9,7 @@ export const TargetSection: React.FC = () => {
     <section id="target" className="py-24 px-4 bg-[#09090b] border-y border-zinc-800/80 text-white relative">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         {/* Header */}
-        <div className="text-center max-w-4xl mx-auto mb-16">
+        <div className="text-center max-w-4xl mx-auto mb-16 reveal reveal-up">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs sm:text-sm font-mono font-bold uppercase tracking-widest mb-4 shadow-sm">
             <Users className="w-4 h-4 text-amber-400" />
             <span>{targetAudience.badge}</span>
@@ -22,7 +22,7 @@ export const TargetSection: React.FC = () => {
         {/* 2 Columns: Fit vs Not Fit */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Fit Column (Green Callout) */}
-          <div className="p-8 rounded-3xl border border-emerald-500/30 bg-emerald-950/15 shadow-xl">
+          <div className="p-8 rounded-3xl border border-emerald-500/30 bg-emerald-950/15 shadow-xl reveal reveal-left delay-100">
             <div className="flex items-center gap-2.5 mb-6 pb-4 border-b border-emerald-500/20 text-emerald-400 font-mono text-base sm:text-lg font-bold">
               <CheckCircle2 className="w-6 h-6" />
               <span>{targetAudience.fitHeader}</span>
@@ -41,7 +41,7 @@ export const TargetSection: React.FC = () => {
           </div>
 
           {/* Not Fit Column (Red Callout) */}
-          <div className="p-8 rounded-3xl border border-red-500/30 bg-red-950/15 shadow-xl">
+          <div className="p-8 rounded-3xl border border-red-500/30 bg-red-950/15 shadow-xl reveal reveal-right delay-150">
             <div className="flex items-center gap-2.5 mb-6 pb-4 border-b border-red-500/20 text-red-400 font-mono text-base sm:text-lg font-bold">
               <XCircle className="w-6 h-6" />
               <span>{targetAudience.notFitHeader}</span>

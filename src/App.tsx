@@ -17,10 +17,17 @@ import { StickyBottomCta } from './components/StickyBottomCta';
 import { RegisterModal } from './components/RegisterModal';
 import { SuccessPage } from './pages/SuccessPage';
 import { BannerCta } from './sections/BannerCta';
+import { initScrollReveal } from './utils/scrollReveal';
 
 export function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [page, setPage] = useState<'landing' | 'success'>('landing');
+
+  // Khởi chạy động cơ Scroll Reveal mượt mà 120 FPS
+  React.useEffect(() => {
+    const cleanup = initScrollReveal();
+    return cleanup;
+  }, [page]);
 
   // Check URL query on mount (for success redirect if needed)
   React.useEffect(() => {

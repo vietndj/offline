@@ -14,7 +14,7 @@ export const CurriculumSection: React.FC<CurriculumSectionProps> = ({ onOpenRegi
     <section id="curriculum" className="py-24 px-4 bg-white text-zinc-900 border-y border-zinc-200/80 relative">
       <div className="max-w-6xl mx-auto px-2 sm:px-6">
         {/* Section Header */}
-        <div className="text-center max-w-4xl mx-auto mb-14">
+        <div className="text-center max-w-4xl mx-auto mb-14 reveal reveal-up">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-orange-200 bg-orange-50 text-orange-800 text-xs sm:text-sm font-mono font-bold uppercase tracking-widest mb-4 shadow-xs">
             <Sparkles className="w-4 h-4 text-orange-600" />
             <span>{curriculum.badge}</span>
@@ -27,7 +27,7 @@ export const CurriculumSection: React.FC<CurriculumSectionProps> = ({ onOpenRegi
           </p>
 
           {/* 3 Real Class Event Photos (Data-driven from curriculum.eventPhotos) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left reveal reveal-scale delay-150">
             {curriculum.eventPhotos.map((photo, idx) => (
               <div key={idx} className="flex flex-col h-full bg-white rounded-2xl overflow-hidden border border-zinc-200 shadow-sm group">
                 <div className="h-56 sm:h-64 overflow-hidden bg-zinc-100 shrink-0">
@@ -47,35 +47,42 @@ export const CurriculumSection: React.FC<CurriculumSectionProps> = ({ onOpenRegi
         </div>
 
         {/* Day Selector Tabs */}
-        <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto mb-10">
+        <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto mb-10 reveal reveal-up delay-100">
           {curriculum.days.map((day, idx) => {
             const isActive = idx === activeDay;
             return (
               <button
                 key={idx}
                 onClick={() => setActiveDay(idx)}
-                className={`p-5 rounded-2xl border text-center transition-all duration-200 cursor-pointer ${
+                className={`p-4 sm:p-5 rounded-2xl text-left border-2 transition-all flex items-center justify-between cursor-pointer ${
                   isActive
-                    ? 'bg-blue-50/90 border-blue-600 text-blue-950 shadow-md ring-2 ring-blue-500/30'
-                    : 'bg-[#f8fafc] border-zinc-200 text-zinc-700 hover:border-zinc-400 hover:text-zinc-950'
+                    ? 'border-blue-600 bg-blue-50 text-blue-950 shadow-md ring-2 ring-blue-500/20'
+                    : 'border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300 hover:text-zinc-900'
                 }`}
               >
-                <div className={`font-mono text-xl sm:text-2xl font-black ${isActive ? 'text-blue-600' : 'text-zinc-800'}`}>
-                  {curriculum.dayPrefix} {day.dayNumber}
+                <div>
+                  <div className="text-xs font-mono font-bold uppercase tracking-wider text-blue-700">
+                    {curriculum.dayPrefix} {parseInt(day.dayNumber)}
+                  </div>
+                  <div className="font-serif text-lg sm:text-xl font-bold text-[#09090b]">
+                    {day.title}
+                  </div>
                 </div>
-                <div className="text-sm sm:text-base text-zinc-700 font-sans font-semibold mt-1">{day.timeRange}</div>
+                <div className="text-xs sm:text-sm font-mono font-bold px-3 py-1 rounded-full bg-zinc-100 text-zinc-700 border border-zinc-200">
+                  {day.timeRange}
+                </div>
               </button>
             );
           })}
         </div>
 
-        {/* Active Day Card */}
-        {curriculum.days.map((day, dIdx) => {
-          if (dIdx !== activeDay) return null;
+        {/* Active Day Modules & Schedule */}
+        {curriculum.days.map((day, idx) => {
+          if (idx !== activeDay) return null;
           return (
             <div
               key={day.dayNumber}
-              className="rounded-3xl border-2 border-blue-200/80 bg-[#f8fafc] p-6 sm:p-10 shadow-xl relative overflow-hidden"
+              className="rounded-3xl border-2 border-blue-200/80 bg-[#f8fafc] p-6 sm:p-10 shadow-xl relative overflow-hidden reveal reveal-up delay-150"
             >
               {/* Day Header Banner */}
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-8 border-b border-zinc-200 mb-8">

@@ -13,7 +13,7 @@ export const InstructorSection: React.FC = () => {
       <span id="giang-vien" className="absolute -top-24 pointer-events-none" />
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
+        <div className="text-center max-w-3xl mx-auto mb-14 reveal reveal-up">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-300/80 bg-amber-100/60 text-amber-900 text-xs sm:text-sm font-mono font-bold uppercase tracking-widest mb-4 shadow-2xs">
             <Sparkles className="w-4 h-4 text-amber-600" />
             <span>{instructor.badge}</span>
@@ -34,11 +34,11 @@ export const InstructorSection: React.FC = () => {
         </div>
 
         {/* Instructor Card */}
-        <div className="p-6 sm:p-10 md:p-12 rounded-3xl border border-zinc-200/90 bg-white shadow-xl">
+        <div className="p-6 sm:p-10 md:p-12 rounded-3xl border border-zinc-200/90 bg-white shadow-xl reveal reveal-scale delay-100">
           {/* Top Row: Avatar + Bio + Quote */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10 items-center">
             {/* Avatar Photo */}
-            <div className="md:col-span-5 lg:col-span-4 flex justify-center">
+            <div className="md:col-span-5 lg:col-span-4 flex justify-center reveal reveal-left delay-150">
               <div className="w-56 sm:w-64 md:w-full max-w-[280px] aspect-square rounded-3xl overflow-hidden border-2 border-orange-500/40 p-2 bg-gradient-to-tr from-amber-500 to-orange-500 shadow-xl">
                 <img
                   src={instructor.avatar}
@@ -50,7 +50,7 @@ export const InstructorSection: React.FC = () => {
             </div>
 
             {/* Bio Content & Quote */}
-            <div className="md:col-span-7 lg:col-span-8 flex flex-col justify-center">
+            <div className="md:col-span-7 lg:col-span-8 flex flex-col justify-center reveal reveal-right delay-200">
               <div className="space-y-3.5 text-base sm:text-lg text-zinc-800 leading-relaxed mb-6 font-sans">
                 {instructor.bio.map((p, idx) => (
                   <p key={idx}>{p}</p>

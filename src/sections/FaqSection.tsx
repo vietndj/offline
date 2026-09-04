@@ -15,7 +15,7 @@ export const FaqSection: React.FC = () => {
       <div className="max-w-6xl mx-auto px-2 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Left Column: Title & Support Callout (5 Cols) */}
-          <div className="lg:col-span-5 lg:sticky lg:top-28 space-y-8">
+          <div className="lg:col-span-5 lg:sticky lg:top-28 space-y-8 reveal reveal-left">
             <div>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-amber-300 bg-amber-50 text-amber-900 text-xs sm:text-sm font-mono font-bold uppercase tracking-widest mb-4 shadow-xs">
                 <HelpCircle className="w-4 h-4 text-amber-600" />
@@ -31,7 +31,7 @@ export const FaqSection: React.FC = () => {
           </div>
 
           {/* Right Column: Numbered Accordion List (7 Cols) */}
-          <div className="lg:col-span-7 space-y-4">
+          <div className="lg:col-span-7 space-y-4 reveal reveal-right delay-100">
             {faqSection.items.map((faq, idx) => {
               const isOpen = openIdx === idx;
               return (

@@ -35,7 +35,7 @@ export const GrowthChartSection: React.FC = () => {
   return (
     <section id="growth" className="py-24 px-4 bg-[#0c0d10] border-y border-zinc-800/80 relative">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center max-w-5xl mx-auto mb-14">
+        <div className="text-center max-w-5xl mx-auto mb-14 reveal reveal-up">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono tracking-widest uppercase mb-4 shadow-xs">
             <TrendingUp className="w-3.5 h-3.5" />
             <span>{chart.badge}</span>
@@ -98,7 +98,7 @@ export const GrowthChartSection: React.FC = () => {
         </div>
 
         {/* Interactive Chart Container */}
-        <div className="bg-zinc-900/90 rounded-3xl p-6 md:p-10 border border-zinc-800 mb-16 shadow-2xl relative overflow-hidden">
+        <div className="bg-zinc-900/90 rounded-3xl p-6 md:p-10 border border-zinc-800 mb-16 shadow-2xl relative overflow-hidden reveal reveal-scale delay-150">
           <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
             <div className="flex items-center gap-6 text-xs sm:text-sm font-mono">
               <div className="flex items-center gap-2 text-emerald-400">

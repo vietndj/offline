@@ -42,6 +42,8 @@ const DEFAULT_MASTER_SHEET_NAME = "Offline FEDU";
 // CRM DCSO API Config
 const DEFAULT_CRM_API_URL = "https://esa.dcso.pro/public-api/leads/createLead";
 const DEFAULT_CRM_API_KEY = "b69ddc30-143d-447d-881d-791c4e99f83b";
+// Key bổ sung đang hoạt động của videoedu.topexpert.vn trên DCSO
+const LEGACY_CRM_API_KEY = "533d7d16-e6da-4ac1-abc3-405d04cfffc2";
 
 const DEFAULT_GOOGLE_PRIVATE_KEY = "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDTkXmjGxkiIuCC\nD3z0pKQE0lIJewMjIWfu5oPT12wxOB7SNZw+PHURG4suLaKD7lNAYGe9J4AB3reu\nTc0u7lbYoLsydxRa3WQ8NALYcEldWc7NnQvtd7bz6VEbPfKwjCLE5btg7B30FKKw\nFz26wnmvaBDOudopx6dI69GHa2Paj0BRTj2JZ92OjU1OPb+ONULe2UGBnuxLSK8N\nu3qIM1ooQFB2D2irtXoPvD6DJmO6HmjIjoO2rSrWqusX9qwVwnbfMDL7BmeG/0rZ\nE3QI+VjU6geWyUJ/XVWgUVtM8EA9IihM1DkDif2yatPfJ3E6iv5TDYOsHo3rQXWt\nob1fHk7rAgMBAAECggEAGPmk4tDJnEKCv0fFx/mBlUIgxha77ZM9ejHDIShekMbf\nuI/0lFI9vZnDSd3AQBPLxx86T9WQYmggxdZQYPhozyTWRGRTRlC5SvQW2+cRehAm\nfhZKeKt3sP57gRxEgHvihNzbzFrDRHOFKwVrV5cqlz7RMR42d1Um1dBkyTgvrvag\nLXUrgqhPfN8U9ILSJDFXJF2o0bSJuiqhLiWWshp4rF857ngg2HDVO14Mp7Mk85tb\nKOsUr+UUEuPMtTP1jJrO2m3shesTSeVG1J81bDtoeXUDHaloYTmoGyMMjwje0lou\nCIiXmlHQF3z9UVYa3WgwF03vQ+542MacOnTa6jlZxQKBgQD0ZZO0ohr4rSwyJn0O\n9ce7B3GfJR4RKg/xRoNGaYPlIrfYgKEU4GirWTtFhL0UlsFVWBZJqSYt6j7Antvo\nFWfWsO7nn8ptbgWWwgHGtzFjAs7AKjzcbdf8SFJRG/kizSvQffuDxXAZSxU5c3lb\n2fEowhYkuFZw+ep3noCYJaZDDQKBgQDdnOWiq3JY1oHJwEV9uCDqm6JtyTVY2Rth\nDRi1DF1V2yoveAStanTfpfdRYp09HMS83fkCWMgPcDlJdi/m18pfJrOOK4xpYT3Y\nOkaA6i6l3QsQAly2/EJp6XzGYyYCFMhzewrNM9zT5fu4jgNqawGFgWnG5F7YSh8W\nPuAciSg71wKBgBPA1gRmicmJraXMCJWZ9e++9UcIp/p5LNqyeU/KnXd6q+Na2iom\nzS70Ql8nEGVGng+40+xWOJjDcxj8fgevGzp2CIk+GA1qNBdwTNZz3hEDnBRaFZs3\nYZqpecXGfgd7D8yFMjv/TEUvFWMUWz26Ssyhi0qif5IYEQRkEj655EtNAoGAN4jE\nxuHd0sNWXN9wypNktEXyCz77vlsRkF1+zofdr9EvHhweV/KwfQcTFfL3YkQeTRH2\n/46N+8hsoqsaT+fNj9Cb+EmTcyjqHZBk8JM+w1PEHOvqnfRTFEVtfi2EbcsVfFLe\nHxQbB4K/dL0pv/Y2uGT4w92gouTYK3PwJ1Z7nZsCgYA1lXF3fW+0sDX7A8AgaDQ3\nAVlY6JMYbOUGI4qEHmAcdycykGeMAafBxicmbrWGEa6QF6pZ8m+9RQUH9cfASd4X\nY6mNtQ5COwZ/6hD6JIL2n/Fk/Kl+pRjjctfcZMPwam9hn6FDybCwuDP5RjD1xg40\nrnev+mxuY6JF6giGE0oJbw==\n-----END PRIVATE KEY-----\n";
 
@@ -64,6 +66,21 @@ export function formatVietnamTime(date: Date = new Date()): string {
     map[p.type] = p.value;
   }
   return `${map.year}-${map.month}-${map.day} ${map.hour}:${map.minute}:${map.second}`;
+}
+
+/**
+ * Chuẩn hóa số điện thoại Việt Nam (10 số, bắt đầu bằng 0)
+ */
+export function normalizePhone(phone: string): string {
+  let cleaned = phone.replace(/[^\d+]/g, '').trim();
+  if (cleaned.startsWith('+84')) {
+    cleaned = '0' + cleaned.slice(3);
+  } else if (cleaned.startsWith('84') && cleaned.length >= 11) {
+    cleaned = '0' + cleaned.slice(2);
+  } else if (cleaned.length === 9 && !cleaned.startsWith('0')) {
+    cleaned = '0' + cleaned;
+  }
+  return cleaned;
 }
 
 /**
@@ -141,6 +158,10 @@ async function appendToGoogleSheet(
 
   const pageUrl = data.url || (data.source && data.source.startsWith('http') ? data.source : 'https://offline.fedu.vn');
 
+  const normalizedPhone = normalizePhone(data.phone);
+  // Thêm dấu nháy đơn ' trước số điện thoại để Google Sheet không tự ý cắt mất số 0 ở đầu
+  const sheetPhone = `'${normalizedPhone}`;
+
   // Format cột cho Sổ Con "Offline-VideoEdu":
   // Cột A: Thời gian ("yyyy-MM-dd HH:mm:ss")
   // Cột B: Họ tên
@@ -153,7 +174,7 @@ async function appendToGoogleSheet(
   const primaryRowValues = [
     data.submittedAt,
     data.fullName,
-    data.phone,
+    sheetPhone,
     data.email || '',
     pageUrl,
     data.occupation || '',
@@ -165,7 +186,7 @@ async function appendToGoogleSheet(
   const masterRowValues = [
     data.submittedAt,
     data.fullName,
-    data.phone,
+    sheetPhone,
     data.email || '',
     data.occupation || 'Chưa điền',
     data.reason || 'Chưa điền',
@@ -228,22 +249,24 @@ async function appendToGoogleSheet(
 }
 
 /**
- * Đẩy dữ liệu sang hệ thống CRM (https://esa.dcso.pro/public-api/leads/createLead)
+ * Đẩy dữ liệu sang hệ thống CRM DCSO (hỗ trợ cả 2 API Key để đảm bảo đổ về đúng bảng quản lý)
  */
 export async function dispatchToCrm(
   data: RegistrationPayload
 ): Promise<{ success: boolean; data?: any; error?: string }> {
-  const apiKey = process.env.CRM_API_KEY || DEFAULT_CRM_API_KEY;
+  const primaryApiKey = process.env.CRM_API_KEY || DEFAULT_CRM_API_KEY;
+  const legacyApiKey = process.env.LEGACY_CRM_API_KEY || LEGACY_CRM_API_KEY;
   const crmUrl = process.env.CRM_API_URL || DEFAULT_CRM_API_URL;
 
   const { lastName, firstName } = splitVietnameseName(data.fullName);
   const pageUrl = data.url || (data.source && data.source.startsWith('http') ? data.source : 'https://offline.fedu.vn');
+  const normalizedPhone = normalizePhone(data.phone);
 
   const payload = {
     model: {
       LastName: lastName,
       FirstName: firstName,
-      Phone: data.phone,
+      Phone: normalizedPhone,
       email: data.email || '',
       Address: '',
     },
@@ -258,34 +281,42 @@ export async function dispatchToCrm(
     },
   };
 
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 7000);
+  const keysToSend = Array.from(new Set([primaryApiKey, legacyApiKey].filter(Boolean)));
 
-  try {
-    const res = await fetch(crmUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ApiKey: apiKey,
-      },
-      body: JSON.stringify(payload),
-      signal: controller.signal,
-    });
-    clearTimeout(timeoutId);
+  const results = await Promise.allSettled(
+    keysToSend.map(async (key) => {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 7000);
+      try {
+        const res = await fetch(crmUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ApiKey: key,
+          },
+          body: JSON.stringify(payload),
+          signal: controller.signal,
+        });
+        clearTimeout(timeoutId);
 
-    const json = await res.json().catch(() => null);
-    if (!res.ok) {
-      console.error('[CRM DCSO] API non-OK status:', res.status, json);
-      return { success: false, error: `CRM HTTP ${res.status}` };
-    }
-    console.log('[CRM DCSO] Lead created successfully in CRM:', json);
-    return { success: true, data: json };
-  } catch (err: unknown) {
-    clearTimeout(timeoutId);
-    const msg = err instanceof Error ? err.message : String(err);
-    console.error('[CRM DCSO] Dispatch exception:', msg);
-    return { success: false, error: msg };
-  }
+        const json = await res.json().catch(() => null);
+        if (!res.ok) {
+          console.error(`[CRM DCSO] Key ${key.slice(0, 8)} non-OK:`, res.status, json);
+          return { success: false, key, error: `HTTP ${res.status}` };
+        }
+        console.log(`[CRM DCSO] Key ${key.slice(0, 8)} lead created successfully:`, json);
+        return { success: true, key, data: json };
+      } catch (err: unknown) {
+        clearTimeout(timeoutId);
+        const msg = err instanceof Error ? err.message : String(err);
+        console.error(`[CRM DCSO] Key ${key.slice(0, 8)} dispatch error:`, msg);
+        return { success: false, key, error: msg };
+      }
+    })
+  );
+
+  const anySuccess = results.some((r) => r.status === 'fulfilled' && r.value.success);
+  return { success: anySuccess, data: results };
 }
 
 function escapeHtml(text: string): string {
@@ -421,8 +452,9 @@ export default async function handler(
         });
       }
 
-      // Kiểm tra định dạng số điện thoại (tối thiểu 9 số, tối đa 15 số)
-      const phoneDigits = phone.replace(/\D/g, '');
+      // Chuẩn hóa và kiểm tra định dạng số điện thoại (tối thiểu 9 số, tối đa 15 số)
+      const normalizedPhone = normalizePhone(phone);
+      const phoneDigits = normalizedPhone.replace(/\D/g, '');
       if (phoneDigits.length < 9 || phoneDigits.length > 15) {
         return res.status(400).json({
           success: false,
@@ -432,7 +464,7 @@ export default async function handler(
 
       const submission: RegistrationPayload = {
         fullName,
-        phone,
+        phone: normalizedPhone,
         email,
         occupation,
         reason,

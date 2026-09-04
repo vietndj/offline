@@ -13,7 +13,7 @@ export const DefinitionSection: React.FC<DefinitionSectionProps> = ({ onOpenRegi
     <section id="dinh-nghia" className="py-24 px-4 bg-[#0c0d12] text-white relative border-b border-zinc-800">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <div className="text-center max-w-4xl mx-auto mb-16">
+        <div className="text-center max-w-4xl mx-auto mb-16 reveal reveal-up">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs sm:text-sm font-mono font-bold tracking-widest uppercase mb-4 shadow-sm">
             <HelpCircle className="w-4 h-4 text-amber-400" />
             <span>{definition.badge}</span>
@@ -36,12 +36,13 @@ export const DefinitionSection: React.FC<DefinitionSectionProps> = ({ onOpenRegi
 
         {/* 3-Column Comparison Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {definition.columns.map((col) => {
+          {definition.columns.map((col, idx) => {
+            const delayClass = idx === 0 ? 'delay-100' : idx === 1 ? 'delay-200' : 'delay-300';
             if (col.variant === 'danger') {
               return (
                 <div
                   key={col.id}
-                  className="rounded-3xl border border-red-500/20 bg-red-950/10 p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden"
+                  className={`rounded-3xl border border-red-500/20 bg-red-950/10 p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden reveal reveal-up ${delayClass}`}
                 >
                   <div className="space-y-4">
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-red-500/20 text-red-400 text-xs font-mono font-bold uppercase">
@@ -80,7 +81,7 @@ export const DefinitionSection: React.FC<DefinitionSectionProps> = ({ onOpenRegi
               return (
                 <div
                   key={col.id}
-                  className="rounded-3xl border border-zinc-700 bg-zinc-900/80 p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden"
+                  className={`rounded-3xl border border-zinc-700 bg-zinc-900/80 p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden reveal reveal-up ${delayClass}`}
                 >
                   <div className="space-y-4">
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-zinc-800 text-zinc-200 text-xs sm:text-sm font-mono font-bold uppercase">
@@ -119,7 +120,7 @@ export const DefinitionSection: React.FC<DefinitionSectionProps> = ({ onOpenRegi
             return (
               <div
                 key={col.id}
-                className="rounded-3xl border-2 border-amber-500 bg-gradient-to-b from-amber-500/15 via-zinc-900 to-zinc-950 p-6 sm:p-8 flex flex-col justify-between relative shadow-2xl shadow-amber-500/15 ring-2 ring-amber-500/30"
+                className={`rounded-3xl border-2 border-amber-500 bg-gradient-to-b from-amber-500/15 via-zinc-900 to-zinc-950 p-6 sm:p-8 flex flex-col justify-between relative shadow-2xl shadow-amber-500/15 ring-2 ring-amber-500/30 reveal reveal-up ${delayClass}`}
               >
                 {col.badge && (
                   <div className="absolute top-0 right-0 px-4 py-1.5 rounded-bl-2xl bg-amber-500 text-zinc-950 text-xs sm:text-sm font-mono font-black uppercase tracking-wider">

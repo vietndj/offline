@@ -68,7 +68,7 @@ export const RegisterSection: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* Left Column: Perks & Value Stack */}
-          <div className="lg:col-span-5 flex flex-col justify-between">
+          <div className="lg:col-span-5 flex flex-col justify-between reveal reveal-left">
             <div>
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 text-orange-400 text-xs sm:text-sm font-mono font-bold uppercase tracking-wide mb-5">
                 <span className="w-2 h-2 rounded-full bg-orange-500 inline-block animate-pulse" />
@@ -134,7 +134,7 @@ export const RegisterSection: React.FC = () => {
 
           {/* Right Column: In-page Form */}
           <div className="lg:col-span-7">
-            <div className="p-8 sm:p-10 rounded-3xl border border-zinc-800/80 bg-zinc-900/90 shadow-2xl backdrop-blur-sm">
+            <div className="p-8 sm:p-10 rounded-3xl border border-zinc-800/80 bg-zinc-900/90 shadow-2xl backdrop-blur-sm reveal reveal-right delay-100">
               <div className="mb-6">
                 <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
                   {register.form.title}

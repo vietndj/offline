@@ -34,7 +34,7 @@ export const ProofSection: React.FC = () => {
   return (
     <section id="proof" className="py-24 px-4 bg-white text-zinc-900 relative border-y border-zinc-200/80">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center max-w-4xl mx-auto mb-16">
+        <div className="text-center max-w-4xl mx-auto mb-16 reveal reveal-up">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-50 border border-amber-300 text-amber-900 text-xs sm:text-sm font-mono font-bold tracking-widest uppercase mb-4 shadow-xs">
             <ShieldCheck className="w-4 h-4 text-amber-600" />
             <span>{proof.badge}</span>
@@ -48,7 +48,7 @@ export const ProofSection: React.FC = () => {
         </div>
 
         {/* Real Meta Business Proof Highlight Card */}
-        <div className="bg-[#f8fafc] rounded-3xl p-6 sm:p-8 md:p-10 border border-zinc-200 mb-16 shadow-xl relative overflow-hidden">
+        <div className="bg-[#f8fafc] rounded-3xl p-6 sm:p-8 md:p-10 border border-zinc-200 mb-16 shadow-xl relative overflow-hidden reveal reveal-scale delay-100">
           <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
