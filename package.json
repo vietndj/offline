@@ -8,7 +8,10 @@
     "build": "npx vite@7.3.2 build --config vite.config.ts",
     "serve": "npx vite@7.3.2 preview --config vite.config.ts --host 0.0.0.0",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test:e2e": "node tests/e2e/runner.mjs"
+    "test:e2e": "node tests/e2e/runner.mjs",
+    "deploy:prebuilt": "npx vercel build --prod --yes && npx vercel deploy --prebuilt --prod --yes",
+    "deploy": "npm run typecheck && npm run test:e2e && npm run deploy:prebuilt",
+    "deploy:fast": "npm run deploy:prebuilt"
   },
   "dependencies": {
     "@vercel/node": "^5.8.23",
