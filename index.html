@@ -52,30 +52,26 @@
         }
       }
     </script>
+
+    <!-- In-App Webview Compatibility Shim (Zalo, FB Messenger, TikTok) -->
+    <script>
+      (function() {
+        try {
+          if (typeof window !== 'undefined' && typeof window.zaloJSV2 === 'undefined') {
+            window.zaloJSV2 = new Proxy({}, {
+              get: function(target, prop) {
+                if (prop in target) return target[prop];
+                return function() { return undefined; };
+              }
+            });
+          }
+        } catch (e) {
+          window.zaloJSV2 = {};
+        }
+      })();
+    </script>
   </head>
   <body class="bg-[#09090b] text-white">
-    <div id="error-display" style="display:none; color: #ff3b30; background: #1a0f0f; padding: 24px; font-family: monospace; border: 2px solid #ff3b30; border-radius: 12px; position: fixed; top: 20px; left: 20px; right: 20px; z-index: 999999; box-shadow: 0 10px 30px rgba(0,0,0,0.5); line-height: 1.5; font-size: 14px; max-height: 80vh; overflow-y: auto;">
-      <h3 style="margin-top:0; font-size: 18px; border-bottom: 1px solid rgba(255,59,48,0.3); padding-bottom: 8px; margin-bottom: 12px;">🔴 Lỗi Khởi Chạy (Runtime Error)</h3>
-      <pre id="error-message" style="white-space: pre-wrap; word-break: break-all; margin: 0; color: #ff8c82;"></pre>
-    </div>
-    <script>
-      window.addEventListener('error', function(e) {
-        var display = document.getElementById('error-display');
-        var message = document.getElementById('error-message');
-        if (display && message) {
-          display.style.display = 'block';
-          message.textContent = e.message + '\nTại: ' + e.filename + ':' + e.lineno + ':' + e.colno + '\n\nChi tiết:\n' + (e.error ? e.error.stack : 'N/A');
-        }
-      });
-      window.addEventListener('unhandledrejection', function(e) {
-        var display = document.getElementById('error-display');
-        var message = document.getElementById('error-message');
-        if (display && message) {
-          display.style.display = 'block';
-          message.textContent = 'Unhandled Promise Rejection: ' + e.reason + '\n\nChi tiết:\n' + (e.reason && e.reason.stack ? e.reason.stack : 'N/A');
-        }
-      });
-    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
