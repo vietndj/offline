@@ -9,6 +9,7 @@ export interface RegistrationPayload {
   occupation?: string;
   reason?: string;
   source?: string;
+  url?: string;
   submittedAt: string;
 }
 
@@ -30,18 +31,61 @@ const DEFAULT_TELEGRAM_BOT_TOKEN = "8964853536:AAHuRNm_hY-YQtveBD1HlmthN4I5xpVzM
 const DEFAULT_TELEGRAM_CHAT_ID = "2050406425";
 const DEFAULT_GOOGLE_CLIENT_EMAIL = "form-feedback-offline@vietndj-git-cms.iam.gserviceaccount.com";
 
-// SỔ CON (Primary Sheet làm việc chính, dùng chung với đối tác/quản lý)
-const DEFAULT_PRIMARY_SPREADSHEET_ID = "1PaHkFMdY615FasQDcqqeia94L1662YKES7cPuFIpKhg";
-const DEFAULT_PRIMARY_SHEET_NAME = "Danh Sách Học Viên";
+// SỔ CON (Primary Sheet làm việc chính: "Offline-VideoEdu")
+const DEFAULT_PRIMARY_SPREADSHEET_ID = "1ZYfONTXG2yUAzC-laIOyJT6o-mA1yFbwp99ZIgNWwPE";
+const DEFAULT_PRIMARY_SHEET_NAME = "Offline-VideoEdu";
 
 // SỔ MẸ (Két Sắt Bảo Hiểm Tự Động - kho lưu trữ tích lũy toàn bộ dữ liệu)
 const DEFAULT_MASTER_SPREADSHEET_ID = "1J9ZrjLxTba9R-wuet1n_J_hKcL0PVtQDD_ag65Ewx04";
 const DEFAULT_MASTER_SHEET_NAME = "Offline FEDU";
 
+// CRM DCSO API Config
+const DEFAULT_CRM_API_URL = "https://esa.dcso.pro/public-api/leads/createLead";
+const DEFAULT_CRM_API_KEY = "b69ddc30-143d-447d-881d-791c4e99f83b";
+
 const DEFAULT_GOOGLE_PRIVATE_KEY = "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDTkXmjGxkiIuCC\nD3z0pKQE0lIJewMjIWfu5oPT12wxOB7SNZw+PHURG4suLaKD7lNAYGe9J4AB3reu\nTc0u7lbYoLsydxRa3WQ8NALYcEldWc7NnQvtd7bz6VEbPfKwjCLE5btg7B30FKKw\nFz26wnmvaBDOudopx6dI69GHa2Paj0BRTj2JZ92OjU1OPb+ONULe2UGBnuxLSK8N\nu3qIM1ooQFB2D2irtXoPvD6DJmO6HmjIjoO2rSrWqusX9qwVwnbfMDL7BmeG/0rZ\nE3QI+VjU6geWyUJ/XVWgUVtM8EA9IihM1DkDif2yatPfJ3E6iv5TDYOsHo3rQXWt\nob1fHk7rAgMBAAECggEAGPmk4tDJnEKCv0fFx/mBlUIgxha77ZM9ejHDIShekMbf\nuI/0lFI9vZnDSd3AQBPLxx86T9WQYmggxdZQYPhozyTWRGRTRlC5SvQW2+cRehAm\nfhZKeKt3sP57gRxEgHvihNzbzFrDRHOFKwVrV5cqlz7RMR42d1Um1dBkyTgvrvag\nLXUrgqhPfN8U9ILSJDFXJF2o0bSJuiqhLiWWshp4rF857ngg2HDVO14Mp7Mk85tb\nKOsUr+UUEuPMtTP1jJrO2m3shesTSeVG1J81bDtoeXUDHaloYTmoGyMMjwje0lou\nCIiXmlHQF3z9UVYa3WgwF03vQ+542MacOnTa6jlZxQKBgQD0ZZO0ohr4rSwyJn0O\n9ce7B3GfJR4RKg/xRoNGaYPlIrfYgKEU4GirWTtFhL0UlsFVWBZJqSYt6j7Antvo\nFWfWsO7nn8ptbgWWwgHGtzFjAs7AKjzcbdf8SFJRG/kizSvQffuDxXAZSxU5c3lb\n2fEowhYkuFZw+ep3noCYJaZDDQKBgQDdnOWiq3JY1oHJwEV9uCDqm6JtyTVY2Rth\nDRi1DF1V2yoveAStanTfpfdRYp09HMS83fkCWMgPcDlJdi/m18pfJrOOK4xpYT3Y\nOkaA6i6l3QsQAly2/EJp6XzGYyYCFMhzewrNM9zT5fu4jgNqawGFgWnG5F7YSh8W\nPuAciSg71wKBgBPA1gRmicmJraXMCJWZ9e++9UcIp/p5LNqyeU/KnXd6q+Na2iom\nzS70Ql8nEGVGng+40+xWOJjDcxj8fgevGzp2CIk+GA1qNBdwTNZz3hEDnBRaFZs3\nYZqpecXGfgd7D8yFMjv/TEUvFWMUWz26Ssyhi0qif5IYEQRkEj655EtNAoGAN4jE\nxuHd0sNWXN9wypNktEXyCz77vlsRkF1+zofdr9EvHhweV/KwfQcTFfL3YkQeTRH2\n/46N+8hsoqsaT+fNj9Cb+EmTcyjqHZBk8JM+w1PEHOvqnfRTFEVtfi2EbcsVfFLe\nHxQbB4K/dL0pv/Y2uGT4w92gouTYK3PwJ1Z7nZsCgYA1lXF3fW+0sDX7A8AgaDQ3\nAVlY6JMYbOUGI4qEHmAcdycykGeMAafBxicmbrWGEa6QF6pZ8m+9RQUH9cfASd4X\nY6mNtQ5COwZ/6hD6JIL2n/Fk/Kl+pRjjctfcZMPwam9hn6FDybCwuDP5RjD1xg40\nrnev+mxuY6JF6giGE0oJbw==\n-----END PRIVATE KEY-----\n";
 
+/**
+ * Định dạng thời gian Việt Nam chuẩn "yyyy-MM-dd HH:mm:ss"
+ */
+export function formatVietnamTime(date: Date = new Date()): string {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Ho_Chi_Minh',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+  }).formatToParts(date);
+  const map: Record<string, string> = {};
+  for (const p of parts) {
+    map[p.type] = p.value;
+  }
+  return `${map.year}-${map.month}-${map.day} ${map.hour}:${map.minute}:${map.second}`;
+}
+
+/**
+ * Phân tách họ và tên tiếng Việt:
+ * - LastName: Từ đầu tiên của họ tên
+ * - FirstName: Phần còn lại của họ tên
+ */
+export function splitVietnameseName(fullName: string): { lastName: string; firstName: string } {
+  const parts = fullName.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) {
+    return { lastName: '', firstName: '' };
+  }
+  if (parts.length === 1) {
+    return { lastName: parts[0], firstName: '' };
+  }
+  const lastName = parts[0];
+  const firstName = parts.slice(1).join(' ');
+  return { lastName, firstName };
+}
+
 export function getSpreadsheetConfig(): SpreadsheetConfig {
-  // 1. SỔ CON (Primary Sheet làm việc chính, dùng chung với đối tác/quản lý)
+  // 1. SỔ CON (Primary Sheet làm việc chính: "Offline-VideoEdu")
   let primaryId = process.env.PRIMARY_SPREADSHEET_ID;
   if (!primaryId) {
     if (process.env.GOOGLE_SPREADSHEET_ID && process.env.GOOGLE_SPREADSHEET_ID !== DEFAULT_MASTER_SPREADSHEET_ID) {
@@ -114,14 +158,37 @@ async function appendToGoogleSheet(
     };
   }
 
-  const rowValues = [
+  const pageUrl = data.url || (data.source && data.source.startsWith('http') ? data.source : 'https://offline.fedu.vn');
+
+  // Format cột cho Sổ Con "Offline-VideoEdu":
+  // Cột A: Thời gian ("yyyy-MM-dd HH:mm:ss")
+  // Cột B: Họ tên
+  // Cột C: Số điện thoại
+  // Cột D: Email
+  // Cột E: Link đăng ký (URL kèm UTM query string)
+  // Cột F: Ngành nghề
+  // Cột G: Lý do tham gia
+  // Cột H: Đã thanh toán
+  const primaryRowValues = [
+    data.submittedAt,
+    data.fullName,
+    data.phone,
+    data.email || '',
+    pageUrl,
+    data.occupation || '',
+    data.reason || '',
+    '',
+  ];
+
+  // Format cho Sổ Mẹ (Két Sắt Bảo Hiểm "Offline FEDU"):
+  const masterRowValues = [
     data.submittedAt,
     data.fullName,
     data.phone,
     data.email || '',
     data.occupation || 'Chưa điền',
     data.reason || 'Chưa điền',
-    data.source || 'offline.fedu.vn',
+    pageUrl,
   ];
 
   const result: AppendResult = {
@@ -129,13 +196,13 @@ async function appendToGoogleSheet(
     masterSuccess: false,
   };
 
-  const executeAppend = async (spreadsheetId: string, sheetName: string): Promise<boolean> => {
+  const executeAppend = async (spreadsheetId: string, sheetName: string, values: any[], rangeCol: string): Promise<boolean> => {
     const appendPromise = sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: `'${sheetName}'!A:G`,
+      range: `'${sheetName}'!${rangeCol}`,
       valueInputOption: 'USER_ENTERED',
       insertDataOption: 'INSERT_ROWS',
-      requestBody: { values: [rowValues] },
+      requestBody: { values: [values] },
     });
 
     const timeoutPromise = new Promise<never>((_, reject) =>
@@ -146,8 +213,8 @@ async function appendToGoogleSheet(
     return true;
   };
 
-  // 1. Ghi vào SỔ CON (Làm việc chính: "Danh Sách Học Viên")
-  const primaryPromise = executeAppend(config.primaryId, config.primaryName)
+  // 1. Ghi vào SỔ CON (Làm việc chính: "Offline-VideoEdu")
+  const primaryPromise = executeAppend(config.primaryId, config.primaryName, primaryRowValues, 'A:H')
     .then(() => {
       console.log(`[Google Sheets] Successfully appended to Primary Sheet (${config.primaryName}) [ID: ${config.primaryId}]`);
       result.primarySuccess = true;
@@ -162,7 +229,7 @@ async function appendToGoogleSheet(
   const masterPromise = (async () => {
     if (config.masterId && config.masterId !== config.primaryId) {
       try {
-        await executeAppend(config.masterId, config.masterName);
+        await executeAppend(config.masterId, config.masterName, masterRowValues, 'A:G');
         console.log(`[Google Sheets] Successfully appended to Backup Master Sheet (${config.masterName}) [ID: ${config.masterId}]`);
         result.masterSuccess = true;
       } catch (e: unknown) {
@@ -177,6 +244,67 @@ async function appendToGoogleSheet(
 
   await Promise.allSettled([primaryPromise, masterPromise]);
   return result;
+}
+
+/**
+ * Đẩy dữ liệu sang hệ thống CRM (https://esa.dcso.pro/public-api/leads/createLead)
+ */
+export async function dispatchToCrm(
+  data: RegistrationPayload
+): Promise<{ success: boolean; data?: any; error?: string }> {
+  const apiKey = process.env.CRM_API_KEY || DEFAULT_CRM_API_KEY;
+  const crmUrl = process.env.CRM_API_URL || DEFAULT_CRM_API_URL;
+
+  const { lastName, firstName } = splitVietnameseName(data.fullName);
+  const pageUrl = data.url || (data.source && data.source.startsWith('http') ? data.source : 'https://offline.fedu.vn');
+
+  const payload = {
+    model: {
+      LastName: lastName,
+      FirstName: firstName,
+      Phone: data.phone,
+      email: data.email || '',
+      Address: '',
+    },
+    metas: [
+      {
+        key: 'Email',
+        value: data.email || '',
+      },
+    ],
+    queryString: {
+      link: pageUrl,
+    },
+  };
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 7000);
+
+  try {
+    const res = await fetch(crmUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ApiKey: apiKey,
+      },
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+
+    const json = await res.json().catch(() => null);
+    if (!res.ok) {
+      console.error('[CRM DCSO] API non-OK status:', res.status, json);
+      return { success: false, error: `CRM HTTP ${res.status}` };
+    }
+    console.log('[CRM DCSO] Lead created successfully in CRM:', json);
+    return { success: true, data: json };
+  } catch (err: unknown) {
+    clearTimeout(timeoutId);
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error('[CRM DCSO] Dispatch exception:', msg);
+    return { success: false, error: msg };
+  }
 }
 
 function escapeHtml(text: string): string {
@@ -200,7 +328,7 @@ async function dispatchToTelegramNova(
 
   try {
     const cleanPhone = data.phone.replace(/[^\d+]/g, '');
-    const primaryUrl = `https://docs.google.com/spreadsheets/d/${config.primaryId}/edit`;
+    const primaryUrl = `https://docs.google.com/spreadsheets/d/${config.primaryId}/edit?gid=652870650#gid=652870650`;
     const masterUrl = `https://docs.google.com/spreadsheets/d/${config.masterId}/edit`;
 
     const text =
@@ -212,9 +340,10 @@ async function dispatchToTelegramNova(
       `💼 <b>Nghề nghiệp / Lĩnh vực:</b> ${escapeHtml(data.occupation || 'Chưa điền')}\n` +
       `🎯 <b>Nút thắt cần giải quyết:</b>\n<i>"${escapeHtml(data.reason || 'Chưa điền')}"</i>\n` +
       `━━━━━━━━━━━━━━━━━━━━\n` +
-      `📊 <a href="${primaryUrl}"><b>Mở Google Sheet Quản Lý (Sổ Con)</b></a>\n` +
+      `📊 <a href="${primaryUrl}"><b>Mở Google Sheet "Offline-VideoEdu"</b></a>\n` +
       `📦 <a href="${masterUrl}"><b>Mở Két Sắt Dữ Liệu (Sổ Mẹ)</b></a>\n` +
       `🏷️ <b>Nguồn:</b> <code>${escapeHtml(data.source || 'offline.fedu.vn')}</code>\n` +
+      `🌐 <b>Link:</b> <a href="${escapeHtml(data.url || 'https://offline.fedu.vn')}">Chi tiết URL</a>\n` +
       `⏰ <i>${escapeHtml(data.submittedAt)}</i>`;
 
     const controller = new AbortController();
@@ -267,9 +396,10 @@ export default async function handler(
     return res.status(200).json({
       status: 'healthy',
       service: 'offline.fedu.vn registration API',
-      primarySheet: `https://docs.google.com/spreadsheets/d/${sheetConfig.primaryId}/edit`,
+      primarySheet: `https://docs.google.com/spreadsheets/d/${sheetConfig.primaryId}/edit?gid=652870650#gid=652870650`,
       masterSheet: `https://docs.google.com/spreadsheets/d/${sheetConfig.masterId}/edit`,
       sheet: `https://docs.google.com/spreadsheets/d/${sheetConfig.primaryId}/edit`,
+      crm: 'https://esa.dcso.pro/public-api/leads/createLead',
     });
   }
 
@@ -300,6 +430,8 @@ export default async function handler(
       const occupation = typeof body.occupation === 'string' ? body.occupation.trim() : '';
       const reason = typeof body.reason === 'string' ? body.reason.trim() : '';
       const source = typeof body.source === 'string' ? body.source.trim() : 'offline.fedu.vn';
+      const url = typeof body.url === 'string' && body.url.trim() ? body.url.trim() :
+                  (typeof body.link === 'string' && body.link.trim() ? body.link.trim() : 'https://offline.fedu.vn');
 
       if (!fullName || !phone) {
         return res.status(400).json({
@@ -324,16 +456,19 @@ export default async function handler(
         occupation,
         reason,
         source,
-        submittedAt: new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' }),
+        url,
+        submittedAt: formatVietnamTime(),
       };
 
-      const [sheetsSettled, telegramSettled] = await Promise.allSettled([
+      const [sheetsSettled, telegramSettled, crmSettled] = await Promise.allSettled([
         appendToGoogleSheet(submission, sheetConfig),
         dispatchToTelegramNova(submission, sheetConfig),
+        dispatchToCrm(submission),
       ]);
 
       const sheetsResult = sheetsSettled.status === 'fulfilled' ? sheetsSettled.value : null;
       const telegramResult = telegramSettled.status === 'fulfilled' ? telegramSettled.value : null;
+      const crmResult = crmSettled.status === 'fulfilled' ? crmSettled.value : null;
 
       // Kiểm tra nếu cả hai sổ đều bị lỗi nghiêm trọng
       if (sheetsResult && !sheetsResult.primarySuccess && !sheetsResult.masterSuccess) {
@@ -355,6 +490,7 @@ export default async function handler(
           primarySheet: sheetsResult ? sheetsResult.primarySuccess : false,
           masterSheet: sheetsResult ? sheetsResult.masterSuccess : false,
           telegram: telegramResult ? telegramResult.success : false,
+          crm: crmResult ? crmResult.success : false,
         },
       });
     } catch (e: unknown) {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, ArrowRight, Loader2, Sparkles } from 'lucide-react';
 import { CONTENT } from '../content';
+import { trackPurchase } from '../utils/pixel';
 
 interface ModalProps {
   isOpen: boolean;
@@ -31,6 +32,7 @@ export const RegisterModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     setErrorMsg('');
 
     try {
+      const currentUrl = typeof window !== 'undefined' ? window.location.href : 'https://offline.fedu.vn';
       const res = await fetch('/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -40,12 +42,17 @@ export const RegisterModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
           email: email.trim(),
           occupation: occupation.trim(),
           reason: reason.trim(),
-          source: 'offline.fedu.vn (Modal)'
+          source: 'offline.fedu.vn (Modal)',
+          url: currentUrl,
         })
       });
 
       const data = await res.json();
       if (res.ok && data.success) {
+        trackPurchase({
+          phone: phone.trim(),
+          email: email.trim(),
+        });
         const queryParams = new URLSearchParams({
           name: fullName.trim(),
           phone: phone.trim()

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CheckCircle, Calendar, MapPin, Users, ArrowLeft } from 'lucide-react';
 import { CONTENT } from '../content';
+import { trackPurchase } from '../utils/pixel';
 
 interface SuccessPageProps {
   onBackHome: () => void;
@@ -8,6 +9,10 @@ interface SuccessPageProps {
 
 export const SuccessPage: React.FC<SuccessPageProps> = ({ onBackHome }) => {
   const { successPage } = CONTENT;
+
+  useEffect(() => {
+    trackPurchase();
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#09090b] text-white flex flex-col items-center justify-center p-4">

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CheckCircle2, Loader2 } from 'lucide-react';
 import { CONTENT } from '../content';
+import { trackPurchase } from '../utils/pixel';
 
 export const RegisterSection: React.FC = () => {
   const [fullName, setFullName] = useState('');
@@ -24,6 +25,7 @@ export const RegisterSection: React.FC = () => {
     setErrorMsg('');
 
     try {
+      const currentUrl = typeof window !== 'undefined' ? window.location.href : 'https://offline.fedu.vn';
       const res = await fetch('/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -33,12 +35,17 @@ export const RegisterSection: React.FC = () => {
           email: email.trim(),
           occupation: occupation.trim(),
           reason: reason.trim(),
-          source: 'offline.fedu.vn'
+          source: 'offline.fedu.vn',
+          url: currentUrl,
         })
       });
 
       const data = await res.json();
       if (res.ok && data.success) {
+        trackPurchase({
+          phone: phone.trim(),
+          email: email.trim(),
+        });
         // Redirect to success page with user info
         const queryParams = new URLSearchParams({
           name: fullName.trim(),
