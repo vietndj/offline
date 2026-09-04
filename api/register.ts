@@ -86,30 +86,11 @@ export function splitVietnameseName(fullName: string): { lastName: string; first
 
 export function getSpreadsheetConfig(): SpreadsheetConfig {
   // 1. SỔ CON (Primary Sheet làm việc chính: "Offline-VideoEdu")
-  let primaryId = process.env.PRIMARY_SPREADSHEET_ID;
-  if (!primaryId) {
-    if (process.env.GOOGLE_SPREADSHEET_ID && process.env.GOOGLE_SPREADSHEET_ID !== DEFAULT_MASTER_SPREADSHEET_ID) {
-      primaryId = process.env.GOOGLE_SPREADSHEET_ID;
-    } else {
-      primaryId = DEFAULT_PRIMARY_SPREADSHEET_ID;
-    }
-  }
-
-  const primaryName = process.env.PRIMARY_SHEET_NAME ||
-    (process.env.GOOGLE_SHEET_NAME && process.env.GOOGLE_SHEET_NAME !== DEFAULT_MASTER_SHEET_NAME
-      ? process.env.GOOGLE_SHEET_NAME
-      : DEFAULT_PRIMARY_SHEET_NAME);
+  const primaryId = process.env.PRIMARY_SPREADSHEET_ID || DEFAULT_PRIMARY_SPREADSHEET_ID;
+  const primaryName = process.env.PRIMARY_SHEET_NAME || DEFAULT_PRIMARY_SHEET_NAME;
 
   // 2. SỔ MẸ (Két Sắt Bảo Hiểm Tự Động - kho lưu trữ tích lũy toàn bộ dữ liệu)
-  let masterId = process.env.MASTER_SPREADSHEET_ID || process.env.GOOGLE_MASTER_SPREADSHEET_ID;
-  if (!masterId) {
-    if (process.env.GOOGLE_SPREADSHEET_ID === DEFAULT_MASTER_SPREADSHEET_ID) {
-      masterId = process.env.GOOGLE_SPREADSHEET_ID;
-    } else {
-      masterId = DEFAULT_MASTER_SPREADSHEET_ID;
-    }
-  }
-
+  const masterId = process.env.MASTER_SPREADSHEET_ID || DEFAULT_MASTER_SPREADSHEET_ID;
   const masterName = process.env.MASTER_SHEET_NAME || DEFAULT_MASTER_SHEET_NAME;
 
   return {
