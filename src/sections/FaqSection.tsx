@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { content } from '../content';
-import { ChevronDown, HelpCircle, MessageCircleQuestion, ArrowRight } from 'lucide-react';
+import { CONTENT } from '../content';
+import { ChevronDown, HelpCircle } from 'lucide-react';
 
 export const FaqSection: React.FC = () => {
-  const { faqs } = content;
+  const { faqSection } = CONTENT;
   const [openIdx, setOpenIdx] = useState<number | null>(0);
 
   const toggle = (idx: number) => {
@@ -19,20 +19,20 @@ export const FaqSection: React.FC = () => {
             <div>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-amber-300 bg-amber-50 text-amber-900 text-xs sm:text-sm font-mono font-bold uppercase tracking-widest mb-4 shadow-xs">
                 <HelpCircle className="w-4 h-4 text-amber-600" />
-                <span>GIẢI ĐÁP THẮC MẮC</span>
+                <span>{faqSection.badge}</span>
               </div>
               <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-[#09090b] mb-4 leading-[1.18] [text-wrap:balance]">
-                Câu hỏi thường gặp
+                {faqSection.headline}
               </h2>
               <p className="font-sans text-base sm:text-lg text-zinc-700 leading-relaxed [text-wrap:balance]">
-                Tất cả những thắc mắc phổ biến nhất của học viên trước khi tham gia khóa học offline 2 ngày tại Hà Nội.
+                {faqSection.description}
               </p>
             </div>
           </div>
 
           {/* Right Column: Numbered Accordion List (7 Cols) */}
           <div className="lg:col-span-7 space-y-4">
-            {faqs.map((faq, idx) => {
+            {faqSection.items.map((faq, idx) => {
               const isOpen = openIdx === idx;
               return (
                 <div
@@ -87,4 +87,3 @@ export const FaqSection: React.FC = () => {
     </section>
   );
 };
-

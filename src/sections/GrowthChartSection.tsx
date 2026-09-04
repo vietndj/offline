@@ -1,23 +1,26 @@
 import React from 'react';
-import { content } from '../content';
-import { TrendingUp, CheckCircle, XCircle, AlertCircle, Clock, Sparkles, ExternalLink } from 'lucide-react';
+import { CONTENT } from '../content';
+import { TrendingUp, AlertCircle, Clock, Sparkles, ExternalLink, XCircle, CheckCircle } from 'lucide-react';
 
 export const GrowthChartSection: React.FC = () => {
-  const { chart } = content;
+  const { chart } = CONTENT;
 
   // Custom SVG Audience Retention Curve Data Points (Meta & Nielsen Benchmark)
   const width = 800;
   const height = 320;
   const padding = 50;
 
-  const pointsNormal = chart.data.map((d, i) => {
-    const x = padding + (i * (width - 2 * padding)) / (chart.data.length - 1);
+  const hasMultiplePoints = Boolean(chart.data && chart.data.length > 1);
+  const divisor = hasMultiplePoints ? chart.data.length - 1 : 1;
+
+  const pointsNormal = (chart.data || []).map((d, i) => {
+    const x = padding + (i * (width - 2 * padding)) / divisor;
     const y = height - padding - (d.normal / 100) * (height - 2 * padding);
     return { x, y, val: d.normal, month: d.month };
   });
 
-  const pointsMarketing = chart.data.map((d, i) => {
-    const x = padding + (i * (width - 2 * padding)) / (chart.data.length - 1);
+  const pointsMarketing = (chart.data || []).map((d, i) => {
+    const x = padding + (i * (width - 2 * padding)) / divisor;
     const y = height - padding - (d.marketing / 100) * (height - 2 * padding);
     return { x, y, val: d.marketing, month: d.month };
   });
@@ -25,7 +28,9 @@ export const GrowthChartSection: React.FC = () => {
   const pathNormal = pointsNormal.reduce((acc, p, i) => `${acc} ${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`, '');
   const pathMarketing = pointsMarketing.reduce((acc, p, i) => `${acc} ${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`, '');
 
-  const areaMarketing = `${pathMarketing} L ${pointsMarketing[pointsMarketing.length - 1].x} ${height - padding} L ${pointsMarketing[0].x} ${height - padding} Z`;
+  const areaMarketing = pointsMarketing.length > 0
+    ? `${pathMarketing} L ${pointsMarketing[pointsMarketing.length - 1].x} ${height - padding} L ${pointsMarketing[0].x} ${height - padding} Z`
+    : '';
 
   return (
     <section id="growth" className="py-24 px-4 bg-[#0c0d10] border-y border-zinc-800/80 relative">
@@ -98,15 +103,15 @@ export const GrowthChartSection: React.FC = () => {
             <div className="flex items-center gap-6 text-xs sm:text-sm font-mono">
               <div className="flex items-center gap-2 text-emerald-400">
                 <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-md shadow-emerald-500/50" />
-                <span className="font-bold">Video Marketing Thực Chiến (Cấu trúc nén nhịp)</span>
+                <span className="font-bold">{chart.legends.marketing}</span>
               </div>
               <div className="flex items-center gap-2 text-orange-400">
                 <div className="w-3 h-3 rounded-full bg-orange-500/80" />
-                <span className="font-semibold">Video Tự Phát (Bản năng mở đầu lan man)</span>
+                <span className="font-semibold">{chart.legends.normal}</span>
               </div>
             </div>
             <div className="text-xs sm:text-sm text-zinc-400 font-mono">
-              Đơn vị: Tỷ lệ khán giả còn ở lại trên timeline (%)
+              {chart.legends.unit}
             </div>
           </div>
 
@@ -134,8 +139,16 @@ export const GrowthChartSection: React.FC = () => {
                 })}
 
                 {/* Vertical milestone indicator lines */}
-                <line x1={pointsMarketing[1].x} y1={padding} x2={pointsMarketing[1].x} y2={height - padding} stroke="#10b981" strokeOpacity="0.25" strokeDasharray="3 3" />
-                <line x1={pointsMarketing[2].x} y1={padding} x2={pointsMarketing[2].x} y2={height - padding} stroke="#10b981" strokeOpacity="0.25" strokeDasharray="3 3" />
+                {pointsMarketing.length > 2 && (
+                  <>
+                    {pointsMarketing[1] && (
+                      <line x1={pointsMarketing[1]?.x} y1={padding} x2={pointsMarketing[1]?.x} y2={height - padding} stroke="#10b981" strokeOpacity="0.25" strokeDasharray="3 3" />
+                    )}
+                    {pointsMarketing[2] && (
+                      <line x1={pointsMarketing[2]?.x} y1={padding} x2={pointsMarketing[2]?.x} y2={height - padding} stroke="#10b981" strokeOpacity="0.25" strokeDasharray="3 3" />
+                    )}
+                  </>
+                )}
 
                 {/* Area under Marketing curve */}
                 <path d={areaMarketing} fill="url(#marketingGradient)" />
@@ -174,48 +187,48 @@ export const GrowthChartSection: React.FC = () => {
 
           {/* Verified Research Citation Banner */}
           {chart.source && (
-            <div className="mt-8 pt-6 border-t border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm font-mono">
-              <div className="flex items-center gap-2.5 text-zinc-300">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400 animate-pulse shrink-0" />
-                <span>Nguồn kiểm chứng: <strong className="text-white">{chart.source.label}</strong> • <em>{chart.source.studyName}</em></span>
+            <div className="mt-8 pt-4 border-t border-zinc-800/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] sm:text-xs font-mono text-zinc-500">
+              <div>
+                <span>{chart.source.label} ({chart.source.studyName})</span>
               </div>
               <a
                 href={chart.source.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 font-bold hover:underline transition-all px-4 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 shadow-sm hover:bg-emerald-500/20 shrink-0"
+                className="inline-flex items-center gap-1.5 text-zinc-500 hover:text-zinc-300 transition-colors shrink-0"
               >
-                <span>Xem báo cáo gốc trên Meta</span>
-                <ExternalLink className="w-4 h-4" />
+                <span>{chart.source.viewReportText}</span>
+                <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>
           )}
         </div>
 
         {/* 3 Comparison Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {chart.bullets.map((b, idx) => (
-            <div key={idx} className="bg-zinc-900/80 rounded-2xl p-6 sm:p-7 border border-zinc-700/80 flex flex-col justify-between">
-              <div>
-                <h4 className="text-lg sm:text-xl font-bold text-white mb-4">
-                  {b.title}
-                </h4>
-                <div className="space-y-3.5 text-sm sm:text-base mb-4 font-sans">
-                  <div className="flex items-start gap-2.5 text-rose-200 bg-rose-950/40 p-3.5 rounded-xl border border-rose-900/40">
-                    <XCircle className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
-                    <span><strong>Tự làm:</strong> {b.normal}</span>
-                  </div>
-                  <div className="flex items-start gap-2.5 text-emerald-200 bg-emerald-950/40 p-3.5 rounded-xl border border-emerald-900/40">
-                    <CheckCircle className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-                    <span><strong>Có cấu trúc:</strong> {b.marketing}</span>
+        {chart.bullets && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {chart.bullets.map((b, idx) => (
+              <div key={idx} className="bg-zinc-900/80 rounded-2xl p-6 sm:p-7 border border-zinc-700/80 flex flex-col justify-between">
+                <div>
+                  <h4 className="text-lg sm:text-xl font-bold text-white mb-4">
+                    {b.title}
+                  </h4>
+                  <div className="space-y-3.5 text-sm sm:text-base mb-4 font-sans">
+                    <div className="flex items-start gap-2.5 text-rose-200 bg-rose-950/40 p-3.5 rounded-xl border border-rose-900/40">
+                      <XCircle className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
+                      <span>{b.normal}</span>
+                    </div>
+                    <div className="flex items-start gap-2.5 text-emerald-200 bg-emerald-950/40 p-3.5 rounded-xl border border-emerald-900/40">
+                      <CheckCircle className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>{b.marketing}</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
 };
-

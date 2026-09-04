@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { content } from '../content';
-import { Sparkles, Sun, Moon, Target, Gift, CheckCircle2, ArrowRight } from 'lucide-react';
+import { CONTENT } from '../content';
+import { Sparkles, Sun, Moon, Target, Gift, ArrowRight } from 'lucide-react';
 
 interface CurriculumSectionProps {
   onOpenRegister?: () => void;
 }
 
 export const CurriculumSection: React.FC<CurriculumSectionProps> = ({ onOpenRegister }) => {
-  const { curriculum } = content;
+  const { curriculum } = CONTENT;
   const [activeDay, setActiveDay] = useState(0);
 
   return (
@@ -26,47 +26,23 @@ export const CurriculumSection: React.FC<CurriculumSectionProps> = ({ onOpenRegi
             {curriculum.subheadline}
           </p>
 
-          {/* 3 Real Class Event Photos (No Duplicates) */}
+          {/* 3 Real Class Event Photos (Data-driven from curriculum.eventPhotos) */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
-            <div className="flex flex-col h-full bg-white rounded-2xl overflow-hidden border border-zinc-200 shadow-sm group">
-              <div className="h-56 sm:h-64 overflow-hidden bg-zinc-100 shrink-0">
-                <img
-                  src="/assets/events/event_full_class.png"
-                  alt="Toàn cảnh lớp học offline"
-                  className="w-full h-full object-cover transform group-hover:scale-103 transition-transform duration-500"
-                  loading="lazy"
-                />
+            {curriculum.eventPhotos.map((photo, idx) => (
+              <div key={idx} className="flex flex-col h-full bg-white rounded-2xl overflow-hidden border border-zinc-200 shadow-sm group">
+                <div className="h-56 sm:h-64 overflow-hidden bg-zinc-100 shrink-0">
+                  <img
+                    src={photo.image}
+                    alt={photo.alt || photo.caption}
+                    className="w-full h-full object-cover transform group-hover:scale-103 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="p-3.5 bg-white text-sm sm:text-base font-sans font-bold text-zinc-900 text-center border-t border-zinc-100 flex-1 flex items-center justify-center leading-snug">
+                  {photo.caption}
+                </div>
               </div>
-              <div className="p-3.5 bg-white text-sm sm:text-base font-sans font-bold text-zinc-900 text-center border-t border-zinc-100 flex-1 flex items-center justify-center leading-snug">
-                🎓 Tốt nghiệp & trao giáo trình
-              </div>
-            </div>
-            <div className="flex flex-col h-full bg-white rounded-2xl overflow-hidden border border-zinc-200 shadow-sm group">
-              <div className="h-56 sm:h-64 overflow-hidden bg-zinc-100 shrink-0">
-                <img
-                  src="/assets/events/event_1on1_coaching.webp"
-                  alt="Hướng dẫn cầm tay chỉ việc 1-1"
-                  className="w-full h-full object-cover transform group-hover:scale-103 transition-transform duration-500"
-                  loading="lazy"
-                />
-              </div>
-              <div className="p-3.5 bg-white text-sm sm:text-base font-sans font-bold text-zinc-900 text-center border-t border-zinc-100 flex-1 flex items-center justify-center leading-snug">
-                📱 Thầy Việt hướng dẫn 1 kèm 1
-              </div>
-            </div>
-            <div className="flex flex-col h-full bg-white rounded-2xl overflow-hidden border border-zinc-200 shadow-sm group">
-              <div className="h-56 sm:h-64 overflow-hidden bg-zinc-100 shrink-0">
-                <img
-                  src="/assets/events/event_studio_practice.jpg"
-                  alt="Thực hành trực tiếp trên laptop"
-                  className="w-full h-full object-cover transform group-hover:scale-103 transition-transform duration-500"
-                  loading="lazy"
-                />
-              </div>
-              <div className="p-3.5 bg-white text-sm sm:text-base font-sans font-bold text-zinc-900 text-center border-t border-zinc-100 flex-1 flex items-center justify-center leading-snug">
-                💻 Thực hành dựng clip tại lớp
-              </div>
-            </div>
+            ))}
           </div>
         </div>
 
@@ -85,7 +61,7 @@ export const CurriculumSection: React.FC<CurriculumSectionProps> = ({ onOpenRegi
                 }`}
               >
                 <div className={`font-mono text-xl sm:text-2xl font-black ${isActive ? 'text-blue-600' : 'text-zinc-800'}`}>
-                  NGÀY {day.dayNumber}
+                  {curriculum.dayPrefix} {day.dayNumber}
                 </div>
                 <div className="text-sm sm:text-base text-zinc-700 font-sans font-semibold mt-1">{day.timeRange}</div>
               </button>
@@ -110,7 +86,7 @@ export const CurriculumSection: React.FC<CurriculumSectionProps> = ({ onOpenRegi
                   <div>
                     <div className="flex items-center gap-2.5 flex-wrap">
                       <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#09090b]">
-                        Ngày {parseInt(day.dayNumber)}
+                        {curriculum.dayPrefix} {parseInt(day.dayNumber)}
                       </h3>
                       <span className="text-zinc-400 font-sans">•</span>
                       <span className="text-sm sm:text-base font-mono font-bold text-blue-700 bg-blue-100/80 px-3.5 py-1 rounded-full border border-blue-300">
@@ -134,7 +110,7 @@ export const CurriculumSection: React.FC<CurriculumSectionProps> = ({ onOpenRegi
                   <Target className="w-6 h-6" />
                 </div>
                 <div className="text-base sm:text-lg text-zinc-900 leading-relaxed font-sans">
-                  <strong className="font-bold text-blue-900 block mb-1">Mục tiêu ngày học:</strong>
+                  <strong className="font-bold text-blue-900 block mb-1">{curriculum.goalLabel}</strong>
                   {day.goal}
                 </div>
               </div>
@@ -261,7 +237,7 @@ export const CurriculumSection: React.FC<CurriculumSectionProps> = ({ onOpenRegi
               onClick={onOpenRegister}
               className="px-8 py-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-zinc-950 font-bold text-base sm:text-lg transition-all shrink-0 shadow-lg shadow-black/20 hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-2"
             >
-              <span>NHẬN TOÀN BỘ QUÀ TẶNG</span>
+              <span>{curriculum.bonus.cta}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           )}
@@ -270,4 +246,3 @@ export const CurriculumSection: React.FC<CurriculumSectionProps> = ({ onOpenRegi
     </section>
   );
 };
-

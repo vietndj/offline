@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { content } from '../content';
-import { Award, Sparkles, Play, CheckCircle2, ExternalLink, X, Quote } from 'lucide-react';
+import { CONTENT } from '../content';
+import { Award, Play, CheckCircle2, ExternalLink, X, Quote } from 'lucide-react';
 
 export const CaseStudySection: React.FC = () => {
-  const { caseStudies } = content;
+  const { caseStudies } = CONTENT;
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
 
   const item = caseStudies.items[0];
@@ -58,14 +58,14 @@ export const CaseStudySection: React.FC = () => {
                       {item.name}
                     </span>
                     <span className="bg-emerald-600 px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">
-                      Walk & Talk
+                      {caseStudies.formatBadge}
                     </span>
                   </div>
 
                   <div className="absolute bottom-3 left-3 right-3 text-center">
                     <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/95 text-zinc-900 font-mono text-xs font-bold shadow-lg">
                       <Play className="w-3.5 h-3.5 fill-current text-red-600" />
-                      <span>BẤM ĐỂ XEM VIDEO</span>
+                      <span>{caseStudies.playVideoBadge}</span>
                     </span>
                   </div>
                 </div>
@@ -89,7 +89,7 @@ export const CaseStudySection: React.FC = () => {
                   </div>
 
                   <div className="text-xs sm:text-sm font-mono text-amber-800 font-bold uppercase tracking-wider bg-amber-100/80 border border-amber-300 px-3 py-1 rounded-lg w-fit mb-4">
-                    Ngách: {item.niche}
+                    {caseStudies.nichePrefix}{item.niche}
                   </div>
 
                   {/* Story Quote */}
@@ -102,7 +102,7 @@ export const CaseStudySection: React.FC = () => {
                   {item.highlights && (
                     <div className="space-y-3 mb-6">
                       <strong className="text-xs sm:text-sm font-mono font-bold text-zinc-900 uppercase tracking-wider block mb-2">
-                        Điểm Đột Phá Thực Chiến:
+                        {caseStudies.breakthroughTitle}
                       </strong>
                       {item.highlights.map((hl, hIdx) => (
                         <div key={hIdx} className="flex items-start gap-3 text-base sm:text-lg text-zinc-900 font-sans">
@@ -121,7 +121,7 @@ export const CaseStudySection: React.FC = () => {
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm transition-all shadow-sm cursor-pointer"
                   >
                     <Play className="w-4 h-4 fill-current" />
-                    <span>Xem Video Thực Hành</span>
+                    <span>{caseStudies.watchButtonText}</span>
                   </button>
                   {item.youtubeUrl && (
                     <a
@@ -130,7 +130,7 @@ export const CaseStudySection: React.FC = () => {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-xs font-mono text-zinc-500 hover:text-zinc-900 transition-colors"
                     >
-                      <span>Mở YouTube</span>
+                      <span>{caseStudies.openYoutubeText}</span>
                       <ExternalLink className="w-3.5 h-3.5" />
                     </a>
                   )}
@@ -157,7 +157,7 @@ export const CaseStudySection: React.FC = () => {
                   {item?.niche}
                 </span>
                 <h3 className="text-base sm:text-lg font-bold text-white leading-snug">
-                  Video Thực Tế: {item?.name}
+                  {caseStudies.modalTitlePrefix}{item?.name}
                 </h3>
               </div>
               <button
@@ -183,4 +183,3 @@ export const CaseStudySection: React.FC = () => {
     </section>
   );
 };
-

@@ -1,16 +1,19 @@
 import React from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import { CONTENT } from '../content';
 
 interface BannerProps {
   onOpenRegister: () => void;
   title?: string;
   badge?: string;
+  cta?: string;
 }
 
 export const BannerCta: React.FC<BannerProps> = ({ 
   onOpenRegister, 
-  title = "Làm chủ kỹ năng video marketing 2 ngày thực chiến cùng thầy Việt",
-  badge = "SĨ SỐ GIỚI HẠN ≤ 40 HỌC VIÊN" 
+  title = CONTENT.bannerCta.title,
+  badge = CONTENT.bannerCta.badge,
+  cta = CONTENT.bannerCta.cta,
 }) => {
   return (
     <section className="py-12 bg-gradient-to-r from-amber-500/10 via-orange-500/15 to-amber-500/10 border-y border-amber-500/20 text-white relative overflow-hidden">
@@ -28,7 +31,7 @@ export const BannerCta: React.FC<BannerProps> = ({
           onClick={onOpenRegister}
           className="shrink-0 px-6 py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-zinc-950 font-sans font-bold text-sm sm:text-base shadow-md shadow-orange-500/20 hover:shadow-orange-500/30 transition-all duration-200 transform hover:-translate-y-0.5 flex items-center gap-2 cursor-pointer"
         >
-          <span>ĐĂNG KÝ GIỮ CHỖ</span>
+          <span>{cta}</span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { content } from '../content';
+import { CONTENT } from '../content';
 import { Calendar, MapPin, Users, Sparkles, ArrowRight } from 'lucide-react';
 
 interface HeroProps {
@@ -7,7 +7,7 @@ interface HeroProps {
 }
 
 export const HeroSection: React.FC<HeroProps> = ({ onOpenRegister }) => {
-  const { hero } = content;
+  const { hero } = CONTENT;
 
   return (
     <section id="hero" className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-[#09090b] text-white">
@@ -32,7 +32,7 @@ export const HeroSection: React.FC<HeroProps> = ({ onOpenRegister }) => {
           {hero.subheadline}
         </p>
 
-        {/* 5 Feature Tags */}
+        {/* Feature Tags */}
         <div className="flex flex-wrap justify-center gap-2.5 sm:gap-3 mb-12 max-w-3xl mx-auto">
           {hero.tags.map((tag, idx) => (
             <span

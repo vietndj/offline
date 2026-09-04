@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { content } from '../content';
-import { Sparkles, Play, CheckCircle2, X, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
+import { CONTENT } from '../content';
+import { Sparkles, Play, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const ShowcaseSection: React.FC = () => {
-  const { showcase } = content;
+  const { showcase } = CONTENT;
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [isPaused, setIsPaused] = useState(false);
@@ -55,15 +55,6 @@ export const ShowcaseSection: React.FC = () => {
 
     return () => clearInterval(timer);
   }, [isPaused, activeVideoId, filteredVideos.length]);
-
-  const handleScroll = () => {
-    if (!scrollRef.current) return;
-    const container = scrollRef.current;
-    const cardEl = container.querySelector<HTMLElement>(':scope > div');
-    const step = (cardEl ? cardEl.offsetWidth : 340) + 24;
-    const idx = Math.round(container.scrollLeft / step);
-    setCurrentIndex(Math.min(Math.max(0, idx), filteredVideos.length - 1));
-  };
 
   const handleCategoryChange = (catId: string) => {
     setSelectedCategory(catId);
@@ -134,7 +125,7 @@ export const ShowcaseSection: React.FC = () => {
           {/* Previous Button (Left Arrow) */}
           <button
             onClick={scrollPrev}
-            aria-label="Cuộn video trước"
+            aria-label={showcase.ui.prevAriaLabel}
             className="hidden sm:flex absolute -left-3 lg:-left-5 top-[38%] -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-zinc-900/95 border border-zinc-700/90 text-zinc-300 hover:text-emerald-300 hover:border-emerald-500 shadow-2xl items-center justify-center transition-all cursor-pointer backdrop-blur-md hover:scale-110 active:scale-95"
           >
             <ChevronLeft className="w-6 h-6" />
@@ -143,80 +134,66 @@ export const ShowcaseSection: React.FC = () => {
           {/* Next Button (Right Arrow) */}
           <button
             onClick={scrollNext}
-            aria-label="Cuộn video tiếp theo"
+            aria-label={showcase.ui.nextAriaLabel}
             className="hidden sm:flex absolute -right-3 lg:-right-5 top-[38%] -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-zinc-900/95 border border-zinc-700/90 text-zinc-300 hover:text-emerald-300 hover:border-emerald-500 shadow-2xl items-center justify-center transition-all cursor-pointer backdrop-blur-md hover:scale-110 active:scale-95"
           >
             <ChevronRight className="w-6 h-6" />
           </button>
 
-          {/* Scrollable Track */}
+          {/* Cards Track */}
           <div
             ref={scrollRef}
-            onScroll={handleScroll}
-            className="flex gap-6 overflow-x-auto pb-5 pt-2 px-2 scroll-smooth snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-none py-4 px-1"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            {filteredVideos.map((vid, idx) => (
+            {filteredVideos.map((vid) => (
               <div
-                key={idx}
-                className="w-[290px] sm:w-[320px] md:w-[350px] shrink-0 snap-start p-5 rounded-3xl border border-zinc-800 bg-zinc-900/90 shadow-2xl flex flex-col justify-between hover:border-emerald-500/50 hover:shadow-emerald-950/30 transition-all duration-300 group"
+                key={vid.id}
+                className="w-[280px] sm:w-[320px] md:w-[340px] shrink-0 snap-start bg-[#121216] rounded-3xl p-5 border border-zinc-800 hover:border-emerald-500/50 shadow-xl transition-all duration-300 flex flex-col justify-between group/card"
               >
                 <div>
-                  {/* 9:16 Vertical Video Poster & Play Button Container */}
+                  {/* Poster Thumbnail with Play Trigger */}
                   <div
                     onClick={() => setActiveVideoId(vid.id)}
-                    className="w-full aspect-[9/16] rounded-2xl overflow-hidden bg-zinc-950 mb-5 border border-zinc-800 relative cursor-pointer group-hover:scale-[1.01] transition-transform duration-300 shadow-inner"
+                    className="relative aspect-[9/16] w-full rounded-2xl overflow-hidden bg-black mb-4 border border-zinc-800 shadow-inner group/thumb cursor-pointer"
                   >
                     <img
                       src={vid.poster}
                       alt={vid.title}
-                      className="w-full h-full object-cover group-hover:opacity-90 transition-opacity"
+                      className="w-full h-full object-cover transform group-hover/thumb:scale-103 transition-transform duration-500"
                       loading="lazy"
                     />
-                    {/* Subtle Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
 
-                    {/* Red Play Button */}
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <div className="w-16 h-12 sm:w-20 sm:h-14 rounded-2xl bg-red-600 group-hover:bg-red-500 text-white flex items-center justify-center shadow-2xl shadow-red-600/50 transition-all duration-200 group-hover:scale-110">
-                        <Play className="w-7 h-7 fill-current ml-1" />
+                    {/* Red YouTube-style Play Button */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-14 h-10 sm:w-16 sm:h-11 bg-red-600 rounded-xl flex items-center justify-center text-white shadow-xl shadow-red-600/40 group-hover/thumb:scale-110 group-hover/thumb:bg-red-500 transition-all duration-200">
+                        <Play className="w-5 h-5 sm:w-6 sm:h-6 fill-white ml-0.5" />
                       </div>
                     </div>
 
-                    {/* Top Badge: Author */}
-                    <div className="absolute top-3 left-3 flex items-center text-xs font-mono font-bold text-white z-10">
-                      <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/10">
-                        {vid.author}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Category Label Pill */}
-                  {vid.categoryLabel && (
-                    <div className="mb-2.5">
-                      <span className="inline-block text-[11px] font-mono font-bold text-emerald-300 bg-emerald-500/10 px-2.5 py-0.5 rounded border border-emerald-500/20">
+                    {/* Category Label Pill */}
+                    <div className="absolute top-3 left-3 z-10">
+                      <span className="px-2.5 py-1 rounded-md bg-zinc-900/90 text-emerald-400 text-[10px] sm:text-xs font-mono font-bold backdrop-blur-md border border-zinc-700 shadow-sm">
                         {vid.categoryLabel}
                       </span>
                     </div>
-                  )}
 
-                  {/* Info */}
-                  <div className="flex items-center justify-between gap-2 mb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-                      <span className="font-sans font-bold text-white text-base sm:text-lg">
+                    {/* Author & Role Overlay at Bottom */}
+                    <div className="absolute bottom-3 inset-x-3 text-left">
+                      <div className="text-white font-sans font-bold text-sm leading-tight drop-shadow-md">
                         {vid.author}
-                      </span>
+                      </div>
+                      <div className="text-zinc-300 font-sans text-xs drop-shadow-md">
+                        {vid.role}
+                      </div>
                     </div>
-                    <span className="text-xs sm:text-sm font-mono font-bold text-amber-300 bg-amber-500/20 px-3 py-1 rounded-lg border border-amber-500/30 truncate">
-                      {vid.role}
-                    </span>
                   </div>
 
-                  <h3 className="text-base sm:text-lg font-sans font-bold text-white tracking-tight leading-snug group-hover:text-emerald-300 transition-colors">
+                  <h3 className="font-serif font-bold text-base sm:text-lg text-white leading-snug line-clamp-2 group-hover/card:text-emerald-400 transition-colors">
                     {vid.title}
                   </h3>
-
-                  <p className="text-sm sm:text-base text-zinc-300 leading-relaxed font-sans mt-1.5">
+                  <p className="font-sans text-xs sm:text-sm text-zinc-400 line-clamp-2 mt-2 leading-relaxed">
                     {vid.desc}
                   </p>
                 </div>
@@ -228,7 +205,7 @@ export const ShowcaseSection: React.FC = () => {
                     className="flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 font-bold cursor-pointer transition-colors"
                   >
                     <Play className="w-3.5 h-3.5 fill-current" />
-                    <span>XEM VIDEO</span>
+                    <span>{showcase.ui.watchVideo}</span>
                   </button>
                   {vid.youtubeUrl && (
                     <a
@@ -237,7 +214,7 @@ export const ShowcaseSection: React.FC = () => {
                       rel="noopener noreferrer"
                       className="flex items-center gap-1 text-zinc-500 hover:text-zinc-300 transition-colors"
                     >
-                      <span>Mở video</span>
+                      <span>{showcase.ui.openVideo}</span>
                       <ExternalLink className="w-3 h-3" />
                     </a>
                   )}
@@ -246,7 +223,7 @@ export const ShowcaseSection: React.FC = () => {
             ))}
           </div>
 
-          {/* Pagination Indicators & Quick Navigation Dots */}
+          {/* Pagination Indicators */}
           <div className="flex items-center justify-center gap-2 mt-6">
             {filteredVideos.map((_, i) => (
               <button
@@ -261,14 +238,14 @@ export const ShowcaseSection: React.FC = () => {
                 className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                   currentIndex === i ? 'w-8 bg-emerald-400 shadow-sm shadow-emerald-400/50' : 'w-2.5 bg-zinc-700 hover:bg-zinc-500'
                 }`}
-                aria-label={`Chuyển tới video ${i + 1}`}
+                aria-label={`Video ${i + 1}`}
               />
             ))}
           </div>
 
           {/* Mobile swipe hint */}
           <div className="flex sm:hidden items-center justify-center gap-1.5 text-xs font-mono text-zinc-400 mt-3">
-            <span>← Vuốt ngang để xem thêm video →</span>
+            <span>{showcase.ui.swipeHint}</span>
           </div>
         </div>
       </div>
@@ -283,35 +260,33 @@ export const ShowcaseSection: React.FC = () => {
             className="relative w-full max-w-sm sm:max-w-md bg-zinc-900 border border-zinc-700 rounded-3xl overflow-hidden shadow-2xl p-4 sm:p-6"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Modal Header */}
-            <div className="flex items-center justify-between pb-4 mb-4 border-b border-zinc-800">
-              <div>
+            <div className="flex items-center justify-between pb-3 mb-3 border-b border-zinc-800">
+              <div className="min-w-0 pr-2">
                 <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider block">
-                  {selectedVideo.role}
+                  {selectedVideo.categoryLabel}
                 </span>
-                <h3 className="text-base sm:text-lg font-bold text-white leading-snug mt-0.5">
-                  {selectedVideo.author}
+                <h3 className="text-base sm:text-lg font-bold text-white truncate">
+                  {selectedVideo.title}
                 </h3>
               </div>
               <button
                 onClick={() => setActiveVideoId(null)}
-                className="w-9 h-9 rounded-full bg-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-700 flex items-center justify-center transition-colors cursor-pointer"
+                className="w-9 h-9 rounded-full bg-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-700 flex items-center justify-center transition-colors cursor-pointer shrink-0"
               >
-                <X className="w-5 h-5" />
+                ✕
               </button>
             </div>
 
-            {/* Video Player */}
-            <div className="w-full aspect-[9/16] rounded-2xl overflow-hidden bg-black border border-zinc-800 shadow-inner mb-4">
+            <div className="w-full aspect-[9/16] rounded-2xl overflow-hidden bg-black border border-zinc-800 shadow-inner mb-3">
               {selectedVideo.videoUrl ? (
                 <video
                   src={selectedVideo.videoUrl}
                   controls
                   autoPlay
                   playsInline
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
-              ) : (
+              ) : selectedVideo.youtubeUrl ? (
                 <iframe
                   src={`https://www.youtube-nocookie.com/embed/${selectedVideo.id}?autoplay=1&rel=0&modestbranding=1`}
                   title={selectedVideo.title}
@@ -319,18 +294,26 @@ export const ShowcaseSection: React.FC = () => {
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 />
-              )}
+              ) : null}
             </div>
 
-            {/* Video Description */}
-            <p className="text-sm text-zinc-300 font-sans leading-relaxed">
-              {selectedVideo.desc}
-            </p>
+            <div className="flex items-center justify-between text-xs text-zinc-400 font-mono pt-1">
+              <span>{selectedVideo.author} • {selectedVideo.role}</span>
+              {selectedVideo.youtubeUrl && (
+                <a
+                  href={selectedVideo.youtubeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-emerald-400 hover:underline flex items-center gap-1"
+                >
+                  <span>{showcase.ui.openVideo}</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              )}
+            </div>
           </div>
         </div>
       )}
     </section>
   );
 };
-
-

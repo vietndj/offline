@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { content } from '../content';
-import { Sparkles, CheckCircle2, Play, ExternalLink, ArrowRight } from 'lucide-react';
+import { CONTENT } from '../content';
+import { Sparkles, Play, ArrowRight } from 'lucide-react';
 
 interface MetaphorsSectionProps {
   onOpenRegister: () => void;
 }
 
 export const MetaphorsSection: React.FC<MetaphorsSectionProps> = ({ onOpenRegister }) => {
-  const { metaphors } = content;
+  const { metaphors } = CONTENT;
   const [activeYoutubeModal, setActiveYoutubeModal] = useState<string | null>(null);
 
   return (
@@ -49,7 +49,7 @@ export const MetaphorsSection: React.FC<MetaphorsSectionProps> = ({ onOpenRegist
                   <div className="absolute top-3 right-3 flex items-center gap-1.5 opacity-90 group-hover/vid:opacity-100 transition-opacity">
                     <button
                       onClick={() => setActiveYoutubeModal(item.youtubeId)}
-                      title="Xem trên YouTube"
+                      title={metaphors.labels.watchYoutubeTitle}
                       className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-black/70 hover:bg-red-600 text-white text-[11px] font-mono font-semibold backdrop-blur-md border border-white/20 transition-colors shadow-sm cursor-pointer"
                     >
                       <Play className="w-3 h-3 fill-current" />
@@ -63,7 +63,7 @@ export const MetaphorsSection: React.FC<MetaphorsSectionProps> = ({ onOpenRegist
                     {item.icon}
                   </span>
                   <span className="text-xs font-mono uppercase tracking-widest text-orange-600 font-bold bg-orange-50 px-2.5 py-1 rounded-full border border-orange-200/80">
-                    ĐỊNH DẠNG 0{idx + 1}
+                    {metaphors.formatPrefix}0{idx + 1}
                   </span>
                 </div>
 
@@ -78,7 +78,7 @@ export const MetaphorsSection: React.FC<MetaphorsSectionProps> = ({ onOpenRegist
                 <div className="bg-emerald-50 rounded-2xl p-4 border border-emerald-200/90 mb-4 shadow-xs">
                   <p className="text-xs sm:text-sm font-mono uppercase tracking-wider text-emerald-950 mb-1.5 font-bold flex items-center gap-1.5">
                     <span>🎯</span>
-                    <span>Output Chuyển Đổi</span>
+                    <span>{metaphors.labels.output}</span>
                   </p>
                   <p className="text-emerald-950 text-sm sm:text-[15px] leading-relaxed font-sans font-semibold">
                     {item.output}
@@ -89,7 +89,7 @@ export const MetaphorsSection: React.FC<MetaphorsSectionProps> = ({ onOpenRegist
                 <div className="bg-amber-50/90 rounded-2xl p-4 border border-amber-200/80 mb-4 shadow-xs">
                   <p className="text-xs sm:text-sm font-mono uppercase tracking-wider text-amber-950 mb-1.5 font-bold flex items-center gap-1.5">
                     <span>✨</span>
-                    <span>Gỡ Bỏ Rào Cản</span>
+                    <span>{metaphors.labels.relief}</span>
                   </p>
                   <p className="text-zinc-900 text-sm sm:text-[15px] leading-relaxed font-sans font-medium">
                     {item.relief}
@@ -99,13 +99,15 @@ export const MetaphorsSection: React.FC<MetaphorsSectionProps> = ({ onOpenRegist
                 {/* 3. Application */}
                 <div className="mb-6 text-sm sm:text-[15px] text-zinc-800 font-sans flex items-start gap-2.5 bg-zinc-50 p-3.5 rounded-xl border border-zinc-200/80">
                   <Sparkles className="w-5 h-5 text-orange-600 shrink-0 mt-0.5" />
-                  <span className="leading-snug"><strong className="text-zinc-950 font-bold">Ứng dụng:</strong> {item.application}</span>
+                  <span className="leading-snug">
+                    <strong className="text-zinc-950 font-bold">{metaphors.labels.application}</strong> {item.application}
+                  </span>
                 </div>
               </div>
 
               <div className="pt-4 border-t border-zinc-200 flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-700">
-                <span>Thực hành tại lớp</span>
-                <span className="font-bold text-orange-600">1 kèm 1</span>
+                <span>{metaphors.labels.practiceNote}</span>
+                <span className="font-bold text-orange-600">{metaphors.labels.practiceTag}</span>
               </div>
             </div>
           ))}
@@ -145,7 +147,7 @@ export const MetaphorsSection: React.FC<MetaphorsSectionProps> = ({ onOpenRegist
             onClick={onOpenRegister}
             className="inline-flex items-center justify-center gap-3 px-10 py-5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-zinc-950 font-bold text-lg sm:text-xl hover:from-orange-400 hover:to-amber-400 transition-all shadow-lg shadow-orange-500/20 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
           >
-            <span>LÀM CHỦ 4 ĐỊNH DẠNG VIDEO NÀY TẠI LỚP HỌC</span>
+            <span>{metaphors.cta}</span>
             <ArrowRight className="w-5 h-5" />
           </button>
         </div>
@@ -153,4 +155,3 @@ export const MetaphorsSection: React.FC<MetaphorsSectionProps> = ({ onOpenRegist
     </section>
   );
 };
-

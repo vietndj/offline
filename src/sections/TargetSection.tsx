@@ -1,9 +1,9 @@
 import React from 'react';
-import { content } from '../content';
+import { CONTENT } from '../content';
 import { CheckCircle2, XCircle, Users } from 'lucide-react';
 
 export const TargetSection: React.FC = () => {
-  const { targetAudience } = content;
+  const { targetAudience } = CONTENT;
 
   return (
     <section id="target" className="py-24 px-4 bg-[#09090b] border-y border-zinc-800/80 text-white relative">
@@ -25,7 +25,7 @@ export const TargetSection: React.FC = () => {
           <div className="p-8 rounded-3xl border border-emerald-500/30 bg-emerald-950/15 shadow-xl">
             <div className="flex items-center gap-2.5 mb-6 pb-4 border-b border-emerald-500/20 text-emerald-400 font-mono text-base sm:text-lg font-bold">
               <CheckCircle2 className="w-6 h-6" />
-              <span>RẤT PHÙ HỢP NẾU BẠN LÀ:</span>
+              <span>{targetAudience.fitHeader}</span>
             </div>
             <div className="space-y-5">
               {targetAudience.fit.map((item, idx) => (
@@ -44,7 +44,7 @@ export const TargetSection: React.FC = () => {
           <div className="p-8 rounded-3xl border border-red-500/30 bg-red-950/15 shadow-xl">
             <div className="flex items-center gap-2.5 mb-6 pb-4 border-b border-red-500/20 text-red-400 font-mono text-base sm:text-lg font-bold">
               <XCircle className="w-6 h-6" />
-              <span>KHÔNG PHÙ HỢP NẾU BẠN:</span>
+              <span>{targetAudience.notFitHeader}</span>
             </div>
             <div className="space-y-5">
               {targetAudience.notFit.map((item, idx) => (

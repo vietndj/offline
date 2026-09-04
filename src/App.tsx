@@ -8,7 +8,6 @@ import { MetaphorsSection } from './sections/MetaphorsSection';
 import { PainSection } from './sections/PainSection';
 import { CurriculumSection } from './sections/CurriculumSection';
 import { ShowcaseSection } from './sections/ShowcaseSection';
-import { CaseStudySection } from './sections/CaseStudySection';
 import { TargetSection } from './sections/TargetSection';
 import { InstructorSection } from './sections/InstructorSection';
 import { RegisterSection } from './sections/RegisterSection';
@@ -31,10 +30,14 @@ export function App() {
   }, []);
 
   if (page === 'success') {
-    return <SuccessPage onBackHome={() => {
-      window.history.pushState({}, '', '/');
-      setPage('landing');
-    }} />;
+    return (
+      <SuccessPage
+        onBackHome={() => {
+          window.history.pushState({}, '', '/');
+          setPage('landing');
+        }}
+      />
+    );
   }
 
   return (
@@ -49,7 +52,7 @@ export function App() {
         <MetaphorsSection onOpenRegister={() => setModalOpen(true)} />
         <PainSection />
         <CurriculumSection onOpenRegister={() => setModalOpen(true)} />
-        <BannerCta onOpenRegister={() => setModalOpen(true)} title="Thực hành cầm tay chỉ việc 1-1 cùng Nguyễn Đức Việt" badge="PHÒNG STUDIO CHUYÊN NGHIỆP" />
+        <BannerCta onOpenRegister={() => setModalOpen(true)} />
         <ShowcaseSection />
         <TargetSection />
         <InstructorSection />

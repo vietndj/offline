@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { X, ArrowRight, CheckCircle2, Loader2, Sparkles } from 'lucide-react';
+import { X, ArrowRight, Loader2, Sparkles } from 'lucide-react';
+import { CONTENT } from '../content';
 
 interface ModalProps {
   isOpen: boolean;
@@ -15,12 +16,14 @@ export const RegisterModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
+  const { registerModal } = CONTENT;
+
   if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!fullName.trim() || !phone.trim()) {
-      setErrorMsg('Vui lòng nhập đầy đủ Họ tên và Số điện thoại');
+      setErrorMsg(registerModal.errors.requiredFields);
       return;
     }
 
@@ -49,11 +52,11 @@ export const RegisterModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         });
         window.location.href = `/success?${queryParams.toString()}`;
       } else {
-        setErrorMsg(data.error || 'Có lỗi xảy ra, vui lòng thử lại.');
+        setErrorMsg(data.error || registerModal.errors.serverError);
       }
     } catch (err) {
       console.error(err);
-      setErrorMsg('Lỗi kết nối máy chủ. Vui lòng thử lại.');
+      setErrorMsg(registerModal.errors.networkError);
     } finally {
       setIsSubmitting(false);
     }
@@ -74,13 +77,13 @@ export const RegisterModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         <div className="mb-6">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-xs font-mono font-semibold uppercase tracking-wider mb-2">
             <Sparkles className="w-3 h-3" />
-            <span>ĐĂNG KÝ GIỮ CHỖ OFFLINE</span>
+            <span>{registerModal.badge}</span>
           </div>
           <h3 className="font-serif text-2xl font-medium text-white">
-            Khóa Học Video Marketing 2 Ngày
+            {registerModal.title}
           </h3>
           <p className="text-xs text-zinc-400 font-sans mt-1">
-            Gặp mặt trực tiếp tại Hà Nội · Kèm cặp 1-1 bởi Thầy Nguyễn Đức Việt.
+            {registerModal.subtitle}
           </p>
         </div>
 
@@ -94,14 +97,14 @@ export const RegisterModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
           <div>
             <label className="block text-xs font-mono text-zinc-300 mb-1">
-              HỌ VÀ TÊN <span className="text-amber-400">*</span>
+              {registerModal.fields.fullName.label} <span className="text-amber-400">*</span>
             </label>
             <input
               type="text"
               required
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              placeholder="Ví dụ: Nguyễn Văn Nam"
+              placeholder={registerModal.fields.fullName.placeholder}
               className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 focus:border-amber-500 text-sm text-white placeholder-zinc-500 outline-none"
             />
           </div>
@@ -109,26 +112,26 @@ export const RegisterModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-mono text-zinc-300 mb-1">
-                SỐ ĐIỆN THOẠI / ZALO <span className="text-amber-400">*</span>
+                {registerModal.fields.phone.label} <span className="text-amber-400">*</span>
               </label>
               <input
                 type="tel"
                 required
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="0912345678"
+                placeholder={registerModal.fields.phone.placeholder}
                 className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 focus:border-amber-500 text-sm text-white placeholder-zinc-500 outline-none"
               />
             </div>
             <div>
               <label className="block text-xs font-mono text-zinc-300 mb-1">
-                EMAIL
+                {registerModal.fields.email.label}
               </label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="nam@gmail.com"
+                placeholder={registerModal.fields.email.placeholder}
                 className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 focus:border-amber-500 text-sm text-white placeholder-zinc-500 outline-none"
               />
             </div>
@@ -136,26 +139,26 @@ export const RegisterModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
           <div>
             <label className="block text-xs font-mono text-zinc-300 mb-1">
-              NGHỀ NGHIỆP / LĨNH VỰC
+              {registerModal.fields.occupation.label}
             </label>
             <input
               type="text"
               value={occupation}
               onChange={(e) => setOccupation(e.target.value)}
-              placeholder="Giảng viên / Bác sĩ / Coach..."
+              placeholder={registerModal.fields.occupation.placeholder}
               className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 focus:border-amber-500 text-sm text-white placeholder-zinc-500 outline-none"
             />
           </div>
 
           <div>
             <label className="block text-xs font-mono text-zinc-300 mb-1">
-              NÚT THẮT BẠN MUỐN GIẢI QUYẾT?
+              {registerModal.fields.reason.label}
             </label>
             <textarea
               rows={2}
               value={reason}
               onChange={(e) => setReason(e.target.value)}
-              placeholder="Setup 2 góc quay / Kịch bản chuyển đổi..."
+              placeholder={registerModal.fields.reason.placeholder}
               className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 focus:border-amber-500 text-sm text-white placeholder-zinc-500 outline-none resize-none"
             />
           </div>
@@ -168,11 +171,11 @@ export const RegisterModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             {isSubmitting ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                <span>Đang gửi thông tin...</span>
+                <span>{registerModal.ctaSubmitting}</span>
               </>
             ) : (
               <>
-                <span>XÁC NHẬN ĐĂNG KÝ</span>
+                <span>{registerModal.cta}</span>
                 <ArrowRight className="w-4 h-4" />
               </>
             )}

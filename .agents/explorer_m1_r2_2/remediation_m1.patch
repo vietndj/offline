@@ -1,0 +1,330 @@
+diff --git a/CONTENT_MAP.md b/CONTENT_MAP.md
+index f872654..3c1c2ee 100644
+--- a/CONTENT_MAP.md
++++ b/CONTENT_MAP.md
+@@ -18,8 +18,8 @@
+ | **5** | **Bằng Chứng Meta Suite & Kênh** | `src/sections/ProofSection.tsx` | `CONTENT.proof` | `badge`, `headline`, `description`, `reportCard` (3 số liệu view/click/SĐT & 3 trụ cột hành động), 3 tab soi ảnh HD `tabs` (ảnh, URL nguồn, metric gain), 4 thẻ kênh `channels.items` (ảnh, follower, ngày cập nhật), `ui` nhãn phóng to |
+ | **6** | **Bản Chất Cốt Lõi (So sánh 3 cột)** | `src/sections/DefinitionSection.tsx` | `CONTENT.definition` | `badge`, `headline`, `subheadline`, `highlightWord`, 3 cột `columns` (01. Video Ads, 02. Đu Trend, 03. Video Marketing có cấu trúc), khối đúc kết `callout` (quote trích dẫn của thầy Việt, nút CTA) |
+ | **7** | **Biểu Đồ Giữ Chân (Retention)** | `src/sections/GrowthChartSection.tsx` | `CONTENT.chart` | `badge`, `headline`, `description`, `legends` (chú giải màu sắc & đơn vị), 3 khối `insights` (Nỗi đau, Nút thắt, Giải pháp), dữ liệu điểm `data` (từng mốc giây), trích dẫn nghiên cứu `source` (link Meta Nielsen), kết luận `takeaway` (Kịch bản 3 Tầng) |
+-| **8** | **4 Định Dạng Video Thực Chiến** | `src/sections/MetaphorsSection.tsx` | `CONTENT.metaphors` | `badge`, `headline`, `subheadline`, `formatPrefix`, `labels` (Output, Gỡ rào cản, Ứng dụng, Thực hành), 4 định dạng `items` (Voice Over, Walk & Talk, Talking Head, Storytelling: video mp4, poster, youtubeId, youtubeUrl, output, relief, application), nút `cta` |
+-| **9** | **4 Nút Thắt & Video Switcher** | `src/sections/PainSection.tsx` | `CONTENT.painPoints` | `badge`, `headline`, `subheadline`, `tabPrefix`, `sectionTag`, `outcomePrefix`, 4 tab `tabs` (vướng mắc, giải pháp studio, 2 thẻ phụ), 4 kho video `brollVideos`, `scriptVideos`, `lightingVideos`, `processVideos` (tiêu đề, shortTitle, link video, poster, fbUrl, youtubeUrl), `tab4Overlays` (5 bước quy trình, tag cam kết), `ui` (nhãn modal, nút mở FB/YT) |
++| **8** | **4 Định Dạng Video Thực Chiến** | `src/sections/MetaphorsSection.tsx` | `CONTENT.metaphors` | `badge`, `headline`, `subheadline`, `formatPrefix`, `labels` (Output, Gỡ rào cản, Ứng dụng, Thực hành, watchYoutubeTitle), 4 định dạng `items` (Voice Over, Walk & Talk, Talking Head, Storytelling: video mp4, poster, youtubeId, youtubeUrl, output, relief, application), nút `cta` |
++| **9** | **4 Nút Thắt & Video Switcher** | `src/sections/PainSection.tsx` | `CONTENT.painPoints` | `badge`, `headline`, `subheadline`, `tabPrefix`, `sectionTag`, `outcomePrefix`, 4 tab `tabs` (vướng mắc, giải pháp studio, 2 thẻ phụ), 4 kho video `brollVideos`, `scriptVideos`, `lightingVideos`, `processVideos` (tiêu đề, shortTitle, link video, poster, fbUrl, youtubeUrl), `tab4Overlays` (5 bước quy trình, tag cam kết), `ui` (nhãn modal, nút mở FB/YT, brollBadgePrefix, scriptBadgePrefix, lightingBadgePrefix, processBadgePrefix) |
+ | **10** | **Lộ Trình Học 2 Ngày** | `src/sections/CurriculumSection.tsx` | `CONTENT.curriculum` | `badge`, `headline`, `subheadline`, 3 ảnh thực tế lớp `eventPhotos` (ảnh, caption, alt), `dayPrefix`, `goalLabel`, chi tiết 2 ngày `days` (mục tiêu ngày, bài học ca sáng, bài học ca chiều, thời gian), khối quà tặng `bonus` (tag, tiêu đề, mô tả, nút nhận quà) |
+ | **11** | **Banner Kêu Gọi Giữa Trang** | `src/sections/BannerCta.tsx` & `App.tsx` | `CONTENT.bannerCta` | `badge` ("PHÒNG STUDIO CHUYÊN NGHIỆP"), `title` ("Thực hành cầm tay chỉ việc 1-1 cùng Nguyễn Đức Việt"), `cta` ("ĐĂNG KÝ GIỮ CHỖ") |
+ | **12** | **Thành Phẩm Video Học Viên** | `src/sections/ShowcaseSection.tsx` | `CONTENT.showcase` | `badge`, `headline`, `subheadline`, danh mục bộ lọc `categories` (Spa, Đời thường, Bán hàng, Tất cả), 8 video thành phẩm `videos` (tên học viên, vai trò, mô tả, poster, videoUrl, youtubeUrl, danh mục), `ui` (nhãn xem video, vuốt ngang, aria) |
+diff --git a/src/App.tsx b/src/App.tsx
+index 3d4d7b0..22d3b6c 100644
+--- a/src/App.tsx
++++ b/src/App.tsx
+@@ -8,7 +8,6 @@ import { MetaphorsSection } from './sections/MetaphorsSection';
+ import { PainSection } from './sections/PainSection';
+ import { CurriculumSection } from './sections/CurriculumSection';
+ import { ShowcaseSection } from './sections/ShowcaseSection';
+-import { CaseStudySection } from './sections/CaseStudySection';
+ import { TargetSection } from './sections/TargetSection';
+ import { InstructorSection } from './sections/InstructorSection';
+ import { RegisterSection } from './sections/RegisterSection';
+diff --git a/src/content.ts b/src/content.ts
+index 35c2cc9..e313e52 100644
+--- a/src/content.ts
++++ b/src/content.ts
+@@ -208,6 +208,8 @@ export interface ContentData {
+       application: string;
+       practiceNote: string;
+       practiceTag: string;
++      watchYoutubeTitle: string;
++      youtubeButtonText?: string;
+     };
+     items: {
+       id: string;
+@@ -305,6 +307,10 @@ export interface ContentData {
+       scriptCategory: string;
+       lightingCategory: string;
+       processCategory: string;
++      brollBadgePrefix: string;
++      scriptBadgePrefix: string;
++      lightingBadgePrefix: string;
++      processBadgePrefix: string;
+       playBrollText: string;
+       playScriptText: string;
+       playLightingText: string;
+@@ -607,7 +613,7 @@ export const CONTENT: ContentData = {
+ 
+   // 4. Hero Section
+   hero: {
+-    badge: "MUTATION_TEST_HERO_BADGE_CHALLENGE_PASS",
++    badge: "GẶP MẶT TRỰC TIẾP · HÀ NỘI · SĨ SỐ GIỚI HẠN",
+     headline: "Biến Chuyên Môn Của Bạn Thành Video Marketing Đắt Giá",
+     subheadline: "Khóa học offline 2 ngày thực chiến (từ sáng đến chiều), cầm tay chỉ việc giúp chủ doanh nghiệp, người làm chuyên môn, đào tạo và dịch vụ làm chủ toàn bộ quy trình sản xuất video từ A–Z. Không cần rành công nghệ hay giỏi kỹ thuật từ trước.",
+     tags: [
+@@ -753,7 +759,7 @@ export const CONTENT: ContentData = {
+ 
+   // 6. Definition Section (Bản Chất Cốt Lõi: So Sánh 3 Cột)
+   definition: {
+-    badge: "MUTATION_TEST_DEF_BADGE_CHALLENGE_PASS",
++    badge: "BẢN CHẤT CỐT LÕI · PHÂN BIỆT RÕ RÀNG",
+     headline: "Video marketing là gì? Vì sao 90% người làm video đang nhầm sang \"video ads\" hoặc \"câu view rác\"?",
+     subheadline: "Quảng cáo tắt tiền là hết khách, câu view giải trí thì không ra tiền. Chỉ có video marketing có cấu trúc chuẩn mới là tài sản tự động mang khách hàng về cho bạn 24/7.",
+     highlightWord: "video marketing có cấu trúc chuẩn",
+@@ -896,7 +902,9 @@ export const CONTENT: ContentData = {
+       relief: "Gỡ Bỏ Rào Cản",
+       application: "Ứng dụng:",
+       practiceNote: "Thực hành tại lớp",
+-      practiceTag: "1 kèm 1"
++      practiceTag: "1 kèm 1",
++      watchYoutubeTitle: "Xem trên YouTube",
++      youtubeButtonText: "YouTube"
+     },
+     items: [
+       {
+@@ -973,7 +981,7 @@ export const CONTENT: ContentData = {
+           "Nói vấp liên tục, quay đi quay lại cả chục lần vẫn không ưng ý.",
+           "Mất hàng giờ đồng hồ chỉ để hoàn thành 1 đoạn video ngắn ngủi 30 giây."
+         ],
+-        outcome: "Giải pháp: Phương pháp kịch bản chuyển đổi ngắt nhịp 5s + Kỹ thuật B-roll Bank (chèn cảnh trám 2-3s đè timeline) giúp bạn nói tự nhiên, che 100% lỗi nói vấp và mắt đơ.",
++        outcome: "Phương pháp kịch bản chuyển đổi ngắt nhịp 5s + Kỹ thuật B-roll Bank (chèn cảnh trám 2-3s đè timeline) giúp bạn nói tự nhiên, che 100% lỗi nói vấp và mắt đơ.",
+         media: "/assets/formats/voiceover_poster.jpg",
+         cards: [
+           { title: "Kịch bản chuyển đổi", desc: "Chỉ nhìn 1 từ khóa cốt lõi cho mỗi ý, nói chuyện như đang tâm sự với 1 người bạn thân." },
+@@ -989,7 +997,7 @@ export const CONTENT: ContentData = {
+           "Mắt đảo lia lịa, giọng đều như trả bài: Càng cố nhớ kịch bản thì mặt càng đơ, khán giả nghe 2 giây là lướt ngay.",
+           "Hình ảnh bị ép khung, cắt vụn theo tiếng: Cố băm nhỏ video cho khít chữ, khiến clip bị giật cục và mất nhịp ngấm."
+         ],
+-        outcome: "Giải pháp: Trợ lý AI bóc lỗi văn mẫu + Quy trình kịch bản 1 nhịp thở: Dùng bộ 3 trợ lý AI (Miss Idea, Miss Vlog, Miss Video Ads) lọc sạch 7 lỗi sáo rỗng, bẻ nhỏ câu ngắn 5s kèm B-roll, nói tự nhiên như tâm sự ngoài đời.",
++        outcome: "Trợ lý AI bóc lỗi văn mẫu + Quy trình kịch bản 1 nhịp thở: Dùng bộ 3 trợ lý AI (Miss Idea, Miss Vlog, Miss Video Ads) lọc sạch 7 lỗi sáo rỗng, bẻ nhỏ câu ngắn 5s kèm B-roll, nói tự nhiên như tâm sự ngoài đời.",
+         media: "/assets/showcase/ai_miss_vlog_poster.jpg",
+         cards: [
+           {
+@@ -1011,7 +1019,7 @@ export const CONTENT: ContentData = {
+           "Mặt bị bóng dầu hoặc tối sầm vì không biết cách mượn ánh sáng tự nhiên và đèn cơ bản.",
+           "Âm thanh lẫn tạp âm, tiếng vọng phòng làm giảm 80% độ uy tín của chuyên gia."
+         ],
+-        outcome: "Giải pháp: Kỹ thuật setup 2 góc quay điện thoại (Góc chính diện + Góc cận 45 độ) tạo chiều sâu điện ảnh kết hợp lọc âm trong vắt.",
++        outcome: "Kỹ thuật setup 2 góc quay điện thoại (Góc chính diện + Góc cận 45 độ) tạo chiều sâu điện ảnh kết hợp lọc âm trong vắt.",
+         media: "/assets/lighting/light_talkinghead.jpg",
+         cards: [
+           { title: "Setup 2 Cam Điện Thoại", desc: "Tận dụng ngay 2 chiếc smartphone có sẵn để tạo hiệu ứng chuyển góc như talkshow truyền hình." },
+@@ -1027,7 +1035,7 @@ export const CONTENT: ContentData = {
+           "Không có kho tư liệu dự trữ: Cứ có việc bận kinh doanh là kênh bị bỏ hoang hàng tuần, mất sạch tương tác và đề xuất.",
+           "Không đo lường chuyển đổi: Làm video theo cảm tính, không biết clip nào kéo khách để nhân bản mô hình."
+         ],
+-        outcome: "Giải pháp: Đóng gói quy trình sản xuất video 1 buổi/tuần: Quay 1 buổi tích lũy kho 50+ tư liệu B-roll dùng cho cả tháng, kết hợp phễu thu thập số điện thoại và data khách tự động.",
++        outcome: "Đóng gói quy trình sản xuất video 1 buổi/tuần: Quay 1 buổi tích lũy kho 50+ tư liệu B-roll dùng cho cả tháng, kết hợp phễu thu thập số điện thoại và data khách tự động.",
+         media: "/assets/showcase/multicam.jpg",
+         cards: [
+           { title: "Kho B-Roll Bank 50+ clip", desc: "Quay sẵn kho cảnh làm việc, tư vấn, đóng gói để ghép video quanh năm không bao giờ cạn ý tưởng." },
+@@ -1161,6 +1169,10 @@ export const CONTENT: ContentData = {
+       scriptCategory: "Trợ Lý AI Viết Kịch Bản Thực Chiến",
+       lightingCategory: "Thực Hành Setup Ánh Sáng",
+       processCategory: "Quy Trình Sản Xuất 1 Buổi/Tuần",
++      brollBadgePrefix: "B-ROLL BANK 0",
++      scriptBadgePrefix: "AI VIẾT KỊCH BẢN 0",
++      lightingBadgePrefix: "VIDEO THỰC CHIẾN 0",
++      processBadgePrefix: "QUY TRÌNH THỰC CHIẾN 0",
+       playBrollText: "BẤM ĐỂ XEM B-ROLL BANK",
+       playScriptText: "BẤM XEM AI DEMO",
+       playLightingText: "BẤM ĐỂ XEM VIDEO",
+@@ -1274,14 +1286,14 @@ export const CONTENT: ContentData = {
+ 
+   // 11. Mid-Page Banner CTA
+   bannerCta: {
+-    badge: "MUTATION_TEST_BANNER_BADGE_CHALLENGE_PASS",
++    badge: "PHÒNG STUDIO CHUYÊN NGHIỆP",
+     title: "Thực hành cầm tay chỉ việc 1-1 cùng Nguyễn Đức Việt",
+     cta: "ĐĂNG KÝ GIỮ CHỖ"
+   },
+ 
+   // 12. Student Showcase Section
+   showcase: {
+-    badge: "MUTATION_TEST_SHOWCASE_BADGE_CHALLENGE_PASS",
++    badge: "THÀNH PHẨM THỰC TẾ HỌC VIÊN",
+     headline: "Xem Video Do Chính Học Viên Sản Xuất Sau Khóa Học",
+     subheadline: "Từ những người chưa từng biết cầm máy hay edit, đây là những video thành phẩm được quay và dựng hoàn chỉnh 100%.",
+     categories: [
+@@ -1567,7 +1579,7 @@ export const CONTENT: ContentData = {
+ 
+   // 19. Mobile Sticky Floating CTA
+   stickyBottomCta: {
+-    badge: "MUTATION_TEST_STICKY_BADGE_CHALLENGE_PASS",
++    badge: "OFFLINE HÀ NỘI",
+     subtitle: "Giới hạn ≤ 40 Học Viên",
+     cta: "GIỮ CHỖ"
+   },
+diff --git a/src/sections/DefinitionSection.tsx b/src/sections/DefinitionSection.tsx
+index 5dea55c..f0bd467 100644
+--- a/src/sections/DefinitionSection.tsx
++++ b/src/sections/DefinitionSection.tsx
+@@ -22,7 +22,7 @@ export const DefinitionSection: React.FC<DefinitionSectionProps> = ({ onOpenRegi
+             {definition.headline}
+           </h2>
+           <p className="text-zinc-300 text-base sm:text-lg leading-relaxed [text-wrap:balance] max-w-3xl mx-auto font-sans">
+-            {definition.subheadline.includes(definition.highlightWord) ? (
++            {definition.highlightWord && definition.subheadline.includes(definition.highlightWord) ? (
+               <>
+                 {definition.subheadline.split(definition.highlightWord)[0]}
+                 <strong className="text-amber-400">{definition.highlightWord}</strong>
+diff --git a/src/sections/GrowthChartSection.tsx b/src/sections/GrowthChartSection.tsx
+index d642a19..a77559d 100644
+--- a/src/sections/GrowthChartSection.tsx
++++ b/src/sections/GrowthChartSection.tsx
+@@ -10,14 +10,17 @@ export const GrowthChartSection: React.FC = () => {
+   const height = 320;
+   const padding = 50;
+ 
+-  const pointsNormal = chart.data.map((d, i) => {
+-    const x = padding + (i * (width - 2 * padding)) / (chart.data.length - 1);
++  const hasMultiplePoints = Boolean(chart.data && chart.data.length > 1);
++  const divisor = hasMultiplePoints ? chart.data.length - 1 : 1;
++
++  const pointsNormal = (chart.data || []).map((d, i) => {
++    const x = padding + (i * (width - 2 * padding)) / divisor;
+     const y = height - padding - (d.normal / 100) * (height - 2 * padding);
+     return { x, y, val: d.normal, month: d.month };
+   });
+ 
+-  const pointsMarketing = chart.data.map((d, i) => {
+-    const x = padding + (i * (width - 2 * padding)) / (chart.data.length - 1);
++  const pointsMarketing = (chart.data || []).map((d, i) => {
++    const x = padding + (i * (width - 2 * padding)) / divisor;
+     const y = height - padding - (d.marketing / 100) * (height - 2 * padding);
+     return { x, y, val: d.marketing, month: d.month };
+   });
+@@ -25,7 +28,9 @@ export const GrowthChartSection: React.FC = () => {
+   const pathNormal = pointsNormal.reduce((acc, p, i) => `${acc} ${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`, '');
+   const pathMarketing = pointsMarketing.reduce((acc, p, i) => `${acc} ${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`, '');
+ 
+-  const areaMarketing = `${pathMarketing} L ${pointsMarketing[pointsMarketing.length - 1].x} ${height - padding} L ${pointsMarketing[0].x} ${height - padding} Z`;
++  const areaMarketing = pointsMarketing.length > 0
++    ? `${pathMarketing} L ${pointsMarketing[pointsMarketing.length - 1].x} ${height - padding} L ${pointsMarketing[0].x} ${height - padding} Z`
++    : '';
+ 
+   return (
+     <section id="growth" className="py-24 px-4 bg-[#0c0d10] border-y border-zinc-800/80 relative">
+diff --git a/src/sections/MetaphorsSection.tsx b/src/sections/MetaphorsSection.tsx
+index a179d9f..591c34d 100644
+--- a/src/sections/MetaphorsSection.tsx
++++ b/src/sections/MetaphorsSection.tsx
+@@ -49,7 +49,7 @@ export const MetaphorsSection: React.FC<MetaphorsSectionProps> = ({ onOpenRegist
+                   <div className="absolute top-3 right-3 flex items-center gap-1.5 opacity-90 group-hover/vid:opacity-100 transition-opacity">
+                     <button
+                       onClick={() => setActiveYoutubeModal(item.youtubeId)}
+-                      title="Xem trên YouTube"
++                      title={metaphors.labels.watchYoutubeTitle}
+                       className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-black/70 hover:bg-red-600 text-white text-[11px] font-mono font-semibold backdrop-blur-md border border-white/20 transition-colors shadow-sm cursor-pointer"
+                     >
+                       <Play className="w-3 h-3 fill-current" />
+diff --git a/src/sections/PainSection.tsx b/src/sections/PainSection.tsx
+index 7bd2045..28ee369 100644
+--- a/src/sections/PainSection.tsx
++++ b/src/sections/PainSection.tsx
+@@ -4,7 +4,7 @@ import { Sparkles, CheckCircle2, AlertCircle, Play, X, ExternalLink, Video } fro
+ 
+ export const PainSection: React.FC = () => {
+   const { painPoints } = CONTENT;
+-  const [activeTab, setActiveTab] = useState(painPoints.tabs[0].id);
++  const [activeTab, setActiveTab] = useState(painPoints.tabs?.[0]?.id || '');
+   const [selectedBrollIndex, setSelectedBrollIndex] = useState(0);
+   const [selectedScriptIndex, setSelectedScriptIndex] = useState(0);
+   const [selectedLightIndex, setSelectedLightIndex] = useState(0);
+@@ -18,11 +18,50 @@ export const PainSection: React.FC = () => {
+     youtubeUrl?: string;
+   } | null>(null);
+ 
+-  const currentTab = painPoints.tabs.find(t => t.id === activeTab) || painPoints.tabs[0];
+-  const activeBrollVideo = painPoints.brollVideos[selectedBrollIndex] || painPoints.brollVideos[0];
+-  const activeScriptVideo = painPoints.scriptVideos[selectedScriptIndex] || painPoints.scriptVideos[0];
+-  const activeLightVideo = painPoints.lightingVideos[selectedLightIndex] || painPoints.lightingVideos[0];
+-  const activeProcessVideo = painPoints.processVideos[selectedProcessIndex] || painPoints.processVideos[0];
++  const currentTab = painPoints.tabs.find(t => t.id === activeTab) || painPoints.tabs?.[0] || {
++    id: '',
++    title: '',
++    subtitle: '',
++    points: [],
++    outcome: '',
++    media: '',
++    cards: []
++  };
++  const activeBrollVideo = painPoints.brollVideos[selectedBrollIndex] || painPoints.brollVideos?.[0] || {
++    id: '',
++    title: '',
++    subtitle: '',
++    shortTitle: '',
++    poster: '',
++    desc: ''
++  };
++  const activeScriptVideo = painPoints.scriptVideos[selectedScriptIndex] || painPoints.scriptVideos?.[0] || {
++    id: '',
++    title: '',
++    subtitle: '',
++    shortTitle: '',
++    poster: '',
++    videoId: '',
++    youtubeUrl: ''
++  };
++  const activeLightVideo = painPoints.lightingVideos[selectedLightIndex] || painPoints.lightingVideos?.[0] || {
++    id: '',
++    title: '',
++    subtitle: '',
++    shortTitle: '',
++    poster: '',
++    videoId: '',
++    youtubeUrl: ''
++  };
++  const activeProcessVideo = painPoints.processVideos[selectedProcessIndex] || painPoints.processVideos?.[0] || {
++    id: '',
++    title: '',
++    subtitle: '',
++    shortTitle: '',
++    poster: '',
++    videoId: '',
++    youtubeUrl: ''
++  };
+ 
+   return (
+     <section id="pain-points" className="py-24 px-4 bg-[#09090b] border-y border-zinc-800/80 text-white relative">
+@@ -123,7 +162,7 @@ export const PainSection: React.FC = () => {
+ 
+                 {/* Outcome Box */}
+                 <div className="p-5 sm:p-6 rounded-2xl border-2 border-emerald-500/40 bg-emerald-950/40 text-emerald-100 text-base sm:text-lg font-sans mb-6 leading-relaxed shadow-lg">
+-                  {painPoints.outcomePrefix} <strong>{currentTab.outcome.replace(/^Giải pháp:\s*/, '')}</strong>
++                  {painPoints.outcomePrefix} <strong>{currentTab?.outcome || ''}</strong>
+                 </div>
+               </div>
+ 
+@@ -178,7 +217,7 @@ export const PainSection: React.FC = () => {
+                     <div className="absolute bottom-0 inset-x-0 p-4 text-left">
+                       <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500 text-zinc-950 font-mono text-[11px] font-bold uppercase mb-1.5 shadow-sm">
+                         <Video className="w-3.5 h-3.5" />
+-                        <span>B-ROLL BANK 0{selectedBrollIndex + 1}</span>
++                        <span>{painPoints.ui.brollBadgePrefix}{selectedBrollIndex + 1}</span>
+                       </div>
+                       <h4 className="font-sans font-bold text-base text-white leading-snug line-clamp-1">
+                         {activeBrollVideo.title}
+@@ -257,7 +296,7 @@ export const PainSection: React.FC = () => {
+                     <div className="absolute bottom-0 inset-x-0 p-4 text-left">
+                       <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500 text-zinc-950 font-mono text-[11px] font-bold uppercase mb-1.5 shadow-sm">
+                         <Video className="w-3.5 h-3.5" />
+-                        <span>AI VIẾT KỊCH BẢN 0{selectedScriptIndex + 1}</span>
++                        <span>{painPoints.ui.scriptBadgePrefix}{selectedScriptIndex + 1}</span>
+                       </div>
+                       <h4 className="font-sans font-bold text-base text-white leading-snug line-clamp-1">
+                         {activeScriptVideo.title}
+@@ -335,7 +374,7 @@ export const PainSection: React.FC = () => {
+                     <div className="absolute bottom-0 inset-x-0 p-4 text-left">
+                       <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500 text-zinc-950 font-mono text-[11px] font-bold uppercase mb-1.5 shadow-sm">
+                         <Video className="w-3.5 h-3.5" />
+-                        <span>VIDEO THỰC CHIẾN 0{selectedLightIndex + 1}</span>
++                        <span>{painPoints.ui.lightingBadgePrefix}{selectedLightIndex + 1}</span>
+                       </div>
+                       <h4 className="font-sans font-bold text-base text-white leading-snug line-clamp-1">
+                         {activeLightVideo.title}
+@@ -459,7 +498,7 @@ export const PainSection: React.FC = () => {
+                       </div>
+                       <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500 text-zinc-950 font-mono text-[11px] font-bold uppercase mb-1.5 shadow-sm">
+                         <Video className="w-3.5 h-3.5" />
+-                        <span>QUY TRÌNH THỰC CHIẾN 0{selectedProcessIndex + 1}</span>
++                        <span>{painPoints.ui.processBadgePrefix}{selectedProcessIndex + 1}</span>
+                       </div>
+                       <h4 className="font-sans font-bold text-base text-white leading-snug line-clamp-1">
+                         {activeProcessVideo.title}

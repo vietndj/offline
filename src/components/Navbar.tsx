@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Video, Menu, X, ArrowRight } from 'lucide-react';
+import { CONTENT } from '../content';
 
 interface NavbarProps {
   onOpenRegister: () => void;
@@ -8,6 +9,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onOpenRegister }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { navbar } = CONTENT;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,16 +18,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRegister }) => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const navLinks = [
-    { label: 'Kết Quả', href: '#proof' },
-    { label: '4 Định Dạng', href: '#metaphors' },
-    { label: '4 Nút Thắt', href: '#pain-points' },
-    { label: 'Lộ Trình 2 Ngày', href: '#curriculum' },
-    { label: 'Video Học Viên', href: '#showcase' },
-    { label: 'Giảng Viên', href: '#instructor' },
-    { label: 'Hỏi Đáp', href: '#faq' },
-  ];
 
   return (
     <header
@@ -42,16 +34,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRegister }) => {
           </div>
           <div>
             <span className="font-bold text-base tracking-tight text-white block leading-none">
-              VIDEO MARKETING
+              {navbar.brand.title}
             </span>
             <span className="text-[10px] font-mono tracking-widest text-orange-400 block mt-1 uppercase font-semibold">
-              WORKSHOP OFFLINE 2 NGÀY
+              {navbar.brand.subtitle}
             </span>
           </div>
         </a>
 
         <nav className="hidden lg:flex items-center gap-7">
-          {navLinks.map((link) => (
+          {navbar.links.map((link) => (
             <a
               key={link.label}
               href={link.href}
@@ -65,16 +57,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRegister }) => {
         <div className="hidden sm:flex items-center gap-3">
           <button
             onClick={onOpenRegister}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-black font-semibold text-xs hover:bg-zinc-200 transition-all active:scale-95 shadow-md"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-black font-semibold text-xs hover:bg-zinc-200 transition-all active:scale-95 shadow-md cursor-pointer"
           >
-            <span>GIỮ CHỖ NGAY</span>
+            <span>{navbar.cta}</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden p-2 rounded-lg bg-zinc-800 text-zinc-300 hover:text-white"
+          className="lg:hidden p-2 rounded-lg bg-zinc-800 text-zinc-300 hover:text-white cursor-pointer"
           aria-label="Toggle Menu"
         >
           {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -84,7 +76,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRegister }) => {
       {mobileMenuOpen && (
         <div className="lg:hidden bg-[#09090b]/98 border-b border-zinc-800 px-4 py-6 space-y-4 shadow-2xl backdrop-blur-xl">
           <div className="flex flex-col space-y-3">
-            {navLinks.map((link) => (
+            {navbar.links.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
@@ -100,9 +92,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRegister }) => {
               setMobileMenuOpen(false);
               onOpenRegister();
             }}
-            className="w-full py-3 rounded-xl bg-orange-500 text-black font-bold text-sm text-center shadow-lg shadow-orange-500/20"
+            className="w-full py-3 rounded-xl bg-orange-500 text-black font-bold text-sm text-center shadow-lg shadow-orange-500/20 cursor-pointer"
           >
-            ĐĂNG KÝ GIỮ CHỖ NGAY
+            {navbar.mobileCta}
           </button>
         </div>
       )}

@@ -7,7 +7,8 @@
     "dev": "npx vite@7.3.2 --config vite.config.ts --host 0.0.0.0",
     "build": "npx vite@7.3.2 build --config vite.config.ts",
     "serve": "npx vite@7.3.2 preview --config vite.config.ts --host 0.0.0.0",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test:e2e": "node tests/e2e/runner.mjs"
   },
   "dependencies": {
     "@vercel/node": "^5.8.23",

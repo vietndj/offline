@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { content } from '../content';
+import { CONTENT } from '../content';
 import { Sparkles, CheckCircle2, AlertCircle, Play, X, ExternalLink, Video } from 'lucide-react';
 
 export const PainSection: React.FC = () => {
-  const { painPoints } = content;
-  const [activeTab, setActiveTab] = useState(painPoints.tabs[0].id);
+  const { painPoints } = CONTENT;
+  const [activeTab, setActiveTab] = useState(painPoints.tabs?.[0]?.id || '');
   const [selectedBrollIndex, setSelectedBrollIndex] = useState(0);
   const [selectedScriptIndex, setSelectedScriptIndex] = useState(0);
   const [selectedLightIndex, setSelectedLightIndex] = useState(0);
@@ -15,13 +15,53 @@ export const PainSection: React.FC = () => {
     category?: string;
     videoUrl?: string;
     fbUrl?: string;
+    youtubeUrl?: string;
   } | null>(null);
 
-  const currentTab = painPoints.tabs.find(t => t.id === activeTab) || painPoints.tabs[0];
-  const activeBrollVideo = painPoints.brollVideos[selectedBrollIndex] || painPoints.brollVideos[0];
-  const activeScriptVideo = painPoints.scriptVideos[selectedScriptIndex] || painPoints.scriptVideos[0];
-  const activeLightVideo = painPoints.lightingVideos[selectedLightIndex] || painPoints.lightingVideos[0];
-  const activeProcessVideo = painPoints.processVideos[selectedProcessIndex] || painPoints.processVideos[0];
+  const currentTab = painPoints.tabs.find(t => t.id === activeTab) || painPoints.tabs?.[0] || {
+    id: '',
+    title: '',
+    subtitle: '',
+    points: [],
+    outcome: '',
+    media: '',
+    cards: []
+  };
+  const activeBrollVideo = painPoints.brollVideos[selectedBrollIndex] || painPoints.brollVideos?.[0] || {
+    id: '',
+    title: '',
+    subtitle: '',
+    shortTitle: '',
+    poster: '',
+    desc: ''
+  };
+  const activeScriptVideo = painPoints.scriptVideos[selectedScriptIndex] || painPoints.scriptVideos?.[0] || {
+    id: '',
+    title: '',
+    subtitle: '',
+    shortTitle: '',
+    poster: '',
+    videoId: '',
+    youtubeUrl: ''
+  };
+  const activeLightVideo = painPoints.lightingVideos[selectedLightIndex] || painPoints.lightingVideos?.[0] || {
+    id: '',
+    title: '',
+    subtitle: '',
+    shortTitle: '',
+    poster: '',
+    videoId: '',
+    youtubeUrl: ''
+  };
+  const activeProcessVideo = painPoints.processVideos[selectedProcessIndex] || painPoints.processVideos?.[0] || {
+    id: '',
+    title: '',
+    subtitle: '',
+    shortTitle: '',
+    poster: '',
+    videoId: '',
+    youtubeUrl: ''
+  };
 
   return (
     <section id="pain-points" className="py-24 px-4 bg-[#09090b] border-y border-zinc-800/80 text-white relative">
@@ -47,30 +87,33 @@ export const PainSection: React.FC = () => {
             return (
               <button
                 key={tab.id}
+                type="button"
                 onClick={() => setActiveTab(tab.id)}
-                className={`p-5 sm:p-6 rounded-2xl text-left transition-all duration-200 cursor-pointer border flex flex-col justify-between ${
+                className={`p-5 sm:p-6 rounded-2xl text-left cursor-pointer border-2 flex flex-col justify-between outline-none focus:outline-none focus-visible:outline-none transition-colors duration-150 select-none ${
                   isActive
-                    ? 'bg-amber-500/20 border-2 border-amber-500 text-white shadow-2xl ring-2 ring-amber-500/40'
+                    ? 'bg-amber-500/20 border-amber-500 text-white shadow-xl shadow-amber-500/10'
                     : 'bg-zinc-900/90 border-zinc-700/80 text-zinc-300 hover:border-zinc-500 hover:text-white'
                 }`}
               >
                 <div>
                   <div className="flex items-center gap-3 mb-3">
-                    <span className={`w-8 h-8 rounded-full text-sm font-mono font-black flex items-center justify-center shrink-0 ${
-                      isActive ? 'bg-amber-400 text-zinc-950 shadow-md' : 'bg-zinc-800 text-zinc-300 border border-zinc-700'
+                    <span className={`w-8 h-8 rounded-full text-sm font-mono font-black flex items-center justify-center shrink-0 border transition-colors duration-150 ${
+                      isActive
+                        ? 'bg-amber-400 text-zinc-950 border-amber-400 shadow-md'
+                        : 'bg-zinc-800 text-zinc-300 border-zinc-700'
                     }`}>
                       {String(idx + 1).padStart(2, '0')}
                     </span>
-                    <span className={`text-xs font-mono font-bold uppercase tracking-wider ${isActive ? 'text-amber-300' : 'text-zinc-400'}`}>
-                      VƯỚNG MẮC 0{idx + 1}
+                    <span className={`text-xs font-mono font-bold uppercase tracking-wider transition-colors duration-150 ${isActive ? 'text-amber-300' : 'text-zinc-400'}`}>
+                      {painPoints.tabPrefix}0{idx + 1}
                     </span>
                   </div>
-                  <div className={`text-lg sm:text-xl font-sans font-bold leading-snug ${isActive ? 'text-white' : 'text-zinc-100'}`}>
+                  <div className={`text-lg sm:text-xl font-sans font-bold leading-snug transition-colors duration-150 ${isActive ? 'text-white' : 'text-zinc-100'}`}>
                     {tab.title}
                   </div>
                 </div>
-                <div className={`text-sm sm:text-base font-sans leading-snug mt-3 pt-3 border-t ${
-                  isActive ? 'border-amber-500/30 text-amber-200 font-medium' : 'border-zinc-800 text-zinc-400'
+                <div className={`text-sm sm:text-base font-sans leading-snug mt-3 pt-3 border-t transition-colors duration-150 ${
+                  isActive ? 'border-amber-500/30 text-amber-200' : 'border-zinc-800 text-zinc-400'
                 }`}>
                   {tab.subtitle}
                 </div>
@@ -80,14 +123,14 @@ export const PainSection: React.FC = () => {
         </div>
 
         {/* Tab Detail Content */}
-        <div className="p-6 sm:p-10 rounded-3xl border border-zinc-700/80 bg-[#121216] shadow-2xl">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="p-6 sm:p-10 rounded-3xl border border-zinc-700/80 bg-[#121216] shadow-2xl min-h-[560px]">
+          <div key={activeTab} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Left Content (7 Cols) */}
             <div className="lg:col-span-7 flex flex-col justify-between">
               <div>
                 <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono font-bold text-amber-400 uppercase tracking-wider mb-3">
                   <AlertCircle className="w-4 h-4" />
-                  <span>VƯỚNG MẮC THỰC TẾ & CÁCH THẦY TRÒ CÙNG LÀM</span>
+                  <span>{painPoints.sectionTag}</span>
                 </div>
                 
                 <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 leading-snug">
@@ -119,7 +162,7 @@ export const PainSection: React.FC = () => {
 
                 {/* Outcome Box */}
                 <div className="p-5 sm:p-6 rounded-2xl border-2 border-emerald-500/40 bg-emerald-950/40 text-emerald-100 text-base sm:text-lg font-sans mb-6 leading-relaxed shadow-lg">
-                  ✨ <strong>Cách xử lý tại studio:</strong> {currentTab.outcome.replace(/^Giải pháp:\s*/, '')}
+                  {painPoints.outcomePrefix} <strong>{currentTab?.outcome || ''}</strong>
                 </div>
               </div>
 
@@ -144,9 +187,10 @@ export const PainSection: React.FC = () => {
                     onClick={() => setModalVideo({
                       id: activeBrollVideo.videoId,
                       title: activeBrollVideo.title,
-                      category: 'Kho B-Roll Bank Xử Lý',
+                      category: painPoints.ui.brollCategory,
                       videoUrl: activeBrollVideo.videoUrl,
                       fbUrl: activeBrollVideo.fbUrl,
+                      youtubeUrl: activeBrollVideo.youtubeUrl,
                     })}
                     className="relative rounded-3xl overflow-hidden border-2 border-amber-500 bg-zinc-950 shadow-2xl group cursor-pointer aspect-[9/16] flex items-center justify-center ring-2 ring-amber-500/30"
                   >
@@ -165,7 +209,7 @@ export const PainSection: React.FC = () => {
                         <Play className="w-6 h-6 text-white fill-white ml-0.5" />
                       </div>
                       <span className="mt-3 px-3.5 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-xs font-mono font-bold text-amber-300 tracking-wider shadow-lg">
-                        BẤM ĐỂ XEM B-ROLL BANK
+                        {painPoints.ui.playBrollText}
                       </span>
                     </div>
 
@@ -173,7 +217,7 @@ export const PainSection: React.FC = () => {
                     <div className="absolute bottom-0 inset-x-0 p-4 text-left">
                       <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500 text-zinc-950 font-mono text-[11px] font-bold uppercase mb-1.5 shadow-sm">
                         <Video className="w-3.5 h-3.5" />
-                        <span>B-ROLL BANK 0{selectedBrollIndex + 1}</span>
+                        <span>{painPoints.ui.brollBadgePrefix}{selectedBrollIndex + 1}</span>
                       </div>
                       <h4 className="font-sans font-bold text-base text-white leading-snug line-clamp-1">
                         {activeBrollVideo.title}
@@ -184,8 +228,8 @@ export const PainSection: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* 3 B-Roll Videos Switcher */}
-                  <div className="grid grid-cols-3 gap-2">
+                  {/* 2 B-Roll Videos Switcher */}
+                  <div className="grid grid-cols-2 gap-2">
                     {painPoints.brollVideos.map((bv, idx) => {
                       const isSelected = idx === selectedBrollIndex;
                       return (
@@ -208,7 +252,7 @@ export const PainSection: React.FC = () => {
                           </div>
                           <div className="font-mono text-[10px] font-bold text-amber-300">0{idx + 1}</div>
                           <div className="text-[11px] font-sans font-bold text-zinc-200 truncate w-full leading-tight">
-                            {bv.title.replace(' & B-Roll Đè Hình', '').replace('B-Roll ', '').replace('Talking Head & ', '')}
+                            {bv.shortTitle}
                           </div>
                         </button>
                       );
@@ -223,8 +267,9 @@ export const PainSection: React.FC = () => {
                     onClick={() => setModalVideo({
                       id: activeScriptVideo.videoId,
                       title: activeScriptVideo.title,
-                      category: 'Trợ Lý AI Viết Kịch Bản Thực Chiến',
+                      category: painPoints.ui.scriptCategory,
                       videoUrl: activeScriptVideo.videoUrl,
+                      youtubeUrl: activeScriptVideo.youtubeUrl,
                     })}
                     className="relative rounded-3xl overflow-hidden border-2 border-amber-500 bg-zinc-950 shadow-2xl group cursor-pointer aspect-[9/16] flex items-center justify-center ring-2 ring-amber-500/30"
                   >
@@ -243,7 +288,7 @@ export const PainSection: React.FC = () => {
                         <Play className="w-6 h-6 text-white fill-white ml-0.5" />
                       </div>
                       <span className="mt-3 px-3.5 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-xs font-mono font-bold text-amber-300 tracking-wider shadow-lg">
-                        BẤM XEM AI DEMO
+                        {painPoints.ui.playScriptText}
                       </span>
                     </div>
 
@@ -251,7 +296,7 @@ export const PainSection: React.FC = () => {
                     <div className="absolute bottom-0 inset-x-0 p-4 text-left">
                       <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500 text-zinc-950 font-mono text-[11px] font-bold uppercase mb-1.5 shadow-sm">
                         <Video className="w-3.5 h-3.5" />
-                        <span>AI VIẾT KỊCH BẢN 0{selectedScriptIndex + 1}</span>
+                        <span>{painPoints.ui.scriptBadgePrefix}{selectedScriptIndex + 1}</span>
                       </div>
                       <h4 className="font-sans font-bold text-base text-white leading-snug line-clamp-1">
                         {activeScriptVideo.title}
@@ -286,7 +331,7 @@ export const PainSection: React.FC = () => {
                           </div>
                           <div className="font-mono text-[10px] font-bold text-amber-300">0{idx + 1}</div>
                           <div className="text-[11px] font-sans font-bold text-zinc-200 truncate w-full leading-tight">
-                            {sv.title.replace('AI Miss ', '').replace(': Lọc Sạch Mùi AI', ' (Lọc Mùi)').replace(': Ngắt Nhịp 3s Đời Thường', ' (Vlog 3s)').replace(': Hook + Body + CTA', ' (Video Ads)')}
+                            {sv.shortTitle}
                           </div>
                         </button>
                       );
@@ -298,7 +343,12 @@ export const PainSection: React.FC = () => {
                 <div className="w-full max-w-[380px] space-y-4">
                   {/* Active Video Card */}
                   <div
-                    onClick={() => setModalVideo({ id: activeLightVideo.videoId, title: activeLightVideo.title, category: 'Thực Hành Setup Ánh Sáng' })}
+                    onClick={() => setModalVideo({
+                      id: activeLightVideo.videoId,
+                      title: activeLightVideo.title,
+                      category: painPoints.ui.lightingCategory,
+                      youtubeUrl: activeLightVideo.youtubeUrl,
+                    })}
                     className="relative rounded-3xl overflow-hidden border-2 border-amber-500 bg-zinc-950 shadow-2xl group cursor-pointer aspect-[9/16] flex items-center justify-center ring-2 ring-amber-500/30"
                   >
                     <img
@@ -316,7 +366,7 @@ export const PainSection: React.FC = () => {
                         <Play className="w-6 h-6 text-white fill-white ml-0.5" />
                       </div>
                       <span className="mt-3 px-3.5 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-xs font-mono font-bold text-amber-300 tracking-wider shadow-lg">
-                        BẤM ĐỂ XEM VIDEO
+                        {painPoints.ui.playLightingText}
                       </span>
                     </div>
 
@@ -324,7 +374,7 @@ export const PainSection: React.FC = () => {
                     <div className="absolute bottom-0 inset-x-0 p-4 text-left">
                       <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500 text-zinc-950 font-mono text-[11px] font-bold uppercase mb-1.5 shadow-sm">
                         <Video className="w-3.5 h-3.5" />
-                        <span>VIDEO THỰC CHIẾN 0{selectedLightIndex + 1}</span>
+                        <span>{painPoints.ui.lightingBadgePrefix}{selectedLightIndex + 1}</span>
                       </div>
                       <h4 className="font-sans font-bold text-base text-white leading-snug line-clamp-1">
                         {activeLightVideo.title}
@@ -360,7 +410,7 @@ export const PainSection: React.FC = () => {
                           <div className="min-w-0 flex-1">
                             <div className="font-mono text-[11px] font-bold text-amber-300">0{idx + 1}</div>
                             <div className="text-xs font-sans font-bold text-zinc-200 truncate leading-snug">
-                              {lv.title.replace('Setup Ánh Sáng ', '')}
+                              {lv.shortTitle}
                             </div>
                           </div>
                         </button>
@@ -373,7 +423,13 @@ export const PainSection: React.FC = () => {
                 <div className="w-full max-w-[380px] space-y-4">
                   {/* Active Process Video Card */}
                   <div
-                    onClick={() => setModalVideo({ id: activeProcessVideo.videoId, title: activeProcessVideo.title, category: 'Quy Trình Sản Xuất 1 Buổi/Tuần' })}
+                    onClick={() => setModalVideo({
+                      id: activeProcessVideo.videoId,
+                      title: activeProcessVideo.title,
+                      category: painPoints.ui.processCategory,
+                      videoUrl: activeProcessVideo.videoUrl,
+                      youtubeUrl: activeProcessVideo.youtubeUrl,
+                    })}
                     className="relative rounded-3xl overflow-hidden border-2 border-amber-500 bg-zinc-950 shadow-2xl group cursor-pointer aspect-[9/16] flex items-center justify-center ring-2 ring-amber-500/30"
                   >
                     <img
@@ -389,24 +445,25 @@ export const PainSection: React.FC = () => {
                     <div className="absolute top-3 inset-x-3 z-10 space-y-1.5">
                       <div className="flex items-center justify-between">
                         <span className="px-2.5 py-1 rounded-md bg-amber-500 text-zinc-950 font-mono text-[11px] font-black tracking-wider uppercase shadow-md">
-                          MODULE 1 • QUY TRÌNH 5 BƯỚC
+                          {painPoints.tab4Overlays.moduleBadge}
                         </span>
                         <span className="px-2 py-0.5 rounded bg-black/75 backdrop-blur-md border border-white/20 font-mono text-[10px] text-amber-300 font-bold">
-                          1 BUỔI / TUẦN
+                          {painPoints.tab4Overlays.cadenceBadge}
                         </span>
                       </div>
                       
                       {/* 5-Step Workflow Pills */}
                       <div className="flex items-center justify-between gap-1 px-2 py-1 rounded-xl bg-black/85 backdrop-blur-md border border-white/20 text-[10px] font-mono font-bold text-zinc-200 shadow-lg">
-                        <span className="text-amber-300">💡 Ý Tưởng</span>
-                        <span className="text-zinc-500">→</span>
-                        <span className="text-amber-300">📝 Kịch Bản</span>
-                        <span className="text-zinc-500">→</span>
-                        <span className="text-amber-300">🎥 Quay</span>
-                        <span className="text-zinc-500">→</span>
-                        <span className="text-amber-300">✂️ Edit</span>
-                        <span className="text-zinc-500">→</span>
-                        <span className="text-emerald-400">🚀 Đăng</span>
+                        {painPoints.tab4Overlays.workflowPills.map((pill, pIdx) => (
+                          <React.Fragment key={pIdx}>
+                            <span className={pIdx === painPoints.tab4Overlays.workflowPills.length - 1 ? 'text-emerald-400' : 'text-amber-300'}>
+                              {pill}
+                            </span>
+                            {pIdx < painPoints.tab4Overlays.workflowPills.length - 1 && (
+                              <span className="text-zinc-500">→</span>
+                            )}
+                          </React.Fragment>
+                        ))}
                       </div>
                     </div>
 
@@ -416,7 +473,7 @@ export const PainSection: React.FC = () => {
                         <Play className="w-6 h-6 text-white fill-white ml-0.5" />
                       </div>
                       <span className="mt-3 px-3.5 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-xs font-mono font-bold text-amber-300 tracking-wider shadow-lg">
-                        BẤM ĐỂ XEM VIDEO
+                        {painPoints.ui.playProcessText}
                       </span>
                     </div>
 
@@ -424,19 +481,24 @@ export const PainSection: React.FC = () => {
                     <div className="absolute bottom-0 inset-x-0 p-4 text-left">
                       {/* 3 Core Value Tags */}
                       <div className="flex items-center gap-1.5 mb-2 flex-wrap">
-                        <span className="px-2 py-0.5 rounded bg-amber-500/25 border border-amber-500/50 text-[10px] font-mono font-bold text-amber-300">
-                          ✓ Quy Trình Rõ Ràng
-                        </span>
-                        <span className="px-2 py-0.5 rounded bg-emerald-500/25 border border-emerald-500/50 text-[10px] font-mono font-bold text-emerald-300">
-                          ✓ Lịch Đều Đặn
-                        </span>
-                        <span className="px-2 py-0.5 rounded bg-purple-500/25 border border-purple-500/50 text-[10px] font-mono font-bold text-purple-300">
-                          ✓ AI Hỗ Trợ
-                        </span>
+                        {painPoints.tab4Overlays.valueTags.map((vTag, vtIdx) => (
+                          <span
+                            key={vtIdx}
+                            className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold border ${
+                              vtIdx === 0
+                                ? 'bg-amber-500/25 border-amber-500/50 text-amber-300'
+                                : vtIdx === 1
+                                ? 'bg-emerald-500/25 border-emerald-500/50 text-emerald-300'
+                                : 'bg-purple-500/25 border-purple-500/50 text-purple-300'
+                            }`}
+                          >
+                            {vTag}
+                          </span>
+                        ))}
                       </div>
                       <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500 text-zinc-950 font-mono text-[11px] font-bold uppercase mb-1.5 shadow-sm">
                         <Video className="w-3.5 h-3.5" />
-                        <span>QUY TRÌNH THỰC CHIẾN 0{selectedProcessIndex + 1}</span>
+                        <span>{painPoints.ui.processBadgePrefix}{selectedProcessIndex + 1}</span>
                       </div>
                       <h4 className="font-sans font-bold text-base text-white leading-snug line-clamp-1">
                         {activeProcessVideo.title}
@@ -447,8 +509,8 @@ export const PainSection: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* 3 Process Videos Switcher */}
-                  <div className="grid grid-cols-3 gap-2">
+                  {/* 2 Process Videos Switcher */}
+                  <div className="grid grid-cols-2 gap-2">
                     {painPoints.processVideos.map((pv, idx) => {
                       const isSelected = idx === selectedProcessIndex;
                       return (
@@ -471,7 +533,7 @@ export const PainSection: React.FC = () => {
                           </div>
                           <div className="font-mono text-[10px] font-bold text-amber-300">0{idx + 1}</div>
                           <div className="text-[11px] font-sans font-bold text-zinc-200 truncate w-full leading-tight">
-                            {pv.title.replace('Quy Trình ', '').replace('Sản Xuất ', '')}
+                            {pv.shortTitle}
                           </div>
                         </button>
                       );
@@ -498,7 +560,7 @@ export const PainSection: React.FC = () => {
             <div className="p-4 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/80">
               <div className="min-w-0 pr-2">
                 <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider block">
-                  {modalVideo.category || 'Thực Hành Video Marketing'}
+                  {modalVideo.category || painPoints.ui.brollCategory}
                 </span>
                 <h4 className="text-sm font-sans font-bold text-white truncate">
                   {modalVideo.title}
@@ -535,7 +597,7 @@ export const PainSection: React.FC = () => {
 
             {/* Modal Footer */}
             <div className="p-3 bg-zinc-900/90 border-t border-zinc-800 flex items-center justify-between text-xs font-mono text-zinc-400">
-              <span>HD 1080p • Thực hành cùng thầy Việt</span>
+              <span>{painPoints.ui.modalQualityBadge}</span>
               {modalVideo.fbUrl ? (
                 <a
                   href={modalVideo.fbUrl}
@@ -543,7 +605,17 @@ export const PainSection: React.FC = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 text-amber-400 hover:underline"
                 >
-                  <span>Mở Facebook Reel</span>
+                  <span>{painPoints.ui.openFbReelText}</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              ) : modalVideo.youtubeUrl ? (
+                <a
+                  href={modalVideo.youtubeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-amber-400 hover:underline"
+                >
+                  <span>{painPoints.ui.openYoutubeText}</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               ) : modalVideo.id && !modalVideo.videoUrl ? (
@@ -553,11 +625,11 @@ export const PainSection: React.FC = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 text-amber-400 hover:underline"
                 >
-                  <span>Mở YouTube</span>
+                  <span>{painPoints.ui.openYoutubeText}</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               ) : (
-                <span className="text-amber-400/90 font-medium">Trợ Lý AI Độc Quyền</span>
+                <span className="text-amber-400/90 font-medium">{painPoints.ui.aiBadgeText}</span>
               )}
             </div>
           </div>
