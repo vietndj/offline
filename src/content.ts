@@ -605,7 +605,7 @@ export const CONTENT: ContentData = {
     ],
     ogTitle: "Khóa Học Video Marketing Offline 2 Ngày Thực Chiến - Thầy Nguyễn Đức Việt",
     ogDescription: "Biến Chuyên Môn Của Bạn Thành Video Marketing Đắt Giá. Cầm tay chỉ việc 1-1, ra thành phẩm ngay tại lớp.",
-    ogImage: "/assets/meta_suite_6m_growth.png",
+    ogImage: "https://offline.fedu.vn/opengraph.jpg?v=20260904",
     ogUrl: "https://offline.fedu.vn",
     twitterCard: "summary_large_image"
   },
