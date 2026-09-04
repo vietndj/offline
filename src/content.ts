@@ -632,7 +632,7 @@ export const CONTENT: ContentData = {
   // 4. Hero Section
   hero: {
     badge: "GẶP MẶT TRỰC TIẾP · HÀ NỘI · SĨ SỐ GIỚI HẠN",
-    headline: "Biến Chuyên Môn Của Bạn Thành Video Marketing Đắt Giá",
+    headline: "Biến chuyên môn của bạn thành video marketing đắt giá",
     subheadline: "Khóa học offline 2 ngày thực chiến (từ sáng đến chiều), cầm tay chỉ việc giúp chủ doanh nghiệp, người làm chuyên môn, đào tạo và dịch vụ làm chủ toàn bộ quy trình sản xuất video từ A–Z. Không cần rành công nghệ hay giỏi kỹ thuật từ trước.",
     tags: [
       "KỊCH BẢN CHUYỂN ĐỔI",
@@ -657,7 +657,7 @@ export const CONTENT: ContentData = {
   // 5. Proof Section (Dữ Liệu Đối Soát Meta Suite & Showcase)
   proof: {
     badge: "DỮ LIỆU ĐỐI SOÁT TỪ META BUSINESS",
-    headline: "Chuyển Đổi Thực Tế Từ Fanpage 30 Ngày Học Làm Nội Dung Viral",
+    headline: "Chuyển đổi thực tế từ Fanpage 30 Ngày Học Làm Nội Dung Viral",
     revenue: "6.000.000+ Lượt Xem · 50.800+ Click Link",
     timeline: "3.642 Khách Hàng Nhắn Tin Tư Vấn",
     dailyPeak: "428 Số ĐT Để Lại Mua Khóa Học",
@@ -703,7 +703,7 @@ export const CONTENT: ContentData = {
         id: "meta-growth",
         shortLabel: "Tăng Trưởng Meta",
         badgeLabel: "6,0M View · 50,8K Click",
-        title: "Báo Cáo Hiệu Quả 6 Tháng Từ Meta Business Suite",
+        title: "Báo cáo hiệu quả 6 tháng từ Meta Business Suite",
         image: "/assets/meta_suite_6m_growth.png",
         sourceBadge: "business.facebook.com · ID: 839755019212216",
         caption: "Thanh URL trình duyệt thật · Tăng trưởng 6.0M view & 50.8K link click",
@@ -714,7 +714,7 @@ export const CONTENT: ContentData = {
         id: "weekly-leverage",
         shortLabel: "Đòn Bẩy 1 Bài/Tuần",
         badgeLabel: "146,4K Reach · 108 Inbox",
-        title: "Báo Cáo Hiệu Suất Tuần: 1 Bài Đăng Kéo 108 Khách Mới",
+        title: "Báo cáo hiệu suất tuần: 1 bài đăng kéo 108 khách mới",
         image: "/assets/meta_weekly_1post_108inbox.png",
         sourceBadge: "Meta Business Suite · Báo Cáo Tuần 23/8 - 29/8",
         caption: "Đăng đúng 1 bài trong tuần nhưng tiếp cận 146.400 người & 108 inbox mới",
@@ -725,7 +725,7 @@ export const CONTENT: ContentData = {
         id: "leads-audit",
         shortLabel: "Đối Soát 428 Số ĐT",
         badgeLabel: "428 SĐT · 3.642 Leads",
-        title: "Đối Soát 428 Số Điện Thoại & Khách Hàng Thật",
+        title: "Đối soát 428 số điện thoại & khách hàng thật",
         image: "/assets/facebook_real_page_dashboard.png",
         sourceBadge: "Hệ Thống Đối Soát Hộp Thư Tự Động",
         caption: "Trích đoạn danh sách khách hàng để lại số điện thoại xin tư vấn và mua khóa học",
@@ -734,7 +734,7 @@ export const CONTENT: ContentData = {
       }
     ],
     channels: {
-      headline: "Các Kênh Video Triệu View Được Xây Dựng Từ Con Số 0",
+      headline: "Các kênh video triệu view được xây dựng từ con số 0",
       subheadline: "Hình ảnh thực tế từ các kênh Fanpage, TikTok và số liệu phân tích chuyển đổi",
       updateDate: "(Cập nhật ngày 03/09/2026)",
       items: [
@@ -843,7 +843,7 @@ export const CONTENT: ContentData = {
   // 7. Growth Chart Section
   chart: {
     badge: "NGHIÊN CỨU & ĐỐI SOÁT DỮ LIỆU TOÀN CẦU",
-    headline: "Vì Sao Video Có Cấu Trúc Giữ Chân Gấp 12 Lần Video Tự Phát?",
+    headline: "Vì sao video có cấu trúc giữ chân gấp 12 lần video tự phát?",
     description: "Theo nghiên cứu BrandEffect của Meta & Nielsen trên 173 chiến dịch video: 47% giá trị quảng cáo được quyết định trong 3 giây đầu tiên, và 74% được chốt lại trước mốc 10 giây. Không biết kỹ thuật nén nhịp, video tự phát sẽ rơi rụng tới 81% khán giả ngay ở 10 giây đầu trước khi kịp nói đến phần bán hàng.",
     legends: {
       marketing: "Video Marketing Thực Chiến (Cấu trúc nén nhịp)",
@@ -887,17 +887,17 @@ export const CONTENT: ContentData = {
     ],
     bullets: [
       {
-        title: "Mốc 3 Giây Đầu (Hook Giữ Chân)",
+        title: "Mốc 3 giây đầu (Hook giữ chân)",
         normal: "Rơi rụng 68% khán giả do mở đầu lan man, chào hỏi và giới thiệu dài dòng",
         marketing: "Giữ lại 88% khán giả nhờ Hook bóc trần nỗi sợ và kịch bản ngắt dòng 1 nhịp thở"
       },
       {
-        title: "Mốc 10 Giây (Ngưỡng Giá Trị Meta & Nielsen)",
+        title: "Mốc 10 giây (Ngưỡng giá trị Meta & Nielsen)",
         normal: "Chỉ còn 19% người xem — mất trắng 81% cơ hội tiếp cận khách hàng tiềm năng",
         marketing: "Duy trì 76% khán giả — Meta chứng minh 74% tổng giá trị chiến dịch được tạo ra tại đây"
       },
       {
-        title: "Mốc 60 Giây (Kêu Gọi Hành Động & Chốt Đơn)",
+        title: "Mốc 60 giây (Kêu gọi hành động & chốt đơn)",
         normal: "Chỉ còn 5% người xem ở lại — hầu như không có ai nghe được lời kêu gọi mua hàng",
         marketing: "Giữ vững 58% người xem nghe trọn vẹn CTA — tỷ lệ chuyển đổi ra đơn gấp 11.6 lần"
       }
@@ -935,7 +935,7 @@ export const CONTENT: ContentData = {
       ],
       solution: {
         badge: "GIẢI PHÁP CHUYỂN ĐỔI",
-        title: "Kịch Bản 3 Tầng + Kỹ Thuật Ngắt Nhịp 5 Giây",
+        title: "Kịch bản chuyển đổi & Kỹ thuật ngắt nhịp 5 giây",
         desc: "Tự tin nói chuyện mộc mạc như hai người bạn ngồi đàm đạo chén trà — không cần diễn, không cần gồng, chuyển đổi đến tự nhiên.",
         metrics: [
           {
@@ -954,7 +954,7 @@ export const CONTENT: ContentData = {
   // 8. Metaphors Section (4 Formats)
   metaphors: {
     badge: "4 ĐỊNH DẠNG VIDEO MARKETING THỰC CHIẾN",
-    headline: "Làm Chủ 4 Định Dạng Video Giúp Ra Đơn Bền Vững",
+    headline: "Làm chủ 4 định dạng video giúp ra đơn bền vững",
     subheadline: "Không cần kỹ xảo phức tạp hay studio đắt tiền. Bạn chỉ cần chọn đúng 1 trong 4 định dạng phù hợp với tính cách và lĩnh vực của mình để bắt đầu quay ngay.",
     formatPrefix: "ĐỊNH DẠNG 0",
     labels: {
@@ -1026,7 +1026,7 @@ export const CONTENT: ContentData = {
   // 9. Pain Points Section (4 Bottlenecks)
   painPoints: {
     badge: "BẠN ĐANG GẶP PHẢI ĐIỀU NÀY?",
-    headline: "Tháo Gỡ 4 Nút Thắt Khiến Video Của Bạn Không Có Chuyển Đổi",
+    headline: "Tháo gỡ 4 nút thắt khiến video của bạn không có chuyển đổi",
     subheadline: "Hầu hết mọi người bỏ cuộc không phải vì thiếu chuyên môn, mà vì mắc kẹt ở 4 cạm bẫy kỹ thuật và tư duy làm video sai cách.",
     tabPrefix: "VƯỚNG MẮC 0",
     sectionTag: "VƯỚNG MẮC THỰC TẾ & CÁCH THẦY TRÒ CÙNG LÀM",
@@ -1034,7 +1034,7 @@ export const CONTENT: ContentData = {
     tabs: [
       {
         id: "tab-1",
-        title: "Bí Ý Khi Lên Hình",
+        title: "Bí ý khi lên hình",
         subtitle: "Đứng trước camera bị gượng gạo, mặt đơ, quên sạch lời thoại",
         points: [
           "Càng cố học thuộc lòng kịch bản thì mặt càng đơ, mắt đảo lia lịa đọc chữ.",
@@ -1045,12 +1045,12 @@ export const CONTENT: ContentData = {
         media: "/assets/formats/voiceover_poster.jpg",
         cards: [
           { title: "Kịch bản chuyển đổi", desc: "Chỉ nhìn 1 từ khóa cốt lõi cho mỗi ý, nói chuyện như đang tâm sự với 1 người bạn thân." },
-          { title: "Kho B-Roll Bank Xử Lý", desc: "Băm nhỏ 10-15 cảnh thao tác tay ngắn 2-3s chèn đè lên nhịp nói, che sạch lỗi vấp và mắt đơ khi lên hình." }
+          { title: "Kho B-roll xử lý", desc: "Băm nhỏ 10-15 cảnh thao tác tay ngắn 2-3s chèn đè lên nhịp nói, che sạch lỗi vấp và mắt đơ khi lên hình." }
         ]
       },
       {
         id: "tab-2",
-        title: "Lan Man Khi Viết Kịch Bản",
+        title: "Lan man khi viết kịch bản",
         subtitle: "Khán giả bỏ đi không phải vì máy ảnh cùi — mà vì 3s đầu bạn mải khoe thứ bạn có, chứ chưa chạm vào thứ họ đang đau",
         points: [
           "Tầng 1 (Chào hỏi bề nổi): 3s đầu mải chào hỏi xã giao và khoe thứ mình có, khiến 68% người xem quẹt qua ngay lập tức.",
@@ -1072,7 +1072,7 @@ export const CONTENT: ContentData = {
       },
       {
         id: "tab-3",
-        title: "Quay Rồi Nhưng Chưa Chuyên Nghiệp",
+        title: "Quay rồi nhưng chưa chuyên nghiệp",
         subtitle: "Hình ảnh tối tăm, âm thanh rè, góc quay đơn điệu như camera an ninh",
         points: [
           "Góc máy chính diện đơn điệu như camera an ninh, người xem nhìn 3 giây là chán.",
@@ -1082,13 +1082,13 @@ export const CONTENT: ContentData = {
         outcome: "Kỹ thuật setup 2 góc quay điện thoại (Góc chính diện + Góc cận 45 độ) tạo chiều sâu điện ảnh kết hợp lọc âm trong vắt.",
         media: "/assets/lighting/light_talkinghead.jpg",
         cards: [
-          { title: "Setup 2 Cam Điện Thoại", desc: "Tận dụng ngay 2 chiếc smartphone có sẵn để tạo hiệu ứng chuyển góc như talkshow truyền hình." },
+          { title: "Setup 2 cam điện thoại", desc: "Tận dụng ngay 2 chiếc smartphone có sẵn để tạo hiệu ứng chuyển góc như talkshow truyền hình." },
           { title: "Ánh sáng & Lọc tạp âm", desc: "Kỹ thuật đánh sáng 3 điểm tối giản và lọc âm AI khử 100% tiếng ồn phòng." }
         ]
       },
       {
         id: "tab-4",
-        title: "Muốn Làm Đều Nhưng Không Biết Bắt Đầu",
+        title: "Muốn làm đều nhưng không biết bắt đầu",
         subtitle: "Không có quy trình sản xuất bền bỉ, mất cả ngày làm 1 clip rồi bỏ bẵng cả tháng",
         points: [
           "Mỗi lần quay là một cực hình: Từ nghĩ ý tưởng, dựng bối cảnh đến cắt ghép mất nguyên cả ngày cuối tuần.",
@@ -1098,7 +1098,7 @@ export const CONTENT: ContentData = {
         outcome: "Đóng gói quy trình sản xuất video 1 buổi/tuần: Quay 1 buổi tích lũy kho 50+ tư liệu B-roll dùng cho cả tháng, kết hợp phễu thu thập số điện thoại và data khách tự động.",
         media: "/assets/showcase/multicam.jpg",
         cards: [
-          { title: "Kho B-Roll Bank 50+ clip", desc: "Quay sẵn kho cảnh làm việc, tư vấn, đóng gói để ghép video quanh năm không bao giờ cạn ý tưởng." },
+          { title: "Kho B-roll 50+ clip", desc: "Quay sẵn kho cảnh làm việc, tư vấn, đóng gói để ghép video quanh năm không bao giờ cạn ý tưởng." },
           { title: "Tự động hóa phễu ra đơn", desc: "Gắn liên kết phễu tự động thu thập data khách hàng về Google Sheet & Telegram ngay sau khi xem video." }
         ]
       }
@@ -1106,7 +1106,7 @@ export const CONTENT: ContentData = {
     brollVideos: [
       {
         id: "broll-1",
-        title: "Voice Over & B-Roll Đè Hình",
+        title: "Voice-over & B-roll đè hình",
         shortTitle: "Góc Cận Đè Hình",
         subtitle: "Không cần lộ mặt, thu voice đè lên cảnh quay đời thực",
         youtubeUrl: "https://youtu.be/ZQ1Qfpln29o",
@@ -1116,7 +1116,7 @@ export const CONTENT: ContentData = {
       },
       {
         id: "broll-2",
-        title: "Talking Head & Kỹ Thuật 2 Cam",
+        title: "Talking Head & kỹ thuật 2 cam",
         shortTitle: "Setup 2 Cam",
         subtitle: "Setup một sải tay & Kỹ thuật ngắt nhịp không cần học thuộc lòng",
         youtubeUrl: "https://www.facebook.com/reel/1039457391880112",
@@ -1130,7 +1130,7 @@ export const CONTENT: ContentData = {
     scriptVideos: [
       {
         id: "script-1",
-        title: "AI Miss Idea: Lọc Sạch Mùi AI",
+        title: "AI Miss Idea: Lọc sạch mùi AI",
         shortTitle: "Lọc Mùi AI",
         subtitle: "Bóc 7 lỗi văn mẫu AI, tạo kịch bản mộc mạc đánh trúng nỗi sợ khách hàng",
         youtubeUrl: "",
@@ -1141,7 +1141,7 @@ export const CONTENT: ContentData = {
       },
       {
         id: "script-2",
-        title: "AI Miss Vlog: Ngắt Nhịp 3s Đời Thường",
+        title: "AI Miss Vlog: Ngắt nhịp 3s đời thường",
         shortTitle: "Vlog 3 Giây",
         subtitle: "Biến việc làm hàng ngày thành kịch bản quay khả thi, khóa chặt 3s đầu (Hook)",
         youtubeUrl: "https://youtube.com/shorts/ftuv04UxKJA",
@@ -1165,7 +1165,7 @@ export const CONTENT: ContentData = {
     lightingVideos: [
       {
         id: "light-1",
-        title: "Setup Ánh Sáng Talking Head",
+        title: "Setup ánh sáng Talking Head",
         shortTitle: "Keylight 45°",
         subtitle: "Đèn thanh Keylight 45° + Đèn ven tóc + Máy ảnh",
         youtubeUrl: "https://youtu.be/Pem27DMrkVE",
@@ -1175,7 +1175,7 @@ export const CONTENT: ContentData = {
       },
       {
         id: "light-2",
-        title: "Setup Ánh Sáng 2 Đèn Spotlight",
+        title: "Setup ánh sáng 2 đèn Spotlight",
         shortTitle: "2 Đèn Spotlight",
         subtitle: "1 đèn thanh + 1 đèn pin rọi phông màu tạo chiều sâu",
         youtubeUrl: "https://youtu.be/vZUmtQA2Ryc",
@@ -1187,7 +1187,7 @@ export const CONTENT: ContentData = {
     processVideos: [
       {
         id: "proc-1",
-        title: "Thực Hành 1-1 Đóng Gói Tại Lớp K2",
+        title: "Thực hành 1-1 đóng gói tại lớp K2",
         shortTitle: "Đóng Gói Lớp K2",
         subtitle: "Thầy Việt trực tiếp hướng dẫn bấm máy và hoàn thiện video",
         youtubeUrl: "https://youtu.be/WV8rggcgmGA",
@@ -1198,7 +1198,7 @@ export const CONTENT: ContentData = {
       },
       {
         id: "proc-2",
-        title: "Bắt Đầu Với Thứ Vớ Vẩn",
+        title: "Bắt đầu với thứ vớ vẩn",
         shortTitle: "Vượt Nỗi Sợ",
         subtitle: "Sự chú ý là đồng tiền mạnh nhất • Vượt qua 'thuế thể diện' để làm video",
         youtubeUrl: "https://youtu.be/-1ddyry_Qs0",
@@ -1247,7 +1247,7 @@ export const CONTENT: ContentData = {
   // 10. Curriculum Section (Lộ Trình 2 Ngày)
   curriculum: {
     badge: "LỘ TRÌNH LỚP HỌC 2 NGÀY THỰC CHIẾN",
-    headline: "Học Đến Đâu Làm Được Đến Đó • Ra Video Ngay Tại Lớp",
+    headline: "Học đến đâu làm được đến đó • Ra video ngay tại lớp",
     subheadline: "Không học lý thuyết dông dài. Mình ngồi lại cùng bạn giải quyết đúng 3 việc: Cầm máy lên nói câu gì không bị ngượng, quay dựng thế nào cho nhanh, và làm sao để về nhà một mình bạn vẫn tự làm đều đặn mỗi ngày.",
     eventPhotos: [
       {
@@ -1338,7 +1338,7 @@ export const CONTENT: ContentData = {
     ],
     bonus: {
       tag: "BỘ CÔNG CỤ ĐẶC QUYỀN",
-      title: "Bộ 3 Trợ Lý AI Extension + Kho 500+ Âm Thanh & B-Roll Mẫu",
+      title: "Bộ 3 trợ lý AI Extension + Kho 500+ âm thanh & B-roll mẫu",
       desc: "Tặng kèm trọn bộ extension AI cài thẳng vào trình duyệt, kho tài nguyên SFX bản quyền và bộ preset CapCut giúp học viên về nhà làm video ngay mà không lo thiếu nguyên liệu.",
       cta: "NHẬN TOÀN BỘ QUÀ TẶNG"
     }
@@ -1354,7 +1354,7 @@ export const CONTENT: ContentData = {
   // 12. Student Showcase Section
   showcase: {
     badge: "THÀNH PHẨM THỰC TẾ HỌC VIÊN",
-    headline: "Xem Video Do Chính Học Viên Sản Xuất Sau Khóa Học",
+    headline: "Xem video do chính học viên sản xuất sau khóa học",
     subheadline: "Từ những người chưa từng biết cầm máy hay edit, đây là những video thành phẩm được quay và dựng hoàn chỉnh 100%.",
     categories: [
       { id: "all", label: "Tất Cả Thành Phẩm" },
@@ -1365,7 +1365,7 @@ export const CONTENT: ContentData = {
     videos: [
       {
         id: "vu-hai-long",
-        title: "Tâm Sự Làm Nghề: Thà Mất Thêm Giờ Còn Hơn Để Khách Hối Hận",
+        title: "Tâm sự làm nghề: Thà mất thêm giờ còn hơn để khách hối hận",
         author: "Vũ Hải Long",
         role: "Sáng Tạo & Dịch Vụ",
         desc: "Chia sẻ trải nghiệm nghề thực tế giúp khách hàng cảm nhận được sự tận tâm và uy tín.",
@@ -1376,7 +1376,7 @@ export const CONTENT: ContentData = {
       },
       {
         id: "tham-tho-spa",
-        title: "Kéo Khách Quen Bằng Thước Phim Không Gian Spa",
+        title: "Kéo khách quen bằng thước phim không gian spa",
         author: "Thực Hành Voice-Over",
         role: "Home Spa & Làm Đẹp",
         desc: "Thước phim cận cảnh không gian và tay nghề chăm sóc da, tạo cảm giác an tâm cho khách mới.",
@@ -1387,7 +1387,7 @@ export const CONTENT: ContentData = {
       },
       {
         id: "broll-25s-k2",
-        title: "Quay Cảnh Trám Bàn Làm Việc Bằng Điện Thoại",
+        title: "Quay cảnh trám bàn làm việc bằng điện thoại",
         author: "Thực Hành Cảnh Trám",
         role: "B-Roll Minh Họa",
         desc: "Tận dụng ánh sáng tự nhiên nghiêng 45° bên bàn làm việc tạo nên video ngắn 25 giây cuốn hút.",
@@ -1398,7 +1398,7 @@ export const CONTENT: ContentData = {
       },
       {
         id: "cattuong-49s-k2",
-        title: "Bắt Trọn Âm Thanh & Bối Cảnh Đời Thường Ngoài Sân",
+        title: "Bắt trọn âm thanh & bối cảnh đời thường ngoài sân",
         author: "Thực Hành Kể Chuyện",
         role: "Storytelling Đời Thường",
         desc: "Dùng âm thanh mộc mạc đời thực để giữ chân người xem mà không cần kỹ xảo cầu kỳ.",
@@ -1409,7 +1409,7 @@ export const CONTENT: ContentData = {
       },
       {
         id: "alNkUUuE7fE",
-        title: "Tự Quay & Dựng Xong Video Ngay Trong Buổi Học",
+        title: "Tự quay & dựng xong video ngay trong buổi học",
         author: "Bạn Vân Anh",
         role: "Video Thực Hành Tại Lớp",
         desc: "Tự tay bấm máy quay B-roll và dựng xong clip tâm sự cảm xúc chỉ sau 1 buổi thực hành.",
@@ -1420,7 +1420,7 @@ export const CONTENT: ContentData = {
       },
       {
         id: "YlRVjLDx1UI",
-        title: "Tự Tin Nói Trước Ống Kính Ngay Lần Bấm Máy Đầu",
+        title: "Tự tin nói trước ống kính ngay lần bấm máy đầu",
         author: "Bạn Phương",
         role: "Video Thực Hành Tại Lớp",
         desc: "Xóa sạch cảm giác đơ mặt, tự quay video chia sẻ chuyên môn lưu loát ngay tại phòng học.",
@@ -1431,7 +1431,7 @@ export const CONTENT: ContentData = {
       },
       {
         id: "WV8rggcgmGA",
-        title: "Trải Nghiệm Tự Tay Bấm Máy Thực Chiến Cùng Thầy",
+        title: "Trải nghiệm tự tay bấm máy thực chiến cùng thầy",
         author: "Lớp Offline K2",
         role: "Thực Hành Tại Studio",
         desc: "Học viên tự thực hành setup đèn, bấm máy quay và dựng video hoàn chỉnh ngay tại lớp.",
@@ -1442,7 +1442,7 @@ export const CONTENT: ContentData = {
       },
       {
         id: "GqLHBWSiWDI",
-        title: "Biến Không Gian Mở Thành Bối Cảnh Quay Tự Nhiên",
+        title: "Biến không gian mở thành bối cảnh quay tự nhiên",
         author: "Định Dạng Walk & Talk",
         role: "Video Đời Thường Xây Kênh",
         desc: "Tận dụng bước chân chuyển động ngoài đời để dẫn dắt câu chuyện mộc mạc, giữ chân người xem.",
@@ -1464,7 +1464,7 @@ export const CONTENT: ContentData = {
   // 13. Case Studies Section
   caseStudies: {
     badge: "KẾT QUẢ THỰC TẾ HỌC VIÊN",
-    headline: "Sản Phẩm Sau Khóa Học: Thực Hành Định Dạng Walk & Talk",
+    headline: "Sản phẩm sau khóa học: Thực hành định dạng Walk & Talk",
     subheadline: "Ứng dụng định dạng vừa đi vừa nói tại không gian mở đời thực, giúp video tự nhiên, giữ chân người xem gấp 2.4 lần mà không cần học thuộc lòng kịch bản.",
     formatBadge: "Walk & Talk",
     playVideoBadge: "BẤM ĐỂ XEM VIDEO",
@@ -1496,38 +1496,38 @@ export const CONTENT: ContentData = {
   // 14. Target Audience Section
   targetAudience: {
     badge: "BỘ LỌC ĐỐI TƯỢNG HỌC VIÊN",
-    headline: "Khóa Học Này Dành Cho Ai?",
-    fitHeader: "RẤT PHÙ HỢP NẾU BẠN LÀ:",
-    notFitHeader: "KHÔNG PHÙ HỢP NẾU BẠN:",
+    headline: "Khóa học này dành cho ai?",
+    fitHeader: "Rất phù hợp nếu bạn là:",
+    notFitHeader: "Không phù hợp nếu bạn:",
     fit: [
       {
-        title: "Chủ Doanh Nghiệp, Chủ Cơ Sở Dịch Vụ, Spa, Thẩm Mỹ, Bán Lẻ",
+        title: "Chủ doanh nghiệp, cơ sở dịch vụ, spa, thẩm mỹ, bán lẻ",
         desc: "Muốn tự xây dựng kênh video marketing mang lại khách hàng bền vững mà không phụ thuộc hoàn toàn vào chạy quảng cáo đắt đỏ."
       },
       {
-        title: "Chuyên Gia, Bác Sĩ, Coach, Giảng Viên, Người Làm Giáo Dục",
+        title: "Chuyên gia, bác sĩ, coach, giảng viên, người làm giáo dục",
         desc: "Đã có sẵn kiến thức và chuyên môn sâu, muốn đóng gói thành các video giá trị cao để xây dựng nhân hiệu và bán khóa học/dịch vụ tư vấn."
       },
       {
-        title: "Người Đang Kinh Doanh Tự Do Muốn Đột Phá Doanh Thu",
+        title: "Người đang kinh doanh tự do muốn tăng trưởng doanh thu",
         desc: "Đã thử tự quay video nhưng lúng túng, hình ảnh xấu, nói vấp và video không có người xem hay tương tác mua hàng."
       },
       {
-        title: "Người Muốn Làm Chủ Kỹ Năng Video Chuyên Nghiệp Trong 2 Ngày",
+        title: "Người muốn làm chủ kỹ năng làm video trong 2 ngày",
         desc: "Cần lộ trình thực chiến cầm tay chỉ việc, được thực hành bấm máy và sửa bài 1-1 tại phòng studio thay vì tự mò mẫm hàng tháng trời."
       }
     ],
     notFit: [
       {
-        title: "Người Tìm Kiếm Chiêu Trò Câu View Rác",
+        title: "Người tìm kiếm chiêu trò câu view nhảm",
         desc: "Khóa học tập trung vào video marketing có cấu trúc tạo ra chuyển đổi và thương hiệu bền vững, không dạy chiêu trò giật gân rẻ tiền."
       },
       {
-        title: "Người Không Muốn Trực Tiếp Bấm Máy Thực Hành",
+        title: "Người không muốn trực tiếp bấm máy thực hành",
         desc: "100% thời lượng khóa học là bài tập thực hành. Nếu bạn chỉ muốn nghe lý thuyết suông mà không chịu làm bài tập, khóa học này không phù hợp."
       },
       {
-        title: "Người Kỳ Vọng 'Làm Giàu Sau 1 Đêm'",
+        title: "Người kỳ vọng 'làm giàu sau 1 đêm'",
         desc: "Video marketing là tài sản tích lũy dài hạn. Nó đòi hỏi bạn áp dụng đúng quy trình và sự kiên trì trong ít nhất 30 - 60 ngày."
       }
     ]
@@ -1537,9 +1537,9 @@ export const CONTENT: ContentData = {
   instructor: {
     badge: "NGƯỜI TRỰC TIẾP HƯỚNG DẪN BẠN",
     name: "Nguyễn Đức Việt",
-    mainRole: "Chuyên Gia Đào Tạo Video Marketing & Sản Xuất Đa Phương Tiện",
+    mainRole: "Giảng viên FPT · Video Marketing & Sản xuất đa phương tiện",
     subRole: "15+ Năm Kinh Nghiệm",
-    role: "Chuyên Gia Đào Tạo Video Marketing & Sản Xuất Đa Phương Tiện (15+ Năm Kinh Nghiệm)",
+    role: "Giảng viên FPT · Video Marketing & Sản xuất đa phương tiện (15+ năm kinh nghiệm)",
     avatar: "/assets/image_1781192246239-Dsb4zlhm.png",
     bio: [
       "15+ năm trực tiếp giảng dạy và đào tạo thiết kế, mỹ thuật đa phương tiện, lập trình và video marketing tại FPT Arena Multimedia và các hệ thống giáo dục hàng đầu.",
@@ -1647,7 +1647,7 @@ export const CONTENT: ContentData = {
   // 20. Modal Registration Popup
   registerModal: {
     badge: "ĐĂNG KÝ GIỮ CHỖ OFFLINE",
-    title: "Khóa Học Video Marketing 2 Ngày",
+    title: "Khóa học video marketing 2 ngày",
     subtitle: "Gặp mặt trực tiếp tại Hà Nội · Kèm cặp 1-1 bởi Thầy Nguyễn Đức Việt.",
     fields: {
       fullName: { label: "HỌ VÀ TÊN", placeholder: "Ví dụ: Nguyễn Văn Nam" },
@@ -1668,7 +1668,7 @@ export const CONTENT: ContentData = {
   // 21. Success Page
   successPage: {
     badge: "ĐĂNG KÝ GIỮ CHỖ THÀNH CÔNG",
-    headline: "Chào Mừng Bạn Đến Với Khóa Học Video Marketing!",
+    headline: "Chào mừng bạn đến với khóa học video marketing!",
     description: "Thông tin đăng ký của bạn đã được ghi nhận vào hệ thống. Đội ngũ tổ chức khóa học sẽ liên hệ qua Zalo/Điện thoại trong vòng 24h để gửi tài liệu chuẩn bị và xác nhận lịch học.",
     summary: {
       time: { label: "Thời gian: ", value: "2 Ngày Thứ 7 & Chủ Nhật (09:00 - 17:00)" },
