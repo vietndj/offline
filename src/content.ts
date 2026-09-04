@@ -1248,7 +1248,7 @@ export const CONTENT: ContentData = {
   curriculum: {
     badge: "LỘ TRÌNH LỚP HỌC 2 NGÀY THỰC CHIẾN",
     headline: "Học Đến Đâu Làm Được Đến Đó • Ra Video Ngay Tại Lớp",
-    subheadline: "Lộ trình 4 buổi học được thiết kế xoay quanh 4 câu hỏi sống còn: Từ kịch bản 3 tầng 4 bước, tự tay dựng video đầu tiên, làm chủ 4 định dạng quay đến ứng dụng bộ 3 trợ lý AI tự động hóa.",
+    subheadline: "Không học lý thuyết dông dài. Mình ngồi lại cùng bạn giải quyết đúng 3 việc: Cầm máy lên nói câu gì không bị ngượng, quay dựng thế nào cho nhanh, và làm sao để về nhà một mình bạn vẫn tự làm đều đặn mỗi ngày.",
     eventPhotos: [
       {
         image: "/assets/events/event_full_class.png",
@@ -1272,66 +1272,66 @@ export const CONTENT: ContentData = {
       {
         dayNumber: "01",
         timeRange: "09:00 – 17:00",
-        title: "Bẻ Khóa Kịch Bản 3 Tầng 4 Bước · Dựng Phim Câm · Xuất Xưởng Video Đầu Tay",
+        title: "Kịch bản & Dựng phim",
         badgeCount: "12 Module Thực Hành Cầm Tay Chỉ Việc",
-        goal: "Mục tiêu Ngày 1 là phá tan hoàn toàn nỗi sợ viết kịch bản và sợ công nghệ. Buổi sáng làm chủ tư duy 3 Tầng & kịch bản 4 Bước để tự viết kịch bản 60s không học vẹt; buổi chiều tự tay quay B-roll và dùng CapCut dựng xong 01 video Voice-over hoàn chỉnh mang về máy.",
+        goal: "Xóa sạch nỗi sợ viết kịch bản và sợ công nghệ. Buổi sáng viết xong kịch bản 60s nói trúng vấn đề khách hàng; buổi chiều tự tay quay B-roll và dùng CapCut dựng xong 01 video hoàn chỉnh mang về máy.",
         morning: {
           sessionName: "Ca sáng",
           time: "09:00 – 12:00",
-          title: "Kịch bản thế nào để video marketing đánh trúng tim can người xem?",
+          title: "Kịch bản 60s nói trúng vấn đề khách hàng",
           items: [
-            "Phân định video giáo dục vs. video giải trí: Vì sao 90% video chuyên gia bị lướt qua sau 3s? Hiểu đúng luật chơi video marketing tạo ra tiền.",
-            "Kỹ năng 3 Tầng (SAFE - REAL - RAW): Bóc trần sự thật từ lời nói đãi bôi bề nổi (Safe), cảm giác mệt mỏi có thật (Real) đến sự thật ngượng miệng (Raw) khiến khách hàng thấy đúng tim can.",
-            "Bộ khung kịch bản 4 Bước chuyển đổi: Xây cầu đồng cảm → Minh oan 'Đó không phải lỗi của bạn' → Gom bế tắc về 1 nút thắt duy nhất → Đưa ra chiếc chìa khóa độc quyền.",
-            "Kịch bản 1 dòng 1 nhịp thở: Bẻ nhỏ kịch bản thành từng câu ngắn 5–7 chữ, nhìn từ khóa là nói được ngay, xóa sạch 100% tình trạng học vẹt hay sượng miệng.",
-            "Cấu trúc Hook 3s & CTA chuyển đổi: Cách mở đầu khiến ngón tay người xem dừng lướt và cách đặt lời kêu gọi dẫn khách nhắn tin/để lại số điện thoại.",
-            "Thực hành nhóm 2–3 người: Cùng thầy Việt mổ xẻ và viết hoàn chỉnh kịch bản 60s thực chiến cho chính sản phẩm/dịch vụ của từng học viên."
+            "Video tạo ra tiền vs. View ảo: Hiểu đúng luật chơi để video hút đúng khách mua, không phí công đu view nhảm.",
+            "Tìm đúng điểm chạm khách hàng: Bóc đúng nỗi bế tắc có thật của người mua, chạm cảm xúc ngay từ câu đầu tiên.",
+            "Công thức kịch bản 4 bước: Xây đồng cảm → Chỉ ra nút thắt → Đưa giải pháp → Kêu gọi hành động.",
+            "Nói tự nhiên không vấp: Kỹ thuật ngắt câu 5–7 chữ theo nhịp thở, nhìn từ khóa nói ngay, không học vẹt.",
+            "Mở đầu 3s & Kêu gọi mua hàng: Cách giật ngón tay dừng lướt và câu chốt tự nhiên dẫn khách chủ động inbox.",
+            "Sửa kịch bản tại chỗ: Cầm tay chỉ việc viết xong 01 kịch bản 60s hoàn chỉnh cho chính sản phẩm của bạn."
           ]
         },
         afternoon: {
           sessionName: "Ca chiều",
           time: "13:30 – 17:00",
-          title: "Quay và dựng video đầu tiên thế nào?",
+          title: "Dựng video đầu tay trên điện thoại",
           items: [
-            "Quy trình 'Dựng phim câm trước khi thu voice': Cắt gọt hình ảnh B-roll đạt độ cuốn hút trước, sau đó nhìn timeline thu tiếng để giữ trọn nhịp thở tự nhiên.",
-            "Khai thác B-Roll Bank tại lớp: Kỹ thuật quay 10–15 cảnh thao tác tay cận cảnh (Macro shots) trong 10 phút để che 100% lỗi nói vấp và mắt đơ.",
-            "Làm chủ CapCut Mobile từ số 0: Thao tác cắt gọt khoảng lặng (Dead Air), chỉnh tốc độ, ghép lớp phủ (Overlay) mượt mà không giật cục.",
-            "Kỹ thuật nối động tác (Cut-on-Action): Bí quyết chuyển từ cảnh toàn sang cảnh cận liền mạch như phim tài liệu truyền hình.",
-            "Chèn phụ đề tự động (Auto-Captions): Chuẩn hóa typography, chọn font chữ Việt hóa sắc nét, phối màu nổi bật và tạo điểm nhấn từ khóa.",
-            "Thu âm Voice-over trong vắt & Xuất video: Cắm mic cài áo thu tiếng trực tiếp trên CapCut, xuất video chuẩn Full HD 1080p về máy điện thoại."
+            "Dựng hình trước – Lồng tiếng sau: Xếp chuỗi hình ảnh B-roll cuốn hút trước rồi mới lồng tiếng, vừa nhàn vừa tự nhiên.",
+            "Quay kho B-roll 10 phút: Kỹ thuật quay 10–15 cảnh thao tác tay cận cảnh để che sạch lỗi nói vấp hay mắt đơ.",
+            "Làm chủ CapCut từ số 0: Cắt bỏ đoạn ngập ngừng, tăng tốc độ và chèn ảnh/clip đè lên mượt mà.",
+            "Kỹ thuật nối hình điện ảnh: Chuyển từ cảnh toàn sang cảnh cận liền mạch, không giật cục như người mới làm.",
+            "Chèn phụ đề tự động: Bật phụ đề 1 chạm, chuẩn hóa font tiếng Việt sắc nét và tô màu nổi bật từ khóa đắt.",
+            "Thu âm lọc tạp âm & Xuất file: Cắm mic thu giọng ấm rõ ngay trên app, xuất video chuẩn 1080p sắc nét về máy."
           ]
         }
       },
       {
         dayNumber: "02",
         timeRange: "09:00 – 17:00",
-        title: "Làm Chủ 4 Định Dạng Quay · Ngoại Cảnh Thiên Nhiên · Bơm Đòn Bẩy AI Xây Kênh Solo",
+        title: "Quay thực chiến",
         badgeCount: "12 Module Thực Chiến Nâng Cao",
-        goal: "Mục tiêu Ngày 2 là giúp học viên làm chủ trọn vẹn 4 định dạng quay video chuyển đổi, tự tin đứng trước máy quay trong studio và ngoài trời, đồng thời cài đặt bộ 3 trợ lý AI độc quyền để một mình tự vận hành kênh đều đặn mỗi ngày.",
+        goal: "Tự tin đứng trước ống kính ở mọi không gian và làm chủ bộ 3 trợ lý AI độc quyền để một mình tự sản xuất video đều đặn mỗi ngày.",
         morning: {
           sessionName: "Ca sáng",
           time: "09:00 – 12:00",
-          title: "Có những cách quay video nào hiệu quả, giúp mình tự nhiên không bị đơ?",
+          title: "Thực hành quay tự nhiên trước ống kính",
           items: [
-            "Bản đồ 4 Định dạng Video cốt lõi: Voice-over thao tác tay, Walk & Talk ngoại cảnh, Talking Head 2 cam chuyên gia và Storytelling chuỗi hành động.",
-            "Setup 2 Góc máy Smartphone chuẩn truyền hình: Máy chính diện ngang tầm mắt kết hợp máy phụ nghiêng 45 độ xóa phông, tạo chiều sâu như talkshow.",
-            "Kỹ thuật đánh sáng 3 điểm tối giản: Đèn thanh Keylight 45° + Đèn ven tóc + Tận dụng ánh sáng tự nhiên giúp mặt sáng đều, mịn màng không bóng dầu.",
-            "Thực địa Ngoại cảnh thiên nhiên tại lớp & Thử thách 'Túi Mù': Bốc thăm đề bài ngẫu nhiên theo nhóm, giải phóng sự ngượng ngùng trước đám đông.",
-            "Level 1 - Quay chuyển cảnh theo nhịp nhạc: Bắt góc lia máy mượt mà (Pan, Tilt, Push-in) ăn khớp với từng phách tiết tấu âm thanh.",
-            "Level 2 - Thực hành định dạng Walk & Talk: Cầm mic không dây vừa đi dạo vừa nói chuyện trôi chảy, giữ chân người xem gấp 2.4 lần."
+            "4 Định dạng video thực chiến: Lồng tiếng thao tác tay, vừa đi vừa nói, chuyên gia 2 góc máy và kể chuyện hành động.",
+            "Setup 2 góc máy điện thoại: Một máy ngang tầm mắt, một máy phụ chếch 45 độ tạo chiều sâu như talkshow truyền hình.",
+            "Đánh sáng 3 điểm đẹp da: Chỉnh đèn sáng mặt, thêm ven tóc và tận dụng ánh sáng tự nhiên để khung hình ấm, sạch.",
+            "Thực hành ngoại cảnh tại lớp: Cầm máy quay ngoài trời cùng bạn học, xóa sạch cảm giác ngại ngùng trước đám đông.",
+            "Lia máy chuyển cảnh theo nhạc: Bắt nhịp quay lia, nghiêng và đẩy máy khớp từng phách nhạc cuốn mắt.",
+            "Thực hành vừa đi vừa nói (Walk & Talk): Cắm mic không dây đi dạo nói chuyện tự nhiên, giữ chân người xem cực tốt."
           ]
         },
         afternoon: {
           sessionName: "Ca chiều",
           time: "13:30 – 17:00",
-          title: "Biết edit rồi, làm thế nào để video xem cuốn hút và dùng AI làm hộ mỗi ngày?",
+          title: "Nén nhịp cuốn hút & Bơm đòn bẩy AI",
           items: [
-            "Nghệ thuật nén nhịp 0.8s–2.5s: Bí quyết cứ mỗi 2-3s đổi góc máy hoặc đổi cỡ cảnh một lần, giữ người xem không thể rời mắt đến giây cuối.",
-            "Thiết kế âm thanh cảm xúc (Sound Design): Cách phối nhạc nền theo sóng cảm xúc, chèn tiếng gõ, tiếng click, tiếng thở đúng điểm rơi tâm lý.",
-            "Cài đặt Bộ 3 Trợ Lý AI của thầy Việt: Nạp trực tiếp Miss Idea (lên 30 ý tưởng), Miss Vlog (lọc sạch 7 lỗi văn mẫu) và Miss Video Ads (kịch bản chuyển đổi).",
-            "Quy trình AI viết kịch bản 5 phút: Nhập bối cảnh công việc thực tế, AI tự động phân cảnh và ngắt dòng kịch bản 1 câu 1 nhịp thở.",
-            "Phòng khám Video trực tiếp (Hot Seat 1-1): Thầy Việt chiếu bài của từng học viên lên màn hình lớn, chỉ rõ từng giây thừa và nén nhịp tại chỗ.",
-            "Bàn giao Quy trình Vận hành Solo 30 ngày: Lộ trình đóng gói để 1 người tự sản xuất 1 video chất lượng cao mỗi ngày chỉ trong 30–45 phút."
+            "Nghệ thuật nén nhịp 2 giây: Cứ 2–3s đổi cỡ cảnh hoặc góc nhìn một lần, giữ người xem dán mắt đến hết clip.",
+            "Chèn âm thanh cảm xúc: Thêm tiếng gõ, tiếng click và nhạc nền đúng điểm rơi tâm lý của người xem.",
+            "Cài đặt Bộ 3 Trợ lý AI độc quyền: Nạp sẵn trợ lý lên 30 ý tưởng, lọc sạch văn mẫu AI và viết kịch bản bán hàng.",
+            "Quy trình AI viết kịch bản 5 phút: Đưa đúng bối cảnh sản phẩm, AI tự động nhả kịch bản ngắt dòng theo nhịp thở.",
+            "Khám video trực tiếp tại lớp: Chiếu bài học viên lên màn hình lớn, chỉ rõ từng giây thừa và nắn nhịp tại chỗ.",
+            "Quy trình sản xuất Solo 30 ngày: Lộ trình đóng gói để 1 người tự làm 1 video chất lượng mỗi ngày trong 30 phút."
           ]
         }
       }
