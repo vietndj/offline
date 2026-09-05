@@ -522,6 +522,8 @@ export interface ContentData {
       subtitle: string;
       buttonText: string;
       zaloUrl: string;
+      phone?: string;
+      avatarUrl?: string;
       qrCodeUrl?: string;
       qrNote?: string;
     };
@@ -1640,12 +1642,14 @@ export const CONTENT: ContentData = {
       }
     ],
     supportBox: {
-      title: "Bạn vẫn còn câu hỏi khác?",
-      subtitle: "Nhắn tin Zalo trực tiếp cho Thầy Việt để được hỗ trợ 1-1 ngay.",
-      buttonText: "Nhắn Zalo: 0934.688.632",
+      title: "Bạn có thắc mắc riêng?",
+      subtitle: "Nhắn tin Zalo: 0934.688.632",
+      buttonText: "Nhắn Zalo",
       zaloUrl: "https://zalo.me/0934688632",
+      phone: "0934.688.632",
+      avatarUrl: "/assets/viet_avatar.png",
       qrCodeUrl: "/assets/qr_zalo_0934688632.png",
-      qrNote: "Mở Camera quét vào chat Zalo"
+      qrNote: "Quét ảnh vào chat"
     }
   },
 
