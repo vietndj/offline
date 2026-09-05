@@ -517,6 +517,14 @@ export interface ContentData {
       q: string;
       a: string;
     }[];
+    supportBox?: {
+      title: string;
+      subtitle: string;
+      buttonText: string;
+      zaloUrl: string;
+      qrCodeUrl?: string;
+      qrNote?: string;
+    };
   };
 
   // 18. Backwards compatibility FAQs alias
@@ -583,8 +591,8 @@ export const CONTENT: ContentData = {
     brandSubtitle: "WORKSHOP OFFLINE 2 NGÀY",
     domain: "offline.fedu.vn",
     url: "https://offline.fedu.vn",
-    hotline: "0912345678",
-    zaloUrl: "https://zalo.me",
+    hotline: "0934688632",
+    zaloUrl: "https://zalo.me/0934688632",
     facebookPageUrl: "https://facebook.com",
     youtubeChannelUrl: "https://youtube.com",
     copyright: "© 2026 VIDEO MARKETING — Khóa Học Video Marketing Thực Chiến Đứng Lớp Trực Tiếp Bởi Nguyễn Đức Việt."
@@ -1109,8 +1117,9 @@ export const CONTENT: ContentData = {
         title: "Voice-over & B-roll đè hình",
         shortTitle: "Góc Cận Đè Hình",
         subtitle: "Không cần lộ mặt, thu voice đè lên cảnh quay đời thực",
-        youtubeUrl: "https://youtu.be/ZQ1Qfpln29o",
-        videoId: "ZQ1Qfpln29o",
+        youtubeUrl: "https://youtube.com/shorts/lG4Q518RIdw",
+        videoId: "lG4Q518RIdw",
+        videoUrl: "/assets/formats/shorts_lG4Q518RIdw.mp4",
         poster: "/assets/formats/voiceover_poster.jpg",
         desc: "Quay sẵn 10-15 cảnh thao tác tay ngắn 2-3s, dựng clip trước rồi thu âm đè lên như đang tâm sự."
       },
@@ -1629,7 +1638,15 @@ export const CONTENT: ContentData = {
         q: "Sĩ số lớp là bao nhiêu học viên?",
         a: "Để đảm bảo chất lượng cầm tay chỉ việc và mọi học viên đều có sản phẩm video mang về, mỗi lớp được giới hạn nghiêm ngặt tối đa không quá 40 học viên."
       }
-    ]
+    ],
+    supportBox: {
+      title: "Bạn vẫn còn câu hỏi khác?",
+      subtitle: "Nhắn tin Zalo trực tiếp cho Thầy Việt để được hỗ trợ 1-1 ngay.",
+      buttonText: "Nhắn Zalo: 0934.688.632",
+      zaloUrl: "https://zalo.me/0934688632",
+      qrCodeUrl: "/assets/qr_zalo_0934688632.png",
+      qrNote: "Mở Camera quét vào chat Zalo"
+    }
   },
 
   // 18. Backwards compatibility alias
