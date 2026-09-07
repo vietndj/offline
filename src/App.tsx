@@ -10,6 +10,7 @@ import { CurriculumSection } from './sections/CurriculumSection';
 import { ShowcaseSection } from './sections/ShowcaseSection';
 import { TargetSection } from './sections/TargetSection';
 import { InstructorSection } from './sections/InstructorSection';
+import { VenueSection } from './sections/VenueSection';
 import { RegisterSection } from './sections/RegisterSection';
 import { FaqSection } from './sections/FaqSection';
 import { Footer } from './components/Footer';
@@ -63,6 +64,7 @@ export function App() {
         <ShowcaseSection />
         <TargetSection />
         <InstructorSection />
+        <VenueSection onOpenRegister={() => setModalOpen(true)} />
         <RegisterSection />
         <FaqSection />
       </main>

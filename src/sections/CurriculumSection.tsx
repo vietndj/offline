@@ -1,10 +1,66 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { CONTENT } from '../content';
-import { Sparkles, Sun, Moon, Target, Gift, ArrowRight } from 'lucide-react';
+import { Sparkles, Sun, Moon, Target, Gift, ArrowRight, Volume2, VolumeX } from 'lucide-react';
 
 interface CurriculumSectionProps {
   onOpenRegister?: () => void;
 }
+
+const EventMedia: React.FC<{ photo: { image: string; caption: string; alt: string; video?: string } }> = ({ photo }) => {
+  const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const toggleSound = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (videoRef.current) {
+      const nextMuted = !videoRef.current.muted;
+      videoRef.current.muted = nextMuted;
+      setIsMuted(nextMuted);
+    }
+  };
+
+  if (photo.video) {
+    return (
+      <div className="relative w-full h-full bg-black">
+        <video
+          ref={videoRef}
+          src={photo.video}
+          poster={photo.image}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-full object-cover"
+        />
+        {/* Badge Live / Auto run */}
+        <div className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md text-[11px] font-mono font-bold text-white flex items-center gap-1.5 shadow-sm pointer-events-none">
+          <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse inline-block" />
+          <span>VIDEO THỰC HÀNH</span>
+        </div>
+
+        {/* Nút bật/tắt tiếng */}
+        <button
+          type="button"
+          onClick={toggleSound}
+          className="absolute bottom-2.5 right-2.5 w-8 h-8 rounded-full bg-black/70 hover:bg-black/90 backdrop-blur-md text-white flex items-center justify-center transition-all cursor-pointer border border-white/20 shadow-md"
+          title={isMuted ? "Bật âm thanh" : "Tắt âm thanh"}
+          aria-label={isMuted ? "Bật âm thanh" : "Tắt âm thanh"}
+        >
+          {isMuted ? <VolumeX className="w-4 h-4 text-zinc-300" /> : <Volume2 className="w-4 h-4 text-orange-400" />}
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={photo.image}
+      alt={photo.alt || photo.caption}
+      className="w-full h-full object-cover transform group-hover:scale-103 transition-transform duration-500"
+      loading="lazy"
+    />
+  );
+};
 
 export const CurriculumSection: React.FC<CurriculumSectionProps> = ({ onOpenRegister }) => {
   const { curriculum } = CONTENT;
@@ -26,17 +82,12 @@ export const CurriculumSection: React.FC<CurriculumSectionProps> = ({ onOpenRegi
             {curriculum.subheadline}
           </p>
 
-          {/* 3 Real Class Event Photos (Data-driven from curriculum.eventPhotos) */}
+          {/* 3 Real Class Event Items (Photos + Auto run Video) */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left reveal reveal-scale delay-150">
             {curriculum.eventPhotos.map((photo, idx) => (
               <div key={idx} className="flex flex-col h-full bg-white rounded-2xl overflow-hidden border border-zinc-200 shadow-sm group">
-                <div className="h-56 sm:h-64 overflow-hidden bg-zinc-100 shrink-0">
-                  <img
-                    src={photo.image}
-                    alt={photo.alt || photo.caption}
-                    className="w-full h-full object-cover transform group-hover:scale-103 transition-transform duration-500"
-                    loading="lazy"
-                  />
+                <div className="h-56 sm:h-64 overflow-hidden bg-zinc-100 shrink-0 relative">
+                  <EventMedia photo={photo} />
                 </div>
                 <div className="p-3.5 bg-white text-sm sm:text-base font-sans font-bold text-zinc-900 text-center border-t border-zinc-100 flex-1 flex items-center justify-center leading-snug">
                   {photo.caption}

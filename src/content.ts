@@ -349,6 +349,7 @@ export interface ContentData {
       image: string;
       caption: string;
       alt: string;
+      video?: string;
     }[];
     dayPrefix: string;
     goalLabel: string;
@@ -471,6 +472,32 @@ export interface ContentData {
       label: string;
     }[];
     quote: string;
+  };
+
+  // 15.5. Venue & Logistics Section
+  venue: {
+    badge: string;
+    headline: string;
+    description: string;
+    note: string;
+    perks: {
+      id: string;
+      title: string;
+      desc: string;
+      tag: string;
+      icon: string;
+      image: string;
+      priceBadge?: string;
+      highlight?: string;
+    }[];
+    galleryTitle: string;
+    gallerySubtitle: string;
+    gallery: {
+      title: string;
+      desc: string;
+      image: string;
+      tag: string;
+    }[];
   };
 
   // 16. In-Page Registration Form Section
@@ -633,6 +660,7 @@ export const CONTENT: ContentData = {
       { label: "Lộ Trình 2 Ngày", href: "#curriculum" },
       { label: "Video Học Viên", href: "#showcase" },
       { label: "Giảng Viên", href: "#instructor" },
+      { label: "Địa Điểm", href: "#dia-diem" },
       { label: "Hỏi Đáp", href: "#faq" }
     ],
     cta: "GIỮ CHỖ NGAY",
@@ -1267,9 +1295,10 @@ export const CONTENT: ContentData = {
         alt: "Toàn cảnh lớp học offline tốt nghiệp và trao giáo trình"
       },
       {
-        image: "/assets/events/event_1on1_coaching.webp",
-        caption: "📱 Thầy Việt hướng dẫn 1 kèm 1",
-        alt: "Thầy Nguyễn Đức Việt hướng dẫn cầm tay chỉ việc 1 kèm 1"
+        image: "/assets/showcase/lop_k2.jpg",
+        video: "/assets/formats/lop_k2.mp4",
+        caption: "📱 Thầy Việt hướng dẫn 1 kèm 1 tại lớp K2",
+        alt: "Thầy Nguyễn Đức Việt trực tiếp hướng dẫn bấm máy và hoàn thiện video 1-1 tại lớp K2"
       },
       {
         image: "/assets/events/event_studio_practice.jpg",
@@ -1564,6 +1593,104 @@ export const CONTENT: ContentData = {
       { number: "100%", label: "Cầm Tay Chỉ Việc 1-1" }
     ],
     quote: "Làm video marketing không phải là phô diễn kỹ xảo đắt tiền, mà là dùng hình ảnh và âm thanh chân thật để bóc đúng nỗi đau khách hàng và trao giải pháp tốt nhất."
+  },
+
+  // 15.5. Venue & Logistics Section
+  venue: {
+    badge: "📍 KHÔNG GIAN HỌC & ĂN NGHỈ",
+    headline: "Không gian xanh, yên tĩnh tại Hà Nội",
+    description: "Chỗ học nhiều cây xanh, thoáng đãng để anh chị thoải mái cầm máy quay thực hành, không bị gò bó trong 4 bức tường văn phòng.",
+    note: "Địa chỉ cụ thể sẽ gửi riêng trong nhóm Zalo lớp để đảm bảo không gian riêng tư tối đa cho anh chị em.",
+    perks: [
+      {
+        id: "morning-teabreak",
+        title: "Cafe, trà và bánh ngọt ăn nhẹ",
+        desc: "Sáng nào lớp cũng có sẵn cafe phin, trà thơm và bánh ngọt để anh chị nhâm nhi nạp năng lượng, tỉnh táo học và thực hành suốt cả ngày.",
+        tag: "Mỗi sáng",
+        icon: "Coffee",
+        image: "/assets/venue/venue_cafe.jpg"
+      },
+      {
+        id: "lunch-buffet",
+        title: "Buffet line tự chọn cả 2 bữa trưa",
+        desc: "Trưa cả 2 ngày học đều có buffet tự chọn nóng sốt ngay tại chỗ. Đầy đủ món mặn và rau xanh, ăn xong nghỉ ngơi luôn, không phải đội nắng ra ngoài tìm quán.",
+        tag: "Trưa 2 ngày",
+        icon: "Utensils",
+        image: "/assets/venue/venue_buffet.jpg"
+      },
+      {
+        id: "dinner-bbq",
+        title: "Tiệc buffet nướng BBQ tối ngày đầu",
+        desc: "Học xong ngày 1, cả lớp ở lại ăn đồ nướng ngoài trời. Lúc này anh em ngồi lại cùng nhau, nâng chén trà chén rượu, tâm sự chuyện làm nghề và chia sẻ kinh nghiệm kinh doanh.",
+        tag: "Tối thứ Bảy",
+        icon: "Flame",
+        image: "/assets/venue/venue_bbq.jpg",
+        highlight: "Giao lưu nghề"
+      },
+      {
+        id: "hotel-stay",
+        title: "Khách sạn gần chỗ học (400k – 500k/đêm)",
+        desc: "Anh chị ở xa về có phòng khách sạn sạch sẽ, thoáng mát ngay sát bên. Khuyên anh chị nên ghép 2 người một phòng (chia ra chỉ 200k–250k) để vừa tiết kiệm, vừa tiện thức khuya tâm sự nghề.",
+        tag: "Nghỉ qua đêm",
+        icon: "Bed",
+        image: "/assets/venue/venue_hotel.png",
+        priceBadge: "400k – 500k / đêm"
+      },
+      {
+        id: "kids-friendly",
+        title: "Có chỗ riêng cho các bé 'xem iPad'",
+        desc: "Anh chị bận con nhỏ cuối tuần cứ dắt theo. Bên ngoài phòng học có khuôn viên rộng rãi, thoáng mát để các bé ngồi chơi, xem iPad hoặc làm bánh, bố mẹ hoàn toàn yên tâm ngồi học.",
+        tag: "Thân thiện gia đình",
+        icon: "Baby",
+        image: "/assets/venue/venue_kids.jpg"
+      }
+    ],
+    galleryTitle: "Góc ảnh thực tế không gian học",
+    gallerySubtitle: "Ảnh chụp thực tế tại các khu vực của lớp học (cuộn ngang xem thêm)",
+    gallery: [
+      {
+        title: "Phòng học bàn gỗ & thảo luận",
+        desc: "Bàn gỗ lớn, ngập tràn ánh sáng tự nhiên và cây xanh",
+        image: "/assets/venue/venue_classroom.jpg",
+        tag: "Phòng học"
+      },
+      {
+        title: "Ban công cafe rợp bóng cây",
+        desc: "Không gian thoáng ngắm tán cây mỗi buổi sáng",
+        image: "/assets/venue/venue_cafe.jpg",
+        tag: "Ban công"
+      },
+      {
+        title: "Bàn trà giao lưu kết nối",
+        desc: "Góc ngồi kết nối và trao đổi kịch bản",
+        image: "/assets/venue/venue_discussion.jpg",
+        tag: "Góc trà"
+      },
+      {
+        title: "Buffet line tự chọn cả 2 bữa trưa",
+        desc: "Món nóng sốt, rau củ tươi sạch phục vụ tại chỗ",
+        image: "/assets/venue/venue_buffet.jpg",
+        tag: "Bữa trưa"
+      },
+      {
+        title: "Tiệc nướng BBQ tối ngày 1",
+        desc: "Bếp nướng ngoài trời, quây quần chia sẻ chuyện nghề",
+        image: "/assets/venue/venue_bbq.jpg",
+        tag: "Tiệc BBQ"
+      },
+      {
+        title: "Phòng khách sạn nghỉ đêm",
+        desc: "Sạch sẽ, tiện nghi sát bên (400k - 500k/đêm)",
+        image: "/assets/venue/venue_hotel.png",
+        tag: "Khách sạn"
+      },
+      {
+        title: "Chỗ cho bé vui chơi bên ngoài",
+        desc: "Khuôn viên rộng rãi, an toàn cho các con",
+        image: "/assets/venue/venue_kids.jpg",
+        tag: "Góc bé"
+      }
+    ]
   },
 
   // 16. In-Page Registration Form Section
