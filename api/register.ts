@@ -27,7 +27,7 @@ export interface AppendResult {
   masterError?: string;
 }
 
-const DEFAULT_TELEGRAM_BOT_TOKEN = "8964853536:AAHuRNm_hY-YQtveBD1HlmthN4I5xpVzM8U";
+const DEFAULT_TELEGRAM_BOT_TOKEN = "7991600422:AAHNmZ9ixcQtf_pTVQewadrnYZ0apOEvxgk";
 const DEFAULT_TELEGRAM_CHAT_ID = "2050406425";
 const DEFAULT_GOOGLE_CLIENT_EMAIL = "form-feedback-offline@vietndj-git-cms.iam.gserviceaccount.com";
 
