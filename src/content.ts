@@ -1604,28 +1604,30 @@ export const CONTENT: ContentData = {
     perks: [
       {
         id: "morning-teabreak",
-        title: "Cafe, trà và bánh ngọt ăn nhẹ",
-        desc: "Sáng nào lớp cũng có sẵn cafe phin, trà thơm và bánh ngọt để anh chị nhâm nhi nạp năng lượng, tỉnh táo học và thực hành suốt cả ngày.",
-        tag: "Mỗi sáng",
+        title: "Cafe, trà và bánh ngọt ăn nhẹ (Free)",
+        desc: "Sáng nào lớp cũng có sẵn cafe phin, trà thơm và bánh ngọt phục vụ hoàn toàn miễn phí (free). Anh chị cứ đến sớm nhâm nhi nạp năng lượng, tỉnh táo học và thực hành suốt cả ngày.",
+        tag: "Free mỗi sáng",
         icon: "Coffee",
-        image: "/assets/venue/perk_teabreak.jpg"
+        image: "/assets/venue/perk_teabreak.jpg",
+        priceBadge: "FREE 100%"
       },
       {
         id: "lunch-buffet",
-        title: "Buffet line tự chọn cả 2 bữa trưa",
-        desc: "Trưa cả 2 ngày học đều có buffet tự chọn nóng sốt ngay tại chỗ. Đầy đủ món mặn và rau xanh, ăn xong nghỉ ngơi luôn, không phải đội nắng ra ngoài tìm quán.",
-        tag: "Trưa 2 ngày",
+        title: "Bữa trưa nóng sốt tại chỗ (Đăng ký theo nhu cầu)",
+        desc: "Trưa cả 2 ngày, bếp tại chỗ nhận chuẩn bị suất ăn nóng sốt cho anh chị nào đăng ký ăn chung tại lớp. Chi phí tự túc chia đều theo suất bình dân, tiện ăn xong nghỉ ngơi tại chỗ, không phải đội nắng ra ngoài tìm quán.",
+        tag: "Trưa 2 ngày · Theo nhu cầu",
         icon: "Utensils",
-        image: "/assets/venue/perk_buffet.jpg"
+        image: "/assets/venue/perk_buffet.jpg",
+        highlight: "Đăng ký theo nhu cầu"
       },
       {
         id: "dinner-bbq",
-        title: "Tiệc buffet nướng BBQ tối ngày đầu",
-        desc: "Học xong ngày 1, cả lớp ở lại ăn đồ nướng ngoài trời. Lúc này anh em ngồi lại cùng nhau, nâng chén trà chén rượu, tâm sự chuyện làm nghề và chia sẻ kinh nghiệm kinh doanh.",
-        tag: "Tối thứ Bảy",
+        title: "Tiệc nướng BBQ ngoài trời (Đăng ký theo nhu cầu)",
+        desc: "Học xong ngày 1, lớp tổ chức tiệc nướng ngoài trời cho anh em nào tiện ở lại giao lưu. Nhà hàng nhận chuẩn bị tiệc riêng theo số lượng đăng ký thực tế (chi phí tự túc chia đều). Ai ở lại thì cùng nâng chén trà chén bia, tâm sự chuyện làm nghề.",
+        tag: "Tối thứ Bảy · Theo nhu cầu",
         icon: "Flame",
         image: "/assets/venue/perk_bbq.jpg",
-        highlight: "Giao lưu nghề"
+        highlight: "Ai ở lại thì đăng ký"
       },
       {
         id: "hotel-stay",
