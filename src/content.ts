@@ -1608,7 +1608,7 @@ export const CONTENT: ContentData = {
         desc: "Sáng nào lớp cũng có sẵn cafe phin, trà thơm và bánh ngọt để anh chị nhâm nhi nạp năng lượng, tỉnh táo học và thực hành suốt cả ngày.",
         tag: "Mỗi sáng",
         icon: "Coffee",
-        image: "/assets/venue/venue_cafe.jpg"
+        image: "/assets/venue/perk_teabreak.jpg"
       },
       {
         id: "lunch-buffet",
@@ -1616,7 +1616,7 @@ export const CONTENT: ContentData = {
         desc: "Trưa cả 2 ngày học đều có buffet tự chọn nóng sốt ngay tại chỗ. Đầy đủ món mặn và rau xanh, ăn xong nghỉ ngơi luôn, không phải đội nắng ra ngoài tìm quán.",
         tag: "Trưa 2 ngày",
         icon: "Utensils",
-        image: "/assets/venue/venue_buffet.jpg"
+        image: "/assets/venue/perk_buffet.jpg"
       },
       {
         id: "dinner-bbq",
@@ -1624,7 +1624,7 @@ export const CONTENT: ContentData = {
         desc: "Học xong ngày 1, cả lớp ở lại ăn đồ nướng ngoài trời. Lúc này anh em ngồi lại cùng nhau, nâng chén trà chén rượu, tâm sự chuyện làm nghề và chia sẻ kinh nghiệm kinh doanh.",
         tag: "Tối thứ Bảy",
         icon: "Flame",
-        image: "/assets/venue/venue_bbq.jpg",
+        image: "/assets/venue/perk_bbq.jpg",
         highlight: "Giao lưu nghề"
       },
       {
@@ -1642,53 +1642,53 @@ export const CONTENT: ContentData = {
         desc: "Anh chị bận con nhỏ cuối tuần cứ dắt theo. Bên ngoài phòng học có khuôn viên rộng rãi, thoáng mát để các bé ngồi chơi, xem iPad hoặc làm bánh, bố mẹ hoàn toàn yên tâm ngồi học.",
         tag: "Thân thiện gia đình",
         icon: "Baby",
-        image: "/assets/venue/venue_kids.jpg"
+        image: "/assets/venue/perk_kids.jpg"
       }
     ],
     galleryTitle: "Góc ảnh thực tế không gian học",
     gallerySubtitle: "Ảnh chụp thực tế tại các khu vực của lớp học (cuộn ngang xem thêm)",
     gallery: [
       {
-        title: "Phòng học bàn gỗ & thảo luận",
-        desc: "Bàn gỗ lớn, ngập tràn ánh sáng tự nhiên và cây xanh",
-        image: "/assets/venue/venue_classroom.jpg",
+        title: "Giảng đường chính & Màn chiếu lớn",
+        desc: "Không gian đào tạo tập trung với màn chiếu lớn, bàn ghế tiện nghi cho cả lớp",
+        image: "/assets/venue/gallery_hall_stage.jpg",
+        tag: "Giảng đường"
+      },
+      {
+        title: "Bàn tròn thảo luận & Cầm tay chỉ việc",
+        desc: "Setup bàn gỗ ấm cúng, thoáng đãng, dễ dàng tương tác và sửa kịch bản 1-1",
+        image: "/assets/venue/gallery_classroom.jpg",
         tag: "Phòng học"
       },
       {
-        title: "Ban công cafe rợp bóng cây",
-        desc: "Không gian thoáng ngắm tán cây mỗi buổi sáng",
-        image: "/assets/venue/venue_cafe.jpg",
-        tag: "Ban công"
+        title: "Sân thượng ngắm trọn công viên xanh",
+        desc: "Không gian mở trên cao nhiều cây xanh, gió mát để thư giãn giữa các giờ học",
+        image: "/assets/venue/gallery_rooftop_terrace.jpg",
+        tag: "Sân thượng"
       },
       {
-        title: "Bàn trà giao lưu kết nối",
-        desc: "Góc ngồi kết nối và trao đổi kịch bản",
-        image: "/assets/venue/venue_discussion.jpg",
-        tag: "Góc trà"
+        title: "Góc thực hành quay máy & B-roll",
+        desc: "Khu vực decor hoa tươi và ánh sáng tự nhiên lý tưởng để thực hành góc máy",
+        image: "/assets/venue/gallery_filming_practice.jpg",
+        tag: "Góc thực hành"
       },
       {
-        title: "Buffet line tự chọn cả 2 bữa trưa",
-        desc: "Món nóng sốt, rau củ tươi sạch phục vụ tại chỗ",
-        image: "/assets/venue/venue_buffet.jpg",
-        tag: "Bữa trưa"
+        title: "Bàn gỗ workshop & Trao đổi 1-1",
+        desc: "Không gian ngồi lại cùng giảng viên bóc tách kênh và hoàn thiện video mẫu",
+        image: "/assets/venue/gallery_meeting_desk.jpg",
+        tag: "Khu workshop"
       },
       {
-        title: "Tiệc nướng BBQ tối ngày 1",
-        desc: "Bếp nướng ngoài trời, quây quần chia sẻ chuyện nghề",
-        image: "/assets/venue/venue_bbq.jpg",
-        tag: "Tiệc BBQ"
+        title: "Kiến trúc kính & Cây xanh bao bọc",
+        desc: "Thiết kế hiện đại đón trọn ánh sáng tự nhiên, tạo cảm hứng sáng tạo dồi dào",
+        image: "/assets/venue/gallery_architecture.jpg",
+        tag: "Kiến trúc xanh"
       },
       {
-        title: "Phòng khách sạn nghỉ đêm",
-        desc: "Sạch sẽ, tiện nghi sát bên (400k - 500k/đêm)",
-        image: "/assets/venue/venue_hotel.png",
-        tag: "Khách sạn"
-      },
-      {
-        title: "Chỗ cho bé vui chơi bên ngoài",
-        desc: "Khuôn viên rộng rãi, an toàn cho các con",
-        image: "/assets/venue/venue_kids.jpg",
-        tag: "Góc bé"
+        title: "Ban công cafe ngập bóng cây",
+        desc: "Góc chill thoáng đãng nhâm nhi cafe, nạp lại năng lượng sau giờ học thực chiến",
+        image: "/assets/venue/gallery_cafe_balcony.jpg",
+        tag: "Ban công chill"
       }
     ]
   },
