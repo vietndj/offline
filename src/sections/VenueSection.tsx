@@ -110,6 +110,7 @@ export const VenueSection: React.FC<VenueSectionProps> = () => {
             {venue.perks.map((perk) => {
               const isHotel = perk.id === 'hotel-stay';
               const isBbq = perk.id === 'dinner-bbq';
+              const isBuffet = perk.id === 'lunch-buffet';
 
               return (
                 <div
@@ -119,6 +120,8 @@ export const VenueSection: React.FC<VenueSectionProps> = () => {
                       ? 'border-sky-500/40 shadow-lg shadow-sky-950/20' 
                       : isBbq
                       ? 'border-orange-500/40 shadow-lg shadow-orange-950/20'
+                      : isBuffet
+                      ? 'border-emerald-500/40 shadow-lg shadow-emerald-950/20'
                       : 'border-zinc-800 hover:border-zinc-700'
                   }`}
                 >

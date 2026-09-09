@@ -1613,21 +1613,21 @@ export const CONTENT: ContentData = {
       },
       {
         id: "lunch-buffet",
-        title: "Bữa trưa nóng sốt tại chỗ (Đăng ký theo nhu cầu)",
-        desc: "Trưa cả 2 ngày, bếp tại chỗ nhận chuẩn bị suất ăn nóng sốt cho anh chị nào đăng ký ăn chung tại lớp. Chi phí tự túc chia đều theo suất bình dân, tiện ăn xong nghỉ ngơi tại chỗ, không phải đội nắng ra ngoài tìm quán.",
-        tag: "Trưa 2 ngày · Theo nhu cầu",
+        title: "Buffet trưa nóng sốt cả 2 ngày (Free)",
+        desc: "Trưa cả 2 ngày, lớp phục vụ tiệc buffet nóng sốt hoàn toàn miễn phí (Free 100%) ngay tại chỗ. Anh chị em học xong cứ thong thả ngồi lại dùng bữa cùng nhau, vừa nạp năng lượng vừa tiện nghỉ ngơi giao lưu, không phải bận tâm chuyện ăn uống hay đội nắng ra ngoài tìm quán.",
+        tag: "Free trưa 2 ngày",
         icon: "Utensils",
         image: "/assets/venue/perk_buffet.jpg",
-        highlight: "Đăng ký theo nhu cầu"
+        priceBadge: "FREE 100%"
       },
       {
         id: "dinner-bbq",
-        title: "Tiệc nướng BBQ ngoài trời (Đăng ký theo nhu cầu)",
-        desc: "Học xong ngày 1, lớp tổ chức tiệc nướng ngoài trời cho anh em nào tiện ở lại giao lưu. Nhà hàng nhận chuẩn bị tiệc riêng theo số lượng đăng ký thực tế (chi phí tự túc chia đều). Ai ở lại thì cùng nâng chén trà chén bia, tâm sự chuyện làm nghề.",
-        tag: "Tối thứ Bảy · Theo nhu cầu",
+        title: "Tiệc nướng BBQ tối ngày 1 (Lựa chọn mở)",
+        desc: "Học xong ngày 1, lớp có buổi tiệc nướng ngoài trời để anh em ngồi lại giao lưu. Đây là lựa chọn mở hoàn toàn: kết thúc buổi học đầu tiên mình sẽ hỏi trực tiếp mọi người xem ai tiện tham gia theo nhu cầu (chi phí chia đều). Anh chị nào bận việc gia đình hay phải về sớm cứ thoải mái về, không câu nệ; ai nán lại được thì cùng nâng chén bia chén trà, tâm sự chuyện làm nghề.",
+        tag: "Tối thứ Bảy · Tuỳ chọn",
         icon: "Flame",
         image: "/assets/venue/perk_bbq.jpg",
-        highlight: "Ai ở lại thì đăng ký"
+        highlight: "Hỏi nhu cầu cuối ngày 1"
       },
       {
         id: "hotel-stay",
