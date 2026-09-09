@@ -1604,7 +1604,7 @@ export const CONTENT: ContentData = {
     perks: [
       {
         id: "morning-teabreak",
-        title: "Cafe, trà và bánh ngọt ăn nhẹ (Free)",
+        title: "Cafe, trà và bánh ngọt ăn nhẹ",
         desc: "Sáng nào lớp cũng có sẵn cafe phin, trà thơm và bánh ngọt phục vụ hoàn toàn miễn phí (free). Anh chị cứ đến sớm nhâm nhi nạp năng lượng, tỉnh táo học và thực hành suốt cả ngày.",
         tag: "Free mỗi sáng",
         icon: "Coffee",
@@ -1613,7 +1613,7 @@ export const CONTENT: ContentData = {
       },
       {
         id: "lunch-buffet",
-        title: "Buffet trưa nóng sốt cả 2 ngày (Free)",
+        title: "Buffet trưa nóng sốt cả 2 ngày",
         desc: "Trưa cả 2 ngày, lớp phục vụ tiệc buffet nóng sốt hoàn toàn miễn phí (Free 100%) ngay tại chỗ. Anh chị em học xong cứ thong thả ngồi lại dùng bữa cùng nhau, vừa nạp năng lượng vừa tiện nghỉ ngơi giao lưu, không phải bận tâm chuyện ăn uống hay đội nắng ra ngoài tìm quán.",
         tag: "Free trưa 2 ngày",
         icon: "Utensils",
