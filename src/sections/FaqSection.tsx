@@ -45,16 +45,16 @@ export const FaqSection: React.FC = () => {
                   className="w-10 h-10 rounded-full object-cover border border-zinc-300 shadow-2xs shrink-0"
                 />
                 <div className="text-left min-w-0 pr-1">
-                  <div className="text-[12px] font-sans font-medium text-zinc-700 leading-tight">
-                    {support.title || "Bạn có thắc mắc riêng?"}
+                  <div className="text-[12px] sm:text-[13px] font-sans font-semibold text-zinc-800 leading-tight">
+                    {support.title || "Nhắn riêng cho mình (Nguyễn Đức Việt)"}
                   </div>
                   <a
                     href={support.zaloUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[11px] font-sans text-zinc-500 hover:text-zinc-900 transition-colors inline-flex items-center gap-1 mt-0.5"
+                    className="text-[11px] sm:text-[12px] font-sans text-zinc-500 hover:text-zinc-900 transition-colors inline-flex items-center gap-1 mt-0.5"
                   >
-                    <span>Nhắn Zalo: <span className="font-semibold text-zinc-700">{support.phone || "0934.688.632"}</span></span>
+                    <span>{support.subtitle || `Zalo cá nhân: ${support.phone || "0934.688.632"}`}</span>
                     <ArrowRight className="w-3 h-3 text-zinc-400" />
                   </a>
                 </div>
@@ -99,36 +99,36 @@ export const FaqSection: React.FC = () => {
                 >
                   <button
                     onClick={() => toggle(idx)}
-                    className="w-full p-5 sm:p-6 text-left flex items-start justify-between gap-4 cursor-pointer"
+                    className="w-full p-5 sm:p-6 text-left flex items-start justify-between gap-4 cursor-pointer group"
                   >
-                    <div className="flex items-start gap-3.5">
+                    <div className="flex items-start gap-3.5 sm:gap-4">
                       <span
-                        className={`w-7 h-7 rounded-lg text-xs font-mono font-bold flex items-center justify-center shrink-0 mt-0.5 transition-colors ${
+                        className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-xs sm:text-sm font-mono font-bold flex items-center justify-center shrink-0 transition-all ${
                           isOpen
-                            ? 'bg-amber-500 text-zinc-950 font-black'
-                            : 'bg-zinc-200 text-zinc-700 font-bold'
+                            ? 'bg-amber-500 text-zinc-950 font-black shadow-xs'
+                            : 'bg-zinc-900 text-white font-bold group-hover:bg-black shadow-2xs'
                         }`}
                       >
                         {String(idx + 1).padStart(2, '0')}
                       </span>
-                      <span className="font-sans font-bold text-[#09090b] text-base sm:text-lg md:text-xl leading-snug">
+                      <span className="font-sans font-bold text-[#09090b] text-base sm:text-lg md:text-xl leading-snug pt-1 sm:pt-1.5">
                         {faq.q}
                       </span>
                     </div>
 
                     <div
-                      className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all ${
+                      className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shrink-0 transition-all ${
                         isOpen
-                          ? 'bg-amber-500 text-zinc-950 rotate-180'
-                          : 'bg-zinc-200 text-zinc-700 hover:bg-zinc-300'
+                          ? 'bg-amber-500 text-zinc-950 rotate-180 shadow-xs'
+                          : 'bg-zinc-900 text-white group-hover:bg-black shadow-2xs'
                       }`}
                     >
-                      <ChevronDown className="w-4 h-4" />
+                      <ChevronDown className={`w-5 h-5 transition-colors ${isOpen ? 'text-zinc-950' : 'text-white'}`} />
                     </div>
                   </button>
 
                   {isOpen && (
-                    <div className="px-6 pb-6 pt-2 text-base sm:text-lg text-zinc-900 leading-relaxed border-t border-amber-200 font-sans pl-[58px]">
+                    <div className="px-6 pb-6 pt-2 text-base sm:text-lg text-zinc-900 leading-relaxed border-t border-amber-200 font-sans pl-[60px] sm:pl-[66px]">
                       {faq.a}
                     </div>
                   )}

@@ -1771,8 +1771,8 @@ export const CONTENT: ContentData = {
       }
     ],
     supportBox: {
-      title: "Bạn có thắc mắc riêng?",
-      subtitle: "Nhắn tin Zalo: 0934.688.632",
+      title: "Nhắn riêng cho mình (Nguyễn Đức Việt)",
+      subtitle: "Zalo cá nhân: 0934.688.632",
       buttonText: "Nhắn Zalo",
       zaloUrl: "https://zalo.me/0934688632",
       phone: "0934.688.632",
