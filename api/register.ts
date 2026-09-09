@@ -110,15 +110,15 @@ export function splitVietnameseName(fullName: string): { lastName: string; first
 }
 
 export function getSpreadsheetConfig(): SpreadsheetConfig {
-  // 1. SỔ RIÊNG KHÓA OFFLINE (ưu tiên GOOGLE_SPREADSHEET_ID trong .env)
-  const courseId = process.env.COURSE_SPREADSHEET_ID || process.env.GOOGLE_SPREADSHEET_ID || DEFAULT_COURSE_SPREADSHEET_ID;
-  const courseName = process.env.COURSE_SHEET_NAME || process.env.GOOGLE_SHEET_NAME || DEFAULT_COURSE_SHEET_NAME;
+  // 1. SỔ RIÊNG KHÓA OFFLINE (Bảng mà anh Việt theo dõi: "[FEDU] Danh Sách Học Viên - Khóa Làm Video Viral (Offline)")
+  const courseId = process.env.COURSE_SPREADSHEET_ID || DEFAULT_COURSE_SPREADSHEET_ID;
+  const courseName = process.env.COURSE_SHEET_NAME || (courseId === DEFAULT_COURSE_SPREADSHEET_ID ? DEFAULT_COURSE_SHEET_NAME : (process.env.GOOGLE_SHEET_NAME || DEFAULT_COURSE_SHEET_NAME));
 
-  // 2. SỔ CON (Primary Sheet làm việc chính: "Offline-VideoEdu")
+  // 2. SỔ CON ADS/MARKETING TỔNG HỢP (Primary Sheet: "Offline-VideoEdu")
   const primaryId = process.env.PRIMARY_SPREADSHEET_ID || DEFAULT_PRIMARY_SPREADSHEET_ID;
   const primaryName = process.env.PRIMARY_SHEET_NAME || DEFAULT_PRIMARY_SHEET_NAME;
 
-  // 3. SỔ MẸ (Két Sắt Bảo Hiểm Tự Động - kho lưu trữ tích lũy toàn bộ dữ liệu)
+  // 3. SỔ MẸ (Két Sắt Bảo Hiểm Tự Động: "Offline FEDU")
   const masterId = process.env.MASTER_SPREADSHEET_ID || DEFAULT_MASTER_SPREADSHEET_ID;
   const masterName = process.env.MASTER_SHEET_NAME || DEFAULT_MASTER_SHEET_NAME;
 
@@ -163,8 +163,10 @@ async function appendToGoogleSheet(
   if (!sheets) {
     console.warn('[Google Sheets] Client not ready');
     return {
+      courseSuccess: false,
       primarySuccess: false,
       masterSuccess: false,
+      courseError: 'Google Sheets client unconfigured',
       primaryError: 'Google Sheets client unconfigured',
       masterError: 'Google Sheets client unconfigured',
     };
