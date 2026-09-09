@@ -14,6 +14,8 @@ export interface RegistrationPayload {
 }
 
 export interface SpreadsheetConfig {
+  courseId: string;
+  courseName: string;
   primaryId: string;
   primaryName: string;
   masterId: string;
@@ -21,8 +23,10 @@ export interface SpreadsheetConfig {
 }
 
 export interface AppendResult {
+  courseSuccess: boolean;
   primarySuccess: boolean;
   masterSuccess: boolean;
+  courseError?: string;
   primaryError?: string;
   masterError?: string;
 }
@@ -31,7 +35,11 @@ const DEFAULT_TELEGRAM_BOT_TOKEN = "7991600422:AAHNmZ9ixcQtf_pTVQewadrnYZ0apOEvx
 const DEFAULT_TELEGRAM_CHAT_ID = "2050406425";
 const DEFAULT_GOOGLE_CLIENT_EMAIL = "form-feedback-offline@vietndj-git-cms.iam.gserviceaccount.com";
 
-// SỔ CON (Primary Sheet làm việc chính: "Offline-VideoEdu")
+// SỔ RIÊNG KHÓA OFFLINE (Bảng [FEDU] Danh Sách Học Viên - Khóa Làm Video Viral (Offline) mà anh Việt theo dõi)
+const DEFAULT_COURSE_SPREADSHEET_ID = "1PaHkFMdY615FasQDcqqeia94L1662YKES7cPuFIpKhg";
+const DEFAULT_COURSE_SHEET_NAME = "Danh Sách Học Viên";
+
+// SỔ CON ADS/MARKETING TỔNG HỢP (Data - FEDU -> "Offline-VideoEdu")
 const DEFAULT_PRIMARY_SPREADSHEET_ID = "1ZYfONTXG2yUAzC-laIOyJT6o-mA1yFbwp99ZIgNWwPE";
 const DEFAULT_PRIMARY_SHEET_NAME = "Offline-VideoEdu";
 
@@ -102,15 +110,21 @@ export function splitVietnameseName(fullName: string): { lastName: string; first
 }
 
 export function getSpreadsheetConfig(): SpreadsheetConfig {
-  // 1. SỔ CON (Primary Sheet làm việc chính: "Offline-VideoEdu")
+  // 1. SỔ RIÊNG KHÓA OFFLINE (ưu tiên GOOGLE_SPREADSHEET_ID trong .env)
+  const courseId = process.env.COURSE_SPREADSHEET_ID || process.env.GOOGLE_SPREADSHEET_ID || DEFAULT_COURSE_SPREADSHEET_ID;
+  const courseName = process.env.COURSE_SHEET_NAME || process.env.GOOGLE_SHEET_NAME || DEFAULT_COURSE_SHEET_NAME;
+
+  // 2. SỔ CON (Primary Sheet làm việc chính: "Offline-VideoEdu")
   const primaryId = process.env.PRIMARY_SPREADSHEET_ID || DEFAULT_PRIMARY_SPREADSHEET_ID;
   const primaryName = process.env.PRIMARY_SHEET_NAME || DEFAULT_PRIMARY_SHEET_NAME;
 
-  // 2. SỔ MẸ (Két Sắt Bảo Hiểm Tự Động - kho lưu trữ tích lũy toàn bộ dữ liệu)
+  // 3. SỔ MẸ (Két Sắt Bảo Hiểm Tự Động - kho lưu trữ tích lũy toàn bộ dữ liệu)
   const masterId = process.env.MASTER_SPREADSHEET_ID || DEFAULT_MASTER_SPREADSHEET_ID;
   const masterName = process.env.MASTER_SHEET_NAME || DEFAULT_MASTER_SHEET_NAME;
 
   return {
+    courseId,
+    courseName,
     primaryId,
     primaryName,
     masterId,
@@ -162,7 +176,27 @@ async function appendToGoogleSheet(
   // Thêm dấu nháy đơn ' trước số điện thoại để Google Sheet không tự ý cắt mất số 0 ở đầu
   const sheetPhone = `'${normalizedPhone}`;
 
-  // Format cột cho Sổ Con "Offline-VideoEdu":
+  // 1. Format cột cho Sổ Riêng Khóa Offline "[FEDU] Danh Sách Học Viên - Khóa Làm Video Viral (Offline)":
+  // Cột A: Thời Gian Đăng Ký
+  // Cột B: Họ Và Tên
+  // Cột C: Số Điện Thoại / Zalo
+  // Cột D: Email
+  // Cột E: Ngành Nghề / Lĩnh Vực
+  // Cột F: Khó Khăn / Nút Thắt Lớn Nhất
+  // Cột G: Nguồn Đăng Ký
+  // Cột H: Tình Trạng Liên Hệ
+  const courseRowValues = [
+    data.submittedAt,
+    data.fullName,
+    sheetPhone,
+    data.email || '',
+    data.occupation || 'Chưa điền',
+    data.reason || 'Chưa điền',
+    pageUrl,
+    'Chờ tư vấn',
+  ];
+
+  // 2. Format cột cho Sổ Con Ads "Offline-VideoEdu":
   // Cột A: Thời gian ("yyyy-MM-dd HH:mm:ss")
   // Cột B: Họ tên
   // Cột C: Số điện thoại
@@ -182,7 +216,7 @@ async function appendToGoogleSheet(
     '',
   ];
 
-  // Format cho Sổ Mẹ (Két Sắt Bảo Hiểm "Offline FEDU"):
+  // 3. Format cho Sổ Mẹ (Két Sắt Bảo Hiểm "Offline FEDU"):
   const masterRowValues = [
     data.submittedAt,
     data.fullName,
@@ -191,9 +225,11 @@ async function appendToGoogleSheet(
     data.occupation || 'Chưa điền',
     data.reason || 'Chưa điền',
     pageUrl,
+    'Mới đăng ký',
   ];
 
   const result: AppendResult = {
+    courseSuccess: false,
     primarySuccess: false,
     masterSuccess: false,
   };
@@ -215,23 +251,43 @@ async function appendToGoogleSheet(
     return true;
   };
 
-  // 1. Ghi vào SỔ CON (Làm việc chính: "Offline-VideoEdu")
-  const primaryPromise = executeAppend(config.primaryId, config.primaryName, primaryRowValues, 'A:H')
-    .then(() => {
-      console.log(`[Google Sheets] Successfully appended to Primary Sheet (${config.primaryName}) [ID: ${config.primaryId}]`);
-      result.primarySuccess = true;
-    })
-    .catch((e: unknown) => {
-      const msg = e instanceof Error ? e.message : String(e);
-      console.error(`[Google Sheets] Error appending to Primary Sheet (${config.primaryName}):`, msg);
-      result.primaryError = msg;
-    });
-
-  // 2. Ghi đồng thời vào SỔ MẸ (Két Sắt Bảo Hiểm: "Offline FEDU")
-  const masterPromise = (async () => {
-    if (config.masterId && config.masterId !== config.primaryId) {
+  // 1. Ghi vào SỔ RIÊNG KHÓA OFFLINE (Bảng chính mà anh Việt mở xem học viên)
+  const coursePromise = (async () => {
+    if (config.courseId) {
       try {
-        await executeAppend(config.masterId, config.masterName, masterRowValues, 'A:G');
+        await executeAppend(config.courseId, config.courseName, courseRowValues, 'A:H');
+        console.log(`[Google Sheets] Successfully appended to Course Sheet (${config.courseName}) [ID: ${config.courseId}]`);
+        result.courseSuccess = true;
+      } catch (e: unknown) {
+        const msg = e instanceof Error ? e.message : String(e);
+        console.error(`[Google Sheets] Error appending to Course Sheet (${config.courseName}):`, msg);
+        result.courseError = msg;
+      }
+    }
+  })();
+
+  // 2. Ghi vào SỔ CON ADS/MARKETING ("Offline-VideoEdu")
+  const primaryPromise = (async () => {
+    if (config.primaryId && config.primaryId !== config.courseId) {
+      try {
+        await executeAppend(config.primaryId, config.primaryName, primaryRowValues, 'A:H');
+        console.log(`[Google Sheets] Successfully appended to Primary Sheet (${config.primaryName}) [ID: ${config.primaryId}]`);
+        result.primarySuccess = true;
+      } catch (e: unknown) {
+        const msg = e instanceof Error ? e.message : String(e);
+        console.error(`[Google Sheets] Error appending to Primary Sheet (${config.primaryName}):`, msg);
+        result.primaryError = msg;
+      }
+    } else if (config.primaryId === config.courseId) {
+      result.primarySuccess = result.courseSuccess;
+    }
+  })();
+
+  // 3. Ghi đồng thời vào SỔ MẸ (Két Sắt Bảo Hiểm: "Offline FEDU")
+  const masterPromise = (async () => {
+    if (config.masterId && config.masterId !== config.primaryId && config.masterId !== config.courseId) {
+      try {
+        await executeAppend(config.masterId, config.masterName, masterRowValues, 'A:H');
         console.log(`[Google Sheets] Successfully appended to Backup Master Sheet (${config.masterName}) [ID: ${config.masterId}]`);
         result.masterSuccess = true;
       } catch (e: unknown) {
@@ -241,10 +297,12 @@ async function appendToGoogleSheet(
       }
     } else if (config.masterId === config.primaryId) {
       result.masterSuccess = result.primarySuccess;
+    } else if (config.masterId === config.courseId) {
+      result.masterSuccess = result.courseSuccess;
     }
   })();
 
-  await Promise.allSettled([primaryPromise, masterPromise]);
+  await Promise.allSettled([coursePromise, primaryPromise, masterPromise]);
   return result;
 }
 
@@ -326,6 +384,22 @@ function escapeHtml(text: string): string {
     .replace(/>/g, '&gt;');
 }
 
+function generateSuggestedScript(data: RegistrationPayload): string {
+  const occ = (data.occupation || '').toLowerCase();
+  const email = (data.email || '').toLowerCase();
+  const reason = (data.reason || '').toLowerCase();
+  const nameParts = (data.fullName || '').trim().split(/\s+/);
+  const shortName = nameParts.length > 0 ? nameParts[nameParts.length - 1] : 'bạn';
+
+  if (email.includes('hair') || occ.includes('tóc') || occ.includes('salon')) {
+    return `Chào anh ${shortName}, em là Việt bên lớp video offline đây ạ. Em thấy anh vừa đăng ký giữ chỗ và để email Hair Designer. Lớp đợt này học 19 - 20/09 tại Hà Nội anh nhé. Đợt này anh đang muốn làm video để kéo khách đến salon hay hút học viên học nghề ạ?`;
+  } else if (reason.includes('sổ') || occ.includes('bđs') || occ.includes('bất động sản') || occ.includes('đất') || occ.includes('sale')) {
+    return `Chào anh ${shortName}, em là Việt bên lớp video offline đây ạ. Em thấy anh vừa đăng ký giữ chỗ và ghi nút thắt quay sổ BĐS. Lớp đợt này học thực chiến trong 2 ngày 19 - 20/09 tại Hà Nội anh nhé. Không biết hiện tại anh đang đánh mảng dự án hay thổ cư, và có bài toán gì cần em tư vấn trước không ạ?`;
+  } else {
+    return `Chào anh/chị ${shortName}, em là Việt bên lớp video offline đây ạ. Em thấy mình vừa đăng ký giữ chỗ lớp đợt này trên website. Lớp đợt này học thực chiến trong 2 ngày 19 - 20/09 tại Hà Nội. Không biết hiện tại mình đang kinh doanh mảng nào và có bài toán gì cần em tư vấn trước không ạ?`;
+  }
+}
+
 async function dispatchToTelegramNova(
   data: RegistrationPayload,
   config: SpreadsheetConfig
@@ -340,8 +414,10 @@ async function dispatchToTelegramNova(
 
   try {
     const cleanPhone = data.phone.replace(/[^\d+]/g, '');
+    const courseUrl = `https://docs.google.com/spreadsheets/d/${config.courseId}/edit`;
     const primaryUrl = `https://docs.google.com/spreadsheets/d/${config.primaryId}/edit?gid=652870650#gid=652870650`;
     const masterUrl = `https://docs.google.com/spreadsheets/d/${config.masterId}/edit`;
+    const suggestedScript = generateSuggestedScript(data);
 
     const text =
       `🔥 <b>HỌC VIÊN ĐĂNG KÝ KHÓA OFFLINE FEDU!</b>\n` +
@@ -352,11 +428,26 @@ async function dispatchToTelegramNova(
       `💼 <b>Nghề nghiệp / Lĩnh vực:</b> ${escapeHtml(data.occupation || 'Chưa điền')}\n` +
       `🎯 <b>Nút thắt cần giải quyết:</b>\n<i>"${escapeHtml(data.reason || 'Chưa điền')}"</i>\n` +
       `━━━━━━━━━━━━━━━━━━━━\n` +
-      `📊 <a href="${primaryUrl}"><b>Mở Google Sheet "Offline-VideoEdu"</b></a>\n` +
+      `💡 <b>KỊCH BẢN ĐỀ XUẤT (VIETMAC-VOICE):</b>\n` +
+      `<code>${escapeHtml(suggestedScript)}</code>\n` +
+      `━━━━━━━━━━━━━━━━━━━━\n` +
+      `📊 <a href="${courseUrl}"><b>Mở Google Sheet Khóa Offline (Danh Sách Học Viên)</b></a>\n` +
+      `📈 <a href="${primaryUrl}"><b>Mở Sổ Tổng Hợp Ads (Offline-VideoEdu)</b></a>\n` +
       `📦 <a href="${masterUrl}"><b>Mở Két Sắt Dữ Liệu (Sổ Mẹ)</b></a>\n` +
       `🏷️ <b>Nguồn:</b> <code>${escapeHtml(data.source || 'offline.fedu.vn')}</code>\n` +
       `🌐 <b>Link:</b> <a href="${escapeHtml(data.url || 'https://offline.fedu.vn')}">Chi tiết URL</a>\n` +
       `⏰ <i>${escapeHtml(data.submittedAt)}</i>`;
+
+    const replyMarkup = {
+      inline_keyboard: [
+        [
+          { text: '💬 Mở Chat Zalo (zalo.me)', url: `https://zalo.me/${cleanPhone}` }
+        ],
+        [
+          { text: '🚀 DUYỆT GỬI (iMessage + Danh bạ)', callback_data: `approve:${cleanPhone}` }
+        ]
+      ]
+    };
 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 6000);
@@ -369,6 +460,7 @@ async function dispatchToTelegramNova(
         text,
         parse_mode: 'HTML',
         disable_web_page_preview: true,
+        reply_markup: replyMarkup,
       }),
       signal: controller.signal,
     });
@@ -408,9 +500,10 @@ export default async function handler(
     return res.status(200).json({
       status: 'healthy',
       service: 'offline.fedu.vn registration API',
+      courseSheet: `https://docs.google.com/spreadsheets/d/${sheetConfig.courseId}/edit`,
       primarySheet: `https://docs.google.com/spreadsheets/d/${sheetConfig.primaryId}/edit?gid=652870650#gid=652870650`,
       masterSheet: `https://docs.google.com/spreadsheets/d/${sheetConfig.masterId}/edit`,
-      sheet: `https://docs.google.com/spreadsheets/d/${sheetConfig.primaryId}/edit`,
+      sheet: `https://docs.google.com/spreadsheets/d/${sheetConfig.courseId}/edit`,
       crm: 'https://esa.dcso.pro/public-api/leads/createLead',
     });
   }
@@ -483,9 +576,10 @@ export default async function handler(
       const telegramResult = telegramSettled.status === 'fulfilled' ? telegramSettled.value : null;
       const crmResult = crmSettled.status === 'fulfilled' ? crmSettled.value : null;
 
-      // Kiểm tra nếu cả hai sổ đều bị lỗi nghiêm trọng
-      if (sheetsResult && !sheetsResult.primarySuccess && !sheetsResult.masterSuccess) {
-        console.error('[API Register] Both Primary and Master sheets failed to append:', {
+      // Kiểm tra nếu cả ba sổ đều bị lỗi nghiêm trọng
+      if (sheetsResult && !sheetsResult.primarySuccess && !sheetsResult.courseSuccess && !sheetsResult.masterSuccess) {
+        console.error('[API Register] All sheets failed to append:', {
+          courseError: sheetsResult.courseError,
           primaryError: sheetsResult.primaryError,
           masterError: sheetsResult.masterError,
         });
@@ -500,6 +594,7 @@ export default async function handler(
         message: 'Đăng ký giữ chỗ thành công!',
         item: submission,
         sync: {
+          courseSheet: sheetsResult ? sheetsResult.courseSuccess : false,
           primarySheet: sheetsResult ? sheetsResult.primarySuccess : false,
           masterSheet: sheetsResult ? sheetsResult.masterSuccess : false,
           telegram: telegramResult ? telegramResult.success : false,
