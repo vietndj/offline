@@ -386,20 +386,128 @@ function escapeHtml(text: string): string {
     .replace(/>/g, '&gt;');
 }
 
-function generateSuggestedScript(data: RegistrationPayload): string {
-  const occ = (data.occupation || '').toLowerCase();
-  const email = (data.email || '').toLowerCase();
-  const reason = (data.reason || '').toLowerCase();
-  const nameParts = (data.fullName || '').trim().split(/\s+/);
+function detectSalutation(fullName: string): { pronoun: string; greeting: string; shortName: string } {
+  const nameParts = (fullName || '').trim().split(/\s+/).filter(Boolean);
   const shortName = nameParts.length > 0 ? nameParts[nameParts.length - 1] : 'bạn';
+  const nameLower = (fullName || '').toLowerCase();
+  const firstLower = shortName.toLowerCase();
 
-  if (email.includes('hair') || occ.includes('tóc') || occ.includes('salon')) {
-    return `Chào anh ${shortName}, em là Việt bên lớp video offline đây ạ. Em thấy anh vừa đăng ký giữ chỗ và để email Hair Designer. Lớp đợt này học 19 - 20/09 tại Hà Nội anh nhé. Đợt này anh đang muốn làm video để kéo khách đến salon hay hút học viên học nghề ạ?`;
-  } else if (reason.includes('sổ') || occ.includes('bđs') || occ.includes('bất động sản') || occ.includes('đất') || occ.includes('sale')) {
-    return `Chào anh ${shortName}, em là Việt bên lớp video offline đây ạ. Em thấy anh vừa đăng ký giữ chỗ và ghi nút thắt quay sổ BĐS. Lớp đợt này học thực chiến trong 2 ngày 19 - 20/09 tại Hà Nội anh nhé. Không biết hiện tại anh đang đánh mảng dự án hay thổ cư, và có bài toán gì cần em tư vấn trước không ạ?`;
-  } else {
-    return `Chào anh/chị ${shortName}, em là Việt bên lớp video offline đây ạ. Em thấy mình vừa đăng ký giữ chỗ lớp đợt này trên website. Lớp đợt này học thực chiến trong 2 ngày 19 - 20/09 tại Hà Nội. Không biết hiện tại mình đang kinh doanh mảng nào và có bài toán gì cần em tư vấn trước không ạ?`;
+  const femaleKeywords = [
+    'thị', 'lan', 'phương', 'hương', 'hằng', 'mai', 'thảo', 'trang', 'nhung',
+    'linh', 'nga', 'ngân', 'oanh', 'quỳnh', 'yến', 'dung', 'diệp', 'thủy',
+    'thu', 'trâm', 'hạnh', 'vân', 'huyền', 'ly', 'loan', 'huệ', 'sen',
+    'mỹ', 'ngọc', 'hiền', 'tuyết', 'liên', 'nhi', 'vy', 'mi', 'mơ', 'bích',
+    'diệu', 'hoa', 'hồng', 'anh'
+  ];
+
+  const maleKeywords = [
+    'văn', 'dũng', 'cường', 'tuấn', 'hùng', 'hoàng', 'nam', 'hải', 'minh',
+    'thắng', 'thành', 'đức', 'huy', 'quân', 'long', 'toàn', 'sơn', 'tùng',
+    'phong', 'trung', 'nghĩa', 'trọng', 'duy', 'việt', 'tân', 'kiên', 'bách',
+    'đạt', 'khoa', 'khánh', 'bình', 'tiến', 'vương', 'quang', 'bảo'
+  ];
+
+  if (nameParts.some(p => p.toLowerCase() === 'thị') || femaleKeywords.includes(firstLower)) {
+    return { pronoun: 'chị', greeting: `Chào chị ${shortName}`, shortName };
   }
+  if (nameParts.some(p => p.toLowerCase() === 'văn') || maleKeywords.includes(firstLower)) {
+    return { pronoun: 'anh', greeting: `Chào anh ${shortName}`, shortName };
+  }
+  return { pronoun: 'mình', greeting: `Chào anh/chị ${shortName}`, shortName };
+}
+
+function generateSuggestedScript(data: RegistrationPayload): string {
+  const occ = (data.occupation || '').trim();
+  const occLower = occ.toLowerCase();
+  const emailLower = (data.email || '').toLowerCase();
+  const reasonLower = (data.reason || '').toLowerCase();
+  const { pronoun, greeting, shortName } = detectSalutation(data.fullName);
+
+  const hasRealOccupation = occ && !occLower.includes('chưa điền') && !occLower.includes('chua dien') && occLower !== 'none';
+
+  // 1. Nhóm F&B / Nhà hàng / Quán ăn / Ẩm thực / Cà phê
+  if (
+    occLower.includes('nhà hàng') ||
+    occLower.includes('quán ăn') ||
+    occLower.includes('quán') ||
+    occLower.includes('f&b') ||
+    occLower.includes('ẩm thực') ||
+    occLower.includes('cà phê') ||
+    occLower.includes('cafe') ||
+    occLower.includes('đồ uống') ||
+    occLower.includes('bếp') ||
+    occLower.includes('nấu')
+  ) {
+    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 19 - 20/09 tại Hà Nội và có ghi đang làm bên nhà hàng, ẩm thực. Đợt này ${pronoun} đang muốn quay món ăn, không gian để kéo khách tới quán hay muốn tự lên hình chia sẻ câu chuyện làm nghề ạ?`;
+  }
+
+  // 2. Nhóm Bất động sản / Nhà đất / Thổ cư
+  if (
+    reasonLower.includes('sổ') ||
+    occLower.includes('bđs') ||
+    occLower.includes('bất động sản') ||
+    occLower.includes('nhà đất') ||
+    occLower.includes('thổ cư') ||
+    occLower.includes('đất') ||
+    occLower.includes('dự án')
+  ) {
+    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 19 - 20/09 tại Hà Nội và có ghi làm bên mảng BĐS. Đợt này ${pronoun} đang đánh mảng dự án hay thổ cư, và đã từng tự quay clip nào chưa hay đang bắt đầu từ số 0 ạ?`;
+  }
+
+  // 3. Nhóm Tóc / Salon / Barbershop
+  if (
+    emailLower.includes('hair') ||
+    occLower.includes('tóc') ||
+    occLower.includes('salon') ||
+    occLower.includes('barber')
+  ) {
+    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 19 - 20/09 tại Hà Nội và có ghi làm salon tóc. Đợt này ${pronoun} đang muốn quay mẫu tóc thực tế để kéo khách tới tiệm hay muốn hút học viên học nghề ạ?`;
+  }
+
+  // 4. Nhóm Spa / Thẩm mỹ / Mỹ phẩm / Skincare / Nha khoa / Phun xăm
+  if (
+    occLower.includes('spa') ||
+    occLower.includes('thẩm mỹ') ||
+    occLower.includes('mỹ phẩm') ||
+    occLower.includes('skincare') ||
+    occLower.includes('da') ||
+    occLower.includes('phun xăm') ||
+    occLower.includes('nha khoa') ||
+    occLower.includes('clinic')
+  ) {
+    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 19 - 20/09 tại Hà Nội và có ghi làm mảng spa, làm đẹp. Đợt này ${pronoun} đang muốn quay cận cảnh quy trình chăm sóc khách hay muốn tự lên hình tư vấn ạ?`;
+  }
+
+  // 5. Nhóm Thời trang / May mặc / Phụ kiện
+  if (
+    occLower.includes('thời trang') ||
+    occLower.includes('quần áo') ||
+    occLower.includes('váy') ||
+    occLower.includes('may mặc') ||
+    occLower.includes('phụ kiện')
+  ) {
+    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 19 - 20/09 tại Hà Nội và có ghi làm bên thời trang. Đợt này ${pronoun} đang muốn tự quay phối đồ/sản phẩm để kéo khách, hay đang vướng khâu lên kịch bản ạ?`;
+  }
+
+  // 6. Nhóm Đào tạo / Bác sĩ / Luật sư / Chuyên gia / Bảo hiểm
+  if (
+    occLower.includes('đào tạo') ||
+    occLower.includes('giáo viên') ||
+    occLower.includes('coach') ||
+    occLower.includes('bác sĩ') ||
+    occLower.includes('luật sư') ||
+    occLower.includes('bảo hiểm')
+  ) {
+    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 19 - 20/09 tại Hà Nội và có ghi làm bên ${occ}. Đợt này ${pronoun} đang muốn xây kênh chuyên gia để hút khách hàng/học viên, hay đang bắt đầu từ số 0 ạ?`;
+  }
+
+  // 7. Có điền nghề nghiệp khác cụ thể
+  if (hasRealOccupation) {
+    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 19 - 20/09 tại Hà Nội và có ghi làm bên mảng ${occ}. Đợt này mình đã lập kênh để đăng thử video nào chưa hay đang bắt đầu từ số 0 vậy ạ?`;
+  }
+
+  // 8. Chưa điền nghề nghiệp
+  return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình vừa đăng ký giữ chỗ lớp thực chiến 2 ngày 19 - 20/09 tại Hà Nội. Không biết đợt này mình đã có kênh đăng clip nào chưa, hay đang bắt đầu từ số 0 để làm hình ảnh cho công việc vậy ạ?`;
 }
 
 async function dispatchToTelegramNova(
@@ -446,7 +554,7 @@ async function dispatchToTelegramNova(
           { text: '💬 Mở Chat Zalo (zalo.me)', url: `https://zalo.me/${cleanPhone}` }
         ],
         [
-          { text: '🚀 DUYỆT GỬI (iMessage + Danh bạ)', callback_data: `approve:${cleanPhone}` }
+          { text: '🚀 DUYỆT GỬI (iMessage + Mail + Danh bạ)', callback_data: `approve:${cleanPhone}` }
         ]
       ]
     };
