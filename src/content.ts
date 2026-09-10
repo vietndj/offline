@@ -621,7 +621,7 @@ export const CONTENT: ContentData = {
     domain: "offline.fedu.vn",
     url: "https://offline.fedu.vn",
     hotline: "0934688632",
-    zaloUrl: "https://zalo.me/0934688632",
+    zaloUrl: "/zalo?phone=0934688632",
     facebookPageUrl: "https://facebook.com",
     youtubeChannelUrl: "https://youtube.com",
     copyright: "© 2026 VIDEO MARKETING — Khóa Học Video Marketing Thực Chiến Đứng Lớp Trực Tiếp Bởi Nguyễn Đức Việt."
@@ -1774,7 +1774,7 @@ export const CONTENT: ContentData = {
       title: "Nhắn riêng cho mình (Nguyễn Đức Việt)",
       subtitle: "Zalo cá nhân: 0934.688.632",
       buttonText: "Nhắn Zalo",
-      zaloUrl: "https://zalo.me/0934688632",
+      zaloUrl: "/zalo?phone=0934688632",
       phone: "0934.688.632",
       avatarUrl: "/assets/viet_avatar.png",
       qrCodeUrl: "/assets/qr_zalo_0934688632.png",

@@ -533,7 +533,7 @@ async function dispatchToTelegramNova(
       `🔥 <b>HỌC VIÊN ĐĂNG KÝ KHÓA OFFLINE FEDU!</b>\n` +
       `━━━━━━━━━━━━━━━━━━━━\n` +
       `👤 <b>Họ tên:</b> <b>${escapeHtml(data.fullName)}</b>\n` +
-      `📞 <b>Điện thoại:</b> <a href="tel:${cleanPhone}"><b>${escapeHtml(data.phone)}</b></a> | <a href="https://zalo.me/${cleanPhone}"><b>Nhắn Zalo</b></a>\n` +
+      `📞 <b>Điện thoại:</b> <a href="tel:${cleanPhone}"><b>${escapeHtml(data.phone)}</b></a> | <a href="zalo://conversation?phone=${cleanPhone}"><b>Mở App Zalo</b></a> | <a href="https://offline.fedu.vn/zalo?phone=${cleanPhone}">Link 1-chạm</a>\n` +
       `📧 <b>Email:</b> ${escapeHtml(data.email || 'Chưa điền')}\n` +
       `💼 <b>Nghề nghiệp / Lĩnh vực:</b> ${escapeHtml(data.occupation || 'Chưa điền')}\n` +
       `🎯 <b>Nút thắt cần giải quyết:</b>\n<i>"${escapeHtml(data.reason || 'Chưa điền')}"</i>\n` +
@@ -551,7 +551,7 @@ async function dispatchToTelegramNova(
     const replyMarkup = {
       inline_keyboard: [
         [
-          { text: '💬 Mở Chat Zalo (zalo.me)', url: `https://zalo.me/${cleanPhone}` }
+          { text: '💬 Mở App Zalo (1-chạm)', url: `https://offline.fedu.vn/zalo?phone=${cleanPhone}` }
         ],
         [
           { text: '🚀 DUYỆT GỬI (iMessage + Mail + Danh bạ)', callback_data: `approve:${cleanPhone}` }

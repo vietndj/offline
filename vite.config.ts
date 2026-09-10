@@ -8,6 +8,9 @@ function apiRegisterPlugin(): Plugin {
     name: "api-register-dev",
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
+        if (req.url && (req.url === "/zalo" || req.url.startsWith("/zalo?"))) {
+          req.url = "/zalo.html" + (req.url.includes("?") ? req.url.slice(req.url.indexOf("?")) : "");
+        }
         if (req.url && (req.url === "/api/register" || req.url.startsWith("/api/register?"))) {
           let body = "";
           req.on("data", (chunk) => {
