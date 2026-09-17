@@ -155,6 +155,49 @@ function getGoogleSheetsClient(): sheets_v4.Sheets | null {
   }
 }
 
+export function evaluateDirectSubmission(data: RegistrationPayload): {
+  isDirect: boolean;
+  warningText: string;
+  courseSource: string;
+  courseStatus: string;
+  masterStatus: string;
+  telegramBadge: string;
+  telegramAlertBlock: string;
+} {
+  const url = data.url || (data.source && data.source.startsWith('http') ? data.source : 'https://offline.fedu.vn');
+  const hasAdsTracking = url.includes('utm_') || url.includes('fbclid') || url.includes('gclid') || url.includes('tiktok') || url.includes('zalo');
+  const isDirect = !hasAdsTracking;
+
+  const hasNoDetails = (!data.occupation || data.occupation.trim() === '' || data.occupation === 'Chưa điền') &&
+                       (!data.reason || data.reason.trim() === '' || data.reason === 'Chưa điền');
+
+  if (isDirect) {
+    const hint = hasNoDetails ? 'Không có mã UTM tracking + Bỏ trống nghề nghiệp & nút thắt' : 'Truy cập trực tiếp (Không có mã UTM tracking)';
+    return {
+      isDirect: true,
+      warningText: 'Nghi vấn Sale tự điền sau khi chốt / Truy cập trực tiếp',
+      courseSource: `${url} [⚠️ Nghi vấn điền hộ - Check lại]`,
+      courseStatus: 'Chờ tư vấn [⚠️ Check nguồn]',
+      masterStatus: 'Mới đăng ký [⚠️ Nghi vấn điền hộ]',
+      telegramBadge: ' <b>⚠️ (Trực tiếp - Nghi vấn điền hộ)</b>',
+      telegramAlertBlock:
+        `⚠️ <b>CẢNH BÁO NGUỒN (NGHI VẤN ĐIỀN HỘ):</b>\n` +
+        `<code>Khách vào trực tiếp (${hint}). Khả năng cao là Trinh/Sale tự điền sau khi chốt hoặc khách tự gõ web — Anh Việt cần đối soát lại với Sale!</code>\n` +
+        `━━━━━━━━━━━━━━━━━━━━\n`,
+    };
+  }
+
+  return {
+    isDirect: false,
+    warningText: '',
+    courseSource: url,
+    courseStatus: 'Chờ tư vấn',
+    masterStatus: 'Mới đăng ký',
+    telegramBadge: '',
+    telegramAlertBlock: '',
+  };
+}
+
 async function appendToGoogleSheet(
   data: RegistrationPayload,
   config: SpreadsheetConfig
@@ -173,6 +216,7 @@ async function appendToGoogleSheet(
   }
 
   const pageUrl = data.url || (data.source && data.source.startsWith('http') ? data.source : 'https://offline.fedu.vn');
+  const directEval = evaluateDirectSubmission(data);
 
   const normalizedPhone = normalizePhone(data.phone);
   // Thêm dấu nháy đơn ' trước số điện thoại để Google Sheet không tự ý cắt mất số 0 ở đầu
@@ -194,8 +238,8 @@ async function appendToGoogleSheet(
     data.email || '',
     data.occupation || 'Chưa điền',
     data.reason || 'Chưa điền',
-    pageUrl,
-    'Chờ tư vấn',
+    directEval.courseSource,
+    directEval.courseStatus,
   ];
 
   // 2. Format cột cho Sổ Con Ads "Offline-VideoEdu":
@@ -212,7 +256,7 @@ async function appendToGoogleSheet(
     data.fullName,
     sheetPhone,
     data.email || '',
-    pageUrl,
+    directEval.courseSource,
     data.occupation || '',
     data.reason || '',
     '',
@@ -226,8 +270,8 @@ async function appendToGoogleSheet(
     data.email || '',
     data.occupation || 'Chưa điền',
     data.reason || 'Chưa điền',
-    pageUrl,
-    'Mới đăng ký',
+    directEval.courseSource,
+    directEval.masterStatus,
   ];
 
   const result: AppendResult = {
@@ -386,34 +430,174 @@ function escapeHtml(text: string): string {
     .replace(/>/g, '&gt;');
 }
 
-function detectSalutation(fullName: string): { pronoun: string; greeting: string; shortName: string } {
+const VN_SURNAMES = new Set([
+  'nguyễn', 'nguyen', 'trần', 'tran', 'lê', 'le', 'phạm', 'pham',
+  'hoàng', 'hoang', 'huỳnh', 'huynh', 'phan', 'vũ', 'vu', 'võ', 'vo',
+  'đặng', 'dang', 'bùi', 'bui', 'đỗ', 'do', 'hồ', 'ho', 'ngô', 'ngo',
+  'dương', 'duong', 'lý', 'ly', 'đinh', 'dinh', 'đoàn', 'doan', 'lâm', 'lam',
+  'trịnh', 'trinh', 'mai', 'đào', 'cao', 'hà', 'lưu', 'luu', 'lương', 'luong',
+  'thái', 'thai', 'châu', 'chau', 'tạ', 'ta', 'phùng', 'phung', 'tô', 'to',
+  'vương', 'vuong', 'quách', 'quach', 'la', 'khổng'
+]);
+
+const COMPOUND_NAME_TRAILS = new Set([
+  'anh', 'linh', 'châu', 'trang', 'phương', 'ngọc', 'nhâm', 'quỳnh',
+  'vy', 'nhi', 'my', 'mi', 'hương', 'hường', 'nguyên', 'mai', 'lan',
+  'tú', 'khánh', 'bình', 'hân', 'huyền', 'đan', 'dung', 'tiên', 'nga'
+]);
+
+const FEMALE_FIRST_NAMES = new Set([
+  'lan', 'hương', 'hường', 'hằng', 'mai', 'thảo', 'trang', 'nhung',
+  'nga', 'ngân', 'oanh', 'quỳnh', 'yến', 'dung', 'diệp', 'thủy', 'thuỷ',
+  'thu', 'trâm', 'hạnh', 'vân', 'huyền', 'ly', 'loan', 'huệ', 'sen',
+  'mỹ', 'hiền', 'tuyết', 'liên', 'nhi', 'vy', 'mi', 'mơ', 'bích',
+  'diệu', 'hoa', 'hồng', 'chi', 'thùy', 'thúy', 'thuý', 'uyên', 'xuyến',
+  'nương', 'khuyên', 'mến', 'thoa', 'lệ', 'quyên', 'quuyên', 'nhâm',
+  'đào', 'cúc', 'nhài', 'thắm', 'tươi', 'đan', 'thục', 'phụng', 'kiều',
+  'gấm', 'lụa', 'thêu', 'ngà', 'hân', 'hoài', 'trinh', 'châu', 'diễm',
+  'phấn', 'mận', 'thược', 'bưởi', 'nhạn', 'cẩm', 'ngát', 'hảo', 'thơm',
+  'nết', 'thương', 'nhàn', 'tình', 'dịu', 'hạ', 'băng', 'lam', 'thư',
+  'nhẫn', 'bông', 'nguyên', 'giao', 'châm', 'yên', 'trà', 'quyn', 'trân',
+  'tho', 'nhuận', 'vi', 'ca', 'thi', 'dơn', 'huyên', 'thuyên', 'nữ'
+]);
+
+const MALE_FIRST_NAMES = new Set([
+  'dũng', 'cường', 'tuấn', 'hùng', 'hoàng', 'nam', 'hải', 'thắng',
+  'thành', 'đức', 'huy', 'quân', 'long', 'toàn', 'sơn', 'tùng', 'phong',
+  'trung', 'nghĩa', 'trọng', 'duy', 'việt', 'tân', 'kiên', 'bách', 'đạt',
+  'khoa', 'tiến', 'vương', 'quang', 'bảo', 'lâm', 'quốc', 'tấn', 'vinh',
+  'khải', 'vũ', 'hiếu', 'đông', 'trường', 'lộc', 'thế', 'quý', 'phúc',
+  'nhật', 'triều', 'trí', 'đại', 'luân', 'khang', 'hưng', 'kiệt', 'phát',
+  'thịnh', 'tài', 'hiệp', 'thực', 'bính', 'giáp', 'chính', 'lực', 'thông',
+  'thái', 'thọ', 'chiến', 'chuẩn', 'định', 'doãn', 'hiển', 'thiện', 'thưởng',
+  'hậu', 'triệu', 'quyền', 'sang', 'thao', 'thiệp', 'minh', 'luận', 'tiệp',
+  'đăng', 'nhân', 'đoán', 'tuân', 'khôi', 'đô', 'toản', 'vượng', 'hỷ',
+  'khoát', 'phi', 'phú', 'bằng', 'chinh', 'thạo', 'thạch', 'tráng', 'nguyên'
+]);
+
+const FEMALE_MIDDLE_KEYWORDS = [
+  'thị', 'thúy', 'thuý', 'như', 'kim', 'diệu', 'ánh', 'tố', 'bích', 'mỹ',
+  'ngọc', 'quỳnh', 'thanh', 'mai', 'thu', 'hồng', 'linh', 'huyền', 'cẩm',
+  'kiều', 'bảo', 'phương', 'thảo', 'loan', 'hương'
+];
+
+const MALE_MIDDLE_KEYWORDS = [
+  'văn', 'hữu', 'đức', 'quang', 'đình', 'tiến', 'trọng', 'công', 'bá',
+  'minh', 'thành', 'hoàng', 'quốc', 'duy', 'mạnh', 'việt', 'tuấn', 'khắc',
+  'thế', 'ngọc', 'hải', 'xuân', 'chí', 'đại', 'phúc', 'chính'
+];
+
+function extractDisplayName(fullName: string): string {
+  const parts = (fullName || '').trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return 'bạn';
+  const cleanParts = parts.map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase());
+  if (cleanParts.length === 1) return cleanParts[0];
+
+  if (cleanParts.length === 2) {
+    const firstLower = cleanParts[0].toLowerCase();
+    if (VN_SURNAMES.has(firstLower)) {
+      return cleanParts[1];
+    }
+    return `${cleanParts[0]} ${cleanParts[1]}`;
+  }
+
+  const lastLower = cleanParts[cleanParts.length - 1].toLowerCase();
+  const secondLastLower = cleanParts[cleanParts.length - 2].toLowerCase();
+  if (COMPOUND_NAME_TRAILS.has(lastLower) && !['văn', 'thị', 'đình', 'hữu'].includes(secondLastLower)) {
+    return `${cleanParts[cleanParts.length - 2]} ${cleanParts[cleanParts.length - 1]}`;
+  }
+  return cleanParts[cleanParts.length - 1];
+}
+
+function detectSalutation(fullName: string, occupation = '', email = ''): { pronoun: string; greeting: string; shortName: string } {
   const nameParts = (fullName || '').trim().split(/\s+/).filter(Boolean);
-  const shortName = nameParts.length > 0 ? nameParts[nameParts.length - 1] : 'bạn';
-  const nameLower = (fullName || '').toLowerCase();
-  const firstLower = shortName.toLowerCase();
-
-  const femaleKeywords = [
-    'thị', 'lan', 'phương', 'hương', 'hằng', 'mai', 'thảo', 'trang', 'nhung',
-    'linh', 'nga', 'ngân', 'oanh', 'quỳnh', 'yến', 'dung', 'diệp', 'thủy',
-    'thu', 'trâm', 'hạnh', 'vân', 'huyền', 'ly', 'loan', 'huệ', 'sen',
-    'mỹ', 'ngọc', 'hiền', 'tuyết', 'liên', 'nhi', 'vy', 'mi', 'mơ', 'bích',
-    'diệu', 'hoa', 'hồng', 'anh'
-  ];
-
-  const maleKeywords = [
-    'văn', 'dũng', 'cường', 'tuấn', 'hùng', 'hoàng', 'nam', 'hải', 'minh',
-    'thắng', 'thành', 'đức', 'huy', 'quân', 'long', 'toàn', 'sơn', 'tùng',
-    'phong', 'trung', 'nghĩa', 'trọng', 'duy', 'việt', 'tân', 'kiên', 'bách',
-    'đạt', 'khoa', 'khánh', 'bình', 'tiến', 'vương', 'quang', 'bảo'
-  ];
-
-  if (nameParts.some(p => p.toLowerCase() === 'thị') || femaleKeywords.includes(firstLower)) {
-    return { pronoun: 'chị', greeting: `Chào chị ${shortName}`, shortName };
+  if (nameParts.length === 0) {
+    return { pronoun: 'anh', greeting: 'Chào bạn', shortName: 'bạn' };
   }
-  if (nameParts.some(p => p.toLowerCase() === 'văn') || maleKeywords.includes(firstLower)) {
-    return { pronoun: 'anh', greeting: `Chào anh ${shortName}`, shortName };
+
+  const displayName = extractDisplayName(fullName);
+  const partsLower = nameParts.map(p => p.toLowerCase());
+  const lastWord = partsLower[partsLower.length - 1];
+  const occLower = (occupation || '').toLowerCase();
+  const emailLower = (email || '').toLowerCase();
+
+  let gender: 'female' | 'male' | null = null;
+
+  // 1. Từ đệm tuyệt đối
+  if (partsLower.includes('thị')) {
+    gender = 'female';
+  } else if (partsLower.includes('văn') && !partsLower.includes('thị')) {
+    gender = 'male';
   }
-  return { pronoun: 'mình', greeting: `Chào anh/chị ${shortName}`, shortName };
+
+  // 2. Các tên ghép phổ biến
+  if (!gender) {
+    if (lastWord === 'anh') {
+      const femaleAnh = ['quỳnh', 'lan', 'mai', 'phương', 'vân', 'trâm', 'kim', 'ngọc', 'diệu', 'hà', 'thùy', 'thúy', 'thuý', 'mỹ', 'ngân', 'nhã', 'yến', 'thanh', 'thu', 'kiều', 'hằng'];
+      const maleAnh = ['tuấn', 'việt', 'đức', 'hoàng', 'hùng', 'duy', 'minh', 'quang', 'nam', 'thế', 'nhật', 'quốc', 'trung', 'hữu', 'tiến', 'đại', 'vũ', 'công', 'khải'];
+      if (partsLower.some(k => femaleAnh.includes(k))) gender = 'female';
+      else if (partsLower.some(k => maleAnh.includes(k))) gender = 'male';
+    } else if (lastWord === 'linh') {
+      const maleLinh = ['tuấn', 'mạnh', 'văn', 'hoàng', 'duy', 'quang', 'tiến', 'đức'];
+      if (partsLower.some(k => maleLinh.includes(k))) gender = 'male';
+      else gender = 'female';
+    } else if (lastWord === 'tú') {
+      const femaleTu = ['cẩm', 'ngọc', 'thanh', 'như', 'mai', 'kim', 'thu', 'đan', 'thảo'];
+      const maleTu = ['tuấn', 'anh', 'văn', 'đức', 'hoàng', 'minh', 'quang', 'trọng', 'hữu', 'tiến', 'đình', 'mạnh', 'quốc'];
+      if (partsLower.some(k => femaleTu.includes(k))) gender = 'female';
+      else if (partsLower.some(k => maleTu.includes(k))) gender = 'male';
+    } else if (lastWord === 'khánh') {
+      const femaleKhanh = ['ngọc', 'mai', 'vân', 'phương', 'huyền'];
+      const maleKhanh = ['quốc', 'duy', 'gia', 'đức', 'hoàng', 'nam', 'bảo', 'huy'];
+      if (partsLower.some(k => femaleKhanh.includes(k))) gender = 'female';
+      else if (partsLower.some(k => maleKhanh.includes(k))) gender = 'male';
+    } else if (lastWord === 'bình') {
+      const femaleBinh = ['thanh', 'như', 'ngọc', 'thu'];
+      const maleBinh = ['đức', 'quang', 'hải', 'quốc', 'thái', 'trọng'];
+      if (partsLower.some(k => femaleBinh.includes(k))) gender = 'female';
+      else if (partsLower.some(k => maleBinh.includes(k))) gender = 'male';
+    } else if (lastWord === 'nhâm') {
+      if (partsLower.some(k => ['linh', 'ngọc', 'thu', 'hương', 'mai'].includes(k))) gender = 'female';
+    }
+  }
+
+  // 3. Tên chính trong từ điển
+  if (!gender) {
+    if (FEMALE_FIRST_NAMES.has(lastWord)) gender = 'female';
+    else if (MALE_FIRST_NAMES.has(lastWord)) gender = 'male';
+  }
+
+  // 4. Kiểm tra các từ tố khác
+  if (!gender) {
+    if (partsLower.some(k => FEMALE_MIDDLE_KEYWORDS.includes(k))) gender = 'female';
+    else if (partsLower.some(k => MALE_MIDDLE_KEYWORDS.includes(k))) gender = 'male';
+  }
+
+  // 5. Ngành nghề
+  if (!gender) {
+    const femaleOccs = ['nội trợ', 'noi tro', 'mẹ bỉm', 'me bim', 'chăm con', 'bỉm sữa', 'nội chợ', 'spa', 'thẩm mỹ', 'nail', 'móng', 'nối mi', 'mi', 'mầm non', 'váy', 'đầm', 'mỹ phẩm', 'skincare'];
+    const maleOccs = ['cơ khí', 'sửa xe', 'xe máy', 'gara', 'ô tô', 'xây dựng', 'thợ', 'kỹ sư', 'lái xe', 'tài xế', 'hàn xì', 'lập trình', 'developer'];
+    if (femaleOccs.some(k => occLower.includes(k))) gender = 'female';
+    else if (maleOccs.some(k => occLower.includes(k))) gender = 'male';
+  }
+
+  // 6. Email
+  if (!gender) {
+    if (['mrs', 'miss', 'girl', 'mebe', 'bimbim'].some(k => emailLower.includes(k))) gender = 'female';
+    else if (['mr.', 'mr_'].some(k => emailLower.includes(k))) gender = 'male';
+  }
+
+  // 7. Fallback
+  if (!gender) {
+    if (['tú', 'bình', 'khánh', 'minh', 'nguyên'].includes(lastWord)) gender = 'male';
+    else if (['linh', 'hà', 'giang', 'an', 'châu', 'dương'].includes(lastWord)) gender = 'female';
+    else gender = 'male';
+  }
+
+  if (gender === 'female') {
+    return { pronoun: 'chị', greeting: `Chào chị ${displayName}`, shortName: displayName };
+  }
+  return { pronoun: 'anh', greeting: `Chào anh ${displayName}`, shortName: displayName };
 }
 
 function generateSuggestedScript(data: RegistrationPayload): string {
@@ -421,9 +605,21 @@ function generateSuggestedScript(data: RegistrationPayload): string {
   const occLower = occ.toLowerCase();
   const emailLower = (data.email || '').toLowerCase();
   const reasonLower = (data.reason || '').toLowerCase();
-  const { pronoun, greeting, shortName } = detectSalutation(data.fullName);
+  const { pronoun, greeting, shortName } = detectSalutation(data.fullName, occ, emailLower);
 
   const hasRealOccupation = occ && !occLower.includes('chưa điền') && !occLower.includes('chua dien') && occLower !== 'none';
+
+  // 0. Nhóm Nội trợ / Mẹ bỉm
+  if (
+    occLower.includes('nội trợ') ||
+    occLower.includes('noi tro') ||
+    occLower.includes('mẹ bỉm') ||
+    occLower.includes('me bim') ||
+    occLower.includes('bỉm sữa') ||
+    occLower.includes('chăm con')
+  ) {
+    return `${greeting}, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi làm bên mảng Nội trợ. Đợt này ${pronoun} đang muốn làm video bán hàng online kiếm thêm thu nhập, hay muốn xây kênh chia sẻ cuộc sống/nấu ăn vậy ạ?`;
+  }
 
   // 1. Nhóm F&B / Nhà hàng / Quán ăn / Ẩm thực / Cà phê
   if (
@@ -503,11 +699,11 @@ function generateSuggestedScript(data: RegistrationPayload): string {
 
   // 7. Có điền nghề nghiệp khác cụ thể
   if (hasRealOccupation) {
-    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 19 - 20/09 tại Hà Nội và có ghi làm bên mảng ${occ}. Đợt này mình đã lập kênh để đăng thử video nào chưa hay đang bắt đầu từ số 0 vậy ạ?`;
+    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 19 - 20/09 tại Hà Nội và có ghi làm bên mảng ${occ}. Đợt này ${pronoun} đã lập kênh để đăng thử video nào chưa hay đang bắt đầu từ số 0 vậy ạ?`;
   }
 
   // 8. Chưa điền nghề nghiệp
-  return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình vừa đăng ký giữ chỗ lớp thực chiến 2 ngày 19 - 20/09 tại Hà Nội. Không biết đợt này mình đã có kênh đăng clip nào chưa, hay đang bắt đầu từ số 0 để làm hình ảnh cho công việc vậy ạ?`;
+  return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình vừa đăng ký giữ chỗ lớp thực chiến 2 ngày 19 - 20/09 tại Hà Nội. Không biết đợt này ${pronoun} đã có kênh đăng clip nào chưa, hay đang bắt đầu từ số 0 để làm hình ảnh cho công việc vậy ạ?`;
 }
 
 async function dispatchToTelegramNova(
@@ -528,6 +724,7 @@ async function dispatchToTelegramNova(
     const primaryUrl = `https://docs.google.com/spreadsheets/d/${config.primaryId}/edit?gid=652870650#gid=652870650`;
     const masterUrl = `https://docs.google.com/spreadsheets/d/${config.masterId}/edit`;
     const suggestedScript = generateSuggestedScript(data);
+    const directEval = evaluateDirectSubmission(data);
 
     const text =
       `🔥 <b>HỌC VIÊN ĐĂNG KÝ KHÓA OFFLINE FEDU!</b>\n` +
@@ -538,13 +735,14 @@ async function dispatchToTelegramNova(
       `💼 <b>Nghề nghiệp / Lĩnh vực:</b> ${escapeHtml(data.occupation || 'Chưa điền')}\n` +
       `🎯 <b>Nút thắt cần giải quyết:</b>\n<i>"${escapeHtml(data.reason || 'Chưa điền')}"</i>\n` +
       `━━━━━━━━━━━━━━━━━━━━\n` +
+      directEval.telegramAlertBlock +
       `💡 <b>KỊCH BẢN ĐỀ XUẤT (VIETMAC-VOICE):</b>\n` +
       `<code>${escapeHtml(suggestedScript)}</code>\n` +
       `━━━━━━━━━━━━━━━━━━━━\n` +
       `📊 <a href="${courseUrl}"><b>Mở Google Sheet Khóa Offline (Danh Sách Học Viên)</b></a>\n` +
       `📈 <a href="${primaryUrl}"><b>Mở Sổ Tổng Hợp Ads (Offline-VideoEdu)</b></a>\n` +
       `📦 <a href="${masterUrl}"><b>Mở Két Sắt Dữ Liệu (Sổ Mẹ)</b></a>\n` +
-      `🏷️ <b>Nguồn:</b> <code>${escapeHtml(data.source || 'offline.fedu.vn')}</code>\n` +
+      `🏷️ <b>Nguồn:</b> <code>${escapeHtml(data.source || 'offline.fedu.vn')}</code>${directEval.telegramBadge}\n` +
       `🌐 <b>Link:</b> <a href="${escapeHtml(data.url || 'https://offline.fedu.vn')}">Chi tiết URL</a>\n` +
       `⏰ <i>${escapeHtml(data.submittedAt)}</i>`;
 

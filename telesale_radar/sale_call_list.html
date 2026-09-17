@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Danh Sách 23 Lead Cần Gọi Nốt — FEDU LED Hub</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%234f46e5'/><text x='50%' y='64%' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='38' fill='white'>SALE</text></svg>">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    .lead-card {
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+    .lead-card:hover {
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+    }
+    .lead-card.done-card {
+      opacity: 0.7;
+      background-color: #f8fafc;
+      border-color: #cbd5e1;
+    }
+    .lead-card.done-card:hover {
+      opacity: 0.95;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col pb-16">
+
+  <!-- ================= TOP HEADER ================= -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white shadow-sm font-black text-sm tracking-tight shrink-0">
+          LED
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-extrabold text-base sm:text-lg text-slate-900 leading-tight">Danh Sách Gọi Nốt Cho Sale</h1>
+            <span class="bg-indigo-50 text-indigo-700 text-xs font-black px-2 py-0.5 rounded-full border border-indigo-200 shrink-0">23 LEAD</span>
+          </div>
+          <p class="text-xs text-slate-500 hidden sm:block">2 Khối: Đã Nhắn (11) + Đã Trao Đổi (12) • Cập nhật: 15/09/2026 16:48</p>
+        </div>
+      </div>
+
+      <!-- Quick stats -->
+      <div class="flex items-center gap-2">
+        <div class="bg-slate-100 px-3 py-1.5 rounded-xl text-right shrink-0">
+          <div class="text-[10px] text-slate-500 font-medium">TIẾN ĐỘ GỌI</div>
+          <div class="text-xs sm:text-sm font-black text-indigo-600" id="progressStat">0 / 23 (0%)</div>
+        </div>
+        <button onclick="exportNotesSummary()" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition shadow-xs">
+          <span>📋 Xuất báo cáo</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- PROGRESS BAR -->
+    <div class="w-full bg-slate-100 h-1.5">
+      <div id="progressBar" class="bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-500 h-1.5 transition-all duration-300" style="width: 0%;"></div>
+    </div>
+
+    <!-- FILTER & SEARCH BAR -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-2.5 bg-slate-50/70 border-t border-slate-100">
+      <div class="flex items-center gap-1.5 overflow-x-auto py-0.5 max-w-full">
+        <button onclick="setFilter('all')" id="filter-btn-all" class="filter-chip px-3 py-1 rounded-lg text-xs font-bold transition bg-indigo-600 text-white shadow-2xs shrink-0">
+          Tất cả (23)
+        </button>
+        <button onclick="setFilter('contacted')" id="filter-btn-contacted" class="filter-chip px-3 py-1 rounded-lg text-xs font-semibold transition bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 shrink-0">
+          🟠 Đã Nhắn (11)
+        </button>
+        <button onclick="setFilter('called')" id="filter-btn-called" class="filter-chip px-3 py-1 rounded-lg text-xs font-semibold transition bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 shrink-0">
+          🔥 Đã Trao Đổi (12)
+        </button>
+        <button onclick="setFilter('pending')" id="filter-btn-pending" class="filter-chip px-3 py-1 rounded-lg text-xs font-semibold transition bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 shrink-0">
+          ⏳ Chưa gọi nốt
+        </button>
+        <button onclick="setFilter('done')" id="filter-btn-done" class="filter-chip px-3 py-1 rounded-lg text-xs font-semibold transition bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 shrink-0">
+          ✅ Đã xử lý
+        </button>
+      </div>
+
+      <!-- Search input -->
+      <div class="relative w-full sm:w-64">
+        <input
+          type="text"
+          id="searchInput"
+          oninput="handleSearch(this.value)"
+          placeholder="Tìm tên, SĐT, nghề..."
+          class="w-full pl-8 pr-3 py-1.5 text-xs bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition shadow-2xs"
+        >
+        <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-5 flex-1 w-full">
+    
+    <!-- VIEW TOGGLE TABS (MOBILE ONLY) -->
+    <div class="grid grid-cols-2 gap-2 mb-4 md:hidden">
+      <button onclick="switchMobileTab('contacted')" id="tab-btn-contacted" class="py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition bg-amber-50 text-amber-900 border-2 border-amber-300 shadow-xs">
+        <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+        <span>Đã Nhắn (11)</span>
+      </button>
+      <button onclick="switchMobileTab('called')" id="tab-btn-called" class="py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition bg-white text-slate-600 border border-slate-200">
+        <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+        <span>Đã Trao Đổi (12)</span>
+      </button>
+    </div>
+
+    <!-- 2 COLUMNS CONTAINER -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-start">
+      
+      <!-- CỘT 1: ĐÃ NHẮN (CHỜ REP) -->
+      <div id="col-contacted-wrapper" class="flex flex-col gap-3">
+        <div class="bg-amber-50/70 border border-amber-200/90 rounded-2xl p-3.5 flex items-center justify-between shadow-xs">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-2xs"></span>
+            <div>
+              <h2 class="font-extrabold text-sm uppercase tracking-wide text-amber-950">ĐÃ NHẮN (CHỜ REP)</h2>
+              <p class="text-[11px] text-amber-800/80">Khách đã nhận tin/gọi nhỡ • Cần gọi trực tiếp trao đổi</p>
+            </div>
+          </div>
+          <span id="badge-count-contacted" class="text-xs font-black bg-white text-amber-800 px-2.5 py-1 rounded-full border border-amber-200 shadow-2xs">
+            11
+          </span>
+        </div>
+        <div id="list-contacted" class="space-y-3"></div>
+      </div>
+
+      <!-- CỘT 2: ĐÃ TRAO ĐỔI / CÂN NHẮC -->
+      <div id="col-called-wrapper" class="flex flex-col gap-3">
+        <div class="bg-indigo-50/70 border border-indigo-200/90 rounded-2xl p-3.5 flex items-center justify-between shadow-xs">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-indigo-600 shadow-2xs"></span>
+            <div>
+              <h2 class="font-extrabold text-sm uppercase tracking-wide text-indigo-950">ĐÃ TRAO ĐỔI / CÂN NHẮC 🔥</h2>
+              <p class="text-[11px] text-indigo-800/80">Đã đàm thoại hoặc hẹn mai • Tỷ lệ chốt K3 cao</p>
+            </div>
+          </div>
+          <span id="badge-count-called" class="text-xs font-black bg-white text-indigo-800 px-2.5 py-1 rounded-full border border-indigo-200 shadow-2xs">
+            12
+          </span>
+        </div>
+        <div id="list-called" class="space-y-3"></div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ================= TOAST NOTIFICATION ================= -->
+  <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-xl z-50 transform translate-y-12 opacity-0 transition-all duration-200 flex items-center gap-2 pointer-events-none">
+    <span id="toast-icon">✅</span>
+    <span id="toast-message">Đã sao chép</span>
+  </div>
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script>
+    const INITIAL_LEADS = [{"id": "0988578228", "suggested_script": "Chào chị Lan Ngọc, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi đang làm giảng dạy, muốn đóng gói lại sản phẩm đào tạo và làm video bài giảng. Đợt này chị đang giảng dạy về chuyên môn gì, và đang vướng ở khâu cấu trúc đóng gói sản phẩm hay khâu bấm máy quay bài giảng vậy ạ?", "recent_snippet": "📵 Gọi nhỡ / Bận (14/09 13:41)", "name": "Phạm Lan Ngọc", "phone": "0988578228", "display_phone": "0988578228", "email": "tranngoclam6688@gmail.con", "occupation": "Giáo viên", "reason": "Chưa điền", "source": "https://offline.fedu.vn/?utm_source=fb&utm_medium=paid_social&utm_campaign=120251689480080437&utm_term=120251868507420437&utm_content=120251868507430437&fbclid=IwcGRvZgVmZGlkFlDmAAtKpeoYoTpjBMrCeN4PLRTLhEFleHRuA2FlbQEwAGFkaWQBqzhv87C4VXNydGMGYXBwX2lkCjY2Mjg1NjgzNzkAAR5-bXZ0X1bMUY0tRrLbbtJkl_90puJr5Vf_Oim9F7zasDWfy1Pn-XoSU5UO2w_aem_8gW9vURx9nRSLZKPBlDZjQ&utm_id=120251689480080437", "registered_at": "14/09/2026", "registration_info": {"badge": "Hôm qua", "is_hot": true, "formatted": "14/09/2026 00:00"}, "status": "contacted", "is_archived": false, "archive_category": "postponed", "note": "📵 Cuộc gọi nhỡ (14/09 13:41) | Nghề: Giáo viên | Lớp Video Offline 19-20/09 Hà Nội", "tags": [], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - Phạm Lan Ngọc", "apple_contact_note": "📵 Cuộc gọi nhỡ (14/09 13:41) | Nghề: Giáo viên | Lớp Video Offline 19-20/09 Hà Nội", "zalo_url": "zalo://conversation?phone=0988578228", "zalo_app_url": "zalo://conversation?phone=0988578228", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0988578228", "zalo_web_url": "https://zalo.me/0988578228", "zalo_status": "", "zalo_snippet": "", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 147, "call_info": {"total_calls": 1, "total_duration": 0.0, "last_call_time": "14/09 13:41", "last_call_duration": 0.0, "last_call_formatted": "0s", "last_call_type": "outgoing", "last_call_answered": false, "calls": [{"time": "14/09 13:41", "date": "14/09 13:41", "duration": 0.0, "formatted_duration": "0s", "duration_formatted": "0s", "type": "outgoing", "answered": false}]}, "sms_info": {"total_messages": 0, "sent_count": 0, "received_count": 0, "last_message_time": null, "last_message_text": "", "last_message_sender": null, "messages": []}, "stu_note": "", "stu_class": "", "stu_consultations": [], "last_activity_time": "14/09 13:41", "column_type": "contacted", "column_label": "ĐÃ NHẮN (CHỜ REP)"}, {"id": "0905891899", "suggested_script": "Chào anh Sơn, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi làm bên mảng Tattoo. Đợt này anh đã lập kênh để đăng thử video nào chưa hay đang bắt đầu từ số 0 vậy ạ?", "recent_snippet": "📞 Đàm thoại 2m 24s (10/09 22:05)", "name": "Le sơn", "phone": "0905891899", "display_phone": "0905891899", "email": "", "occupation": "Tattoo", "reason": "Xây kênh", "source": "https://offline.fedu.vn/?utm_source=fb&utm_medium=paid_social&utm_campaign=120251689480080437&utm_term=120251823465750437&utm_content=120251823500270437&fbclid=IwcGRvZgFmZGlkFlDeA65th-f8N4pUCwhibyw3OD9riztleHRuA2FlbQEwAGFkaWQBqzhlfTODZXNydGMGYXBwX2lkCjY2Mjg1NjgzNzkAAR5te19D9fqpouUIoYLCqZoD0zZmQ5k9-4O2PxYhXTvlcf6nRRpBHW_zRgoPKA_aem_G3xnMOE__zbtuqfqWs9vEQ&utm_id=120251689480080437", "registered_at": "2026-09-07 01:23:32", "registration_info": {"badge": "8 ngày trước (07/09)", "is_hot": false, "formatted": "07/09/2026 01:23"}, "status": "contacted", "is_archived": false, "archive_category": "postponed", "note": "[Tattoo] Đàm thoại 2m24s: Giọng nhỏ, rụt rè, ở tỉnh làm xăm, phân khúc thấp, khả năng đk ít [📞 Đã gọi trao đổi lúc 17:11 11/09]", "tags": ["Tattoo", "Khó chốt", "Sai tệp"], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - Le sơn", "apple_contact_note": "[Tattoo] Đàm thoại 2m24s: Giọng nhỏ, rụt rè, ở tỉnh làm xăm, phân khúc thấp, khả năng đk ít [📞 Đã gọi trao đổi lúc 17:11 11/09]", "zalo_url": "zalo://conversation?phone=0905891899", "zalo_app_url": "zalo://conversation?phone=0905891899", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0905891899", "zalo_web_url": "https://zalo.me/0905891899", "zalo_status": "", "zalo_snippet": "", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 32, "call_info": {"total_calls": 1, "total_duration": 144.82372200489044, "last_call_time": "10/09 22:05", "last_call_duration": 144.82372200489044, "last_call_formatted": "2m 24s", "last_call_type": "outgoing", "last_call_answered": true, "calls": [{"time": "10/09 22:05", "date": "10/09 22:05", "duration": 144.82372200489044, "formatted_duration": "2m 24s", "duration_formatted": "2m 24s", "type": "outgoing", "answered": true}]}, "sms_info": {"total_messages": 0, "sent_count": 0, "received_count": 0, "last_message_time": null, "last_message_text": "", "last_message_sender": null, "messages": []}, "stu_note": "• [14/09/2026 15:28] [Tattoo] Đàm thoại 2m24s: Giọng nhỏ, rụt rè, ở tỉnh làm xăm, phân khúc thấp, khả năng đk ít [📞 Đã gọi trao đổi lúc 17:11 11/09]\n• [11/09/2026 17:11] [Tattoo] Đàm thoại 2m24s: Giọng nhỏ, rụt rè, ở tỉnh làm xăm, phân khúc thấp, khả năng đk ít [📞 Đã gọi trao đổi lúc 17:11 11/09]\nĐàm thoại 2m24s (10/09 22:05): Giọng nhỏ, rụt rè, ở tỉnh làm xăm, phân khúc thấp, khả năng đk ít (Sai tệp / Khó chốt).", "stu_class": "Tư Vấn Fanpage", "stu_consultations": [], "last_activity_time": "10/09 22:05", "column_type": "contacted", "column_label": "ĐÃ NHẮN (CHỜ REP)"}, {"id": "0936423998", "suggested_script": "Chào anh Duyên, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký giữ chỗ lớp thực chiến 2 ngày 19 - 20/09 tại Hà Nội. Không biết đợt này anh đã có kênh đăng clip nào chưa, hay đang bắt đầu từ số 0 để làm hình ảnh cho công việc vậy ạ?", "recent_snippet": "📵 Gọi nhỡ / Bận (14/09 15:29)", "name": "Nguyễn Minh Duyên", "phone": "0936423998", "display_phone": "0936423998", "email": "duyennm.2019@gmail.com", "occupation": "Chưa điền", "reason": "Chưa điền", "source": "https://offline.fedu.vn/", "registered_at": "2026-09-07 17:05:02", "registration_info": {"badge": "8 ngày trước (07/09)", "is_hot": false, "formatted": "07/09/2026 17:05"}, "status": "contacted", "is_archived": false, "archive_category": "postponed", "note": "📵 Gọi nhỡ/bận (14/09 15:29) • 📞 Đã đàm thoại 15s (11/09 17:00) | Chưa điền | Lớp Offline 19-20/09 Hà Nội, đang bận . có vẻ khó chịu", "tags": ["⚠️ Direct (Check lại)"], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - Nguyễn Minh Duyên", "apple_contact_note": "📵 Gọi nhỡ/bận (14/09 15:29) • 📞 Đã đàm thoại 15s (11/09 17:00) | Chưa điền | Lớp Offline 19-20/09 Hà Nội, đang bận . có vẻ khó chịu", "zalo_url": "zalo://conversation?phone=0936423998", "zalo_app_url": "zalo://conversation?phone=0936423998", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0936423998", "zalo_web_url": "https://zalo.me/0936423998", "zalo_status": "", "zalo_snippet": "", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 79, "call_info": {"total_calls": 2, "total_duration": 15.239297986030579, "last_call_time": "14/09 15:29", "last_call_duration": 0.0, "last_call_formatted": "0s", "last_call_type": "outgoing", "last_call_answered": false, "calls": [{"time": "14/09 15:29", "date": "14/09 15:29", "duration": 0.0, "formatted_duration": "0s", "duration_formatted": "0s", "type": "outgoing", "answered": false}, {"time": "11/09 17:00", "date": "11/09 17:00", "duration": 15.239297986030579, "formatted_duration": "15s", "duration_formatted": "15s", "type": "outgoing", "answered": true}]}, "sms_info": {"total_messages": 0, "sent_count": 0, "received_count": 0, "last_message_time": null, "last_message_text": "", "last_message_sender": null, "messages": []}, "stu_note": "", "stu_class": "", "stu_consultations": [], "last_activity_time": "14/09 15:29", "column_type": "contacted", "column_label": "ĐÃ NHẮN (CHỜ REP)"}, {"id": "0349615871", "suggested_script": "Chào chị Linh Nhâm, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi làm bên mảng Nội trợ. Đợt này chị đang muốn làm video bán hàng online kiếm thêm thu nhập, hay muốn xây kênh chia sẻ cuộc sống/nấu ăn vậy ạ?", "recent_snippet": "📵 Gọi nhỡ / Bận (10/09 20:41)", "name": "linh nhâm", "phone": "0349615871", "display_phone": "0349615871", "email": "danglinhnham239@gmail.com", "occupation": "Nội trợ", "reason": "Chưa điền", "source": "https://offline.fedu.vn/", "registered_at": "2026-09-09 19:34:39", "registration_info": {"badge": "6 ngày trước (09/09)", "is_hot": false, "formatted": "09/09/2026 19:34"}, "status": "contacted", "is_archived": false, "archive_category": "postponed", "note": "Nội trợ | Lớp Offline FEDU 19-20/09 - gọi  báo thuê bao [📵 Gọi nhỡ/thuê bao lúc 20:47 10/09]", "tags": ["⚠️ Direct (Check lại)"], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - linh nhâm", "apple_contact_note": "Nội trợ | Lớp Offline FEDU 19-20/09 - gọi  báo thuê bao [📵 Gọi nhỡ/thuê bao lúc 20:47 10/09]", "zalo_url": "zalo://conversation?phone=0349615871", "zalo_app_url": "zalo://conversation?phone=0349615871", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0349615871", "zalo_web_url": "https://zalo.me/0349615871", "zalo_status": "", "zalo_snippet": "", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 61, "call_info": {"total_calls": 1, "total_duration": 0.0, "last_call_time": "10/09 20:41", "last_call_duration": 0.0, "last_call_formatted": "0s", "last_call_type": "outgoing", "last_call_answered": false, "calls": [{"time": "10/09 20:41", "date": "10/09 20:41", "duration": 0.0, "formatted_duration": "0s", "duration_formatted": "0s", "type": "outgoing", "answered": false}]}, "sms_info": {"total_messages": 0, "sent_count": 0, "received_count": 0, "last_message_time": null, "last_message_text": "", "last_message_sender": null, "messages": []}, "stu_note": "", "stu_class": "", "stu_consultations": [], "last_activity_time": "10/09 20:41", "column_type": "contacted", "column_label": "ĐÃ NHẮN (CHỜ REP)"}, {"id": "0978161211", "suggested_script": "Chào anh Dung Nguyễn, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi đang làm bên nhà hàng, ẩm thực. Đợt này anh đang muốn quay món ăn, không gian để kéo khách tới quán hay muốn tự lên hình chia sẻ câu chuyện làm nghề ạ?", "recent_snippet": "📵 Gọi nhỡ / Bận (11/09 17:13)", "name": "Dung Nguyễn", "phone": "0978161211", "display_phone": "0978161211", "email": "dunghoang173@gmail.com", "occupation": "Nấu ăn", "reason": "Chưa điền", "source": "https://offline.fedu.vn/", "registered_at": "2026-09-05 20:46:15", "registration_info": {"badge": "10 ngày trước (05/09)", "is_hot": false, "formatted": "05/09/2026 20:46"}, "status": "contacted", "is_archived": false, "archive_category": "postponed", "note": "📵 Cuộc gọi nhỡ / không nhấc máy (11/09 17:13) | Nấu ăn | Lớp Offline 19-20/09 Hà Nội [📵 Gọi nhỡ/thuê bao lúc 17:13 11/09]", "tags": ["⚠️ Direct (Check lại)"], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - Dung Nguyễn", "apple_contact_note": "📵 Cuộc gọi nhỡ / không nhấc máy (11/09 17:13) | Nấu ăn | Lớp Offline 19-20/09 Hà Nội [📵 Gọi nhỡ/thuê bao lúc 17:13 11/09]", "zalo_url": "zalo://conversation?phone=0978161211", "zalo_app_url": "zalo://conversation?phone=0978161211", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0978161211", "zalo_web_url": "https://zalo.me/0978161211", "zalo_status": "", "zalo_snippet": "", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 102, "call_info": {"total_calls": 1, "total_duration": 0.0, "last_call_time": "11/09 17:13", "last_call_duration": 0.0, "last_call_formatted": "0s", "last_call_type": "outgoing", "last_call_answered": false, "calls": [{"time": "11/09 17:13", "date": "11/09 17:13", "duration": 0.0, "formatted_duration": "0s", "duration_formatted": "0s", "type": "outgoing", "answered": false}]}, "sms_info": {"total_messages": 0, "sent_count": 0, "received_count": 0, "last_message_time": null, "last_message_text": "", "last_message_sender": null, "messages": []}, "stu_note": "", "stu_class": "", "stu_consultations": [], "last_activity_time": "11/09 17:13", "column_type": "contacted", "column_label": "ĐÃ NHẮN (CHỜ REP)"}, {"id": "0969863488", "suggested_script": "Chào chị Hạnh, em là Việt - Giảng viên FPT Arena (phụ trách lớp Video Marketing Offline 19 - 20/09) đây ạ. Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi đang làm giảng viên, muốn đóng gói lại sản phẩm đào tạo và làm video marketing bài giảng. Đợt này chị đang giảng dạy về chuyên môn gì, và đang vướng ở khâu cấu trúc đóng gói sản phẩm hay khâu bấm máy quay bài giảng vậy ạ?", "recent_snippet": "📵 Gọi nhỡ / Bận (10/09 14:51)", "name": "Nguyễn Kum Hạnh", "phone": "0969863488", "display_phone": "0969863488", "email": "kimhanhnguyen963@gmail.com", "occupation": "Giảng Viên", "reason": "Tiết kiệm hàng chục triệu thuê quay", "source": "https://offline.fedu.vn/?fbclid=IwcGRvZgFleHRuA2FlbQEwAGFkaWQBqzhv87C4VXNydGMGYXBwX2lkDDM1MDY4NTUzMTcyOAABHoJ-fy-Ya81_VPHeUaeKOY-_Kmup0cnxPlmWXDHJ8PsZA3nhk5tWkg0a6lpe_aem_UcMOH8SSmX_5IzfYb0PXoA&utm_source=fb&utm_medium=paid_social&utm_campaign=120251689480080437&utm_term=120251868507420437&utm_content=120251868507430437", "registered_at": "2026-09-09 15:36:51", "registration_info": {"badge": "6 ngày trước (09/09)", "is_hot": false, "formatted": "09/09/2026 15:36"}, "status": "contacted", "is_archived": false, "archive_category": "postponed", "note": "Giảng Viên | Nút thắt: Tiết kiệm hàng chục triệu thuê quay\nĐã gọi , thuê bao", "tags": [], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - Nguyễn Kum Hạnh", "apple_contact_note": "Giảng Viên | Nút thắt: Tiết kiệm hàng chục triệu thuê quay\nĐã gọi , thuê bao", "zalo_url": "zalo://conversation?phone=0969863488", "zalo_app_url": "zalo://conversation?phone=0969863488", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0969863488", "zalo_web_url": "https://zalo.me/0969863488", "zalo_status": "", "zalo_snippet": "", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 41, "call_info": {"total_calls": 1, "total_duration": 0.0, "last_call_time": "10/09 14:51", "last_call_duration": 0.0, "last_call_formatted": "0s", "last_call_type": "outgoing", "last_call_answered": false, "calls": [{"time": "10/09 14:51", "date": "10/09 14:51", "duration": 0.0, "formatted_duration": "0s", "duration_formatted": "0s", "type": "outgoing", "answered": false}]}, "sms_info": {"total_messages": 0, "sent_count": 0, "received_count": 0, "last_message_time": null, "last_message_text": "", "last_message_sender": null, "messages": []}, "stu_note": "• [09/09/2026 15:36] Đăng ký từ web offline.fedu.vn. Giảng viên đại học. Điền form: \"Tiết kiệm hàng chục triệu thuê quay\". Mục tiêu tự làm video đào tạo và bài giảng chuẩn mực, đàng hoàng.", "stu_class": "Offline K3 (19-20/09)", "stu_consultations": [{"id": "cst_nguyen_kim_hanh_1", "date": "09/09/2026 15:36", "channel": "web_offline", "topic": "Đăng ký khóa Offline Hà Nội 19-20/09", "student_inquiry": "Giảng Viên | Nút thắt: Tiết kiệm hàng chục triệu thuê quay", "marketing_use": "Học viên Giảng viên đại học muốn tự quay bài giảng và video chia sẻ chuyên môn sư phạm đàng hoàng, tiết kiệm chi phí thuê ngoài định kỳ 20-30tr/tháng.", "screenshot_url": null}], "last_activity_time": "10/09 14:51", "column_type": "contacted", "column_label": "ĐÃ NHẮN (CHỜ REP)"}, {"id": "0936323885", "suggested_script": "Chào chị Thương, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi đang làm giảng dạy, muốn đóng gói lại sản phẩm đào tạo và làm video bài giảng. Đợt này chị đang giảng dạy về chuyên môn gì, và đang vướng ở khâu cấu trúc đóng gói sản phẩm hay khâu bấm máy quay bài giảng vậy ạ?", "recent_snippet": "Tôi (10/09 19:01): Chào anh/chị Thương, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký lớp thự", "name": "Trần Thu Thương", "phone": "0936323885", "display_phone": "0936323885", "email": "chimeconem.official@gmail.com", "occupation": "Giáo dục", "reason": "Video chuyển đổi cao", "source": "https://offline.fedu.vn/?utm_source=fb&utm_medium=paid_social&utm_campaign=120251689480080437&utm_term=120251868507420437&utm_content=120251868507430437&fbclid=IwcGRvZgVmZGlkFlDgGKoqkqZGfakpyLgaCfgFx6LNUq9leHRuA2FlbQEwAGFkaWQBqzhv87C4VXNydGMGYXBwX2lkCjY2Mjg1NjgzNzkAAR7FalNjiNyY2bdnVp8zwSWHdcUOtDQD99uR6hKBhV_vuB21xvfHYsUVpNypIg_aem_78FQangwulziFkaW1p_0sw&utm_id=120251689480080437", "registered_at": "2026-09-09 06:12:03", "registration_info": {"badge": "6 ngày trước (09/09)", "is_hot": false, "formatted": "09/09/2026 06:12"}, "status": "contacted", "is_archived": false, "archive_category": "postponed", "note": "Giáo dục | Video chuyển đổi cao | Lớp Offline 19-20/09 Hà Nội [💬 Đã gửi SMS lúc 19:01 10/09]", "tags": [], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - Trần Thu Thương", "apple_contact_note": "Giáo dục | Video chuyển đổi cao | Lớp Offline 19-20/09 Hà Nội [💬 Đã gửi SMS lúc 19:01 10/09]", "zalo_url": "zalo://conversation?phone=0936323885", "zalo_app_url": "zalo://conversation?phone=0936323885", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0936323885", "zalo_web_url": "https://zalo.me/0936323885", "zalo_status": "", "zalo_snippet": "", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 14, "call_info": {"total_calls": 0, "total_duration": 0.0, "last_call_time": null, "last_call_duration": 0.0, "last_call_formatted": "Chưa gọi", "last_call_type": null, "last_call_answered": false, "calls": []}, "sms_info": {"total_messages": 1, "sent_count": 1, "received_count": 0, "last_message_time": "10/09 19:01", "last_message_text": "Chào anh/chị Thương, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi đ", "last_message_sender": "me", "messages": [{"time": "10/09 19:01", "text": "Chào anh/chị Thương, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi đang làm giảng dạy, muốn đóng gói lại sản phẩm đào tạo và làm video bài giảng. Đợt này mình đang giảng dạy về chuyên môn gì, và đang vướng ở khâu cấu trúc đóng gói sản phẩm hay khâu bấm máy quay bài giảng vậy ạ?", "sender": "me"}]}, "stu_note": "", "stu_class": "", "stu_consultations": [], "last_activity_time": "10/09 19:01", "column_type": "contacted", "column_label": "ĐÃ NHẮN (CHỜ REP)"}, {"id": "0366670789", "suggested_script": "Chào chị Tuyết, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi làm bên mảng Kinh doahh. Đợt này chị đã lập kênh để đăng thử video nào chưa hay đang bắt đầu từ số 0 vậy ạ?", "recent_snippet": "Tôi (10/09 19:02): Chào chị tuyết, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký lớp thực chi", "name": "Ngo thị ánh tuyết", "phone": "0366670789", "display_phone": "0366670789", "email": "anhtuyet1711985@gmail.com", "occupation": "Kinh doahh", "reason": "Chưa điền", "source": "https://offline.fedu.vn/", "registered_at": "2026-09-09 11:12:32", "registration_info": {"badge": "6 ngày trước (09/09)", "is_hot": false, "formatted": "09/09/2026 11:12"}, "status": "contacted", "is_archived": false, "archive_category": "postponed", "note": "Kinh doanh | Lớp Offline FEDU 19-20/09 [💬 Đã gửi SMS lúc 19:02 10/09]", "tags": ["⚠️ Direct (Check lại)"], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - Ngo thị ánh tuyết", "apple_contact_note": "Kinh doanh | Lớp Offline FEDU 19-20/09 [💬 Đã gửi SMS lúc 19:02 10/09]", "zalo_url": "zalo://conversation?phone=0366670789", "zalo_app_url": "zalo://conversation?phone=0366670789", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0366670789", "zalo_web_url": "https://zalo.me/0366670789", "zalo_status": "", "zalo_snippet": "", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 8, "call_info": {"total_calls": 0, "total_duration": 0.0, "last_call_time": null, "last_call_duration": 0.0, "last_call_formatted": "Chưa gọi", "last_call_type": null, "last_call_answered": false, "calls": []}, "sms_info": {"total_messages": 1, "sent_count": 1, "received_count": 0, "last_message_time": "10/09 19:02", "last_message_text": "Chào chị tuyết, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi làm bê", "last_message_sender": "me", "messages": [{"time": "10/09 19:02", "text": "Chào chị tuyết, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi làm bên mảng Kinh doahh. Đợt này mình đã lập kênh để đăng thử video nào chưa hay đang bắt đầu từ số 0 vậy ạ?", "sender": "me"}]}, "stu_note": "", "stu_class": "", "stu_consultations": [], "last_activity_time": "10/09 19:02", "column_type": "contacted", "column_label": "ĐÃ NHẮN (CHỜ REP)"}, {"id": "0348662298", "suggested_script": "Chào chị Thuý, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi làm mảng spa, làm đẹp. Đợt này chị đang muốn quay cận cảnh quy trình chăm sóc khách hay muốn tự lên hình tư vấn ạ?", "recent_snippet": "📵 Gọi nhỡ / Bận (10/09 22:04)", "name": "Phạm thị thuý", "phone": "0348662298", "display_phone": "0348662298", "email": "", "occupation": "Spa", "reason": "Chưa điền", "source": "https://offline.fedu.vn/?utm_source=fb&utm_medium=paid_social&utm_campaign=120251689480080437&utm_term=120251868507420437&utm_content=120251868507430437&fbclid=IwcGRvZgFmZGlkFlDgFKqwJ9zIMD0-7tAIbLcL3lQAFgJleHRuA2FlbQEwAGFkaWQBqzhv87C4VXNydGMGYXBwX2lkCjY2Mjg1NjgzNzkAAR5UnIbv1L1Bhx5-LMETbI0HrCUkqxZDpdWwKKvIVwWUTcsDgE4df1oSyiln5A_aem_lx_S67bierwmMIDkdyDn_w&utm_id=120251689480080437", "registered_at": "2026-09-08 16:11:29", "registration_info": {"badge": "7 ngày trước (08/09)", "is_hot": false, "formatted": "08/09/2026 16:11"}, "status": "contacted", "is_archived": false, "archive_category": "postponed", "note": "[Spa] Đã gọi 22:04 chưa nghe máy (gọi nhỡ)", "tags": ["Spa", "Gọi nhỡ"], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - Phạm thị thuý", "apple_contact_note": "[Spa] Đã gọi 22:04 chưa nghe máy (gọi nhỡ)", "zalo_url": "zalo://conversation?phone=0348662298", "zalo_app_url": "zalo://conversation?phone=0348662298", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0348662298", "zalo_web_url": "https://zalo.me/0348662298", "zalo_status": "", "zalo_snippet": "", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 21, "call_info": {"total_calls": 1, "total_duration": 0.0, "last_call_time": "10/09 22:04", "last_call_duration": 0.0, "last_call_formatted": "0s", "last_call_type": "outgoing", "last_call_answered": false, "calls": [{"time": "10/09 22:04", "date": "10/09 22:04", "duration": 0.0, "formatted_duration": "0s", "duration_formatted": "0s", "type": "outgoing", "answered": false}]}, "sms_info": {"total_messages": 0, "sent_count": 0, "received_count": 0, "last_message_time": null, "last_message_text": "", "last_message_sender": null, "messages": []}, "stu_note": "Đã gọi lúc 22:04 (10/09) chưa nghe máy (cuộc gọi nhỡ)", "stu_class": "Tư Vấn Fanpage", "stu_consultations": [], "last_activity_time": "10/09 22:04", "column_type": "contacted", "column_label": "ĐÃ NHẮN (CHỜ REP)"}, {"id": "0925513636", "suggested_script": "Chào chị Phương, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 19 - 20/09 tại Hà Nội và có ghi đang làm bên nhà hàng, ẩm thực. Đợt này chị đang muốn tập trung quay món ăn, không gian để kéo khách tới quán hay muốn tự lên hình chia sẻ câu chuyện làm nghề ạ?", "recent_snippet": "Tôi (10/09 10:21): o\u0001Chào chị Phương, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực c", "name": "Nguyen Lan Phương", "phone": "0925513636", "display_phone": "0925513636", "email": "nguyenlanphuong050975@gmail.com", "occupation": "Chủ nhà hàng", "reason": "Chưa điền", "source": "https://offline.fedu.vn/?fbclid=IwcGRvZgFleHRuA2FlbQEwAGFkaWQBqzhv87C4VXNydGMGYXBwX2lkDDM1MDY4NTUzMTcyOAABHhG2y6zKYek0ztxWaouqzXlwORWKOj8hW1O7ULdUa6zpiR0FkveClbdIejeY_aem_le7jvyNksWPbh-bQyyv0FA&utm_source=fb&utm_medium=paid_social&utm_campaign=120251689480080437&utm_term=120251868507420437&utm_content=120251868507430437", "registered_at": "2026-09-10 08:29:14", "registration_info": {"badge": "5 ngày trước (10/09)", "is_hot": false, "formatted": "10/09/2026 08:29"}, "status": "contacted", "is_archived": false, "archive_category": "postponed", "note": "📵 Gọi thuê bao (14:24 10/09). Đã gửi tin nhắn Zalo lúc 14:23 (kèm SMS & Mail sáng nay). Chủ nhà hàng. Chờ khách bật máy phản hồi Zalo.", "tags": ["F&B / Nhà hàng", "Đã gửi SMS", "Đã gửi Mail", "Lớp 19-20/09"], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - Nguyen Lan Phương", "apple_contact_note": "📵 Gọi thuê bao (14:24 10/09). Đã gửi tin nhắn Zalo lúc 14:23 (kèm SMS & Mail sáng nay). Chủ nhà hàng. Chờ khách bật máy phản hồi Zalo.", "zalo_url": "zalo://conversation?phone=0925513636", "zalo_app_url": "zalo://conversation?phone=0925513636", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0925513636", "zalo_web_url": "https://zalo.me/0925513636", "zalo_status": "Đã tương tác Zalo", "zalo_snippet": "📵 Gọi thuê bao (14:24 10/09). Đã gửi tin nhắn Zalo lúc 14:23 (kèm SMS & Mail sáng nay). Chủ nhà hàng. Chờ khách bật máy phản hồi Zalo.", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 48, "call_info": {"total_calls": 1, "total_duration": 0.0, "last_call_time": "10/09 14:24", "last_call_duration": 0.0, "last_call_formatted": "0s", "last_call_type": "outgoing", "last_call_answered": false, "calls": [{"time": "10/09 14:24", "date": "10/09 14:24", "duration": 0.0, "formatted_duration": "0s", "duration_formatted": "0s", "type": "outgoing", "answered": false}]}, "sms_info": {"total_messages": 1, "sent_count": 1, "received_count": 0, "last_message_time": "10/09 10:21", "last_message_text": "o\u0001Chào chị Phương, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 19 - 20/09 tại Hà Nội và ", "last_message_sender": "me", "messages": [{"time": "10/09 10:21", "text": "o\u0001Chào chị Phương, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 19 - 20/09 tại Hà Nội và có ghi đang làm bên nhà hàng, ẩm thực. Đợt này chị đang muốn tập trung quay món ăn, không gian để kéo khách tới quán hay muốn tự lên hình chia sẻ câu chuyện làm nghề ạ?", "sender": "me"}]}, "stu_note": "• [10/09/2026 14:25] 📵 Gọi thuê bao (14:24 10/09). Đã gửi tin nhắn Zalo lúc 14:23 (kèm SMS & Mail sáng nay). Chủ nhà hàng. Chờ khách bật máy phản hồi Zalo.\n• [10/09/2026 14:25] 📵 Gọi thuê bao (14:24 10/09). Đã gửi tin nhắn Zalo lúc 14:23 (kèm SMS & Mail sáng nay). Chủ nhà hàng. Chờ khách bật máy phản hồi Zalo.\n• [10/09/2026 10:13] Đã gửi SMS & Mail tư vấn ẩm thực (quay món/không gian vs nhân hiệu) lúc 10:13 10/09/2026\nĐã gửi iMessage/SMS và Email tư vấn may đo lúc 10:13 10/09/2026. Đã lưu danh bạ Apple Contacts offline3 - Nguyen Lan Phương.", "stu_class": "Offline 3 (Hà Nội 19-20/09)", "stu_consultations": [{"id": "cst_nguyen_lan_phuong_2", "date": "10/09/2026 14:24", "channel": "zalo", "topic": "Gọi điện thoại thuê bao - Đã gửi tin nhắn tư vấn qua Zalo", "student_inquiry": "Anh Việt gọi điện thoại cho chị Lan Phương (0925513636) lúc 14:24 nhưng máy báo thuê bao không liên lạc được. Đã gửi tin nhắn mở đầu qua Zalo cá nhân lúc 14:23: \"Chào anh/chị Phương, em là Việt bên lớp video offline đây ạ. Em thấy mình vừa đăng ký giữ chỗ lớp đợt này trên website. Lớp đợt này học thực chiến trong 2 ngày 19 - 20/09 tại Hà Nội. Không biết hiện tại mình đang kinh doanh mảng nào và có bài toán gì cần em tư vấn trước không ạ?\".", "marketing_use": "Chiến lược đa kênh (Multi-touch): Khi khách hàng tắt máy/thuê bao, lập tức để lại tin nhắn Zalo kèm SMS/Mail để khách vừa mở máy là thấy ngay sự chu đáo, chuyên nghiệp.", "screenshot_url": "assets/hocvien/media_1789025092532.png"}, {"id": "cst_nguyen_lan_phuong_1", "date": "10/09/2026 10:13", "channel": "facebook", "topic": "Tư vấn quay video món ăn / không gian nhà hàng vs nhân hiệu", "student_inquiry": "Chủ nhà hàng đăng ký lớp Offline 19-20/09 tại Hà Nội. Cần định hướng làm video kéo khách đến quán hoặc xây thương hiệu cá nhân.", "marketing_use": "B-roll món ăn kích thích vị giác (Macro Sensory), không gian quán, hoặc Talking Head chia sẻ câu chuyện ẩm thực.", "screenshot_url": null}], "last_activity_time": "10/09 14:24", "column_type": "contacted", "column_label": "ĐÃ NHẮN (CHỜ REP)"}, {"id": "0356105104", "suggested_script": "Chào chị Uyên, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký giữ chỗ lớp thực chiến 2 ngày 19 - 20/09 tại Hà Nội. Không biết đợt này chị đã có kênh đăng clip nào chưa, hay đang bắt đầu từ số 0 để làm hình ảnh cho công việc vậy ạ?", "recent_snippet": "📵 Gọi nhỡ / Bận (10/09 21:52)", "name": "Đào Uyên", "phone": "0356105104", "display_phone": "0356105104", "email": "", "occupation": "Chưa điền", "reason": "Chưa điền", "source": "https://offline.fedu.vn/?fbclid=IwY2xjawUMfLdwZG9mBWV4dG4DYWVtAjExAHNydGMGYXBwX2lkDDM1MDY4NTUzMTcyOAABHmu7vCbJn-sjMsS13KeLud5XNHsXmS0AMl2mumRRjnz8SxZVIPJFeW4Ba30d_aem_hn5VaYg3ceVysCRE1Vn1NQ", "registered_at": "2026-09-08 12:31:21", "registration_info": {"badge": "7 ngày trước (08/09)", "is_hot": false, "formatted": "08/09/2026 12:31"}, "status": "contacted", "is_archived": false, "archive_category": "postponed", "note": "📵 Cuộc gọi nhỡ / không nhấc máy (10/09 21:52) | Chưa điền | Lớp Offline 19-20/09 Hà Nội", "tags": [], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - Đào Uyên", "apple_contact_note": "📵 Cuộc gọi nhỡ / không nhấc máy (10/09 21:52) | Chưa điền | Lớp Offline 19-20/09 Hà Nội", "zalo_url": "zalo://conversation?phone=0356105104", "zalo_app_url": "zalo://conversation?phone=0356105104", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0356105104", "zalo_web_url": "https://zalo.me/0356105104", "zalo_status": "", "zalo_snippet": "", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 24, "call_info": {"total_calls": 1, "total_duration": 0.0, "last_call_time": "10/09 21:52", "last_call_duration": 0.0, "last_call_formatted": "0s", "last_call_type": "outgoing", "last_call_answered": false, "calls": [{"time": "10/09 21:52", "date": "10/09 21:52", "duration": 0.0, "formatted_duration": "0s", "duration_formatted": "0s", "type": "outgoing", "answered": false}]}, "sms_info": {"total_messages": 0, "sent_count": 0, "received_count": 0, "last_message_time": null, "last_message_text": "", "last_message_sender": null, "messages": []}, "stu_note": "", "stu_class": "", "stu_consultations": [], "last_activity_time": "10/09 21:52", "column_type": "contacted", "column_label": "ĐÃ NHẮN (CHỜ REP)"}, {"id": "0789122166", "suggested_script": "Chào chị Spa, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi làm mảng spa, làm đẹp. Đợt này chị đang muốn quay cận cảnh quy trình chăm sóc khách hay muốn tự lên hình tư vấn ạ?", "recent_snippet": "💬 📵 Gọi nhỡ/bận (14/09 15:27) • [Spa] Đàm thoại 12m28s: Rất quan tâm, đã gửi QR cọc 3tr trên Zalo lúc 22:22 thuê bao", "name": "Mai Spa", "phone": "0789122166", "display_phone": "0789122166", "email": "uyenlinhmai09@gmail.com", "occupation": "Spa", "reason": "Chưa điền", "source": "https://offline.fedu.vn/", "registered_at": "2026-09-08 18:44:21", "registration_info": {"badge": "7 ngày trước (08/09)", "is_hot": false, "formatted": "08/09/2026 18:44"}, "status": "considering", "is_archived": false, "archive_category": "postponed", "note": "📵 Gọi nhỡ/bận (14/09 15:27) • [Spa] Đàm thoại 12m28s: Rất quan tâm, đã gửi QR cọc 3tr trên Zalo lúc 22:22 thuê bao", "tags": ["Spa", "Đã gửi QR", "Cân nhắc cọc", "⚠️ Direct (Check lại)"], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - Mai Spa", "apple_contact_note": "📵 Gọi nhỡ/bận (14/09 15:27) • [Spa] Đàm thoại 12m28s: Rất quan tâm, đã gửi QR cọc 3tr trên Zalo lúc 22:22 thuê bao", "zalo_url": "zalo://conversation?phone=0789122166", "zalo_app_url": "zalo://conversation?phone=0789122166", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0789122166", "zalo_web_url": "https://zalo.me/0789122166", "zalo_status": "Đã tương tác Zalo", "zalo_snippet": "📵 Gọi nhỡ/bận (14/09 15:27) • [Spa] Đàm thoại 12m28s: Rất quan tâm, đã gửi QR cọc 3tr trên Zalo lúc 22:22 thuê bao", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 71, "call_info": {"total_calls": 3, "total_duration": 748.4787290096283, "last_call_time": "14/09 15:27", "last_call_duration": 0.0, "last_call_formatted": "0s", "last_call_type": "outgoing", "last_call_answered": false, "calls": [{"time": "14/09 15:27", "date": "14/09 15:27", "duration": 0.0, "formatted_duration": "0s", "duration_formatted": "0s", "type": "outgoing", "answered": false}, {"time": "12/09 17:57", "date": "12/09 17:57", "duration": 0.0, "formatted_duration": "0s", "duration_formatted": "0s", "type": "outgoing", "answered": false}, {"time": "10/09 22:08", "date": "10/09 22:08", "duration": 748.4787290096283, "formatted_duration": "12m 28s", "duration_formatted": "12m 28s", "type": "outgoing", "answered": true}]}, "sms_info": {"total_messages": 0, "sent_count": 0, "received_count": 0, "last_message_time": null, "last_message_text": "", "last_message_sender": null, "messages": []}, "stu_note": "• [14/09/2026 15:27] [Spa] Đàm thoại 12m28s: Rất quan tâm, đã gửi QR cọc 3tr trên Zalo lúc 22:22 thuê bao\nĐàm thoại 12m28s (10/09 22:08): Rất quan tâm, đã gửi QR cọc 3tr trên Zalo lúc 22:22, đang cân nhắc chốt.", "stu_class": "Tư Vấn Fanpage", "stu_consultations": [], "last_activity_time": "14/09 15:27", "column_type": "called", "column_label": "ĐÃ TRAO ĐỔI / CÂN NHẮC 🔥"}, {"id": "0932695566", "suggested_script": "Chào chị Huyền, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi làm bên mảng Nội trợ. Đợt này chị đang muốn làm video bán hàng online kiếm thêm thu nhập, hay muốn xây kênh chia sẻ cuộc sống/nấu ăn vậy ạ?", "recent_snippet": "💬 [SN 1969 - Tiềm năng] Đàm thoại 11m30s: Lớn tuổi, lăn tăn học được gì ngoài quay điện thoại. Có thể về QN nên nhắn Zalo.", "name": "Cao thị Huyền", "phone": "0932695566", "display_phone": "0932695566", "email": "", "occupation": "Nội trợ", "reason": "Chưa biết gì", "source": "https://offline.fedu.vn/?utm_source=fb&utm_medium=paid_social&utm_campaign=120251689480080437&utm_term=120251823465750437&utm_content=120251823500270437&fbclid=IwcGRvZgFmZGlkFlDeBN60oBydnkorTP_EnQX_2zRmfNVleHRuA2FlbQEwAGFkaWQBqzhlfTODZXNydGMGYXBwX2lkCjY2Mjg1NjgzNzkAAR7ghpNXwqPTPfM1s3i8P7dwIIWY6S33qgYeu0PZ1MCifQqHdh_vI7xUOc3HDw_aem_bROTXX8M4S9ZzwKvZ3q3WA&utm_id=120251689480080437", "registered_at": "2026-09-06 13:48:41", "registration_info": {"badge": "9 ngày trước (06/09)", "is_hot": false, "formatted": "06/09/2026 13:48"}, "status": "considering", "is_archived": false, "archive_category": "postponed", "note": "[SN 1969 - Tiềm năng] Đàm thoại 11m30s: Lớn tuổi, lăn tăn học được gì ngoài quay điện thoại. Có thể về QN nên nhắn Zalo.", "tags": ["SN 1969", "Có tiềm năng", "Hẹn Zalo"], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - Cao thị Huyền", "apple_contact_note": "[SN 1969 - Tiềm năng] Đàm thoại 11m30s: Lớn tuổi, lăn tăn học được gì ngoài quay điện thoại. Có thể về QN nên nhắn Zalo.", "zalo_url": "zalo://conversation?phone=0932695566", "zalo_app_url": "zalo://conversation?phone=0932695566", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0932695566", "zalo_web_url": "https://zalo.me/0932695566", "zalo_status": "Đã tương tác Zalo", "zalo_snippet": "[SN 1969 - Tiềm năng] Đàm thoại 11m30s: Lớn tuổi, lăn tăn học được gì ngoài quay điện thoại. Có thể về QN nên nhắn Zalo.", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 33, "call_info": {"total_calls": 1, "total_duration": 689.7746889591217, "last_call_time": "10/09 22:26", "last_call_duration": 689.7746889591217, "last_call_formatted": "11m 29s", "last_call_type": "outgoing", "last_call_answered": true, "calls": [{"time": "10/09 22:26", "date": "10/09 22:26", "duration": 689.7746889591217, "formatted_duration": "11m 29s", "duration_formatted": "11m 29s", "type": "outgoing", "answered": true}]}, "sms_info": {"total_messages": 0, "sent_count": 0, "received_count": 0, "last_message_time": null, "last_message_text": "", "last_message_sender": null, "messages": []}, "stu_note": "SN 1969 (57 tuổi). Đàm thoại 11m30s (10/09 22:26): Có tiềm năng, lăn tăn học được gì ngoài quay điện thoại. Có thể về Quảng Ninh nên dặn nhắn Zalo.", "stu_class": "Tư Vấn Fanpage", "stu_consultations": [], "last_activity_time": "10/09 22:26", "column_type": "called", "column_label": "ĐÃ TRAO ĐỔI / CÂN NHẮC 🔥"}, {"id": "0335156521", "suggested_script": "Chào anh Lý, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi đang làm giảng dạy, muốn đóng gói lại sản phẩm đào tạo và làm video bài giảng. Đợt này anh đang giảng dạy về chuyên môn gì, và đang vướng ở khâu cấu trúc đóng gói sản phẩm hay khâu bấm máy quay bài giảng vậy ạ?", "recent_snippet": "📞 Đàm thoại 16s (11/09 17:15)", "name": "Hoàng Lý", "phone": "0335156521", "display_phone": "0335156521", "email": "", "occupation": "Giáo viên", "reason": "Chưa điền", "source": "https://offline.fedu.vn/?utm_source=fb&utm_medium=paid_social&utm_campaign=120251689480080437&utm_term=120251868507420437&utm_content=120251868507430437&fbclid=IwcGRvZgVmZGlkFlDixa0pg3vA4tB0olLAEs2q2gQrjc1leHRuA2FlbQEwAGFkaWQBqzhv87C4VXNydGMGYXBwX2lkCjY2Mjg1NjgzNzkAAR5AwdCXiXLJMH-JfdEYW72ykaP5KbgQGo3jnOAzXCBDJE8CNHBbMnfWCzGYqw_aem_xFF_NiEF00dZZJ-l6OmkDw&utm_id=120251689480080437", "registered_at": "10/09/2026", "registration_info": {"badge": "5 ngày trước (10/09)", "is_hot": false, "formatted": "10/09/2026 00:00"}, "status": "considering", "is_archived": false, "archive_category": "postponed", "note": "[GV tiểu học] Đã trao đổi 6m: Chưa biết đi được không, có thể gọi lại. đã gọi lại đang họp", "tags": ["Giáo viên tiểu học", "Cân nhắc"], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - Hoàng Lý", "apple_contact_note": "[GV tiểu học] Đã trao đổi 6m: Chưa biết đi được không, có thể gọi lại. đã gọi lại đang họp", "zalo_url": "zalo://conversation?phone=0335156521", "zalo_app_url": "zalo://conversation?phone=0335156521", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0335156521", "zalo_web_url": "https://zalo.me/0335156521", "zalo_status": "", "zalo_snippet": "", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 132, "call_info": {"total_calls": 2, "total_duration": 380.24267399311066, "last_call_time": "11/09 17:15", "last_call_duration": 16.023396968841553, "last_call_formatted": "16s", "last_call_type": "outgoing", "last_call_answered": true, "calls": [{"time": "11/09 17:15", "date": "11/09 17:15", "duration": 16.023396968841553, "formatted_duration": "16s", "duration_formatted": "16s", "type": "outgoing", "answered": true}, {"time": "10/09 21:54", "date": "10/09 21:54", "duration": 364.2192770242691, "formatted_duration": "6m 4s", "duration_formatted": "6m 4s", "type": "outgoing", "answered": true}]}, "sms_info": {"total_messages": 0, "sent_count": 0, "received_count": 0, "last_message_time": null, "last_message_text": "", "last_message_sender": null, "messages": []}, "stu_note": "• [11/09/2026 17:15] [GV tiểu học] Đã trao đổi 6m: Chưa biết đi được không, có thể gọi lại. đã gọi lại đang họp\nĐã gọi trao đổi 6m: Là GV tiểu học, chưa biết đi được không, có thể gọi lại.", "stu_class": "Tư Vấn Fanpage", "stu_consultations": [], "last_activity_time": "11/09 17:15", "column_type": "called", "column_label": "ĐÃ TRAO ĐỔI / CÂN NHẮC 🔥"}, {"id": "0989188467", "suggested_script": "Chào chị Hong Thu, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi làm bên mảng Ciach. Đợt này chị đã lập kênh để đăng thử video nào chưa hay đang bắt đầu từ số 0 vậy ạ?", "recent_snippet": "📞 Đàm thoại 11s (14/09 15:21)", "name": "Hong thu", "phone": "0989188467", "display_phone": "0989188467", "email": "hongthusbr.20@gmail.com", "occupation": "Ciach", "reason": "Chưa điền", "source": "https://offline.fedu.vn/", "registered_at": "2026-09-05 06:02:43", "registration_info": {"badge": "10 ngày trước (05/09)", "is_hot": false, "formatted": "05/09/2026 06:02"}, "status": "considering", "is_archived": false, "archive_category": "postponed", "note": "📞 Đã gọi 11s (14/09 15:21) • cam thấy  nguoi nay ko co nhu câu , ưu tiên thấp📞 Đã đàm thoại 6m (11/09 16:42) | Coach | Lớp Offline 19-20/09 Hà Nội. đã gọi có rủ thêm bạn. đang suy nghĩ xem lịch\ngọi lần 2 kêu đang bận", "tags": ["Coach", "Rủ thêm bạn", "Đang suy nghĩ lịch", "Đàm thoại 6m", "⚠️ Direct (Check lại)"], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - Hong thu", "apple_contact_note": "📞 Đã gọi 11s (14/09 15:21) • cam thấy  nguoi nay ko co nhu câu , ưu tiên thấp📞 Đã đàm thoại 6m (11/09 16:42) | Coach | Lớp Offline 19-20/09 Hà Nội. đã gọi có rủ thêm bạn. đang suy nghĩ xem lịch\ngọi lần 2 kêu đang bận", "zalo_url": "zalo://conversation?phone=0989188467", "zalo_app_url": "zalo://conversation?phone=0989188467", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0989188467", "zalo_web_url": "https://zalo.me/0989188467", "zalo_status": "", "zalo_snippet": "", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 106, "call_info": {"total_calls": 2, "total_duration": 371.8582090139389, "last_call_time": "14/09 15:21", "last_call_duration": 11.844398021697998, "last_call_formatted": "11s", "last_call_type": "outgoing", "last_call_answered": true, "calls": [{"time": "14/09 15:21", "date": "14/09 15:21", "duration": 11.844398021697998, "formatted_duration": "11s", "duration_formatted": "11s", "type": "outgoing", "answered": true}, {"time": "11/09 16:42", "date": "11/09 16:42", "duration": 360.0138109922409, "formatted_duration": "6m", "duration_formatted": "6m", "type": "outgoing", "answered": true}]}, "sms_info": {"total_messages": 0, "sent_count": 0, "received_count": 0, "last_message_time": null, "last_message_text": "", "last_message_sender": null, "messages": []}, "stu_note": "• [14/09/2026 15:27] cam thấy  nguoi nay ko co nhu câu , ưu tiên thấp📞 Đã đàm thoại 6m (11/09 16:42) | Coach | Lớp Offline 19-20/09 Hà Nội. đã gọi có rủ thêm bạn. đang suy nghĩ xem lịch\ngọi lần 2 kêu đang bận\n• [14/09/2026 15:21] 📞 Đã đàm thoại 6m (11/09 16:42) | Coach | Lớp Offline 19-20/09 Hà Nội. đã gọi có rủ thêm bạn. đang suy nghĩ xem lịch\ngọi lần 2 kêu đang bận\n📞 Đàm thoại 6m. Tiềm năng đăng ký 2 người.", "stu_class": "Offline K3 (19-20/09)", "stu_consultations": [{"id": "cst_hong_thu_1", "date": "11/09/2026 17:17", "channel": "facebook", "topic": "Rủ thêm bạn học kịch bản video", "student_inquiry": "Lớp offline 19-20/09, đang xem lại lịch và rủ thêm bạn cùng học", "marketing_use": "Đàm thoại 6m (11/09 16:42), quan tâm cao, đang suy nghĩ sắp xếp lịch và rủ bạn", "screenshot_url": null}], "last_activity_time": "14/09 15:21", "column_type": "called", "column_label": "ĐÃ TRAO ĐỔI / CÂN NHẮC 🔥"}, {"id": "0855855688", "suggested_script": "Chào anh Sáng, em gửi thông tin khóa học Video Marketing Offline 19-20/09 tại Hà Nội. Anh mở Zalo check tin nhắn chờ kết bạn với em nhé!", "recent_snippet": "💬 Khách (Zalo 08:56): em tìm thấy chỗ em thíu nơi anh có hi", "name": "Sáng Phạm", "phone": "0855855688", "display_phone": "0855855688", "email": "sanglee221.net@gmail.com", "occupation": "Kinh doanh", "reason": "Chưa điền", "source": "https://offline.fedu.vn/?utm_source=fb&utm_medium=paid_social&utm_campaign=120251689480080437&utm_term=120251868507420437&utm_content=120251868507430437&fbclid=IwcGRvZgVmZGlkFlDl3_c2AeEv3cG8tHEE_HfXMiTrP59leHRuA2FlbQEwAGFkaWQBqzhv87C4VXNydGMGYXBwX2lkCjY2Mjg1NjgzNzkAAR48hVk0mQ3AgMgg1VR2cxizJ7liNkTu7OfCBmrTSbpx45H90sPxURUX2Pefjg_aem_ltUSf5_Rdd1yXV3G7JB8Cg&utm_id=120251689480080437", "registered_at": "13/09/2026", "registration_info": {"badge": "2 ngày trước (13/09)", "is_hot": false, "formatted": "13/09/2026 00:00"}, "status": "considering", "is_archived": false, "archive_category": "postponed", "note": "Zalo: Sáng Phạm. Email: sanglee221.net@gmail.com. Đã gửi thông tin khóa học Offline 19-20/09 qua Zalo lúc 08:47 ngày 13/09.", "tags": ["Sáng Phạm", "K3 Offline Hà Nội", "Đã nhắn Zalo"], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - Sáng Phạm", "apple_contact_note": "Zalo: Sáng Phạm. Email: sanglee221.net@gmail.com. Đã gửi thông tin khóa học Offline 19-20/09 qua Zalo lúc 08:47 ngày 13/09.", "zalo_url": "zalo://conversation?phone=0855855688", "zalo_app_url": "zalo://conversation?phone=0855855688", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0855855688", "zalo_web_url": "https://zalo.me/0855855688", "zalo_status": "Đã kết nối & nhắn tin trao đổi", "zalo_snippet": "Khách (Zalo 08:56): em tìm thấy chỗ em thíu nơi anh có hi", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 141, "call_info": {"total_calls": 2, "total_duration": 306.1747599840164, "last_call_time": "14/09 15:34", "last_call_duration": 0.0, "last_call_formatted": "0s", "last_call_type": "outgoing", "last_call_answered": false, "calls": [{"time": "14/09 15:34", "date": "14/09 15:34", "duration": 0.0, "formatted_duration": "0s", "duration_formatted": "0s", "type": "outgoing", "answered": false}, {"time": "13/09 08:40", "date": "13/09 08:40", "duration": 306.1747599840164, "formatted_duration": "5m 6s", "duration_formatted": "5m 6s", "type": "outgoing", "answered": true}]}, "sms_info": {"total_messages": 0, "sent_count": 0, "received_count": 0, "last_message_time": null, "last_message_text": "", "last_message_sender": null, "messages": []}, "stu_note": "", "stu_class": "", "stu_consultations": [], "last_activity_time": "14/09 15:34", "column_type": "called", "column_label": "ĐÃ TRAO ĐỔI / CÂN NHẮC 🔥"}, {"id": "0767276677", "suggested_script": "Chào anh Đạt, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi làm bên Luật sư. Đợt này anh đang muốn xây kênh chuyên gia để hút khách hàng/học viên, hay đang bắt đầu từ số 0 ạ?", "recent_snippet": "📵 Gọi nhỡ / Bận (14/09 15:22)", "name": "Nguyễn Văn Đạt", "phone": "0767276677", "display_phone": "0767276677", "email": "luatsud@gmail.com", "occupation": "Luật sư", "reason": "Chưa điền", "source": "https://offline.fedu.vn/", "registered_at": "2026-09-09 06:59:21", "registration_info": {"badge": "6 ngày trước (09/09)", "is_hot": false, "formatted": "09/09/2026 06:59"}, "status": "considering", "is_archived": false, "archive_category": "postponed", "note": "📵 Gọi nhỡ/bận (14/09 15:22) • Luật sư (xây kênh). Đang ở Đà Nẵng chưa về, cân nhắc lịch 19-20/9 gần Aeon Long Biên. Đã gửi Fanpage theo dõi.", "tags": ["⚠️ Direct (Check lại)"], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - Nguyễn Văn Đạt", "apple_contact_note": "📵 Gọi nhỡ/bận (14/09 15:22) • Luật sư (xây kênh). Đang ở Đà Nẵng chưa về, cân nhắc lịch 19-20/9 gần Aeon Long Biên. Đã gửi Fanpage theo dõi.", "zalo_url": "zalo://conversation?phone=0767276677", "zalo_app_url": "zalo://conversation?phone=0767276677", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0767276677", "zalo_web_url": "https://zalo.me/0767276677", "zalo_status": "", "zalo_snippet": "", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 67, "call_info": {"total_calls": 2, "total_duration": 262.44171702861786, "last_call_time": "14/09 15:22", "last_call_duration": 0.0, "last_call_formatted": "0s", "last_call_type": "outgoing", "last_call_answered": false, "calls": [{"time": "14/09 15:22", "date": "14/09 15:22", "duration": 0.0, "formatted_duration": "0s", "duration_formatted": "0s", "type": "outgoing", "answered": false}, {"time": "09/09 15:20", "date": "09/09 15:20", "duration": 262.44171702861786, "formatted_duration": "4m 22s", "duration_formatted": "4m 22s", "type": "outgoing", "answered": true}]}, "sms_info": {"total_messages": 0, "sent_count": 0, "received_count": 0, "last_message_time": null, "last_message_text": "", "last_message_sender": null, "messages": []}, "stu_note": "• [15:47 09/09/2026] Đã gọi điện & gửi tóm tắt Zalo (3tr, 19-20/9 gần Aeon Long Biên). Khách đang ở Đà Nẵng chưa về, chưa biết có kịp đăng ký không. Đã xin link Fanpage.", "stu_class": "Offline 3 (Đang ở Đà Nẵng)", "stu_consultations": [{"id": "cst_nguyen_van_at_1", "date": "09/09/2026 15:57", "channel": "phone", "topic": "Telesale & Tóm tắt Zalo: Luật sư muốn xây kênh - Đang ở Đà Nẵng cân nhắc lịch", "student_inquiry": "Anh Việt đã gọi điện trao đổi và tóm tắt qua Zalo: Học 2 ngày 19-20/09 gần Aeon Mall Long Biên, học phí 3 triệu. Khách thả tim, chủ động xin lại link Fanpage theo dõi. Vướng mắc duy nhất: Đang ở Đà Nẵng chưa về Hà Nội, chưa biết có kịp đăng ký đợt này không.", "marketing_use": "Lead chuyên gia Luật sư chất lượng cao, nhu cầu xây kênh nhân hiệu rõ ràng. Chiến lược follow-up: Hỏi thăm ngày bay về Hà Nội, nếu lỡ đợt 19-20/9 thì chốt giữ cọc sang khóa Offline tiếp theo hoặc vào Skool Online học trước nền tảng.", "screenshot_url": "assets/hocvien/media_1788944156678.png"}], "last_activity_time": "14/09 15:22", "column_type": "called", "column_label": "ĐÃ TRAO ĐỔI / CÂN NHẮC 🔥"}, {"id": "0898889090", "suggested_script": "Chào chị Ngân, em là Việt bên lớp video offline đây ạ. Em thấy chị vừa đăng ký giữ chỗ và ghi làm thời trang online, muốn tìm cách làm video marketing bán hàng. Lớp đợt này học 19 - 20/09 tại Hà Nội chị nhé. Đợt này chị đang muốn làm video dạng mặc thử review để chạy quảng cáo ra đơn hay dạng video phối đồ chia sẻ phong cách để hút tương tác tự nhiên ạ?", "recent_snippet": "📵 Gọi nhỡ / Bận (14/09 15:27)", "name": "Luu thi kim ngân", "phone": "0898889090", "display_phone": "0898889090", "email": "luutruongthanh84@gmail.com", "occupation": "Thời trang online", "reason": "Cach maketing video ban hang", "source": "https://offline.fedu.vn/?utm_source=fb&utm_medium=paid_social&utm_campaign=120251689480080437&utm_term=120251823465750437&utm_content=120251823465770437&fbclid=IwcGRvZgVmZGlkFlDg_hE1xapAeDoQ82EanwqT5m_7kJ1leHRuA2FlbQEwAGFkaWQBqzhle9Ai1XNydGMGYXBwX2lkCjY2Mjg1NjgzNzkAAR5Qo7TCHdsuz42kSEVYbhm7v5-z3Hyg8aBls-LMPgkaGxJpeSSSTe8n9KrlRA_aem_8k6IUgxBurrCSqYFXXIdSw&utm_id=120251689480080437", "registered_at": "2026-09-08 21:35:20", "registration_info": {"badge": "7 ngày trước (08/09)", "is_hot": false, "formatted": "08/09/2026 21:35"}, "status": "considering", "is_archived": false, "archive_category": "postponed", "note": "📵 Gọi nhỡ/bận (14/09 15:27) • Thời trang online | Video bán hàng | Lớp Offline 19-20/09 Hà Nội. đang xem sắp lịch đc ko", "tags": [], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - Lưu Thị Kim Ngân", "apple_contact_note": "📵 Gọi nhỡ/bận (14/09 15:27) • Thời trang online | Video bán hàng | Lớp Offline 19-20/09 Hà Nội. đang xem sắp lịch đc ko", "zalo_url": "zalo://conversation?phone=0898889090", "zalo_app_url": "zalo://conversation?phone=0898889090", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0898889090", "zalo_web_url": "https://zalo.me/0898889090", "zalo_status": "", "zalo_snippet": "", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 19, "call_info": {"total_calls": 2, "total_duration": 36.61637496948242, "last_call_time": "14/09 15:27", "last_call_duration": 0.0, "last_call_formatted": "0s", "last_call_type": "outgoing", "last_call_answered": false, "calls": [{"time": "14/09 15:27", "date": "14/09 15:27", "duration": 0.0, "formatted_duration": "0s", "duration_formatted": "0s", "type": "outgoing", "answered": false}, {"time": "09/09 14:45", "date": "09/09 14:45", "duration": 36.61637496948242, "formatted_duration": "36s", "duration_formatted": "36s", "type": "outgoing", "answered": true}]}, "sms_info": {"total_messages": 0, "sent_count": 0, "received_count": 0, "last_message_time": null, "last_message_text": "", "last_message_sender": null, "messages": []}, "stu_note": "• [10/09/2026 08:47] Thời trang online | Video bán hàng | Lớp Offline 19-20/09 Hà Nội. đang xem sắp lịch đc ko\n• [10/09/2026 07:56] Thời trang online | Video bán hàng | Lớp Offline 19-20/09 Hà Nội. đang xem sắp lịch đc ko\nĐã gửi tin nhắn Zalo Web và Email lúc 12:59 ngày 09/09/2026. Email: luutruongthanh84@gmail.com (Resend ID: 4c2a9b26-6ade-4c50-982c-29a8b6eb0042). Nội dung: 'Chào chị Ngân, em là Việt bên lớp video offline đây ạ. Em thấy chị vừa đăng ký giữ chỗ và ghi làm thời trang online, muốn tìm cách làm video marketing bán hàng. Lớp đợt này học 19 - 20/09 tại Hà Nội chị nhé. Đợt này chị đang muốn làm video dạng mặc thử review để chạy quảng cáo ra đơn hay dạng video phối đồ chia sẻ phong cách để hút tương tác tự nhiên ạ?'\n• [09/09/2026 14:55] Đã gọi điện tư vấn lúc 14:47 ngày 09/09/2026. Chị Ngân bảo: \"Để chị tính lại lịch xem\".", "stu_class": "Tư Vấn Fanpage", "stu_consultations": [{"id": "cst_luu_thi_kim_ngan_2", "date": "09/09/2026 14:55", "channel": "phone", "topic": "Gọi điện tư vấn lớp Offline 3 - Khách hẹn tính lại lịch", "student_inquiry": "Anh Việt đã gọi điện trực tiếp tư vấn. Chị Ngân trao đổi: \"Để chị tính lại lịch xem\" (đang cân nhắc sắp xếp thời gian công việc để tham gia lớp 19-20/09 tại Hà Nội).", "marketing_use": "Chiến lược chăm sóc lead thời trang online: Khách có nhu cầu video bán hàng rõ ràng nhưng vướng lịch cá nhân; đưa vào danh sách follow-up sau 2 ngày.", "screenshot_url": null}, {"id": "cst_luu_thi_kim_ngan_1", "date": "09/09/2026 13:00", "channel": "facebook", "topic": "Đã gửi Zalo Web & Email tư vấn 1-chạm (Thời trang online)", "student_inquiry": "Học viên liên hệ trao đổi tư vấn qua tin nhắn.", "marketing_use": "Tư liệu case study học viên thực tế chuẩn phong cách anh Việt.", "screenshot_url": null}], "last_activity_time": "14/09 15:27", "column_type": "called", "column_label": "ĐÃ TRAO ĐỔI / CÂN NHẮC 🔥"}, {"id": "0988978886", "suggested_script": "Chào anh Nhật, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi làm bên mảng BĐS. Đợt này anh đang đánh mảng dự án hay thổ cư, và đã từng tự quay clip nào chưa hay đang bắt đầu từ số 0 ạ?", "recent_snippet": "📵 Gọi nhỡ / Bận (14/09 14:40)", "name": "Nhật", "phone": "0988978886", "display_phone": "0988978886", "email": "nhatnk.bluto@gmail.com", "occupation": "BĐSS", "reason": "Chưa điền", "source": "https://offline.fedu.vn/?utm_source=fb&utm_medium=paid_social&utm_campaign=120251689480080437&utm_term=120251868507420437&utm_content=120251868507430437&fbclid=IwcGRvZgVmZGlkFlDgRJaIE1fx4gk1V3iVBcJQTUewZrFleHRuA2FlbQEwAGFkaWQBqzhv87C4VXNydGMGYXBwX2lkCjY2Mjg1NjgzNzkAAR7z-0tFXHhZWnkpG-qkr051L7MRS0qSfczjn_bZuWtj_KjoQF2t_L0P07dDqQ_aem_G_CGp2pWqyzhIEIDqqnHQA&utm_id=120251689480080437", "registered_at": "2026-09-08 22:38:14", "registration_info": {"badge": "7 ngày trước (08/09)", "is_hot": false, "formatted": "08/09/2026 22:38"}, "status": "considering", "is_archived": false, "archive_category": "postponed", "note": "Bất động sản | Lớp Offline 19-20/09 Hà Nội [📞 Đã gọi trao đổi lúc 16:53 11/09] [🔄 Hẹn gọi lại lúc 16:53 11/09]", "tags": [], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - Nhật", "apple_contact_note": "Bất động sản | Lớp Offline 19-20/09 Hà Nội [📞 Đã gọi trao đổi lúc 16:53 11/09] [🔄 Hẹn gọi lại lúc 16:53 11/09]", "zalo_url": "zalo://conversation?phone=0988978886", "zalo_app_url": "zalo://conversation?phone=0988978886", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0988978886", "zalo_web_url": "https://zalo.me/0988978886", "zalo_status": "", "zalo_snippet": "", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 17, "call_info": {"total_calls": 3, "total_duration": 23.318130016326904, "last_call_time": "14/09 14:40", "last_call_duration": 0.0, "last_call_formatted": "0s", "last_call_type": "outgoing", "last_call_answered": false, "calls": [{"time": "14/09 14:40", "date": "14/09 14:40", "duration": 0.0, "formatted_duration": "0s", "duration_formatted": "0s", "type": "outgoing", "answered": false}, {"time": "12/09 17:56", "date": "12/09 17:56", "duration": 0.0, "formatted_duration": "0s", "duration_formatted": "0s", "type": "outgoing", "answered": false}, {"time": "11/09 16:52", "date": "11/09 16:52", "duration": 23.318130016326904, "formatted_duration": "23s", "duration_formatted": "23s", "type": "outgoing", "answered": true}]}, "sms_info": {"total_messages": 0, "sent_count": 0, "received_count": 0, "last_message_time": null, "last_message_text": "", "last_message_sender": null, "messages": []}, "stu_note": "", "stu_class": "", "stu_consultations": [], "last_activity_time": "14/09 14:40", "column_type": "called", "column_label": "ĐÃ TRAO ĐỔI / CÂN NHẮC 🔥"}, {"id": "0949969286", "suggested_script": "Chào chị Dung, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi làm bên mảng Herbalife (HBL) & Phòng FIT. Đợt này chị đã lập kênh để đăng thử video nào chưa hay đang bắt đầu từ số 0 vậy ạ?", "recent_snippet": "", "name": "Nguyễn Thị Dung", "phone": "0949969286", "display_phone": "0949969286", "email": "", "occupation": "Herbalife (HBL) & Phòng FIT", "reason": "Quay dựng video & Kịch bản tuyển F1 online", "source": "Page 30 Ngày Viral -> Zalo", "registered_at": "11/09/2026", "registration_info": {"badge": "4 ngày trước (11/09)", "is_hot": false, "formatted": "11/09/2026 00:00"}, "status": "considering", "is_archived": false, "archive_category": "postponed", "note": "Lớp Offline Tháng 10. Herbalife & Phòng FIT. Page 10k like: Dung Nguyen. Cần kịch bản & quay dựng tuyển F1 online.", "tags": ["Herbalife / HBL", "Phòng FIT", "Lớp Tháng 10", "Page 10k like", "Tuyển F1", "Chăm sóc Zalo"], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - Nguyễn Thị Dung", "apple_contact_note": "Lớp Offline Tháng 10. Herbalife & Phòng FIT. Page 10k like: Dung Nguyen. Cần kịch bản & quay dựng tuyển F1 online.", "zalo_url": "zalo://conversation?phone=0949969286", "zalo_app_url": "zalo://conversation?phone=0949969286", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0949969286", "zalo_web_url": "https://zalo.me/0949969286", "zalo_status": "", "zalo_snippet": "", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 134, "call_info": {"total_calls": 0, "total_duration": 0.0, "last_call_time": null, "last_call_duration": 0.0, "last_call_formatted": "Chưa gọi", "last_call_type": null, "last_call_answered": false, "calls": []}, "sms_info": {"total_messages": 0, "sent_count": 0, "received_count": 0, "last_message_time": null, "last_message_text": "", "last_message_sender": null, "messages": []}, "stu_note": "Học viên từ Fanpage 30 Ngày Viral -> Zalo: Nguyễn Thị Dung offline thang 10. Làm Herbalife & Phòng FIT. Sở hữu Page Dung Nguyen (10k like, 25k tương tác) & Nguyendung26.com. Mục tiêu: Kỹ thuật quay dựng và kịch bản video để chạy ads tuyển F1 online (Zoom ngày 21/09). Lớp 19-20/09 bận du lịch, hẹn lớp Offline Tháng 10. Đang được anh Việt tư vấn chiến lược trên Zalo.", "stu_class": "Tư Vấn Fanpage", "stu_consultations": [], "last_activity_time": "11/09/2026", "column_type": "called", "column_label": "ĐÃ TRAO ĐỔI / CÂN NHẮC 🔥"}, {"id": "0969468186", "suggested_script": "Chào chị Thu Khánh, em là Việt bên lớp video offline đây ạ. Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi làm bên Bảo hiểm nhân thọ. Đợt này chị đang muốn xây kênh chuyên gia để hút khách hàng/học viên, hay đang bắt đầu từ số 0 ạ?", "recent_snippet": "📞 Đàm thoại 1m 9s (14/09 15:16)", "name": "Thu Khánh", "phone": "0969468186", "display_phone": "0969468186", "email": "", "occupation": "Bảo hiểm nhân thọ", "reason": "Setup góc quay, kịch bản chuyển đổi", "source": "https://offline.fedu.vn/?utm_source=fb&utm_medium=paid_social&utm_campaign=120251689480080437&utm_term=120251868507420437&utm_content=120251868507430437&fbclid=IwcGRvZgVmZGlkFlDl2L_lYBNyRIjezVUS0oFJ8c64M8dleHRuA2FlbQEwAGFkaWQBqzhv87C4VXNydGMGYXBwX2lkCjY2Mjg1NjgzNzkAAR6_94RfUVO2t-5drnIDwhTs4cPstb4BSW0qZc_kNJ52xqdtgsH7RNmGRu27Vw_aem_IcMnEXlW3N129UZ5sFg6kg&utm_id=120251689480080437", "registered_at": "14/09/2026", "registration_info": {"badge": "Hôm qua", "is_hot": true, "formatted": "14/09/2026 00:00"}, "status": "called", "is_archived": false, "archive_category": "postponed", "note": "📞 Đã đàm thoại 1m 9s (14/09 15:16) | Lớp Video Offline 19-20/09 Hà Nội", "tags": [], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - Thu Khánh", "apple_contact_note": "📞 Đã đàm thoại 1m 9s (14/09 15:16) | Lớp Video Offline 19-20/09 Hà Nội", "zalo_url": "zalo://conversation?phone=0969468186", "zalo_app_url": "zalo://conversation?phone=0969468186", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0969468186", "zalo_web_url": "https://zalo.me/0969468186", "zalo_status": "", "zalo_snippet": "", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 144, "call_info": {"total_calls": 2, "total_duration": 69.027881026268, "last_call_time": "14/09 15:16", "last_call_duration": 69.027881026268, "last_call_formatted": "1m 9s", "last_call_type": "outgoing", "last_call_answered": true, "calls": [{"time": "14/09 15:16", "date": "14/09 15:16", "duration": 69.027881026268, "formatted_duration": "1m 9s", "duration_formatted": "1m 9s", "type": "outgoing", "answered": true}, {"time": "14/09 15:15", "date": "14/09 15:15", "duration": 0.0, "formatted_duration": "0s", "duration_formatted": "0s", "type": "outgoing", "answered": false}]}, "sms_info": {"total_messages": 0, "sent_count": 0, "received_count": 0, "last_message_time": null, "last_message_text": "", "last_message_sender": null, "messages": []}, "stu_note": "", "stu_class": "", "stu_consultations": [], "last_activity_time": "14/09 15:16", "column_type": "called", "column_label": "ĐÃ TRAO ĐỔI / CÂN NHẮC 🔥"}, {"id": "0976661286", "suggested_script": "Chào anh Lộc, em là Việt bên lớp video offline. Rất vui vì vừa trao đổi trực tiếp với anh qua Zalo...", "recent_snippet": "💬 Lộc cắt tóc - Đã gọi điện thoại Zalo 13p50s lúc 12:00 ngày 14/09. Rất ấn tượng việc anh Việt quay không mất năng lượng. Nỗi đau: Mất rất nhiều thời gian quay video, tụt năng lượng mệt mỏi. Làm nghề tóc và dạy cắm hoa lụa. Quan tâm lớp Offline 3.", "name": "Thành Lộc (Tóc)", "phone": "0976661286", "display_phone": "0976661286", "email": "", "occupation": "Salon Tóc & Cắt Tóc / Khóa học cắm hoa lụa", "reason": "Mất nhiều thời gian quay video, bị tụt năng lượng. Muốn học kỹ thuật quay nhanh, không mất năng lượng.", "source": "Telesale Radar", "registered_at": "14/09/2026", "registration_info": {"badge": "Hôm qua", "is_hot": true, "formatted": "14/09/2026 00:00"}, "status": "called", "is_archived": false, "archive_category": "postponed", "note": "Lộc cắt tóc - Đã gọi điện thoại Zalo 13p50s lúc 12:00 ngày 14/09. Rất ấn tượng việc anh Việt quay không mất năng lượng. Nỗi đau: Mất rất nhiều thời gian quay video, tụt năng lượng mệt mỏi. Làm nghề tóc và dạy cắm hoa lụa. Quan tâm lớp Offline 3.", "tags": ["toc", "offline3", "called"], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - Thành Lộc (Tóc)", "apple_contact_note": "Lộc cắt tóc - Đã gọi điện thoại Zalo 13p50s lúc 12:00 ngày 14/09. Rất ấn tượng việc anh Việt quay không mất năng lượng. Nỗi đau: Mất rất nhiều thời gian quay video, tụt năng lượng mệt mỏi. Làm nghề tóc và dạy cắm hoa lụa. Quan tâm lớp Offline 3.", "zalo_url": "zalo://conversation?phone=0976661286", "zalo_app_url": "zalo://conversation?phone=0976661286", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0976661286", "zalo_web_url": "https://zalo.me/0976661286", "zalo_status": "Đã tương tác Zalo", "zalo_snippet": "Lộc cắt tóc - Đã gọi điện thoại Zalo 13p50s lúc 12:00 ngày 14/09. Rất ấn tượng việc anh Việt quay không mất năng lượng. Nỗi đau: Mất rất nhiều thời gian quay video, tụt năng lượng mệt mỏi. Làm nghề tóc và dạy cắm hoa lụa. Quan tâm lớp Offline 3.", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 146, "call_info": {"total_calls": 0, "total_duration": 0.0, "last_call_time": null, "last_call_duration": 0.0, "last_call_formatted": "Chưa gọi", "last_call_type": null, "last_call_answered": false, "calls": []}, "sms_info": {"total_messages": 0, "sent_count": 0, "received_count": 0, "last_message_time": null, "last_message_text": "", "last_message_sender": null, "messages": []}, "stu_note": "• [14/09/2026 12:20] Lộc cắt tóc - Đã gọi điện thoại Zalo 13p50s lúc 12:00 ngày 14/09. Rất ấn tượng việc anh Việt quay không mất năng lượng. Nỗi đau: Mất rất nhiều thời gian quay video, tụt năng lượng mệt mỏi. Làm nghề tóc và dạy cắm hoa lụa. Quan tâm lớp Offline 3.\nĐã gọi điện thoại Zalo trực tiếp 13 phút 50 giây lúc 12:00 ngày 14/09/2026. Zalo hiển thị Hoàng Thảo nhưng lưu Lộc cắt tóc. Khách hỏi từ Page 30 Ngày Học Làm Nội Dung Viral ngày 12-13/09/2026.", "stu_class": "Offline 3 (19 - 20/09/2026)", "stu_consultations": [{"id": "cst_thanh_loc_1", "date": "14/09/2026 12:20", "channel": "facebook", "topic": "Giải phóng năng lượng khi quay video & kỹ thuật quay nhanh không mất thời gian", "student_inquiry": "Lộc làm về tóc (có quay dựng khóa học cắm hoa lụa), rất ấn tượng vì sao anh Việt quay liên tục mà không bị mất năng lượng. Bản thân Lộc mất rất nhiều thời gian để quay video, quay bị tụt mood, mệt mỏi, tốn thời gian.", "marketing_use": "Khai thác Tầng tâm lý thứ 3 (Quay video không tụt năng lượng). Giải pháp 3 chân vạc: 1. Nhuần nhuyễn góc máy và b-roll thành phản xạ; 2. Chỉ nói điều mình thực sự thích và muốn nói (không gồng diễn); 3. Kho ý tưởng luôn nạp sẵn trong đầu (hình mẫu và tứ có sẵn, bật máy là quay được ngay).", "screenshot_url": null}], "last_activity_time": "14/09/2026", "column_type": "called", "column_label": "ĐÃ TRAO ĐỔI / CÂN NHẮC 🔥"}, {"id": "0327288139", "suggested_script": "Chào anh/chị Tài, em là Việt bên lớp video offline đây ạ. Em thấy mình vừa đăng ký giữ chỗ lớp đợt này trên website. Lớp đợt này học thực chiến trong 2 ngày 19 - 20/09 tại Hà Nội. Không biết hiện tại mình đang kinh doanh mảng nào và có bài toán gì cần em tư vấn trước không ạ?", "recent_snippet": "📞 Đàm thoại 1m 14s (14/09 15:36)", "name": "Hoàng anh tài", "phone": "0327288139", "display_phone": "0327288139", "email": "taitrieuphu123@gmail.com", "occupation": "Làm xe máy", "reason": "Làm nội dung YouTube", "source": "https://offline.fedu.vn/?utm_source=fb&utm_medium=paid_social&utm_campaign=120251689480080437&utm_term=120251868507420437&utm_content=120251868507430437&fbclid=IwcGRvZgVmZGlkFlDh6Yf6t636BvkgQmIx-hPBCEWyh2JleHRuA2FlbQEwAGFkaWQBqzhv87C4VXNydGMGYXBwX2lkCjY2Mjg1NjgzNzkAAR4GgE8yj2uwHrUMr3JrJiEBqsBRNM0VQsofkqR2438I5caVtwufKdktAXS5vA_aem_VnZgZO-achmEBxB2ZafOmA&utm_id=120251689480080437", "registered_at": "2026-09-09 12:28:58", "registration_info": {"badge": "6 ngày trước (09/09)", "is_hot": false, "formatted": "09/09/2026 12:28"}, "status": "called", "is_archived": false, "archive_category": "postponed", "note": "🔥 GIẢM GIÁ CÒN 2.4 NHƯNG CHƯA CHỐT • 🔥 Đã báo giảm giá còn 2.4 nhưng chưa chốt • 📞 Đàm thoại 1m 14s (14/09 15:36) • Đã gọi trao đổi 5m", "tags": [], "sale_note": "", "is_sale_consulted": false, "has_apple_contact": true, "apple_contact_name": "offline3 - Hoàng Anh Tài", "apple_contact_note": "🔥 Đã báo giảm giá còn 2.4 nhưng chưa chốt • 📞 Đàm thoại 1m 14s (14/09 15:36) • Đã gọi trao đổi 5m", "zalo_url": "zalo://conversation?phone=0327288139", "zalo_app_url": "zalo://conversation?phone=0327288139", "zalo_bridge_url": "https://offline.fedu.vn/zalo?phone=0327288139", "zalo_web_url": "https://zalo.me/0327288139", "zalo_status": "", "zalo_snippet": "", "zalo_dishes": [], "zalo_product": "", "sheet_row_index": 7, "call_info": {"total_calls": 2, "total_duration": 381.43982696533203, "last_call_time": "14/09 15:36", "last_call_duration": 74.25255501270294, "last_call_formatted": "1m 14s", "last_call_type": "outgoing", "last_call_answered": true, "calls": [{"time": "14/09 15:36", "date": "14/09 15:36", "duration": 74.25255501270294, "formatted_duration": "1m 14s", "duration_formatted": "1m 14s", "type": "outgoing", "answered": true}, {"time": "09/09 15:01", "date": "09/09 15:01", "duration": 307.1872719526291, "formatted_duration": "5m 7s", "duration_formatted": "5m 7s", "type": "outgoing", "answered": true}]}, "sms_info": {"total_messages": 0, "sent_count": 0, "received_count": 0, "last_message_time": null, "last_message_text": "", "last_message_sender": null, "messages": []}, "stu_note": "• [15/09/2026 16:46] 🔥 Đã báo giảm giá còn 2.4 nhưng chưa chốt • 📞 Đàm thoại 1m 14s (14/09 15:36) • Đã gọi trao đổi 5m\n• [10/09/2026 08:07] Đã gọi trao đổi 5m\n• [10/09/2026 07:58] ✅ [ĐÃ CỌC OFFLINE K3 19-20/09] 🔥 [HẸN MAI CHỐT] Đông Y & Sửa xe máy (gần Long Biên). Từng làm kênh AI không hiệu quả, muốn học quay dựng thực tế. Đang suy nghĩ chốt lớp Offline 3.\n• [10/09/2026 07:52] ✅ [ĐÃ CỌC OFFLINE K3 19-20/09] 🔥 [HẸN MAI CHỐT] Đông Y & Sửa xe máy (gần Long Biên). Từng làm kênh AI không hiệu quả, muốn học quay dựng thực tế. Đang suy nghĩ chốt lớp Offline 3.\n• [09/09/2026 23:43] 🔥 [HẸN MAI CHỐT] Đông Y & Sửa xe máy (gần Long Biên). Từng làm kênh AI không hiệu quả, muốn học quay dựng thực tế. Đang suy nghĩ chốt lớp Offline 3.\nĐăng ký lúc 12:28:58 ngày 09/09/2026 qua offline.fedu.vn. Email: taitrieuphu123@gmail.com\n• [09/09/2026 15:08] • [15:08 09/09/2026] Gọi điện lần 1: Làm Đông Y & Sửa xe máy, ở gần Long Biên. Từng làm kênh AI không ăn thua, muốn học quay dựng thực tế. Trạng thái: Đang suy nghĩ.", "stu_class": "Offline 3 (19-20/09)", "stu_consultations": [{"id": "cst_hoang_anh_tai_2", "date": "09/09/2026 15:08", "channel": "phone", "topic": "Telesale lần 1: Đông Y & Sửa Xe - Từng làm kênh AI thất bại, muốn học quay dựng thực tế", "student_inquiry": "Khách làm về Đông Y & Sửa xe máy, ở gần Long Biên. Đã từng làm kênh video bằng AI nhưng không hiệu quả (kênh ảo, thiếu chuyển đổi). Nay muốn học quay dựng thực tế người thật việc thật. Anh Việt mới gọi lần đầu, khách đang suy nghĩ cân nhắc.", "marketing_use": "Insight case study đắt giá: Nỗi đau của người làm nghề thật bị cuốn theo trào lưu làm video AI ảo không ra đơn, nay quay về giá trị cốt lõi là video thực chiến mộc mạc. Điểm chạm gần Long Biên rất thuận tiện đi lại. Chiến lược chốt: Kèm mang sản phẩm/ca sửa xe thực tế ra lớp quay.", "screenshot_url": null}, {"id": "cst_hoang_anh_tai_1", "date": "09/09/2026 12:30", "channel": "facebook", "topic": "Làm nội dung YouTube mảng xe máy", "student_inquiry": "Làm nội dung YouTube", "marketing_use": "Video Macro cận cảnh thao tác máy móc + Âm thanh ASMR tiếng máy/vặn ốc + Kể chuyện phục chế xe", "screenshot_url": null}], "last_activity_time": "14/09 15:36", "column_type": "called", "column_label": "ĐÃ TRAO ĐỔI / CÂN NHẮC 🔥"}];
+    let currentFilter = 'all';
+    let searchQuery = '';
+    let currentMobileTab = 'contacted';
+
+    const STORAGE_KEY = 'FEDU_SALE_CALL_PROGRESS_V1';
+    let saleProgress = {};
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) saleProgress = JSON.parse(saved);
+    } catch (e) {
+      console.warn("Storage load error", e);
+    }
+
+    function saveProgress() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(saleProgress));
+      } catch (e) {}
+      updateStats();
+    }
+
+    function renderCards() {
+      const listContacted = document.getElementById('list-contacted');
+      const listCalled = document.getElementById('list-called');
+      listContacted.innerHTML = '';
+      listCalled.innerHTML = '';
+
+      let cntContacted = 0;
+      let cntCalled = 0;
+
+      INITIAL_LEADS.forEach(lead => {
+        const prog = saleProgress[lead.phone] || {};
+        const isDone = prog.status === 'called_ok' || prog.status === 'paid' || prog.status === 'unqualified';
+
+        if (currentFilter === 'contacted' && lead.column_type !== 'contacted') return;
+        if (currentFilter === 'called' && lead.column_type !== 'called') return;
+        if (currentFilter === 'pending' && isDone) return;
+        if (currentFilter === 'done' && !isDone) return;
+
+        if (searchQuery) {
+          const blob = `${lead.name} ${lead.phone} ${lead.occupation} ${lead.reason} ${lead.note} ${prog.note || ''}`.toLowerCase();
+          if (!blob.includes(searchQuery)) return;
+        }
+
+        const card = createCardElement(lead, prog);
+        if (lead.column_type === 'contacted') {
+          listContacted.appendChild(card);
+          cntContacted++;
+        } else {
+          listCalled.appendChild(card);
+          cntCalled++;
+        }
+      });
+
+      if (cntContacted === 0) {
+        listContacted.innerHTML = '<div class="py-8 text-center text-xs text-slate-400 bg-white border border-dashed border-slate-200 rounded-2xl">Không có lead nào trong mục này</div>';
+      }
+      if (cntCalled === 0) {
+        listCalled.innerHTML = '<div class="py-8 text-center text-xs text-slate-400 bg-white border border-dashed border-slate-200 rounded-2xl">Không có lead nào trong mục này</div>';
+      }
+
+      updateStats();
+    }
+
+    function createCardElement(lead, prog) {
+      const isDone = prog.status === 'called_ok' || prog.status === 'paid' || prog.status === 'unqualified';
+      const div = document.createElement('div');
+      div.className = `lead-card bg-white border border-slate-200/90 rounded-2xl p-3.5 shadow-2xs flex flex-col gap-2.5 ${isDone ? 'done-card' : ''}`;
+      div.id = `card-${lead.phone}`;
+
+      const badgeTime = lead.registration_info?.badge || 'Mới';
+      const isHot = lead.registration_info?.is_hot;
+
+      let statusBadgeHtml = '';
+      if (prog.status === 'called_ok') {
+        statusBadgeHtml = '<span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300">✅ ĐÃ TRAO ĐỔI</span>';
+      } else if (prog.status === 'considering') {
+        statusBadgeHtml = '<span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-100 text-rose-800 border border-rose-300">🔥 HẸN GỌI LẠI</span>';
+      } else if (prog.status === 'paid') {
+        statusBadgeHtml = '<span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-600 text-white shadow-2xs">💰 ĐÃ CỌC K3</span>';
+      } else if (prog.status === 'missed') {
+        statusBadgeHtml = '<span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-amber-100 text-amber-800 border border-amber-300">📵 GỌI NHỠ / BẬN</span>';
+      } else if (prog.status === 'unqualified') {
+        statusBadgeHtml = '<span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-slate-200 text-slate-700">❌ SAI TỆP</span>';
+      }
+
+      const lastCallBadge = lead.recent_snippet ? `
+        <div class="text-[11px] bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-2.5 py-1 flex items-start gap-1.5 leading-snug">
+          <span class="shrink-0 mt-0.5">ℹ️</span>
+          <span class="font-medium">${lead.recent_snippet}</span>
+        </div>
+      ` : '';
+
+      const originalNoteBadge = lead.note ? `
+        <div class="text-[11px] bg-indigo-50/40 border border-indigo-100 text-indigo-900 rounded-xl px-2.5 py-1 leading-snug">
+          <b class="text-indigo-950 font-bold">Ghi chú trước:</b> ${lead.note}
+        </div>
+      ` : '';
+
+      const zaloUrl = lead.zalo_app_url || `zalo://conversation?phone=${lead.phone}`;
+      const escapedScript = (lead.suggested_script || '').replace(/'/g, "\\'");
+
+      div.innerHTML = `
+        <!-- Dòng 1: Tên, SĐT, Trạng thái -->
+        <div class="flex items-start justify-between gap-2">
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <h3 class="font-black text-sm sm:text-base text-slate-900 leading-tight">${lead.name}</h3>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-md ${isHot ? 'bg-amber-100 text-amber-800 border border-amber-300' : 'bg-slate-100 text-slate-600'}">
+                ${isHot ? '🔥 ' : '📅 '}${badgeTime}
+              </span>
+            </div>
+            <div class="mt-1 flex items-center gap-1.5">
+              <span class="font-mono text-xs font-black text-indigo-600 tracking-wide">${lead.display_phone || lead.phone}</span>
+              <button onclick="copyToClipboard('${lead.phone}', 'Đã copy SĐT ${lead.phone}')" class="text-slate-400 hover:text-indigo-600 p-0.5 rounded hover:bg-slate-100 transition" title="Copy số">
+                📋
+              </button>
+            </div>
+          </div>
+          <div class="flex flex-col items-end gap-1">
+            ${statusBadgeHtml}
+            <span class="text-[10px] font-bold text-slate-400">#${lead.column_type === 'contacted' ? 'Đã-nhắn' : 'Cân-nhắc'}</span>
+          </div>
+        </div>
+
+        <!-- Dòng 2: Nghề nghiệp & Lý do / Nút thắt -->
+        <div class="bg-slate-50/80 rounded-xl p-2 border border-slate-100 text-xs space-y-1">
+          <div class="flex items-start gap-1.5 text-slate-700">
+            <span class="font-bold text-slate-900 shrink-0">💼 Nghề:</span>
+            <span>${lead.occupation || 'Chưa điền'}</span>
+          </div>
+          ${lead.reason && lead.reason !== 'Chưa điền' ? `
+            <div class="flex items-start gap-1.5 text-slate-700">
+              <span class="font-bold text-indigo-900 shrink-0">🎯 Nút thắt:</span>
+              <span class="text-indigo-950 font-medium">${lead.reason}</span>
+            </div>
+          ` : ''}
+        </div>
+
+        <!-- Dòng 3: Snippet tương tác cũ -->
+        ${lastCallBadge}
+        ${originalNoteBadge}
+
+        <!-- Dòng 4: BỘ NÚT 1-CHẠM LIÊN HỆ (TO RÕ CHO ĐIỆN THOẠI) -->
+        <div class="grid grid-cols-4 gap-1.5 pt-1">
+          <a href="tel:${lead.phone}" onclick="recordAction('${lead.phone}', 'calling')" class="col-span-1 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-extrabold text-xs py-2 px-1 rounded-xl transition flex items-center justify-center gap-1 shadow-xs text-center">
+            📞 Gọi
+          </a>
+
+          <a href="${zaloUrl}" target="_blank" onclick="recordAction('${lead.phone}', 'zalo')" class="col-span-1 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold text-xs py-2 px-1 rounded-xl transition flex items-center justify-center gap-1 shadow-xs text-center">
+            💬 Zalo
+          </a>
+
+          <a href="sms:${lead.phone}" class="col-span-1 bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 font-bold text-xs py-2 px-1 rounded-xl transition flex items-center justify-center gap-1 text-center">
+            ✉️ SMS
+          </a>
+
+          <button onclick="toggleScript('${lead.phone}')" class="col-span-1 bg-amber-100 hover:bg-amber-200 active:scale-95 text-amber-900 font-bold text-xs py-2 px-1 rounded-xl transition flex items-center justify-center gap-1 text-center">
+            💡 Kịch bản
+          </button>
+        </div>
+
+        <!-- Khối kịch bản ẩn / hiện -->
+        <div id="script-box-${lead.phone}" class="hidden bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-extrabold text-amber-900 text-[11px] uppercase tracking-wide">💡 GỢI Ý MỞ LỜI THEO NGHỀ:</span>
+            <button onclick="copyToClipboard('${escapedScript}', 'Đã copy kịch bản mở lời!')" class="text-[10px] font-bold bg-white text-amber-900 border border-amber-300 px-2 py-0.5 rounded-md hover:bg-amber-100 transition">
+              📋 Copy
+            </button>
+          </div>
+          <p class="text-slate-800 italic leading-relaxed bg-white/70 p-2.5 rounded-lg border border-amber-100 font-normal">
+            "${lead.suggested_script}"
+          </p>
+        </div>
+
+        <!-- Dòng 5: CẬP NHẬT KẾT QUẢ CUỘC GỌI CHO SALE -->
+        <div class="border-t border-slate-100 pt-2 flex flex-col gap-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-black text-slate-500 uppercase tracking-wider">KẾT QUẢ GỌI:</span>
+            <span class="text-[10px] text-slate-400">Bấm để đánh dấu</span>
+          </div>
+
+          <div class="grid grid-cols-5 gap-1 text-[11px]">
+            <button onclick="setLeadResult('${lead.phone}', 'called_ok')" class="py-1 px-0.5 rounded-lg font-bold border transition text-center ${prog.status === 'called_ok' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-200'}" title="Đã trao đổi tốt">
+              Đã gọi
+            </button>
+            <button onclick="setLeadResult('${lead.phone}', 'considering')" class="py-1 px-0.5 rounded-lg font-bold border transition text-center ${prog.status === 'considering' ? 'bg-rose-600 text-white border-rose-600' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-rose-50 hover:text-rose-700 hover:border-rose-200'}" title="Khách hẹn mai gọi lại">
+              Hẹn mai
+            </button>
+            <button onclick="setLeadResult('${lead.phone}', 'paid')" class="py-1 px-0.5 rounded-lg font-bold border transition text-center ${prog.status === 'paid' ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-200'}" title="Đã chốt cọc K3">
+              + Cọc K3
+            </button>
+            <button onclick="setLeadResult('${lead.phone}', 'missed')" class="py-1 px-0.5 rounded-lg font-bold border transition text-center ${prog.status === 'missed' ? 'bg-amber-600 text-white border-amber-600' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-amber-50 hover:text-amber-700 hover:border-amber-200'}" title="Gọi nhỡ hoặc bận">
+              Nhỡ / Bận
+            </button>
+            <button onclick="setLeadResult('${lead.phone}', 'unqualified')" class="py-1 px-0.5 rounded-lg font-bold border transition text-center ${prog.status === 'unqualified' ? 'bg-slate-700 text-white border-slate-700' : 'bg-slate-50 text-slate-400 border-slate-200 hover:bg-slate-200 hover:text-slate-800'}" title="Sai tệp / không học">
+              Sai tệp
+            </button>
+          </div>
+
+          <!-- Ghi chú nhanh của Sale -->
+          <div class="flex items-center gap-1.5">
+            <input
+              type="text"
+              id="note-input-${lead.phone}"
+              value="${prog.note || ''}"
+              placeholder="Gõ ghi chú nhanh (VD: Hẹn 20h, đã gửi STK...)"
+              class="flex-1 text-xs px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+              onkeydown="if(event.key==='Enter') saveLeadNote('${lead.phone}')"
+            >
+            <button onclick="saveLeadNote('${lead.phone}')" class="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs rounded-lg border border-indigo-200 transition shrink-0">
+              Lưu
+            </button>
+          </div>
+        </div>
+      `;
+
+      return div;
+    }
+
+    function toggleScript(phone) {
+      const box = document.getElementById(`script-box-${phone}`);
+      if (box) box.classList.toggle('hidden');
+    }
+
+    function setLeadResult(phone, status) {
+      if (!saleProgress[phone]) saleProgress[phone] = {};
+      if (saleProgress[phone].status === status) {
+        saleProgress[phone].status = null;
+        showToast('↩️ Đã hủy trạng thái');
+      } else {
+        saleProgress[phone].status = status;
+        saleProgress[phone].updated_at = new Date().toLocaleTimeString('vi-VN');
+        showToast(`Đã lưu: ${status}`);
+      }
+      saveProgress();
+      renderCards();
+      syncStatusToServer(phone, status);
+    }
+
+    function saveLeadNote(phone) {
+      const input = document.getElementById(`note-input-${phone}`);
+      if (!input) return;
+      const noteVal = input.value.trim();
+      if (!saleProgress[phone]) saleProgress[phone] = {};
+      saleProgress[phone].note = noteVal;
+      saleProgress[phone].note_time = new Date().toLocaleTimeString('vi-VN');
+      saveProgress();
+      showToast('💾 Đã lưu ghi chú!');
+      syncNoteToServer(phone, noteVal);
+    }
+
+    async function syncStatusToServer(phone, status) {
+      try {
+        const lead = INITIAL_LEADS.find(l => l.phone === phone);
+        const mapStatus = {
+          'called_ok': 'called',
+          'considering': 'considering',
+          'paid': 'paid',
+          'missed': 'contacted',
+          'unqualified': 'unqualified'
+        };
+        const targetStatus = mapStatus[status] || 'contacted';
+        await fetch('/api/leads/update', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            phone: phone,
+            status: targetStatus,
+            note: saleProgress[phone]?.note ? `[Sale]: ${saleProgress[phone].note}` : undefined,
+            name: lead ? lead.name : undefined
+          })
+        });
+      } catch (e) {}
+    }
+
+    async function syncNoteToServer(phone, note) {
+      try {
+        await fetch('/api/leads/update', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            phone: phone,
+            note: `[Sale note]: ${note}`
+          })
+        });
+      } catch (e) {}
+    }
+
+    function recordAction(phone, type) {
+      if (!saleProgress[phone]) saleProgress[phone] = {};
+      saleProgress[phone].last_action = type;
+      saleProgress[phone].last_action_time = new Date().toLocaleTimeString('vi-VN');
+      saveProgress();
+    }
+
+    function updateStats() {
+      const total = INITIAL_LEADS.length;
+      let done = 0;
+      Object.values(saleProgress).forEach(p => {
+        if (p.status === 'called_ok' || p.status === 'paid' || p.status === 'unqualified') {
+          done++;
+        }
+      });
+      const pct = Math.round((done / total) * 100);
+      const statEl = document.getElementById('progressStat');
+      const barEl = document.getElementById('progressBar');
+      if (statEl) statEl.innerText = `${done} / ${total} (${pct}%)`;
+      if (barEl) barEl.style.width = `${pct}%`;
+    }
+
+    function setFilter(filter) {
+      currentFilter = filter;
+      document.querySelectorAll('.filter-chip').forEach(btn => {
+        btn.className = 'filter-chip px-3 py-1 rounded-lg text-xs font-semibold transition bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 shrink-0';
+      });
+      const activeBtn = document.getElementById(`filter-btn-${filter}`);
+      if (activeBtn) {
+        activeBtn.className = 'filter-chip px-3 py-1 rounded-lg text-xs font-bold transition bg-indigo-600 text-white shadow-2xs shrink-0';
+      }
+      renderCards();
+    }
+
+    function handleSearch(val) {
+      searchQuery = (val || '').toLowerCase().trim();
+      renderCards();
+    }
+
+    function switchMobileTab(tab) {
+      currentMobileTab = tab;
+      const colContacted = document.getElementById('col-contacted-wrapper');
+      const colCalled = document.getElementById('col-called-wrapper');
+      const btnContacted = document.getElementById('tab-btn-contacted');
+      const btnCalled = document.getElementById('tab-btn-called');
+
+      if (tab === 'contacted') {
+        colContacted.classList.remove('hidden');
+        colCalled.classList.add('hidden');
+        btnContacted.className = 'py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition bg-amber-50 text-amber-900 border-2 border-amber-300 shadow-xs';
+        btnCalled.className = 'py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition bg-white text-slate-600 border border-slate-200';
+      } else {
+        colContacted.classList.add('hidden');
+        colCalled.classList.remove('hidden');
+        btnCalled.className = 'py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition bg-indigo-50 text-indigo-900 border-2 border-indigo-300 shadow-xs';
+        btnContacted.className = 'py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition bg-white text-slate-600 border border-slate-200';
+      }
+    }
+
+    function copyToClipboard(text, msg) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => showToast(msg)).catch(() => manualCopy(text, msg));
+      } else {
+        manualCopy(text, msg);
+      }
+    }
+
+    function manualCopy(text, msg) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast(msg);
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      const m = document.getElementById('toast-message');
+      if (t && m) {
+        m.innerText = msg;
+        t.classList.remove('translate-y-12', 'opacity-0');
+        t.classList.add('translate-y-0', 'opacity-100');
+        setTimeout(() => {
+          t.classList.add('translate-y-12', 'opacity-0');
+          t.classList.remove('translate-y-0', 'opacity-100');
+        }, 2200);
+      }
+    }
+
+    function exportNotesSummary() {
+      let text = `📋 BÁO CÁO GỌI LEAD OFFLINE (${new Date().toLocaleString('vi-VN')})\n\n`;
+      let count = 0;
+      INITIAL_LEADS.forEach((l, idx) => {
+        const p = saleProgress[l.phone] || {};
+        if (p.status || p.note) {
+          count++;
+          text += `${count}. ${l.name} (${l.phone}) - ${l.occupation || 'Nghề tự do'}\n`;
+          text += `   Trạng thái: ${p.status || 'Chưa đánh dấu'}\n`;
+          if (p.note) text += `   Note: ${p.note}\n`;
+          text += `\n`;
+        }
+      });
+      if (count === 0) {
+        alert('Chưa có cuộc gọi nào được ghi nhận hoặc lưu ghi chú!');
+        return;
+      }
+      copyToClipboard(text, `Đã copy báo cáo ${count} cuộc gọi vào bộ nhớ tạm!`);
+    }
+
+    function checkViewport() {
+      if (window.innerWidth < 768) {
+        switchMobileTab(currentMobileTab);
+      } else {
+        document.getElementById('col-contacted-wrapper').classList.remove('hidden');
+        document.getElementById('col-called-wrapper').classList.remove('hidden');
+      }
+    }
+
+    window.addEventListener('resize', checkViewport);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      checkViewport();
+      renderCards();
+    });
+  </script>
+</body>
+</html>

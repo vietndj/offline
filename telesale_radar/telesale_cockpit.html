@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LED — Quản Lý Lead & Cuộc Gọi iPhone</title>
+  <title>FEDU LED Hub — Quản Lý Lead & Cuộc Gọi iPhone</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%234f46e5'/><text x='50%' y='64%' text-anchor='middle' font-family='system-ui, -apple-system, sans-serif' font-weight='900' font-size='38' fill='white' letter-spacing='-0.5'>LED</text></svg>">
   <script>
     window.__errors = [];
@@ -26,6 +26,7 @@
     }
     .kanban-col {
       min-height: calc(100vh - 175px);
+      max-height: calc(100vh - 175px);
       transition: all 0.2s ease;
     }
     .kanban-col.drag-over {
@@ -77,8 +78,7 @@
         <div>
           <div class="flex items-center gap-2">
             <h1 class="font-extrabold text-sm tracking-tight text-slate-900 flex items-center gap-1.5">
-              <span>FEDU <span class="text-indigo-600 font-black">LED</span></span>
-              <span class="text-[9px] font-extrabold text-indigo-600 px-1.5 py-0.5 bg-indigo-50 rounded-md border border-indigo-200 uppercase tracking-wider">Cockpit</span>
+              <span>FEDU <span class="text-indigo-600 font-black">LED Hub</span></span>
             </h1>
             <span class="inline-flex items-center gap-1 px-2 py-0.2 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 badge-pulse"></span>
@@ -212,11 +212,14 @@
           <span id="count-chip-called" class="px-1.5 py-0.2 bg-indigo-100 text-indigo-800 rounded-full text-[10px] font-extrabold">0</span>
         </button>
 
-        <!-- Chip 6: Đã TV bởi Sale -->
+        <div class="h-4 w-px bg-slate-300 mx-1 hidden sm:block"></div>
+
+        <!-- Chip 6: Đã TV bởi Sale (Ẩn khỏi bàn gọi chính để rộng chỗ) -->
         <button
           onclick="setPriorityFilter('sale')"
           id="chip-sale"
           class="priority-chip px-2.5 py-1 rounded-lg text-xs font-bold border border-purple-200 bg-white text-purple-700 hover:bg-purple-50 transition shadow-2xs flex items-center gap-1"
+          title="Bấm để xem các lead Sale đã tư vấn (mặc định đã ẩn khỏi bàn gọi chính để rộng chỗ)"
         >
           <span>🎧 Sale đã TV</span>
           <span id="count-chip-sale" class="px-1.5 py-0.2 bg-purple-100 text-purple-800 rounded-full text-[10px] font-extrabold">0</span>
@@ -235,9 +238,20 @@
   <!-- 3. MAIN KANBAN BOARD (ACTIVE CALLING DESK) -->
   <!-- ============================================================ -->
   <main class="flex-1 px-5 py-3 overflow-x-auto" id="kanbanContainer">
-    <div class="max-w-[1780px] mx-auto min-w-[1250px]">
+    <div class="max-w-[1780px] mx-auto min-w-[1020px]">
+
+      <!-- Banner khi đang mở danh sách Sale đã TV -->
+      <div id="saleFilterNotice" class="hidden mb-3 px-4 py-2 bg-purple-50 border border-purple-200 rounded-xl flex items-center justify-between text-xs text-purple-900 shadow-2xs">
+        <div class="flex items-center gap-2">
+          <span class="text-base">🎧</span>
+          <span>Đang hiển thị <b id="saleNoticeCount">0</b> học viên <b>Sale đã tư vấn</b> (Đã ẩn khỏi bàn gọi chính để rộng chỗ).</span>
+        </div>
+        <button onclick="setPriorityFilter('all')" class="px-2.5 py-1 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-lg transition text-xs flex items-center gap-1 shadow-2xs">
+          <span>← Quay lại Bàn gọi chính</span>
+        </button>
+      </div>
       
-      <div class="grid grid-cols-5 gap-3" id="kanbanGrid">
+      <div class="grid grid-cols-4 gap-3.5" id="kanbanGrid">
 
         <!-- CỘT 1: CHƯA GỌI -->
         <div
@@ -277,45 +291,26 @@
           <div id="cards-contacted" class="space-y-2 overflow-y-auto flex-1 pr-0.5"></div>
         </div>
 
-        <!-- CỘT 3: ĐÃ GỌI ĐIỆN -->
+        <!-- CỘT 3: ĐÃ TRAO ĐỔI / CÂN NHẮC 🔥 (GỘP ĐÃ GỌI & HẸN MAI) -->
         <div
           id="col-called"
-          class="flex flex-col bg-slate-100/60 border border-slate-200/90 rounded-2xl p-2.5 kanban-col"
+          class="flex flex-col bg-indigo-50/20 border border-indigo-200/80 rounded-2xl p-2.5 kanban-col"
           ondragover="handleDragOver(event)"
           ondragenter="handleDragEnter(event, 'col-called')"
           ondragleave="handleDragLeave(event, 'col-called')"
           ondrop="handleDrop(event, 'called')"
         >
-          <div class="flex items-center justify-between pb-2 border-b border-slate-200 mb-2 px-1">
+          <div class="flex items-center justify-between pb-2 border-b border-indigo-200/70 mb-2 px-1">
             <div class="flex items-center gap-1.5">
               <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
-              <h2 class="font-bold text-xs uppercase tracking-wider text-slate-800">Đã Trao Đổi</h2>
+              <h2 class="font-bold text-xs uppercase tracking-wider text-indigo-950">Đã Trao Đổi / Cân Nhắc 🔥</h2>
             </div>
-            <span id="count-called" class="text-xs font-bold bg-white text-slate-600 px-2 py-0.2 rounded-full border border-slate-200 shadow-2xs">0</span>
+            <span id="count-called" class="text-xs font-bold bg-white text-indigo-700 px-2 py-0.2 rounded-full border border-indigo-200 shadow-2xs">0</span>
           </div>
           <div id="cards-called" class="space-y-2 overflow-y-auto flex-1 pr-0.5"></div>
         </div>
 
-        <!-- CỘT 4: HẸN CHỐT / CÂN NHẮC -->
-        <div
-          id="col-considering"
-          class="flex flex-col bg-rose-50/40 border border-rose-200/70 rounded-2xl p-2.5 kanban-col"
-          ondragover="handleDragOver(event)"
-          ondragenter="handleDragEnter(event, 'col-considering')"
-          ondragleave="handleDragLeave(event, 'col-considering')"
-          ondrop="handleDrop(event, 'considering')"
-        >
-          <div class="flex items-center justify-between pb-2 border-b border-rose-200 mb-2 px-1">
-            <div class="flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-rose-500"></span>
-              <h2 class="font-bold text-xs uppercase tracking-wider text-rose-900">Hẹn Mai / Cân Nhắc 🔥</h2>
-            </div>
-            <span id="count-considering" class="text-xs font-bold bg-white text-rose-700 px-2 py-0.2 rounded-full border border-rose-200 shadow-2xs">0</span>
-          </div>
-          <div id="cards-considering" class="space-y-2 overflow-y-auto flex-1 pr-0.5"></div>
-        </div>
-
-        <!-- CỘT 5: ĐÃ CHỐT CỌC / CK -->
+        <!-- CỘT 4: ĐÃ CHỐT CỌC / CK -->
         <div
           id="col-paid"
           class="flex flex-col bg-emerald-50/40 border border-emerald-200/70 rounded-2xl p-2.5 kanban-col"
@@ -516,9 +511,8 @@
       <span class="text-slate-500">•</span>
       <span class="text-amber-300">Đã nhắn: <b id="statContacted" class="font-bold">0</b></span>
       <span class="text-slate-500">•</span>
-      <span class="text-indigo-300">Đã gọi: <b id="statCalled" class="font-bold">0</b></span>
-      <span class="text-slate-500">•</span>
-      <span class="text-rose-300">Hẹn mai: <b id="statConsidering" class="font-bold">0</b></span>
+      <span class="text-indigo-300">Đã trao đổi: <b id="statCalled" class="font-bold">0</b></span>
+      <span id="statConsidering" class="hidden">0</span>
       <span class="text-slate-500">•</span>
       <span class="text-emerald-300">Đã cọc K3: <b id="statPaid" class="font-black text-emerald-400">0</b></span>
       <span class="text-slate-500">•</span>
@@ -672,6 +666,10 @@
           activeBtn.className = "priority-chip px-2.5 py-1 rounded-lg text-xs font-bold border transition bg-rose-600 text-white border-rose-600 shadow-2xs flex items-center gap-1";
         } else if (filterKey === 'today') {
           activeBtn.className = "priority-chip px-2.5 py-1 rounded-lg text-xs font-bold border transition bg-amber-500 text-white border-amber-500 shadow-2xs flex items-center gap-1";
+        } else if (filterKey === 'contacted') {
+          activeBtn.className = "priority-chip px-2.5 py-1 rounded-lg text-xs font-bold border transition bg-blue-600 text-white border-blue-600 shadow-2xs flex items-center gap-1";
+        } else if (filterKey === 'called') {
+          activeBtn.className = "priority-chip px-2.5 py-1 rounded-lg text-xs font-bold border transition bg-indigo-600 text-white border-indigo-600 shadow-2xs flex items-center gap-1";
         } else if (filterKey === 'sale') {
           activeBtn.className = "priority-chip px-2.5 py-1 rounded-lg text-xs font-bold border transition bg-purple-600 text-white border-purple-600 shadow-2xs flex items-center gap-1";
         } else {
@@ -711,8 +709,11 @@
       document.getElementById("statTotal").innerText = s.total || 0;
       document.getElementById("statNew").innerText = s.new || 0;
       document.getElementById("statContacted").innerText = s.contacted || 0;
-      document.getElementById("statCalled").innerText = s.called || 0;
-      document.getElementById("statConsidering").innerText = s.considering || 0;
+      const combinedCalled = (s.called || 0) + (s.considering || 0);
+      const elStatCalled = document.getElementById("statCalled");
+      if (elStatCalled) elStatCalled.innerText = combinedCalled;
+      const elStatConsidering = document.getElementById("statConsidering");
+      if (elStatConsidering) elStatConsidering.innerText = s.considering || 0;
       document.getElementById("statPaid").innerText = s.paid || 0;
       const elStatSale = document.getElementById("statSale");
       if (elStatSale) elStatSale.innerText = s.sale_consulted || 0;
@@ -728,15 +729,32 @@
       updatePriorityCounts();
     }
 
+    function isSaleLead(l) {
+      if (!l) return false;
+      if (l.is_sale_consulted) return true;
+      if (l.sale_note && l.sale_note.trim()) return true;
+      if (l.tags && l.tags.some(t => {
+        const s = t.toLowerCase();
+        return s.includes('sale') || s.includes('đã tv') || s.includes('da tv');
+      })) return true;
+      const note = (l.note || '').toLowerCase();
+      if (note.includes('[sale đã tv]') || note.includes('sale đã tv') || note.includes('sale đã gọi') || note.includes('[sale da tv]')) return true;
+      const name = ((l.apple_contact_name || '') + ' ' + (l.name || '')).toLowerCase();
+      if (name.includes('[sale đã tv]') || name.includes('[sale da tv]')) return true;
+      return false;
+    }
+
     function updatePriorityCounts() {
       const active = allLeads.filter(l => !l.is_archived);
+      const activeNonSale = active.filter(l => !isSaleLead(l));
+      const activeSale = active.filter(l => isSaleLead(l));
       
-      const countAll = active.length;
-      const countCallback = active.filter(l => l.status === 'considering' || (l.note && l.note.toLowerCase().includes('hẹn'))).length;
-      const countToday = active.filter(l => l.registration_info && (l.registration_info.is_hot || (l.registration_info.badge && l.registration_info.badge.includes('Hôm nay')))).length;
-      const countContacted = active.filter(l => l.status === 'contacted').length;
-      const countCalled = active.filter(l => l.call_info && l.call_info.total_calls > 0 && l.call_info.total_duration > 0).length;
-      const countSale = active.filter(l => l.is_sale_consulted || (l.tags && l.tags.some(t => t.toLowerCase().includes('sale')))).length;
+      const countAll = activeNonSale.length;
+      const countCallback = activeNonSale.filter(l => l.status === 'considering' || (l.note && l.note.toLowerCase().includes('hẹn'))).length;
+      const countToday = activeNonSale.filter(l => l.registration_info && (l.registration_info.is_hot || (l.registration_info.badge && l.registration_info.badge.includes('Hôm nay')))).length;
+      const countContacted = activeNonSale.filter(l => l.status === 'contacted').length;
+      const countCalled = activeNonSale.filter(l => l.status === 'called' || l.status === 'considering' || (l.call_info && l.call_info.total_calls > 0 && l.call_info.total_duration > 0)).length;
+      const countSale = activeSale.length;
 
       document.getElementById("count-chip-all").innerText = countAll;
       document.getElementById("count-chip-callback").innerText = countCallback;
@@ -746,7 +764,11 @@
       const chipSale = document.getElementById("count-chip-sale");
       if (chipSale) chipSale.innerText = countSale;
       const elStatSale = document.getElementById("statSale");
-      if (elStatSale && (!elStatSale.innerText || elStatSale.innerText === "0")) elStatSale.innerText = countSale;
+      if (elStatSale) elStatSale.innerText = countSale;
+
+      // Update badge Bàn Gọi LED ở Header
+      const elActiveBadge = document.getElementById("activeCountBadge");
+      if (elActiveBadge) elActiveBadge.innerText = countAll;
     }
 
     function handleSearch(val) {
@@ -763,50 +785,75 @@
     }
 
     // =============================================================
-    // RENDER KANBAN CHÍNH
+    // RENDER KANBAN CHÍNH (4 CỘT TINH GỌN, TỐI ƯU KHÔNG GIAN)
     // =============================================================
     function renderKanban() {
       const cols = {
         new: document.getElementById("cards-new"),
         contacted: document.getElementById("cards-contacted"),
         called: document.getElementById("cards-called"),
-        considering: document.getElementById("cards-considering"),
         paid: document.getElementById("cards-paid")
       };
 
-      const counts = { new: 0, contacted: 0, called: 0, considering: 0, paid: 0 };
-      Object.values(cols).forEach(c => c.innerHTML = "");
+      const counts = { new: 0, contacted: 0, called: 0, paid: 0 };
+      Object.values(cols).forEach(c => { if (c) c.innerHTML = ""; });
+
+      // Hiển thị banner khi đang xem chế độ "Sale đã TV"
+      const notice = document.getElementById("saleFilterNotice");
+      if (notice) {
+        if (currentPriorityFilter === 'sale') {
+          notice.classList.remove("hidden");
+        } else {
+          notice.classList.add("hidden");
+        }
+      }
 
       const filtered = allLeads.filter(l => {
         if (l.is_archived) return false;
 
-        // Lọc theo Priority Filter
-        if (currentPriorityFilter === 'callback') {
-          const isCb = l.status === 'considering' || (l.note && l.note.toLowerCase().includes('hẹn'));
-          if (!isCb) return false;
-        } else if (currentPriorityFilter === 'today') {
-          const isToday = l.registration_info && (l.registration_info.is_hot || (l.registration_info.badge && l.registration_info.badge.includes('Hôm nay')));
-          if (!isToday) return false;
-        } else if (currentPriorityFilter === 'contacted') {
-          if (l.status !== 'contacted') return false;
-        } else if (currentPriorityFilter === 'called') {
-          if (!l.call_info || l.call_info.total_calls === 0 || l.call_info.total_duration === 0) return false;
-        } else if (currentPriorityFilter === 'sale') {
-          const isSale = l.is_sale_consulted || (l.tags && l.tags.some(t => t.toLowerCase().includes('sale')));
-          if (!isSale) return false;
+        // 🔍 1. ƯU TIÊN TÌM KIẾM: Khi anh Việt gõ tìm kiếm, quét trên TOÀN BỘ lead (bỏ qua mọi bộ lọc ẩn/sale)
+        if (searchQuery) {
+          const blob = `${l.name} ${l.phone} ${l.occupation} ${l.reason} ${l.note} ${l.registration_info?.badge || ''}`.toLowerCase();
+          return blob.includes(searchQuery);
         }
 
-        // Lọc theo Search Query
-        if (!searchQuery) return true;
-        const blob = `${l.name} ${l.phone} ${l.occupation} ${l.reason} ${l.note} ${l.registration_info?.badge || ''}`.toLowerCase();
-        return blob.includes(searchQuery);
+        const isSale = isSaleLead(l);
+        const isToday = l.registration_info && (l.registration_info.is_hot || (l.registration_info.badge && l.registration_info.badge.includes('Hôm nay')));
+
+        // 🎯 QUY TẮC VÀNG: ẨN CÁC LEAD "SALE ĐÃ TV" CŨ KHỎI BÀN GỌI CHÍNH (TRỪ KHI LEAD ĐĂNG KÝ MỚI HÔM NAY HOẶC BẤM CHIP "Sale đã TV")
+        if (currentPriorityFilter === 'sale') {
+          if (!isSale) return false;
+        } else if (currentPriorityFilter === 'today') {
+          // Khi lọc "Hôm nay", luôn hiển thị mọi lead có biến động đăng ký hôm nay để không sót
+          if (!isToday) return false;
+        } else {
+          // Ở các filter khác ("all", "callback", "contacted", "called"):
+          // Ẩn lead sale cũ (trừ khi lead mới đăng ký lại hôm nay)
+          if (isSale && !isToday) return false;
+
+          if (currentPriorityFilter === 'callback') {
+            const isCb = l.status === 'considering' || (l.note && l.note.toLowerCase().includes('hẹn'));
+            if (!isCb) return false;
+          } else if (currentPriorityFilter === 'contacted') {
+            if (l.status !== 'contacted') return false;
+          } else if (currentPriorityFilter === 'called') {
+            if (l.status !== 'called' && l.status !== 'considering' && (!l.call_info || l.call_info.total_duration === 0)) return false;
+          }
+        }
+
+        return true;
       });
 
+      const noticeCount = document.getElementById("saleNoticeCount");
+      if (noticeCount) noticeCount.innerText = filtered.length;
+
       filtered.forEach(lead => {
-        const st = (lead.status in cols) ? lead.status : "new";
-        counts[st]++;
+        let colKey = lead.status;
+        if (colKey === 'considering') colKey = 'called';
+        if (!(colKey in cols)) colKey = "new";
+        counts[colKey] = (counts[colKey] || 0) + 1;
         const card = createCard(lead);
-        cols[st].appendChild(card);
+        if (cols[colKey]) cols[colKey].appendChild(card);
       });
 
       Object.keys(counts).forEach(k => {
@@ -871,7 +918,14 @@
         <div class="flex items-start justify-between gap-1">
           <div>
             <h4 class="font-extrabold text-xs text-slate-900 leading-tight">${l.name}</h4>
-            <span class="font-mono text-[11px] text-indigo-600 font-bold">${l.phone}</span>
+            <span
+              onclick="copyPhoneNumber('${l.phone}', event)"
+              class="font-mono text-[11px] font-bold text-indigo-600 hover:text-indigo-900 bg-indigo-50/70 hover:bg-indigo-100 px-1 py-0.2 rounded border border-indigo-200/60 inline-flex items-center gap-1 transition cursor-pointer"
+              title="Bấm để copy số điện thoại"
+            >
+              <span>${l.display_phone || l.phone}</span>
+              <span data-copy-icon="${l.phone}" class="text-[9px] opacity-70">📋</span>
+            </span>
           </div>
           <span class="text-[9px] font-bold px-1.5 py-0.2 rounded ${
             cat === 'paid' ? 'bg-emerald-100 text-emerald-800' : (cat === 'unqualified' ? 'bg-slate-100 text-slate-600' : 'bg-amber-100 text-amber-800')
@@ -940,9 +994,16 @@
       }
 
       // Apple Contacts status
-      const contactAction = l.has_apple_contact
-        ? `<span title="Đã lưu danh bạ iPhone: ${l.apple_contact_name || ''}" class="text-emerald-700 font-bold text-[10px] bg-emerald-50 border border-emerald-300 px-1 py-0.2 rounded">🍏 Đã lưu</span>`
-        : `<button onclick="saveContactToPhone('${l.phone}', '${l.name.replace(/'/g, "\\'")}')" class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 hover:bg-amber-200 border border-amber-300 transition shadow-2xs">🍏 +Lưu DB</button>`;
+      let contactAction = "";
+      if (l.has_apple_contact) {
+        if (l.apple_contact_name && l.apple_contact_name.includes("chưa gọi")) {
+          contactAction = `<span title="Đã lưu danh bạ (Chờ gọi): ${l.apple_contact_name || ''}" class="text-amber-700 font-bold text-[10px] bg-amber-50 border border-amber-300 px-1 py-0.2 rounded">🍏 Chờ gọi</span>`;
+        } else {
+          contactAction = `<span title="Đã lưu danh bạ iPhone: ${l.apple_contact_name || ''}" class="text-emerald-700 font-bold text-[10px] bg-emerald-50 border border-emerald-300 px-1 py-0.2 rounded">🍏 Đã lưu</span>`;
+        }
+      } else {
+        contactAction = `<button onclick="saveContactToPhone('${l.phone}', '${l.name.replace(/'/g, "\\'")}')" class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 hover:bg-amber-200 border border-amber-300 transition shadow-2xs">🍏 +Lưu DB</button>`;
+      }
 
       // Huy hiệu ĐÃ CỌC
       const paidBadge = l.status === 'paid'
@@ -955,14 +1016,28 @@
         ? `<span class="inline-flex items-center gap-0.5 text-[9px] font-extrabold px-1.5 py-0.2 rounded bg-purple-100 text-purple-800 border border-purple-300 shadow-2xs shrink-0" title="Sale đã tư vấn (Cột L: ${l.sale_note || 'ĐÃ TV'})">🎧 Sale đã TV</span>`
         : ``;
 
-      // Đoạn hội thoại gần nhất (nếu có)
+      // Huy hiệu HẸN MAI / CÂN NHẮC
+      const consideringBadge = (l.status === 'considering' || (l.note && l.note.toLowerCase().includes('hẹn')))
+        ? `<span class="inline-flex items-center gap-0.5 text-[9px] font-bold px-1.5 py-0.2 rounded bg-rose-50 text-rose-700 border border-rose-200 shrink-0" title="Khách hẹn mai gọi lại / Cân nhắc">🔥 Hẹn mai</span>`
+        : ``;
+
+      // Huy hiệu ZALO (Đã kết nối / Đã trao đổi qua Zalo)
+      const isZaloInteracted = l.zalo_status || (l.tags && l.tags.some(t => t.toLowerCase().includes('zalo'))) || (l.note && l.note.toLowerCase().includes('zalo'));
+      const zaloBadge = isZaloInteracted
+        ? `<span class="inline-flex items-center gap-0.5 text-[9px] font-bold px-1.5 py-0.2 rounded bg-blue-50 text-[#0068FF] border border-blue-200 shrink-0" title="${l.zalo_status || 'Đã tương tác Zalo'}">💬 Zalo</span>`
+        : ``;
+
+      // Đoạn hội thoại gần nhất (tránh lặp lại đàm thoại nếu đã có ở badge)
       let snippetHtml = "";
       if (l.recent_snippet) {
-        snippetHtml = `
-          <div class="text-[10px] bg-slate-50 text-slate-700 border border-slate-200/80 rounded-md px-2 py-0.5 leading-snug truncate" title="${l.recent_snippet}">
-            💬 <span class="font-semibold text-slate-800">${l.recent_snippet}</span>
-          </div>
-        `;
+        const isRedundantCallSnippet = l.recent_snippet.startsWith("📞 Đàm thoại") && totalCalls > 0 && lastDur > 0;
+        if (!isRedundantCallSnippet) {
+          snippetHtml = `
+            <div class="text-[10px] bg-slate-50 text-slate-700 border border-slate-200/80 rounded-md px-2 py-0.5 leading-snug truncate" title="${l.recent_snippet}">
+              💬 <span class="font-semibold text-slate-800">${l.recent_snippet}</span>
+            </div>
+          `;
+        }
       }
 
       // Tags danh mục
@@ -970,7 +1045,17 @@
       if (l.tags && l.tags.length > 0) {
         tagsHtml = `
           <div class="flex items-center gap-1 flex-wrap pt-0.5">
-            ${l.tags.map(t => `<span class="text-[9px] font-bold px-1.5 py-0.2 rounded ${t.toLowerCase().includes('sale') ? 'bg-purple-100 text-purple-800 border border-purple-300' : 'bg-slate-100 text-slate-700 border border-slate-200'}">${t}</span>`).join('')}
+            ${l.tags.map(t => {
+              let tagStyle = 'bg-slate-100 text-slate-700 border border-slate-200';
+              if (t.includes('⚠️') || t.toLowerCase().includes('direct') || t.toLowerCase().includes('điền hộ')) {
+                tagStyle = 'bg-amber-100 text-amber-900 border border-amber-300 font-black animate-pulse';
+              } else if (t.toLowerCase().includes('sale')) {
+                tagStyle = 'bg-purple-100 text-purple-800 border border-purple-300';
+              } else if (t.toLowerCase().includes('cọc')) {
+                tagStyle = 'bg-emerald-100 text-emerald-800 border border-emerald-300';
+              }
+              return `<span class="text-[9px] font-bold px-1.5 py-0.2 rounded ${tagStyle}">${t}</span>`;
+            }).join('')}
           </div>
         `;
       }
@@ -988,17 +1073,26 @@
       }
 
       div.innerHTML = `
-        <!-- Dòng 1: Tên (Mở Focus Mode khi click), SĐT & Huy hiệu -->
-        <div class="flex items-start justify-between gap-1">
-          <div class="cursor-pointer min-w-0" onclick="openFocusDrawer('${l.phone}')" title="Bấm để mở Chế độ Gọi Tập Trung">
-            <h3 class="font-extrabold text-xs text-slate-900 hover:text-indigo-600 transition flex items-center gap-1 truncate">
-              <span>${l.name}</span>
+        <!-- Dòng 1: Tên & SĐT trên cùng 1 hàng, huy hiệu bên phải (Tối ưu không gian) -->
+        <div class="flex items-start justify-between gap-1.5">
+          <div class="min-w-0 flex items-center gap-1.5 flex-wrap">
+            <h3 class="font-extrabold text-xs text-slate-900 hover:text-indigo-600 transition truncate cursor-pointer" onclick="openFocusDrawer('${l.phone}')" title="Bấm để mở Chế độ Gọi Tập Trung">
+              ${l.name}
             </h3>
-            <span class="font-mono text-[11px] font-bold text-indigo-600">${l.phone}</span>
+            <span
+              onclick="copyPhoneNumber('${l.phone}', event)"
+              class="font-mono text-[10.5px] font-bold text-indigo-600 hover:text-indigo-900 bg-indigo-50/70 hover:bg-indigo-100 px-1 py-0.2 rounded border border-indigo-200/60 inline-flex items-center gap-0.5 transition cursor-pointer"
+              title="Bấm để copy số điện thoại"
+            >
+              <span>${l.display_phone || l.phone}</span>
+              <span data-copy-icon="${l.phone}" class="text-[8.5px] opacity-70">📋</span>
+            </span>
           </div>
-          <div class="flex items-center gap-1 shrink-0 flex-wrap justify-end max-w-[55%]">
+          <div class="flex items-center gap-1 shrink-0 flex-wrap justify-end">
             ${paidBadge}
             ${saleBadge}
+            ${consideringBadge}
+            ${zaloBadge}
             ${callBadge}
             ${contactAction}
           </div>
@@ -1096,19 +1190,17 @@
           <div class="flex items-center gap-1 flex-wrap">
             ${l.status === 'new' ? `
               <button onclick="triggerStatusChange('${l.phone}', 'contacted', '📵 [GỌI NHỠ / BẬN]')" class="text-[9px] font-semibold px-2 py-0.5 rounded border border-slate-200 text-slate-600 hover:bg-slate-50 transition" title="Gọi nhỡ / Bận">Nhỡ</button>
+              <button onclick="triggerStatusChange('${l.phone}', 'called', '')" class="text-[9px] font-semibold px-2 py-0.5 rounded border border-indigo-200 text-indigo-700 hover:bg-indigo-50 transition" title="Đã gọi trao đổi">Đã gọi</button>
               <button onclick="triggerStatusChange('${l.phone}', 'considering', '🔥 [HẸN MAI GỌI LẠI]')" class="text-[9px] font-semibold px-2 py-0.5 rounded border border-rose-200 text-rose-700 hover:bg-rose-50 transition" title="Khách hẹn mai gọi lại">Hẹn mai</button>
             ` : (l.status === 'contacted' ? `
-              <button onclick="triggerStatusChange('${l.phone}', 'considering', '🔥 [HẸN MAI GỌI LẠI]')" class="text-[9px] font-semibold px-2 py-0.5 rounded border border-rose-200 text-rose-700 hover:bg-rose-50 transition" title="Khách hẹn mai gọi lại">Hẹn mai</button>
               <button onclick="triggerStatusChange('${l.phone}', 'called', '')" class="text-[9px] font-semibold px-2 py-0.5 rounded border border-indigo-200 text-indigo-700 hover:bg-indigo-50 transition" title="Đã gọi trao đổi">Đã gọi</button>
-            ` : (l.status === 'called' ? `
               <button onclick="triggerStatusChange('${l.phone}', 'considering', '🔥 [HẸN MAI GỌI LẠI]')" class="text-[9px] font-semibold px-2 py-0.5 rounded border border-rose-200 text-rose-700 hover:bg-rose-50 transition" title="Khách hẹn mai gọi lại">Hẹn mai</button>
-              <button onclick="triggerStatusChange('${l.phone}', 'paid', '')" class="text-[9px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white border border-emerald-300 transition" title="Xác nhận khách đã cọc K3">+ Cọc K3</button>
-            ` : (l.status === 'considering' ? `
-              <button onclick="triggerStatusChange('${l.phone}', 'considering', '🔥 [HẸN LẠI]')" class="text-[9px] font-semibold px-2 py-0.5 rounded border border-rose-200 text-rose-700 hover:bg-rose-50 transition" title="Hẹn lại">Hẹn lại</button>
+            ` : (l.status === 'called' || l.status === 'considering' ? `
+              <button onclick="triggerStatusChange('${l.phone}', 'considering', '${l.status === 'considering' ? '🔥 [HẸN LẠI]' : '🔥 [HẸN MAI GỌI LẠI]'}')" class="text-[9px] font-semibold px-2 py-0.5 rounded border border-rose-200 text-rose-700 hover:bg-rose-50 transition" title="Khách hẹn gọi lại">${l.status === 'considering' ? 'Hẹn lại' : 'Hẹn mai'}</button>
               <button onclick="triggerStatusChange('${l.phone}', 'paid', '')" class="text-[9px] font-bold px-2 py-0.5 rounded bg-emerald-600 text-white hover:bg-emerald-700 border border-emerald-600 transition shadow-2xs" title="Xác nhận khách đã cọc K3">+ Cọc K3</button>
             ` : `
               <span class="text-[10px] font-bold text-emerald-700">Đã chốt cọc K3</span>
-            `)))}
+            `))}
           </div>
 
           <div class="flex items-center gap-1">
@@ -1202,7 +1294,11 @@
         } else if (l.source.includes("zalo")) {
           sourceClean = "Zalo";
         } else if (l.source.includes("fedu.vn")) {
-          sourceClean = "offline.fedu.vn";
+          if (!l.source.includes("utm_") && !l.source.includes("fbclid")) {
+            sourceClean = "Direct (⚠️ Không UTM - Nghi vấn điền hộ)";
+          } else {
+            sourceClean = "offline.fedu.vn";
+          }
         }
       }
 
@@ -1230,7 +1326,18 @@
           <div class="flex items-start justify-between gap-2">
             <div class="min-w-0 flex-1">
               <h2 class="font-black text-lg text-slate-900 leading-tight truncate">${l.name}</h2>
-              <div class="font-mono font-extrabold text-indigo-600 text-base mt-0.5">${l.phone}</div>
+              <div class="mt-1 flex items-center gap-2">
+                <button
+                  type="button"
+                  onclick="copyPhoneNumber('${l.phone}', event)"
+                  class="inline-flex items-center gap-2 px-3 py-1 rounded-xl bg-white hover:bg-indigo-50 active:scale-95 text-indigo-700 hover:text-indigo-900 border border-indigo-200 hover:border-indigo-400 font-mono font-extrabold text-base transition shadow-2xs cursor-pointer group"
+                  title="Bấm để copy số điện thoại ngay"
+                >
+                  <span class="tracking-wide">${l.display_phone || l.phone}</span>
+                  <span data-copy-icon="${l.phone}" class="text-sm transition group-hover:scale-110">📋</span>
+                  <span data-copy-phone="${l.phone}" data-orig-text="Copy" class="text-[11px] font-bold px-1.5 py-0.5 rounded-md bg-indigo-50 group-hover:bg-indigo-100 text-indigo-600 transition border border-indigo-100">Copy</span>
+                </button>
+              </div>
               <div class="text-[11px] text-slate-500 mt-1 flex items-center gap-2 flex-wrap">
                 <span>📅 ĐK: <b>${l.registration_info?.badge || 'Chưa rõ'}</b></span>
                 <span>•</span>
@@ -1495,8 +1602,62 @@
     }
 
     // =============================================================
-    // KỊCH BẢN 1-CHẠM & QUICK ARCHIVE
+    // KỊCH BẢN 1-CHẠM, COPY SĐT & QUICK ARCHIVE
     // =============================================================
+    function copyPhoneNumber(phone, event) {
+      if (event) event.stopPropagation();
+      if (!phone) return;
+      const cleanPhone = phone.replace(/[^\d+]/g, '');
+
+      const handleSuccess = () => {
+        // Cập nhật trạng thái phản hồi trên tất cả badge copy của SĐT này
+        const badges = document.querySelectorAll(`[data-copy-phone="${cleanPhone}"]`);
+        badges.forEach(el => {
+          const orig = el.getAttribute('data-orig-text') || el.innerText;
+          el.setAttribute('data-orig-text', orig);
+          el.innerText = 'Đã chép ✓';
+          el.classList.add('bg-emerald-200', 'text-emerald-900');
+          setTimeout(() => {
+            el.innerText = el.getAttribute('data-orig-text') || 'Copy';
+            el.classList.remove('bg-emerald-200', 'text-emerald-900');
+          }, 2000);
+        });
+
+        const icons = document.querySelectorAll(`[data-copy-icon="${cleanPhone}"]`);
+        icons.forEach(ic => {
+          ic.innerText = '✅';
+          setTimeout(() => { ic.innerText = '📋'; }, 2000);
+        });
+
+        showToast(`Đã copy số điện thoại: ${cleanPhone}!`, "📋", false);
+      };
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(cleanPhone).then(handleSuccess).catch(() => {
+          fallbackCopy(cleanPhone, handleSuccess);
+        });
+      } else {
+        fallbackCopy(cleanPhone, handleSuccess);
+      }
+    }
+
+    function fallbackCopy(text, onSuccess) {
+      const input = document.createElement("textarea");
+      input.value = text;
+      input.style.position = "fixed";
+      input.style.opacity = "0";
+      document.body.appendChild(input);
+      input.focus();
+      input.select();
+      try {
+        document.execCommand("copy");
+        if (onSuccess) onSuccess();
+      } catch (err) {
+        showToast("Không thể copy số tự động", "❌", false);
+      }
+      document.body.removeChild(input);
+    }
+
     function copyScriptText(phone) {
       const target = allLeads.find(l => l.phone === phone);
       if (!target || !target.suggested_script) return;
@@ -1650,13 +1811,14 @@
       if (!phone) return;
 
       const target = allLeads.find(l => l.phone === phone);
-      if (!target || target.status === newStatus) return;
+      if (!target) return;
+      if (newStatus === 'called' && (target.status === 'called' || target.status === 'considering')) return;
+      if (target.status === newStatus) return;
 
       const colNames = {
         new: "Chưa Gọi",
         contacted: "Đã Nhắn Tin",
-        called: "Đã Trao Đổi",
-        considering: "Hẹn Mai / Cân Nhắc",
+        called: "Đã Trao Đổi / Cân Nhắc",
         paid: "Đã Cọc K3"
       };
 

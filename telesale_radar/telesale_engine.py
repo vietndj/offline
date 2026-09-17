@@ -119,6 +119,16 @@ def format_lead_registration(raw_date_str: str) -> Dict[str, Any]:
             pass
             
     if not dt:
+        # Hỗ trợ số serial ngày của Google Sheets / Excel (VD: 46276,83571)
+        try:
+            clean_num = raw_date_str.strip().replace(',', '.')
+            val = float(clean_num)
+            if 30000 < val < 60000:
+                dt = datetime(1899, 12, 30) + timedelta(days=val)
+        except Exception:
+            pass
+
+    if not dt:
         m = re.search(r'(\d{4})-(\d{2})-(\d{2})', raw_date_str)
         if m:
             dt = datetime(int(m.group(1)), int(m.group(2)), int(m.group(3)))
@@ -331,6 +341,7 @@ def get_apple_contacts_map() -> Dict[str, Dict[str, Any]]:
                 LEFT JOIN ZABCDPHONENUMBER p ON p.ZOWNER = r.Z_PK
                 LEFT JOIN ZABCDNOTE n ON n.ZCONTACT = r.Z_PK
                 WHERE r.ZFIRSTNAME LIKE '%offline3%' OR r.ZLASTNAME LIKE '%offline3%'
+                   OR r.ZFIRSTNAME LIKE '%chưa gọi%' OR r.ZLASTNAME LIKE '%chưa gọi%'
             """)
             rows = cur.fetchall()
             conn.close()
@@ -339,7 +350,14 @@ def get_apple_contacts_map() -> Dict[str, Dict[str, Any]]:
                 first, last, full_phone, note = r
                 full_name = f"{first or ''} {last or ''}".strip()
                 phone = normalize_phone(full_phone or "")
-                clean_name = full_name.replace("offline3 - ", "").replace("offline3 -", "").strip()
+                clean_name = (
+                    full_name
+                    .replace("offline3 - ", "")
+                    .replace("offline3 -", "")
+                    .replace("chưa gọi - ", "")
+                    .replace("chưa gọi -", "")
+                    .strip()
+                )
 
                 if phone:
                     contacts_map[phone] = {
@@ -374,7 +392,7 @@ def update_apple_contact_note(contact_name_or_phone: str, note_text: str, raw_na
                 end if
             end if
             if (count of pList) is 0 and thePhone is not "" then
-                repeat with p in (every person whose name starts with "offline3")
+                repeat with p in (every person whose (name starts with "offline3" or name starts with "chưa gọi"))
                     repeat with ph in (every phone of p)
                         set pVal to value of ph
                         if pVal contains thePhone or thePhone contains pVal then
@@ -541,6 +559,8 @@ def send_consultation_email(to_email: str, name: str, script_msg: str, occ: str 
 
     clean_email = to_email.strip()
     subject = f"Xác nhận đăng ký Lớp Offline Video Marketing Hà Nội (19 - 20/09) - Em Việt (Giáo viên FPT)"
+    p_pronoun, p_greeting, _ = detect_salutation(name, occ, clean_email, reason)
+    p_cap = p_pronoun.capitalize()
 
     html_content = f"""<!DOCTYPE html>
 <html>
@@ -552,7 +572,7 @@ def send_consultation_email(to_email: str, name: str, script_msg: str, occ: str 
       <h1 style="margin: 8px 0 0 0; font-size: 20px; color: #ffffff; font-weight: 700;">Khóa Học Video Marketing Thực Chiến Hà Nội</h1>
     </div>
     <div style="padding: 24px;">
-      <p style="font-size: 16px; margin-top: 0;">Chào <b>{name}</b>,</p>
+      <p style="font-size: 16px; margin-top: 0;"><b>{p_greeting}</b>,</p>
       <p style="font-size: 15px; line-height: 1.6; color: #334155;">
         Em là <b>Việt</b> (Giáo viên FPT, người trực tiếp hướng dẫn lớp Video Marketing Offline ngày 19 - 20/09 tại Hà Nội mà mình vừa đăng ký qua Page 30 Ngày Làm Video Viral). Em gửi email này để trực tiếp xác nhận thông tin giữ chỗ và hỗ trợ mình chuẩn bị chu đáo nhất trước buổi học.
       </p>
@@ -569,7 +589,7 @@ def send_consultation_email(to_email: str, name: str, script_msg: str, occ: str 
         </ul>
       </div>
       <p style="font-size: 14px; color: #475569; line-height: 1.6;">
-        Anh/chị có thể phản hồi trực tiếp vào email này hoặc kết nối Zalo theo hotline: <b>0934 688 632</b> để em trực tiếp giải đáp bài toán video của mình nhé.
+        {p_cap} có thể phản hồi trực tiếp vào email này hoặc kết nối Zalo theo hotline: <b>0934 688 632</b> để em trực tiếp giải đáp bài toán video của mình nhé.
       </p>
       <div style="margin-top: 28px; padding-top: 16px; border-top: 1px solid #e2e8f0; font-size: 13px; color: #64748b;">
         <p style="margin: 0; font-weight: 600; color: #0f172a;">Thân mến,</p>
@@ -755,6 +775,8 @@ def get_stu_hub_map() -> Dict[str, Dict[str, Any]]:
                     phone = normalize_phone(s.get('phone', ''))
                     if phone:
                         stu_map[phone] = s
+                    if s.get('id'):
+                        stu_map[s.get('id')] = s
         except Exception:
             pass
     return stu_map
@@ -778,32 +800,198 @@ def get_offline_leads_json_map() -> Dict[str, Dict[str, Any]]:
 # -------------------------------------------------------------
 # 6. TỔNG HỢP LEAD ĐA NGUỒN (SMART AGGREGATOR)
 # -------------------------------------------------------------
+VN_SURNAMES = {
+    'nguyễn', 'nguyen', 'trần', 'tran', 'lê', 'le', 'phạm', 'pham',
+    'hoàng', 'hoang', 'huỳnh', 'huynh', 'phan', 'vũ', 'vu', 'võ', 'vo',
+    'đặng', 'dang', 'bùi', 'bui', 'đỗ', 'do', 'hồ', 'ho', 'ngô', 'ngo',
+    'dương', 'duong', 'lý', 'ly', 'đinh', 'dinh', 'đoàn', 'doan', 'lâm', 'lam',
+    'trịnh', 'trinh', 'mai', 'đào', 'cao', 'hà', 'lưu', 'luu', 'lương', 'luong',
+    'thái', 'thai', 'châu', 'chau', 'tạ', 'ta', 'phùng', 'phung', 'tô', 'to',
+    'vương', 'vuong', 'quách', 'quach', 'la', 'khổng'
+}
 
-def detect_salutation(full_name: str):
+COMPOUND_NAME_TRAILS = {
+    'anh', 'linh', 'châu', 'trang', 'phương', 'ngọc', 'nhâm', 'quỳnh',
+    'vy', 'nhi', 'my', 'mi', 'hương', 'hường', 'nguyên', 'mai', 'lan',
+    'tú', 'khánh', 'bình', 'hân', 'huyền', 'đan', 'dung', 'tiên', 'nga'
+}
+
+FEMALE_FIRST_NAMES = {
+    'lan', 'hương', 'hường', 'hằng', 'mai', 'thảo', 'trang', 'nhung',
+    'nga', 'ngân', 'oanh', 'quỳnh', 'yến', 'dung', 'diệp', 'thủy', 'thuỷ',
+    'thu', 'trâm', 'hạnh', 'vân', 'huyền', 'ly', 'loan', 'huệ', 'sen',
+    'mỹ', 'hiền', 'tuyết', 'liên', 'nhi', 'vy', 'mi', 'mơ', 'bích',
+    'diệu', 'hoa', 'hồng', 'chi', 'thùy', 'thúy', 'thuý', 'uyên', 'xuyến',
+    'nương', 'khuyên', 'mến', 'thoa', 'lệ', 'quyên', 'quuyên', 'nhâm',
+    'đào', 'cúc', 'nhài', 'thắm', 'tươi', 'đan', 'thục', 'phụng', 'kiều',
+    'gấm', 'lụa', 'thêu', 'ngà', 'hân', 'hoài', 'trinh', 'châu', 'diễm',
+    'phấn', 'mận', 'thược', 'bưởi', 'nhạn', 'cẩm', 'ngát', 'hảo', 'thơm',
+    'nết', 'thương', 'nhàn', 'tình', 'dịu', 'hạ', 'băng', 'lam', 'thư',
+    'nhẫn', 'bông', 'nguyên', 'giao', 'châm', 'yên', 'trà', 'quyn', 'trân',
+    'tho', 'nhuận', 'vi', 'ca', 'thi', 'dơn', 'huyên', 'thuyên', 'nữ'
+}
+
+MALE_FIRST_NAMES = {
+    'dũng', 'cường', 'tuấn', 'hùng', 'hoàng', 'nam', 'hải', 'thắng',
+    'thành', 'đức', 'huy', 'quân', 'long', 'toàn', 'sơn', 'tùng', 'phong',
+    'trung', 'nghĩa', 'trọng', 'duy', 'việt', 'tân', 'kiên', 'bách', 'đạt',
+    'khoa', 'tiến', 'vương', 'quang', 'bảo', 'lâm', 'quốc', 'tấn', 'vinh',
+    'khải', 'vũ', 'hiếu', 'đông', 'trường', 'lộc', 'thế', 'quý', 'phúc',
+    'nhật', 'triều', 'trí', 'đại', 'luân', 'khang', 'hưng', 'kiệt', 'phát',
+    'thịnh', 'tài', 'hiệp', 'thực', 'bính', 'giáp', 'chính', 'lực', 'thông',
+    'thái', 'thọ', 'chiến', 'chuẩn', 'định', 'doãn', 'hiển', 'thiện', 'thưởng',
+    'hậu', 'triệu', 'quyền', 'sang', 'thao', 'thiệp', 'minh', 'luận', 'tiệp',
+    'đăng', 'nhân', 'đoán', 'tuân', 'khôi', 'đô', 'toản', 'vượng', 'hỷ',
+    'khoát', 'phi', 'phú', 'bằng', 'chinh', 'thạo', 'thạch', 'tráng', 'nguyên'
+}
+
+FEMALE_MIDDLE_KEYWORDS = {
+    'thị', 'thúy', 'thuý', 'như', 'kim', 'diệu', 'ánh', 'tố', 'bích', 'mỹ',
+    'ngọc', 'quỳnh', 'thanh', 'mai', 'thu', 'hồng', 'linh', 'huyền', 'cẩm',
+    'kiều', 'bảo', 'phương', 'thảo', 'loan', 'hương'
+}
+
+MALE_MIDDLE_KEYWORDS = {
+    'văn', 'hữu', 'đức', 'quang', 'đình', 'tiến', 'trọng', 'công', 'bá',
+    'minh', 'thành', 'hoàng', 'quốc', 'duy', 'mạnh', 'việt', 'tuấn', 'khắc',
+    'thế', 'ngọc', 'hải', 'xuân', 'chí', 'đại', 'phúc', 'chính'
+}
+
+FEMALE_OCCUPATION_KEYWORDS = {
+    'nội trợ', 'noi tro', 'mẹ bỉm', 'me bim', 'chăm con', 'bỉm sữa', 'nội chợ',
+    'spa', 'thẩm mỹ', 'thẩm mĩ', 'phun xăm', 'nail', 'móng', 'nối mi', 'mi',
+    'mầm non', 'làm bánh', 'váy', 'đầm', 'may mặc nữ', 'mỹ phẩm', 'skincare', 'da'
+}
+
+MALE_OCCUPATION_KEYWORDS = {
+    'cơ khí', 'sửa xe', 'xe máy', 'gara', 'ô tô', 'oto', 'xây dựng', 'thợ',
+    'công trình', 'kiến trúc sư', 'kỹ sư', 'ky su', 'lái xe', 'tài xế', 'taxi',
+    'hàn xì', 'điện lạnh', 'lập trình', 'developer', 'bảo vệ'
+}
+
+
+def extract_display_name(full_name: str) -> str:
     name_parts = (full_name or "").strip().split()
-    short_name = name_parts[-1] if name_parts else "bạn"
-    first_lower = short_name.lower()
+    if not name_parts:
+        return "bạn"
+    
+    clean_parts = [p.capitalize() for p in name_parts]
+    if len(clean_parts) == 1:
+        return clean_parts[0]
+    
+    if len(clean_parts) == 2:
+        first_lower = clean_parts[0].lower()
+        if first_lower in VN_SURNAMES:
+            return clean_parts[1]
+        else:
+            return f"{clean_parts[0]} {clean_parts[1]}"
+            
+    last_word_lower = clean_parts[-1].lower()
+    second_last_lower = clean_parts[-2].lower()
+    
+    if last_word_lower in COMPOUND_NAME_TRAILS and second_last_lower not in {'văn', 'thị', 'đình', 'hữu'}:
+        return f"{clean_parts[-2]} {clean_parts[-1]}"
+        
+    return clean_parts[-1]
 
-    female_keywords = [
-        'thị', 'lan', 'phương', 'hương', 'hằng', 'mai', 'thảo', 'trang', 'nhung',
-        'linh', 'nga', 'ngân', 'oanh', 'quỳnh', 'yến', 'dung', 'diệp', 'thủy',
-        'thu', 'trâm', 'hạnh', 'vân', 'huyền', 'ly', 'loan', 'huệ', 'sen',
-        'mỹ', 'ngọc', 'hiền', 'tuyết', 'liên', 'nhi', 'vy', 'mi', 'mơ', 'bích',
-        'diệu', 'hoa', 'hồng', 'anh'
-    ]
-    male_keywords = [
-        'văn', 'dũng', 'cường', 'tuấn', 'hùng', 'hoàng', 'nam', 'hải', 'minh',
-        'thắng', 'thành', 'đức', 'huy', 'quân', 'long', 'toàn', 'sơn', 'tùng',
-        'phong', 'trung', 'nghĩa', 'trọng', 'duy', 'việt', 'tân', 'kiên', 'bách',
-        'đạt', 'khoa', 'khánh', 'bình', 'tiến', 'vương', 'quang', 'bảo'
-    ]
 
+def detect_salutation(full_name: str, occupation: str = "", email: str = "", reason: str = ""):
+    """
+    Tự động phân tích tên người Việt để nhận diện chính xác 'anh' hoặc 'chị'.
+    Tuyệt đối không bao giờ trả về 'anh/chị' rất máy móc và AI.
+    """
+    name_parts = (full_name or "").strip().split()
+    if not name_parts:
+        return 'anh', "Chào bạn", "bạn"
+        
+    display_name = extract_display_name(full_name)
     parts_lower = [p.lower() for p in name_parts]
-    if 'thị' in parts_lower or first_lower in female_keywords:
-        return 'chị', f"Chào chị {short_name}", short_name
-    if 'văn' in parts_lower or first_lower in male_keywords:
-        return 'anh', f"Chào anh {short_name}", short_name
-    return 'mình', f"Chào anh/chị {short_name}", short_name
+    last_word = parts_lower[-1]
+    full_lower = (full_name or "").lower()
+    occ_lower = (occupation or "").lower()
+    email_lower = (email or "").lower()
+
+    gender = None  # 'female' | 'male'
+
+    # 1. Từ đệm tuyệt đối
+    if 'thị' in parts_lower:
+        gender = 'female'
+    elif 'văn' in parts_lower and 'thị' not in parts_lower:
+        gender = 'male'
+
+    # 2. Các tên ghép phổ biến
+    if not gender:
+        if last_word == 'anh':
+            if any(k in parts_lower for k in ['quỳnh', 'lan', 'mai', 'phương', 'vân', 'trâm', 'kim', 'ngọc', 'diệu', 'hà', 'thùy', 'thúy', 'thuý', 'mỹ', 'ngân', 'nhã', 'yến', 'thanh', 'thu', 'kiều', 'hằng']):
+                gender = 'female'
+            elif any(k in parts_lower for k in ['tuấn', 'việt', 'đức', 'hoàng', 'hùng', 'duy', 'minh', 'quang', 'nam', 'thế', 'nhật', 'quốc', 'trung', 'hữu', 'tiến', 'đại', 'vũ', 'công', 'khải']):
+                gender = 'male'
+        elif last_word == 'linh':
+            if any(k in parts_lower for k in ['tuấn', 'mạnh', 'văn', 'hoàng', 'duy', 'quang', 'tiến', 'đức']):
+                gender = 'male'
+            else:
+                gender = 'female'
+        elif last_word == 'tú':
+            if any(k in parts_lower for k in ['cẩm', 'ngọc', 'thanh', 'như', 'mai', 'kim', 'thu', 'đan', 'thảo']):
+                gender = 'female'
+            elif any(k in parts_lower for k in ['tuấn', 'anh', 'văn', 'đức', 'hoàng', 'minh', 'quang', 'trọng', 'hữu', 'tiến', 'đình', 'mạnh', 'quốc']):
+                gender = 'male'
+        elif last_word == 'khánh':
+            if any(k in parts_lower for k in ['ngọc', 'mai', 'vân', 'phương', 'huyền']):
+                gender = 'female'
+            elif any(k in parts_lower for k in ['quốc', 'duy', 'gia', 'đức', 'hoàng', 'nam', 'bảo', 'huy']):
+                gender = 'male'
+        elif last_word == 'bình':
+            if any(k in parts_lower for k in ['thanh', 'như', 'ngọc', 'thu']):
+                gender = 'female'
+            elif any(k in parts_lower for k in ['đức', 'quang', 'hải', 'quốc', 'thái', 'trọng']):
+                gender = 'male'
+        elif last_word == 'nhâm':
+            if any(k in parts_lower for k in ['linh', 'ngọc', 'thu', 'hương', 'mai']):
+                gender = 'female'
+
+    # 3. Tên chính (last word) trong từ điển
+    if not gender:
+        if last_word in FEMALE_FIRST_NAMES:
+            gender = 'female'
+        elif last_word in MALE_FIRST_NAMES:
+            gender = 'male'
+
+    # 4. Kiểm tra các từ tố khác trong tên
+    if not gender:
+        if any(k in FEMALE_MIDDLE_KEYWORDS for k in parts_lower):
+            gender = 'female'
+        elif any(k in MALE_MIDDLE_KEYWORDS for k in parts_lower):
+            gender = 'male'
+
+    # 5. Dựa vào Nghề nghiệp
+    if not gender:
+        if any(k in occ_lower for k in FEMALE_OCCUPATION_KEYWORDS):
+            gender = 'female'
+        elif any(k in occ_lower for k in MALE_OCCUPATION_KEYWORDS):
+            gender = 'male'
+
+    # 6. Dựa vào Email
+    if not gender:
+        if any(k in email_lower for k in ['mrs', 'miss', 'girl', 'mebe', 'bimbim']):
+            gender = 'female'
+        elif any(k in email_lower for k in ['mr.', 'mr_']):
+            gender = 'male'
+
+    # 7. Fallback tên cụ thể nếu chỉ 1 từ unisex
+    if not gender:
+        if last_word in {'tú', 'bình', 'khánh', 'minh', 'nguyên'}:
+            gender = 'male'
+        elif last_word in {'linh', 'hà', 'giang', 'an', 'châu', 'dương'}:
+            gender = 'female'
+        else:
+            gender = 'anh'
+
+    if gender == 'female':
+        return 'chị', f"Chào chị {display_name}", display_name
+    else:
+        return 'anh', f"Chào anh {display_name}", display_name
+
 
 def generate_suggested_script(full_name: str, phone: str, email: str, occupation: str, reason: str) -> str:
     occ = (occupation or "").strip()
@@ -811,8 +999,16 @@ def generate_suggested_script(full_name: str, phone: str, email: str, occupation
     email_lower = (email or "").lower()
     reason_lower = (reason or "").lower()
 
-    pronoun, greeting, short_name = detect_salutation(full_name)
+    pronoun, greeting, short_name = detect_salutation(full_name, occ, email_lower, reason_lower)
     has_real_occ = occ and "chưa điền" not in occ_lower and "chua dien" not in occ_lower and occ_lower != "none"
+
+    # 0. Nhóm Nội trợ / Mẹ bỉm / Chăm sóc gia đình / Bán hàng online tại nhà
+    if any(k in occ_lower for k in ['nội trợ', 'noi tro', 'mẹ bỉm', 'me bim', 'ở nhà', 'bỉm sữa', 'nội chợ', 'chăm con']):
+        return (
+            f"{greeting}, em là Việt bên lớp video offline đây ạ. "
+            f"Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi làm bên mảng Nội trợ. "
+            f"Đợt này {pronoun} đang muốn làm video bán hàng online kiếm thêm thu nhập, hay muốn xây kênh chia sẻ cuộc sống/nấu ăn vậy ạ?"
+        )
 
     # 1. Nhóm F&B / Nhà hàng / Quán ăn / Ẩm thực / Cà phê
     if any(k in occ_lower for k in ['nhà hàng', 'quán ăn', 'quán', 'f&b', 'ẩm thực', 'cà phê', 'cafe', 'đồ uống', 'bếp', 'nấu']):
@@ -875,14 +1071,14 @@ def generate_suggested_script(full_name: str, phone: str, email: str, occupation
         return (
             f"{greeting}, em là Việt bên lớp video offline đây ạ. "
             f"Thấy mình vừa đăng ký lớp thực chiến tại Hà Nội và có ghi làm bên mảng {occ}. "
-            f"Đợt này mình đã lập kênh để đăng thử video nào chưa hay đang bắt đầu từ số 0 vậy ạ?"
+            f"Đợt này {pronoun} đã lập kênh để đăng thử video nào chưa hay đang bắt đầu từ số 0 vậy ạ?"
         )
 
     # 8. Chưa điền nghề nghiệp
     return (
         f"{greeting}, em là Việt bên lớp video offline đây ạ. "
         f"Thấy mình vừa đăng ký giữ chỗ lớp thực chiến 2 ngày 19 - 20/09 tại Hà Nội. "
-        f"Không biết đợt này mình đã có kênh đăng clip nào chưa, hay đang bắt đầu từ số 0 để làm hình ảnh cho công việc vậy ạ?"
+        f"Không biết đợt này {pronoun} đã có kênh đăng clip nào chưa, hay đang bắt đầu từ số 0 để làm hình ảnh cho công việc vậy ạ?"
     )
 
 def aggregate_all_leads() -> List[Dict[str, Any]]:
@@ -930,8 +1126,9 @@ def aggregate_all_leads() -> List[Dict[str, Any]]:
                 "registered_at": ""
             }
         else:
-            if not phone_data[phone].get('name'):
-                phone_data[phone]['name'] = c['name']
+            contact_clean_name = c['name'].replace("offline3 - ", "").replace("offline - ", "").strip()
+            if contact_clean_name and (not phone_data[phone].get('name') or phone_data[phone]['name'].islower() or "quỵnh" in phone_data[phone]['name'].lower()):
+                phone_data[phone]['name'] = contact_clean_name
 
     # 3. Ingest từ offline_leads.json
     for phone, lead in local_leads_map.items():
@@ -947,7 +1144,10 @@ def aggregate_all_leads() -> List[Dict[str, Any]]:
                 "registered_at": lead.get('createdAt', '')
             }
         else:
-            if not phone_data[phone].get('occupation') and lead.get('occupation'):
+            lead_full = lead.get('fullName', '').replace("offline3 - ", "").strip()
+            if lead_full and (not phone_data[phone].get('name') or phone_data[phone]['name'].islower() or "quỵnh" in phone_data[phone]['name'].lower()):
+                phone_data[phone]['name'] = lead_full
+            if lead.get('occupation') and (not phone_data[phone].get('occupation') or phone_data[phone]['occupation'] in ['Kinh doanh', 'Chưa điền', 'Khác']):
                 phone_data[phone]['occupation'] = lead.get('occupation')
             if not phone_data[phone].get('reason') and lead.get('reason'):
                 phone_data[phone]['reason'] = lead.get('reason')
@@ -962,8 +1162,29 @@ def aggregate_all_leads() -> List[Dict[str, Any]]:
             if not phone_data[phone].get('registered_at') and stu.get('created_at'):
                 phone_data[phone]['registered_at'] = stu.get('created_at')
 
-    # Lọc bỏ các số điện thoại không hợp lệ (không đủ 10 số chuẩn)
-    valid_phones = [p for p in all_phones if len(p) == 10 and p.startswith('0')]
+    # Nạp các lead trong cache radar hoặc học viên Offline K3 kết nối trực tiếp qua Zalo (như Phạm Thị Hằng)
+    for c_key, c_val in cache.items():
+        if c_key not in phone_data and c_val.get('name'):
+            all_phones.add(c_key)
+            occ = "Khác"
+            if any(k in (c_val.get('note', '') + " ".join(c_val.get('tags', []))).lower() for k in ['bds', 'bất động sản']):
+                occ = "Bất động sản (BĐS)"
+            elif any(k in (c_val.get('note', '') + " ".join(c_val.get('tags', []))).lower() for k in ['tattoo', 'xăm']):
+                occ = "Tattoo Artist"
+            phone_data[c_key] = {
+                "phone": c_key,
+                "name": c_val.get('name', ''),
+                "email": "",
+                "occupation": occ,
+                "reason": "Video Marketing Thực Chiến",
+                "source": "Zalo Direct",
+                "registered_at": c_val.get('updated_at', '')
+            }
+        elif c_key in phone_data and c_val.get('name'):
+            phone_data[c_key]['name'] = c_val['name']
+
+    # Lọc bỏ các số điện thoại không hợp lệ (giữ số chuẩn 10 số hoặc học viên Zalo K3 đã cọc)
+    valid_phones = [p for p in all_phones if (len(p) == 10 and p.startswith('0')) or (p in cache and cache[p].get('status') == 'paid')]
 
     result_list = []
     for phone in valid_phones:
@@ -1020,6 +1241,21 @@ def aggregate_all_leads() -> List[Dict[str, Any]]:
             if "[Sale đã TV]" not in final_note and "đã tv" not in final_note.lower() and "sale đã" not in final_note.lower():
                 final_note = f"[Sale đã TV] {final_note}".strip() if final_note else f"[Sale đã TV: {sheet_sale_note}]"
 
+        # Kiểm tra nguồn trực tiếp không UTM / nghi vấn Sale điền hộ
+        source_raw = str(base.get('source', '') or '')
+        is_direct_source = False
+        if source_raw:
+            has_tracking = any(k in source_raw.lower() for k in ['utm_', 'fbclid', 'gclid', 'telesale radar'])
+            if not has_tracking and ('fedu.vn' in source_raw.lower() or 'nghi vấn' in source_raw.lower() or source_raw.strip() in ['https://offline.fedu.vn/', 'https://offline.fedu.vn']):
+                is_direct_source = True
+        elif not source_raw and base.get('name'):
+            is_direct_source = True
+
+        if is_direct_source:
+            tag_direct = "⚠️ Direct (Check lại)"
+            if tag_direct not in user_tags:
+                user_tags.append(tag_direct)
+
         # Format ngày đăng ký thông minh (Relative date: Hôm nay, Hôm qua, X ngày trước)
         raw_reg = base.get('registered_at', '')
         reg_info = format_lead_registration(raw_reg)
@@ -1046,23 +1282,41 @@ def aggregate_all_leads() -> List[Dict[str, Any]]:
         else:
             pipeline_status = "new"
 
-        # Gợi ý kịch bản 1-chạm vietmac-voice
-        suggested_script = generate_suggested_script(
+        # Bóc tách tương tác Zalo & kịch bản may đo từ offline_leads.json hoặc note
+        local_lead = local_leads_map.get(phone, {})
+        suggested_script = local_lead.get('suggestedScript') or generate_suggested_script(
             name, phone, base.get('email', ''), base.get('occupation', ''), base.get('reason', '')
         )
 
-        # Trích đoạn hội thoại gần nhất để gợi nhớ (Chat & Call Memory)
+        zalo_snippet = local_lead.get('zaloSnippet', '')
+        zalo_status = local_lead.get('zaloStatus', '')
+        if not zalo_snippet and "zalo" in final_note.lower():
+            for segment in re.split(r'[|;\n]', final_note):
+                if "zalo" in segment.lower():
+                    zalo_snippet = segment.strip()
+                    break
+
+        # Trích đoạn hội thoại gần nhất để gợi nhớ (Chat & Call Memory - Ưu tiên: SMS -> Zalo -> Lịch sử đàm thoại)
         recent_snippet = ""
         if msg_info['messages']:
             last_m = msg_info['messages'][0]
             sender_label = "Khách" if last_m['sender'] == "them" else "Tôi"
             msg_txt = last_m["text"][:90]
             recent_snippet = sender_label + " (" + str(last_m["time"]) + "): " + msg_txt
+        elif zalo_snippet:
+            recent_snippet = zalo_snippet if zalo_snippet.startswith("💬") else f"💬 {zalo_snippet}"
         elif call_info['total_calls'] > 0:
             if call_info['last_call_duration'] > 0:
                 recent_snippet = f"📞 Đàm thoại {call_info['last_call_formatted']} ({call_info['last_call_time']})"
             else:
                 recent_snippet = f"📵 Gọi nhỡ / Bận ({call_info['last_call_time']})"
+
+        is_real_phone = len(phone) == 10 and phone.startswith('0')
+        display_phone = phone if is_real_phone else ("Zalo: bds offline3" if "hang" in phone else "Zalo Direct")
+        zalo_link = f"zalo://conversation?phone={phone}" if is_real_phone else "https://chat.zalo.me"
+        zalo_app_link = f"zalo://conversation?phone={phone}" if is_real_phone else "zalo://"
+        zalo_bridge_link = f"https://offline.fedu.vn/zalo?phone={phone}" if is_real_phone else "https://offline.fedu.vn"
+        zalo_web_link = f"https://zalo.me/{phone}" if is_real_phone else "https://chat.zalo.me"
 
         lead_record = {
             "id": phone,
@@ -1070,6 +1324,7 @@ def aggregate_all_leads() -> List[Dict[str, Any]]:
             "recent_snippet": recent_snippet,
             "name": name,
             "phone": phone,
+            "display_phone": display_phone,
             "email": base.get('email', ''),
             "occupation": base.get('occupation', 'Chưa điền'),
             "reason": base.get('reason', 'Chưa điền'),
@@ -1086,10 +1341,14 @@ def aggregate_all_leads() -> List[Dict[str, Any]]:
             "has_apple_contact": phone in contacts_map,
             "apple_contact_name": contact_info.get('raw_name', f"offline3 - {name}"),
             "apple_contact_note": contact_note,
-            "zalo_url": f"zalo://conversation?phone={phone}",
-            "zalo_app_url": f"zalo://conversation?phone={phone}",
-            "zalo_bridge_url": f"https://offline.fedu.vn/zalo?phone={phone}",
-            "zalo_web_url": f"https://zalo.me/{phone}",
+            "zalo_url": zalo_link,
+            "zalo_app_url": zalo_app_link,
+            "zalo_bridge_url": zalo_bridge_link,
+            "zalo_web_url": zalo_web_link,
+            "zalo_status": zalo_status or ("Đã tương tác Zalo" if "zalo" in final_note.lower() else ""),
+            "zalo_snippet": zalo_snippet,
+            "zalo_dishes": local_lead.get('zaloDishes', []),
+            "zalo_product": local_lead.get('zaloProduct', ''),
             "sheet_row_index": base.get('sheet_row_index'),
             "call_info": call_info,
             "sms_info": msg_info,
