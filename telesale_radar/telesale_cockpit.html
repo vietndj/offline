@@ -353,6 +353,57 @@
           </button>
         </div>
 
+        <!-- Thanh Thống Kê Kho STU -->
+        <div class="flex flex-wrap sm:flex-nowrap gap-3 bg-white border border-slate-200 rounded-2xl p-3 shadow-sm" id="stuStatsBar">
+          <div class="flex-1 w-full sm:w-auto bg-blue-50 rounded-xl p-3 flex flex-col justify-center">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-lg leading-none">📦</span>
+              <span class="text-blue-700 font-bold text-[11px] uppercase tracking-wider">Tổng Hồ Sơ</span>
+            </div>
+            <span class="text-blue-700 font-black text-xl" id="stu-stat-total">0</span>
+          </div>
+          <div class="flex-1 w-full sm:w-auto bg-green-50 rounded-xl p-3 flex flex-col justify-center">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-lg leading-none">✅</span>
+              <span class="text-green-700 font-bold text-[11px] uppercase tracking-wider">Đã Cọc</span>
+            </div>
+            <span class="text-green-700 font-black text-xl" id="stu-stat-paid">0</span>
+          </div>
+          <div class="flex-1 w-full sm:w-auto bg-red-50 rounded-xl p-3 flex flex-col justify-center">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-lg leading-none">❌</span>
+              <span class="text-red-700 font-bold text-[11px] uppercase tracking-wider">Sai Tệp</span>
+            </div>
+            <span class="text-red-700 font-black text-xl" id="stu-stat-unqualified">0</span>
+          </div>
+          <div class="flex-1 w-full sm:w-auto bg-yellow-50 rounded-xl p-3 flex flex-col justify-center">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-lg leading-none">⏸️</span>
+              <span class="text-yellow-700 font-bold text-[11px] uppercase tracking-wider">Hẹn Sau</span>
+            </div>
+            <span class="text-yellow-700 font-black text-xl" id="stu-stat-postponed">0</span>
+          </div>
+        </div>
+
+        <!-- Thêm Search & Filter Realtime vào Kho STU Offline -->
+        <div id="stuFilterBar" class="bg-white border border-slate-200 rounded-2xl p-3 shadow-xs flex flex-col sm:flex-row items-center gap-3">
+          <div class="flex-1 w-full">
+            <input 
+              type="text" 
+              id="stuSearchInput" 
+              placeholder="Tìm kiếm trong kho STU (Tên, SĐT, Ghi chú)..." 
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 text-sm"
+              oninput="handleSTUSearch(event)"
+            />
+          </div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <button onclick="toggleSTUColumn('paid')" id="chip-stu-paid" class="px-3 py-1.5 rounded-full text-xs font-medium cursor-pointer transition-all bg-emerald-100 text-emerald-800 ring-2 ring-emerald-500">✅ Đã Cọc</button>
+            <button onclick="toggleSTUColumn('unqualified')" id="chip-stu-unqualified" class="px-3 py-1.5 rounded-full text-xs font-medium cursor-pointer transition-all bg-slate-200 text-slate-800 ring-2 ring-slate-400">❌ Sai Tệp</button>
+            <button onclick="toggleSTUColumn('postponed')" id="chip-stu-postponed" class="px-3 py-1.5 rounded-full text-xs font-medium cursor-pointer transition-all bg-amber-100 text-amber-800 ring-2 ring-amber-500">⏸️ Hẹn Sau</button>
+            <button onclick="resetSTUFilter()" class="px-3 py-1.5 rounded-full text-xs font-medium cursor-pointer transition-all bg-red-50 text-red-600 hover:bg-red-100">Xóa bộ lọc</button>
+          </div>
+        </div>
+
         <!-- 3 Cột Kho STU -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
           
@@ -909,6 +960,28 @@
       if (countPaid === 0) listPaid.innerHTML = `<div class="py-8 text-center text-slate-400 text-xs italic">Chưa có học viên cọc trong kho.</div>`;
       if (countUnqualified === 0) listUnqualified.innerHTML = `<div class="py-8 text-center text-slate-400 text-xs italic">Chưa có hồ sơ sai tệp.</div>`;
       if (countPostponed === 0) listPostponed.innerHTML = `<div class="py-8 text-center text-slate-400 text-xs italic">Chưa có hồ sơ bảo lưu.</div>`;
+
+      updateSTUStats();
+    }
+
+    function updateSTUStats() {
+      const listPaid = document.getElementById("archive-list-paid");
+      const listUnqualified = document.getElementById("archive-list-unqualified");
+      const listPostponed = document.getElementById("archive-list-postponed");
+
+      const paidCards = listPaid ? listPaid.querySelectorAll('.bg-white.border.border-slate-200.rounded-xl').length : 0;
+      const unqualCards = listUnqualified ? listUnqualified.querySelectorAll('.bg-white.border.border-slate-200.rounded-xl').length : 0;
+      const postCards = listPostponed ? listPostponed.querySelectorAll('.bg-white.border.border-slate-200.rounded-xl').length : 0;
+      
+      const elTotal = document.getElementById('stu-stat-total');
+      const elPaid = document.getElementById('stu-stat-paid');
+      const elUnqual = document.getElementById('stu-stat-unqualified');
+      const elPost = document.getElementById('stu-stat-postponed');
+
+      if (elTotal) elTotal.innerText = paidCards + unqualCards + postCards;
+      if (elPaid) elPaid.innerText = paidCards;
+      if (elUnqual) elUnqual.innerText = unqualCards;
+      if (elPost) elPost.innerText = postCards;
     }
 
     function createArchiveCard(l, cat) {
@@ -2173,6 +2246,77 @@
       evtSource.onerror = () => {
         document.getElementById("liveStatusText").innerText = "Đang kết nối lại...";
       };
+    }
+
+    // =============================================================
+    // CHỨC NĂNG TÌM KIẾM VÀ LỌC KHO STU OFFLINE THEO YÊU CẦU
+    // =============================================================
+    let stuSearchTimeout = null;
+
+    function handleSTUSearch(event) {
+      clearTimeout(stuSearchTimeout);
+      stuSearchTimeout = setTimeout(() => {
+        filterSTUCards(event.target.value);
+      }, 300);
+    }
+
+    function filterSTUCards(query) {
+      const q = query.toLowerCase().trim();
+      const lists = ['archive-list-paid', 'archive-list-unqualified', 'archive-list-postponed'];
+      
+      lists.forEach(listId => {
+        const listEl = document.getElementById(listId);
+        if (!listEl) return;
+        const cards = listEl.children;
+        for (let i = 0; i < cards.length; i++) {
+          const card = cards[i];
+          if (card.classList.contains('text-center') && card.classList.contains('italic')) continue;
+          if (card.textContent.toLowerCase().includes(q)) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        }
+      });
+    }
+
+    let stuColumnState = {
+      paid: true,
+      unqualified: true,
+      postponed: true
+    };
+
+    function toggleSTUColumn(category) {
+      stuColumnState[category] = !stuColumnState[category];
+      const listEl = document.getElementById('archive-list-' + category);
+      if (!listEl) return;
+      
+      const colEl = listEl.parentElement;
+      const chipEl = document.getElementById('chip-stu-' + category);
+      
+      if (stuColumnState[category]) {
+        colEl.style.display = '';
+        chipEl.classList.add('ring-2');
+        chipEl.style.opacity = '1';
+      } else {
+        colEl.style.display = 'none';
+        chipEl.classList.remove('ring-2');
+        chipEl.style.opacity = '0.5';
+      }
+    }
+
+    function resetSTUFilter() {
+      const input = document.getElementById('stuSearchInput');
+      if (input) {
+        input.value = '';
+        filterSTUCards('');
+      }
+      
+      ['paid', 'unqualified', 'postponed'].forEach(cat => {
+        if (!stuColumnState[cat]) {
+          toggleSTUColumn(cat);
+        }
+      });
     }
 
     if (document.readyState === "loading") {

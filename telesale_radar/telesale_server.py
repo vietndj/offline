@@ -476,6 +476,11 @@ async def sse_events(request: Request):
         }
     )
 
+@app.get("/api/stu/stats")
+async def stu_stats():
+    stats = engine.get_stu_stats()
+    return JSONResponse(content=stats)
+
 
 if __name__ == "__main__":
     import uvicorn

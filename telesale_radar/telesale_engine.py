@@ -1637,6 +1637,48 @@ def unarchive_lead(phone: str) -> Dict[str, Any]:
     return {"success": True, "phone": clean_phone, "is_archived": False}
 
 
+def get_stu_stats() -> dict:
+    """Thống kê số lượng học viên đã lưu kho STU."""
+    try:
+        cache = load_local_cache()
+    except Exception:
+        cache = {}
+        
+    stats = {
+        "total": 0,
+        "paid": 0,
+        "unqualified": 0,
+        "postponed": 0,
+        "last_archived_at": None
+    }
+    
+    if not cache:
+        return stats
+        
+    latest_dt = None
+    
+    for phone, data in cache.items():
+        if data.get("is_archived"):
+            stats["total"] += 1
+            cat = data.get("archive_category")
+            if cat in ["paid", "unqualified", "postponed"]:
+                stats[cat] += 1
+                
+            archived_at_str = data.get("archived_at")
+            if archived_at_str:
+                try:
+                    dt = datetime.strptime(archived_at_str, "%d/%m/%Y %H:%M:%S")
+                    if latest_dt is None or dt > latest_dt:
+                        latest_dt = dt
+                except Exception:
+                    pass
+                    
+    if latest_dt:
+        stats["last_archived_at"] = latest_dt.strftime("%Y-%m-%dT%H:%M:%S")
+        
+    return stats
+
+
 if __name__ == "__main__":
     print("🚀 Đang tổng hợp dữ liệu từ tất cả các nguồn...")
     leads = aggregate_all_leads()
