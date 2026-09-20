@@ -1405,6 +1405,17 @@ export const CONTENT: ContentData = {
     ],
     videos: [
       {
+        id: "trang-truong",
+        title: "Thành phẩm thực hành video",
+        author: "Trang Chương",
+        role: "Học viên",
+        desc: "Thành phẩm thực hành quay và dựng video tại lớp.",
+        poster: "/assets/showcase/trang_truong_poster.jpg",
+        youtubeUrl: "https://youtu.be/ENDC8YNSC8U",
+        category: "lifestyle_walktalk",
+        categoryLabel: "Đời Thường Xây Kênh / Walk & Talk"
+      },
+      {
         id: "chien-bds",
         title: "Thực hành video Bất Động Sản",
         author: "Nguyễn Hữu Chiến",
