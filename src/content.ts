@@ -1405,6 +1405,17 @@ export const CONTENT: ContentData = {
     ],
     videos: [
       {
+        id: "trang",
+        title: "Thành phẩm thực hành video",
+        author: "Học viên Trang",
+        role: "Học viên",
+        desc: "Thành phẩm thực hành quay và dựng video tại lớp.",
+        poster: "/assets/showcase/trang_poster.jpg",
+        videoUrl: "/assets/showcase/trang.mp4",
+        category: "lifestyle_walktalk",
+        categoryLabel: "Đời Thường Xây Kênh / Walk & Talk"
+      },
+      {
         id: "le-quynh-anh-k3",
         title: "Thành phẩm thực hành video",
         author: "Lê Quỳnh Anh",
