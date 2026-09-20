@@ -1411,7 +1411,7 @@ export const CONTENT: ContentData = {
         role: "Bất Động Sản",
         desc: "Thành phẩm quay dựng kịch bản bán hàng thực chiến tại lớp.",
         poster: "/assets/showcase/chien_bds_poster.jpg",
-        youtubeUrl: "",
+        youtubeUrl: "https://youtu.be/RT-ZMLyvad8",
         category: "expert_talkinghead",
         categoryLabel: "Bán Hàng / Talking Head"
       },
@@ -1422,7 +1422,7 @@ export const CONTENT: ContentData = {
         role: "Học viên",
         desc: "Thành phẩm thực hành quay và dựng video tại lớp.",
         poster: "/assets/showcase/trang_poster.jpg",
-        youtubeUrl: "",
+        youtubeUrl: "https://youtu.be/NvR304kJ2ZM",
         category: "lifestyle_walktalk",
         categoryLabel: "Đời Thường Xây Kênh / Walk & Talk"
       },
