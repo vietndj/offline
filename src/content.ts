@@ -1405,6 +1405,17 @@ export const CONTENT: ContentData = {
     ],
     videos: [
       {
+        id: "tang-xinh",
+        title: "Thành phẩm thực hành video",
+        author: "Tầng Xinh",
+        role: "Học viên",
+        desc: "Thành phẩm thực hành quay và dựng video tại lớp.",
+        poster: "/assets/showcase/tang_xinh_poster.jpg",
+        youtubeUrl: "https://youtu.be/RQjMz5QVW9s",
+        category: "lifestyle_walktalk",
+        categoryLabel: "Đời Thường Xây Kênh / Walk & Talk"
+      },
+      {
         id: "trang-truong",
         title: "Thành phẩm thực hành video",
         author: "Trang Chương",
