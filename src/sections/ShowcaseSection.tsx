@@ -207,9 +207,9 @@ export const ShowcaseSection: React.FC = () => {
                     <Play className="w-3.5 h-3.5 fill-current" />
                     <span>{showcase.ui.watchVideo}</span>
                   </button>
-                  {vid.youtubeUrl && (
+                  {(vid.youtubeUrl || vid.fbUrl) && (
                     <a
-                      href={vid.youtubeUrl}
+                      href={vid.youtubeUrl || vid.fbUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-1 text-zinc-500 hover:text-zinc-300 transition-colors"
@@ -294,14 +294,22 @@ export const ShowcaseSection: React.FC = () => {
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 />
+              ) : selectedVideo.fbUrl ? (
+                <iframe
+                  src={`https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(selectedVideo.fbUrl)}&show_text=false`}
+                  title={selectedVideo.title}
+                  className="w-full h-full border-0"
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                  allowFullScreen
+                />
               ) : null}
             </div>
 
             <div className="flex items-center justify-between text-xs text-zinc-400 font-mono pt-1">
               <span>{selectedVideo.author} • {selectedVideo.role}</span>
-              {selectedVideo.youtubeUrl && (
+              {(selectedVideo.youtubeUrl || selectedVideo.fbUrl) && (
                 <a
-                  href={selectedVideo.youtubeUrl}
+                  href={selectedVideo.youtubeUrl || selectedVideo.fbUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-emerald-400 hover:underline flex items-center gap-1"

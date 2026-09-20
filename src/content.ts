@@ -404,6 +404,7 @@ export interface ContentData {
       desc: string;
       poster: string;
       youtubeUrl?: string;
+      fbUrl?: string;
       videoUrl?: string;
       category: string;
       categoryLabel: string;
@@ -1403,6 +1404,17 @@ export const CONTENT: ContentData = {
       { id: "expert_talkinghead", label: "Bán Hàng / Talking Head" }
     ],
     videos: [
+      {
+        id: "le-quynh-anh-k3",
+        title: "Thành phẩm thực hành video",
+        author: "Lê Quỳnh Anh",
+        role: "Học viên Offline K3",
+        desc: "Thành phẩm thực hành quay và dựng video từ lớp Offline K3.",
+        poster: "/assets/showcase/le_quynh_anh_poster.jpg",
+        fbUrl: "https://www.facebook.com/share/v/19BCNGw6DT/?mibextid=wwXIfr",
+        category: "lifestyle_walktalk",
+        categoryLabel: "Đời Thường Xây Kênh / Walk & Talk"
+      },
       {
         id: "vu-hai-long",
         title: "Tâm sự làm nghề: Thà mất thêm giờ còn hơn để khách hối hận",
