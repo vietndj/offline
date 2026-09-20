@@ -1405,6 +1405,17 @@ export const CONTENT: ContentData = {
     ],
     videos: [
       {
+        id: "chien-bds",
+        title: "Thực hành video Bất Động Sản",
+        author: "Nguyễn Hữu Chiến",
+        role: "Bất Động Sản",
+        desc: "Thành phẩm quay dựng kịch bản bán hàng thực chiến tại lớp.",
+        poster: "/assets/showcase/chien_bds_poster.jpg",
+        videoUrl: "/assets/showcase/chien_bds.mp4",
+        category: "expert_talkinghead",
+        categoryLabel: "Bán Hàng / Talking Head"
+      },
+      {
         id: "trang",
         title: "Thành phẩm thực hành video",
         author: "Học viên Trang",
