@@ -297,7 +297,7 @@ export const ShowcaseSection: React.FC = () => {
                 />
               ) : selectedVideo.youtubeUrl ? (
                 <iframe
-                  src={`https://www.youtube-nocookie.com/embed/${selectedVideo.id}?autoplay=1&rel=0&modestbranding=1`}
+                  src={`https://www.youtube-nocookie.com/embed/${selectedVideo.youtubeUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/)?.[1] || selectedVideo.id}?autoplay=1&rel=0&modestbranding=1`}
                   title={selectedVideo.title}
                   className="w-full h-full border-0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
