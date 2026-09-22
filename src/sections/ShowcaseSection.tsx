@@ -196,6 +196,15 @@ export const ShowcaseSection: React.FC = () => {
                   <p className="font-sans text-xs sm:text-sm text-zinc-400 line-clamp-2 mt-2 leading-relaxed">
                     {vid.desc}
                   </p>
+                  
+                  {vid.feedback && (
+                    <div className="mt-3 p-3 bg-zinc-900/50 rounded-lg border border-zinc-800/50">
+                      <p className="font-sans text-[11px] font-bold text-emerald-400/90 uppercase tracking-wider mb-1.5">Nhận xét của giảng viên:</p>
+                      <p className="font-sans text-xs text-zinc-400 leading-relaxed line-clamp-4 whitespace-pre-wrap">
+                        {vid.feedback}
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 {/* Bottom Actions */}
