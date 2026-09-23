@@ -306,6 +306,108 @@ def get_stats():
     return {"active_leads": 10, "calls_today": 5}
 
 # Mount static files at the end
+
+class AppleSyncRequest(BaseModel):
+    apple_name: str
+
+@app.post("/api/contacts/{contact_id}/sync-apple")
+async def sync_apple_contact(contact_id: int, req: AppleSyncRequest):
+    conn = get_connection()
+    c = conn.cursor()
+    c.execute("SELECT phone FROM contacts WHERE id=?", (contact_id,))
+    row = c.fetchone()
+    if not row:
+        conn.close()
+        raise HTTPException(status_code=404, detail="Not found")
+    
+    phone = row['phone']
+    name = req.apple_name.strip()
+    
+    # Run applescript
+    script = f'''
+    tell application "Contacts"
+        set newPerson to make new person with properties {{last name:"{name}"}}
+        make new phone at end of phones of newPerson with properties {{label:"Mobile", value:"{phone}"}}
+        save
+    end tell
+    '''
+    import subprocess
+    try:
+        subprocess.run(["osascript", "-e", script], check=True)
+    except Exception as e:
+        conn.close()
+        raise HTTPException(status_code=500, detail=str(e))
+        
+    # Update DB
+    c.execute("UPDATE contacts SET apple_contact_synced=1 WHERE id=?", (contact_id,))
+    
+    # Also update radar_override to remember the name if we want
+    c.execute("SELECT radar_override FROM contacts WHERE id=?", (contact_id,))
+    r_row = c.fetchone()
+    import json
+    override = {}
+    if r_row and r_row['radar_override']:
+        try:
+            override = json.loads(r_row['radar_override'])
+        except:
+            pass
+    override['name'] = name
+    c.execute("UPDATE contacts SET radar_override=? WHERE id=?", (json.dumps(override, ensure_ascii=False), contact_id))
+    
+    conn.commit()
+    conn.close()
+    return {"status": "success", "apple_name": name}
+
+
+class NoteRequest(BaseModel):
+    text: str
+    author: str
+
+@app.post("/api/contacts/{contact_id}/notes")
+async def add_contact_note(contact_id: int, req: NoteRequest):
+    conn = get_connection()
+    c = conn.cursor()
+    c.execute("SELECT notes FROM contacts WHERE id=?", (contact_id,))
+    row = c.fetchone()
+    if not row:
+        conn.close()
+        raise HTTPException(status_code=404, detail="Not found")
+        
+    import json
+    from datetime import datetime
+    notes = []
+    if row['notes']:
+        try:
+            notes = json.loads(row['notes'])
+        except:
+            pass
+            
+    # Add new note
+    now_str = datetime.now().isoformat()
+    notes.insert(0, {
+        "text": req.text,
+        "source": "telesale",
+        "author": req.author,
+        "timestamp": now_str
+    })
+    
+    # Update DB
+    c.execute("UPDATE contacts SET notes=?, updated_at=? WHERE id=?", (json.dumps(notes, ensure_ascii=False), now_str, contact_id))
+    conn.commit()
+    conn.close()
+    return {"status": "success", "notes": notes}
+
+
+@app.get("/api/ai/training-data")
+async def get_ai_training_data():
+    import json
+    import os
+    file_path = '/Users/vietmac/Documents/CODE/offline/command_center/duyettin_scripts.json'
+    if os.path.exists(file_path):
+        with open(file_path, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return {"error": "No data found"}
+
 app.mount("/web", StaticFiles(directory="/Users/vietmac/Documents/CODE/offline/command_center/web"), name="web")
 app.mount("/", StaticFiles(directory="/Users/vietmac/Documents/CODE/offline/command_center/web", html=True), name="root")
 

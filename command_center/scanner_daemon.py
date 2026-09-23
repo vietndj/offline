@@ -58,7 +58,7 @@ def scan_calls():
                 stage = contact["stage"]
                 
                 unix_ts = date + APPLE_EPOCH_OFFSET
-                dt = datetime.fromcreated_at(unix_ts).isoformat()
+                dt = datetime.fromtimestamp(unix_ts).isoformat()
                 
                 direction = "outbound" if originated else "inbound"
                 content = f"Call duration: {duration} seconds"
@@ -118,7 +118,7 @@ def scan_imessages():
                     date_val = date_val / 1000000000
                 
                 unix_ts = date_val + APPLE_EPOCH_OFFSET
-                dt = datetime.fromcreated_at(unix_ts).isoformat()
+                dt = datetime.fromtimestamp(unix_ts).isoformat()
                 
                 direction = "outbound" if is_from_me else "inbound"
                 channel = "imessage" # simplify

@@ -114,6 +114,44 @@ const App = () => {
 
 // --- Contact Drawer (Global) ---
 const ContactDrawer = ({ contact, onClose, showToast, onShare }) => {
+    const [isEditingApple, setIsEditingApple] = useState(false);
+    
+    // Default name for Apple Contact logic
+    let initialAppleName = contact.name || "";
+    try {
+        if (contact.radar_override) {
+            const r = JSON.parse(contact.radar_override);
+            if (r.name) initialAppleName = r.name;
+        }
+    } catch(e) {}
+    if (!initialAppleName.startsWith("offline3 - ")) {
+       initialAppleName = "offline3 - " + initialAppleName;
+    }
+    
+    const [appleNameInput, setAppleNameInput] = useState(initialAppleName);
+    const [isSynced, setIsSynced] = useState(contact.apple_contact_synced === 1 || contact.apple_contact_synced === "1");
+    const [displayAppleName, setDisplayAppleName] = useState(initialAppleName);
+    
+    const handleSyncApple = async () => {
+        try {
+            const res = await fetch('/api/contacts/'+contact.id+'/sync-apple', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ apple_name: appleNameInput })
+            });
+            if (res.ok) {
+                setIsSynced(true);
+                setDisplayAppleName(appleNameInput);
+                setIsEditingApple(false);
+                showToast('✅ Đã đồng bộ lên Danh bạ iCloud!');
+                // optimistically update contact object
+                contact.apple_contact_synced = 1;
+            } else {
+                showToast('❌ Lỗi lưu danh bạ!');
+            }
+        } catch(e) { showToast('❌ Lỗi mạng!'); }
+    };
+
     const isOnlineCourse = (contact.class_name && (contact.class_name.includes('Online') || contact.class_name.includes('Skool'))) || 
                            (contact.tags && contact.tags.includes('Khóa Online'));
                            
@@ -138,14 +176,7 @@ const ContactDrawer = ({ contact, onClose, showToast, onShare }) => {
     if (tiktokMatch) socials.push({type: 'TikTok', url: tiktokMatch[0]});
     
     // Check Apple Sync
-    const isAppleSynced = contact.apple_contact_synced === 1 || contact.apple_contact_synced === "1";
-    let appleName = contact.name;
-    try {
-        if (contact.radar_override) {
-            const r = JSON.parse(contact.radar_override);
-            if (r.name) appleName = r.name;
-        }
-    } catch(e) {}
+    
 
     // Grouping Context/Notes
     const renderContext = (text) => {
@@ -170,10 +201,18 @@ const ContactDrawer = ({ contact, onClose, showToast, onShare }) => {
                    <h3 className="font-bold text-xl title-short text-gray-900">{contact.name}</h3>
                    <div className="flex gap-2 mt-1">
                       {isOnlineCourse && <span className="bg-purple-100 text-purple-800 text-xs px-2 py-0.5 rounded font-bold">🎓 Học viên Online</span>}
-                      {isAppleSynced ? (
-                          <span className="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded font-bold">📱 Danh bạ: {appleName}</span>
+                      {isSynced ? (
+                          <span className="bg-green-100 text-green-800 text-xs px-2.5 py-1 rounded font-bold shadow-sm border border-green-200">📱 iCloud: {displayAppleName}</span>
                       ) : (
-                          <span className="bg-gray-200 text-gray-600 text-xs px-2 py-0.5 rounded font-bold">📱 Chưa lưu danh bạ</span>
+                          isEditingApple ? (
+                              <div className="flex items-center gap-1.5 mt-1">
+                                  <input type="text" value={appleNameInput} onChange={e => setAppleNameInput(e.target.value)} className="border border-gray-300 rounded px-2.5 py-1 text-xs outline-none focus:border-blue-500 shadow-sm w-40 font-medium" placeholder="Tên danh bạ..." autoFocus />
+                                  <button onClick={handleSyncApple} className="bg-green-600 hover:bg-green-700 text-white text-xs px-3 py-1.5 rounded font-bold shadow-sm transition">Lưu</button>
+                                  <button onClick={() => setIsEditingApple(false)} className="bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded font-bold shadow-sm transition">Hủy</button>
+                              </div>
+                          ) : (
+                              <span onClick={() => setIsEditingApple(true)} className="bg-gray-200 text-gray-600 text-xs px-2.5 py-1 rounded font-bold cursor-pointer hover:bg-gray-300 hover:text-gray-800 transition shadow-sm border border-gray-300">📱 Chưa lưu (Bấm sửa & lưu)</span>
+                          )
                       )}
                    </div>
                </div>

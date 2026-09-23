@@ -1,0 +1,27 @@
+{
+  "total_samples": 42,
+  "accuracy": 89.5,
+  "samples": [
+    {
+      "id": 1,
+      "user_message": "Em ơi anh ở xa không học offline được, có học online không?",
+      "ai_suggestion": "Dạ vâng thưa anh, bên em có khóa học online được thiết kế rất chi tiết và dễ hiểu ạ. Anh có muốn đăng ký không?",
+      "mentor_correction": "Sửa lại: Bỏ văn mẫu 'Dạ vâng thưa anh', 'thiết kế rất chi tiết'. Dùng giọng thực chiến, mộc mạc, anh-anh, điều hướng sang khóa Skool.",
+      "approved_reply": "Có khóa Online trên nền tảng Skool anh nhé. Học qua video quay sẵn nhưng lộ trình thực chiến như anh học trực tiếp. Anh đang làm mảng nào để em tư vấn xem có hợp không?"
+    },
+    {
+      "id": 2,
+      "user_message": "Khóa video này bao tiền vậy bạn?",
+      "ai_suggestion": "Chào bạn, khóa học video bên mình có giá là 5.000.000đ, hiện đang được giảm giá còn 3.500.000đ. Bạn đăng ký sớm nhé!",
+      "mentor_correction": "Sửa lại: Không báo giá ngay lập tức. Áp dụng kỹ thuật bóc tách tâm lý, hỏi ngược lại xem họ đang bị kẹt ở khâu nào (quay hay dựng).",
+      "approved_reply": "Anh định học để tự xây kênh hay làm dịch vụ cho người khác? Bị kẹt ở khâu lên kịch bản hay dựng video? Anh cứ nói rõ vấn đề em xem khóa nào giải quyết đúng bệnh thì mới báo giá nhé."
+    },
+    {
+      "id": 3,
+      "user_message": "Cho anh xin địa chỉ qua xem trước được không?",
+      "ai_suggestion": "Địa chỉ bên em ở Tầng 3, tòa nhà... Mời anh qua tham quan ạ.",
+      "mentor_correction": "Sửa lại: Đúng trọng tâm, không mời lơi. Nói rõ thời gian có người trực.",
+      "approved_reply": "Trung tâm ở Tầng 3, tòa nhà... Anh qua thì báo trước em 30 phút để em sắp xếp người hỗ trợ nhé."
+    }
+  ]
+}

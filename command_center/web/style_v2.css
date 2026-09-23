@@ -1,0 +1,356 @@
+/* ═══ 1. FEDU BRAND FONT DECLARATIONS ═══ */
+@font-face {
+  font-family: 'FD Aeonik Extended';
+  src: url('https://font.fedu.vn/fonts/FDAeonikExtended-Bold.woff2?v=20260911b') format('woff2'),
+       local('FD Aeonik Extended Bold');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'FD Aeonik';
+  src: url('https://font.fedu.vn/fonts/FDAeonikExtended-SemiBold.woff2?v=20260911b') format('woff2'),
+       local('FD Aeonik SemiBold');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'FD Aeonik';
+  src: url('./fonts/FDAeonikRegular.ttf') format('truetype'),
+       local('FD Aeonik Regular');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Tiempos Text';
+  src: local('FDTiemposText-Regular'),
+       local('Tiempos Text Regular'),
+       local('TiemposText-Regular'),
+       url('https://font.fedu.vn/fonts/FDTiemposText-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Tiempos Text';
+  src: local('FDTiemposText-Medium'),
+       local('Tiempos Text Medium'),
+       local('TiemposText-Medium'),
+       url('https://font.fedu.vn/fonts/FDTiemposText-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ═══ 2. SWISS DESIGN SYSTEM TOKENS ═══ */
+:root {
+  /* Typography System */
+  --font-display-short: 'FD Aeonik Extended', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display-long: 'FD Aeonik', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Tiempos Text', Georgia, serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Colors - Zebra Striping & Slate Theme */
+  --cl-bg-header:   #07090e;     /* Deepest Onyx */
+  --cl-bg-tint:     #f8fafc;     /* Slate 50 */
+  --cl-bg-light:    #ffffff;
+  --cl-card:        #ffffff;
+  --cl-text-base:   #090d16;     /* Slate 950 */
+  --cl-text-body:   #0f172a;     /* Slate 900 */
+  --cl-text-muted:  #475569;     /* Slate 600 */
+  --cl-text-faint:  #94a3b8;     /* Slate 400 */
+  --cl-accent:      #1a73e8;     /* Royal Blue */
+  --cl-accent-led:  #eab308;     /* LED Amber Gold */
+  --primary-color:  #07090e;     /* Swiss Onyx */
+  
+  --cl-line:        rgba(0, 0, 0, 0.08);
+  --cl-line-dark:   rgba(255, 255, 255, 0.1);
+  --cl-line-strong: rgba(255, 255, 255, 0.2);
+
+  /* Apple Motion Curves */
+  --apple-spring: cubic-bezier(0.25, 1, 0.35, 1.05);
+  --apple-ease:   cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body {
+  background-color: var(--cl-bg-tint);
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-display-long);
+  color: var(--cl-text-base);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══ 3. TYPOGRAPHY CLASSES ═══ */
+.title-short {
+  font-family: var(--font-display-short);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+
+.title-long {
+  font-family: var(--font-display-long);
+  font-weight: 600;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.cl-body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--cl-text-body);
+  font-size: 15.5px;
+  line-height: 1.75;
+}
+
+.editorial-hook {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--cl-text-base);
+  border-left: 3px solid var(--cl-accent-led);
+  padding-left: 1rem;
+}
+
+/* ═══ 4. HEADER & PILLS ═══ */
+.brand-header {
+  background-color: var(--cl-bg-header);
+  border-bottom: 1px solid var(--cl-line-dark);
+}
+
+.cl-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--cl-line-strong);
+  color: var(--cl-accent-led);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+}
+
+.status-dot.active {
+  background-color: #22c55e;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+}
+.status-dot.active::after {
+  content: '';
+  position: absolute;
+  top: -2px; left: -2px; right: -2px; bottom: -2px;
+  border-radius: 50%;
+  border: 1px solid rgba(34, 197, 94, 0.6);
+  animation: pulse-ring 2s infinite;
+}
+
+.status-dot.error {
+  background-color: #ef4444;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* ═══ 5. ZEBRA STRIPING ═══ */
+.cl-zebra--light {
+  background-color: var(--cl-bg-light);
+}
+
+.cl-zebra--tint {
+  background-color: var(--cl-bg-tint);
+  border-bottom: 1px solid var(--cl-line);
+}
+
+/* ═══ 6. TABS NAVIGATION ═══ */
+.tab-nav {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 0.35rem 0;
+}
+.tab-nav::-webkit-scrollbar {
+  display: none;
+}
+.tab-item {
+  padding: 0.55rem 1.15rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: var(--font-display-long);
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--cl-text-muted);
+  background-color: var(--cl-bg-light);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  transition: all 0.22s var(--apple-ease);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.tab-item:hover {
+  background-color: #f1f5f9;
+  color: var(--cl-text-base);
+  border-color: rgba(0, 0, 0, 0.16);
+  transform: translateY(-1px);
+}
+.tab-item.active {
+  background-color: var(--cl-bg-header);
+  color: #ffffff;
+  border-color: var(--cl-bg-header);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ═══ 7. KANBAN BOARD ═══ */
+.kanban-board {
+  display: flex;
+  overflow-x: auto;
+  height: 100%;
+  gap: 1.25rem;
+  padding: 0.5rem 0;
+}
+
+.kanban-col {
+  flex: 0 0 320px;
+  background: #f1f5f9;
+  border-radius: 16px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.kanban-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 0.85rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  cursor: grab;
+  transition: transform 0.25s var(--apple-spring), box-shadow 0.25s var(--apple-ease), border-color 0.2s ease;
+}
+.kanban-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -3px rgba(0, 0, 0, 0.08);
+  border-color: rgba(234, 179, 8, 0.5); /* Amber accent */
+}
+.kanban-card:active {
+  cursor: grabbing;
+  transform: scale(0.98);
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  font-family: var(--font-mono);
+}
+.badge-yellow { background: #fef9c3; color: #854d0e; border: 1px solid #fef08a; }
+.badge-blue { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+.badge-green { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+.badge-purple { background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
+
+/* ═══ 8. DRAWER & MODAL ═══ */
+.drawer-overlay {
+  background: rgba(7, 9, 14, 0.6);
+  backdrop-filter: blur(6px);
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 40;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--apple-ease);
+}
+.drawer-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.drawer {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: 100%;
+  max-width: 520px;
+  background: #ffffff;
+  z-index: 50;
+  box-shadow: -12px 0 40px rgba(0, 0, 0, 0.2);
+  transform: translateX(100%);
+  transition: transform 0.4s var(--apple-spring);
+  display: flex;
+  flex-direction: column;
+}
+.drawer.open {
+  transform: translateX(0);
+}
+
+/* ═══ 9. BUTTONS ═══ */
+.btn-fedu {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 13.5px;
+  transition: all 0.2s var(--apple-ease);
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.btn-fedu:hover {
+  transform: translateY(-1px);
+}
+.btn-fedu-primary {
+  background-color: var(--cl-bg-header);
+  color: #ffffff;
+}
+.btn-fedu-primary:hover {
+  background-color: #1a2233;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .kanban-board {
+    flex-direction: column;
+    height: auto;
+  }
+  .kanban-col {
+    flex: auto;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  .tab-item {
+    font-size: 12.5px;
+    padding: 0.45rem 0.9rem;
+  }
+}

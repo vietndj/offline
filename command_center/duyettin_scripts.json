@@ -1,0 +1,26 @@
+{
+  "total_scripts": 75,
+  "samples": [
+    {
+      "id": 1,
+      "user_message": "Khách hỏi trên Fanpage: 'Khóa 999k gồm 4 khóa tạo video, vậy người không biết gì có được hỗ trợ hỏi đáp không? Sợ xem video vẫn không làm được'",
+      "ai_suggestion": "Phương án 1 (Hỗ trợ kỹ thuật): Dạ chị yên tâm, khóa học có group Zalo hỗ trợ trọn đời.\nPhương án 2 (Bán hàng): Khóa học thiết kế rất chi tiết, dễ hiểu, bảo đảm học xong làm được ngay.",
+      "mentor_correction": "Sửa lại: Bỏ văn mẫu. Xóa tan nỗi sợ bằng cách chứng minh hỗ trợ 1-1 qua Zalo, không phải group chung.",
+      "approved_reply": "Chị yên tâm, khóa học bên em không phải vứt video cho chị tự bơi. Trong quá trình học, chị kẹt ở đâu (từ cài app, lấy nhạc, đến bí ý tưởng), chị quay màn hình gửi thẳng vào Zalo cá nhân của em. Em trực tiếp xem và sửa lỗi cho chị 1-1 luôn nhé."
+    },
+    {
+      "id": 2,
+      "user_message": "Khách nhắn: 'Bn 1 khóa ak'",
+      "ai_suggestion": "Phương án 1: Dạ khóa học đang giảm giá còn 599k ạ.\nPhương án 2: Chào bạn, khóa học quay dựng video có giá 599k, học online trọn đời.",
+      "mentor_correction": "Sửa lại: Bỏ chữ Dạ. Không báo giá cộc lốc. Gửi luôn link landing page để họ tự xem lộ trình.",
+      "approved_reply": "Chào bạn, mình là Việt. Khóa học quay & dựng video thực chiến hiện đang có học phí ưu đãi 599.000đ. Bạn xem chi tiết các bài học mẫu và lộ trình ở đây trước xem có đúng nhu cầu không nhé: https://video.fedu.vn"
+    },
+    {
+      "id": 3,
+      "user_message": "Khách nhắn: 'Mình ngại xuất hiện trước ống kính thì học khóa này làm kênh được không?'",
+      "ai_suggestion": "Phương án 1: Được bạn nhé, khóa có dạy cách làm video không cần lộ mặt.\nPhương án 2: Bạn cứ tự tin lên, trong khóa sẽ có bài dạy vượt qua nỗi sợ camera.",
+      "mentor_correction": "Sửa lại: Đánh trúng tâm lý, đưa ra giải pháp B-roll + Voice-over ngay lập tức.",
+      "approved_reply": "Được chứ bạn. Xu hướng bây giờ là làm video Tách rời hình - tiếng (Quay B-roll). Bạn chỉ cần cầm điện thoại quay cảnh đời thường hoặc góc làm việc, sau đó ngồi trong phòng kín thu âm Voice-over lồng vào. Không cần lộ mặt, không cần diễn xuất mà video vẫn rất nghệ. Trong khóa mình hướng dẫn kỹ kỹ thuật này nhé."
+    }
+  ]
+}
