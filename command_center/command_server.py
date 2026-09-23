@@ -85,7 +85,7 @@ def get_contact(id: int):
     if not contact:
         conn.close()
         raise HTTPException(status_code=404, detail="Contact not found")
-    c.execute("SELECT * FROM conversations WHERE contact_id = ? ORDER BY timestamp DESC", (id,))
+    c.execute("SELECT * FROM conversations WHERE contact_id = ? ORDER BY created_at DESC", (id,))
     convs = c.fetchall()
     conn.close()
     res = dict(contact)
@@ -147,7 +147,7 @@ def add_note(id: int, data: NoteData):
     conn = get_connection()
     c = conn.cursor()
     now = datetime.now().isoformat()
-    c.execute("INSERT INTO conversations (contact_id, channel, direction, content, timestamp) VALUES (?, 'note', 'outbound', ?, ?)", 
+    c.execute("INSERT INTO conversations (contact_id, channel, direction, content, created_at) VALUES (?, 'note', 'outbound', ?, ?)", 
               (id, data.note, now))
     c.execute("UPDATE contacts SET updated_at = ? WHERE id = ?", (now, id))
     conn.commit()
@@ -168,7 +168,7 @@ def list_inbox(contact_id: Optional[int] = None, channel: Optional[str] = None, 
     if channel:
         query += " AND channel = ?"
         params.append(channel)
-    query += " ORDER BY timestamp DESC LIMIT ? OFFSET ?"
+    query += " ORDER BY created_at DESC LIMIT ? OFFSET ?"
     params.extend([limit, offset])
     c.execute(query, params)
     rows = c.fetchall()
