@@ -1,530 +1,233 @@
 {
-  "total_scripts": 75,
+  "total_scripts": 25,
+  "description": "Kho tàng các tình huống khách hàng thực tế trên Fanpage được Anh Việt trực tiếp duyệt và chấn chỉnh văn phong mộc mạc nhất.",
+  "last_updated": "2026-09-24T01:05:00+07:00",
+  "source": "Lịch sử duyệt tin thực tế (Session 4253953e, 9671bf18, duyettin.fedu.vn)",
   "samples": [
     {
       "id": 1,
-      "user_message": "Khách hỏi trên Fanpage: 'Khóa 999k gồm 4 khóa tạo video, vậy người không biết gì có được hỗ trợ hỏi đáp không? Sợ xem video vẫn không làm được'",
-      "ai_suggestion": "Phương án 1 (Hỗ trợ kỹ thuật): Dạ chị yên tâm, khóa học có group Zalo hỗ trợ trọn đời.\nPhương án 2 (Bán hàng): Khóa học thiết kế rất chi tiết, dễ hiểu, bảo đảm học xong làm được ngay.",
-      "mentor_correction": "Sửa lại: Bỏ văn mẫu. Xóa tan nỗi sợ bằng cách chứng minh hỗ trợ 1-1 qua Zalo, không phải group chung.",
-      "approved_reply": "Chị yên tâm, khóa học bên em không phải vứt video cho chị tự bơi. Trong quá trình học, chị kẹt ở đâu (từ cài app, lấy nhạc, đến bí ý tưởng), chị quay màn hình gửi thẳng vào Zalo cá nhân của em (0934.688.632). Em trực tiếp xem và sửa lỗi cho chị 1-1 luôn nhé."
+      "customer_name": "Chị Đặng Lý",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Khách nhắn trên Fanpage: 'Mình ko biết quay dựng nên đang cần tìm khoá off -> B có lớp off rồi à'",
+      "ai_suggestion": "Phương án 1 (AI draft ban đầu): Dạ chào bạn, bên mình có lớp offline. Học phí cọc trước 1.500.000đ qua Techcombank 4101986. Bạn chuyển khoản để giữ chỗ nhé.\nPhương án 2: Giới thiệu dài dòng về mô hình đào tạo 4 tầng nhận thức và đóng gói câu chuyện nghề.",
+      "mentor_correction": "Anh Việt nhắc chấn chỉnh trực tiếp: 'Tư từ chưa đúng, địa điểm gần Aeon Mall Long Biên. Và ko nói cách đóng gói câu chuyện nghề. Nói về cách tôi nói gần đây về việc có niềm tin thông qua bóc tách nội dung và từ trải nghiệm thật đóng gói thành video nhưng nói gọn dễ hiểu 1 câu thôi. Xưng là em Việt (trực tiếp hướng dẫn mình), số Zalo cá nhân (0934688632). Tiền chưa gửi vội, nghe con buôn quá, khi nào tôi bảo gửi mới gửi. Không gọi anh/chị, tự bóc tách gọi đích danh chị Lý. Bỏ cụm 4 tầng nghe khó hiểu và dài dòng, khóa online để xem lại phần trên lớp không đủ thời gian. Thêm cam kết: Không để chị về tay không, làm xong ít nhất 3 video hoàn chỉnh.'",
+      "approved_reply": "Dạ em chào chị Lý! Em là Việt (người trực tiếp hướng dẫn lớp) đây ạ.\nBên em có lớp Offline thực chiến cầm tay chỉ việc trong 2 ngày Thứ 7 & Chủ Nhật tuần này (19 – 20/09, từ 9h00 đến 17h00) tại Hà Nội (khu vực gần Aeon Mall Long Biên).\n\nLớp này em trực tiếp nắn từng góc quay điện thoại và hướng dẫn chị cách biến đúng trải nghiệm thật của mình thành video tạo niềm tin để bán hàng và xây kênh.\n\nĐặc biệt em cam kết: Không để chị về tay không, sau 2 ngày tại lớp chị sẽ tự tay làm xong ít nhất 3 sản phẩm video hoàn chỉnh theo đúng các định dạng hiệu quả nhất hiện nay để đăng bài luôn.\n\nHọc phí trọn gói 2 ngày là 3.000.000đ (được tặng kèm tài khoản học online trọn đời tại https://video.fedu.vn để về nhà xem lại chi tiết những phần trên lớp không đủ thời gian nói hết).\n\nNếu chị còn thắc mắc chi tiết hơn thì nhắn qua 0934688632 (Zalo cá nhân của em) hoặc để lại số điện thoại em gọi lại tư vấn cho chị nhé ạ!"
     },
     {
       "id": 2,
-      "user_message": "Khách nhắn: 'Bn 1 khóa ak'",
-      "ai_suggestion": "Phương án 1: Dạ khóa học đang giảm giá còn 599k ạ.\nPhương án 2: Chào bạn, khóa học quay dựng video có giá 599k, học online trọn đời.",
-      "mentor_correction": "Sửa lại: Bỏ chữ Dạ. Không báo giá cộc lốc. Gửi luôn link landing page để họ tự xem lộ trình.",
-      "approved_reply": "Chào bạn, mình là Việt. Khóa học quay & dựng video thực chiến hiện đang có học phí ưu đãi 599.000đ. Bạn xem chi tiết các bài học mẫu và lộ trình ở đây trước xem có đúng nhu cầu không nhé: https://video.fedu.vn"
+      "customer_name": "Chị Bui Thoa",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Khách nhắn trên Fanpage: 'và nội dung học khoá này ạ -> Mình có lớp off để sửa và xây kênh theo 30 ngày để làm ko ạ'",
+      "ai_suggestion": "Phương án 1 (AI draft ban đầu): Dạ chào chị Thoa, khóa học kéo dài 30 ngày bao gồm cả học trực tiếp và đồng hành online liên tục trên nhóm.\nPhương án 2: Dạ lớp offline sẽ hướng dẫn 30 ngày xây kênh từ cơ bản đến nâng cao.",
+      "mentor_correction": "Anh Việt nhắc chấn chỉnh trực tiếp: 'Nói lại, khoá này trong 2 ngày thôi chị ạ, còn đồng hành là mình đồng hành qua cộng đồng + khoá online em tặng kèm... viết lại.'",
+      "approved_reply": "Dạ em chào chị Thoa! Em là Việt (người trực tiếp hướng dẫn lớp) đây ạ.\nLớp Offline này mình học thực chiến cầm tay chỉ việc trong đúng 2 ngày thôi chị ạ (Thứ 7 & Chủ Nhật tuần này, 19 – 20/09, từ 9h00 đến 17h00) tại Hà Nội (khu vực gần Aeon Mall Long Biên). Còn việc đồng hành lâu dài là em đồng hành cùng chị qua cộng đồng học viên + khóa online em tặng kèm ạ.\n\nỞ 2 ngày trên lớp, em trực tiếp nắn từng góc quay điện thoại và hướng dẫn chị cách biến đúng trải nghiệm thật của mình thành video tạo niềm tin để bán hàng và xây kênh.\n\nĐặc biệt em cam kết: Không để chị về tay không, sau 2 ngày tại lớp chị sẽ tự tay làm xong ít nhất 3 sản phẩm video hoàn chỉnh theo đúng các định dạng hiệu quả nhất hiện nay để đăng bài luôn.\n\nHọc phí trọn gói 2 ngày là 3.000.000đ (được tặng kèm tài khoản học online trọn đời tại https://video.fedu.vn để về nhà xem lại chi tiết những phần trên lớp không đủ thời gian nói hết + cộng đồng sửa bài).\n\nNếu chị còn thắc mắc chi tiết hơn thì nhắn qua 0934688632 (Zalo cá nhân của em) hoặc để lại số điện thoại em gọi lại tư vấn cho chị nhé ạ!"
     },
     {
       "id": 3,
-      "user_message": "Khách nhắn: 'Mình ngại xuất hiện trước ống kính thì học khóa này làm kênh được không?'",
-      "ai_suggestion": "Phương án 1: Được bạn nhé, khóa có dạy cách làm video không cần lộ mặt.\nPhương án 2: Bạn cứ tự tin lên, trong khóa sẽ có bài dạy vượt qua nỗi sợ camera.",
-      "mentor_correction": "Sửa lại: Đánh trúng tâm lý, đưa ra giải pháp B-roll + Voice-over ngay lập tức.",
-      "approved_reply": "Được chứ bạn. Xu hướng bây giờ là làm video Tách rời hình - tiếng (Quay B-roll). Bạn chỉ cần cầm điện thoại quay cảnh đời thường hoặc góc làm việc, sau đó ngồi trong phòng kín thu âm Voice-over lồng vào. Không cần lộ mặt, không cần diễn xuất mà video vẫn rất nghệ. Trong khóa mình hướng dẫn kỹ kỹ thuật này nhé."
+      "customer_name": "Chị Nhường Gk",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Tình huống: Chị Nhường Gk đã gọi điện thoại trao đổi qua Zalo với Anh Việt và đồng ý đăng ký, cần gửi thông tin chuyển khoản học phí.",
+      "ai_suggestion": "Phương án 1 (AI draft ban đầu): Dạ em chào chị Nhường, rất vui được trò chuyện với chị qua điện thoại. Em xin phép giới thiệu lại lộ trình chi tiết khóa học offline 2 ngày...\nPhương án 2: Chị ơi em gửi số tài khoản chị chuyển khoản giúp em nha.",
+      "mentor_correction": "Anh Việt nhắc chấn chỉnh trực tiếp: 'Tôi cần gửi tin nhắn cho chị Nhường về thông tin sau khi đã gọi, thông tin cơ bản về khóa và gửi thanh toán 3tr. Soạn đi. Không cần giới thiệu, đang chat rồi, vào thông tin luôn.'",
+      "approved_reply": "Em gửi chị thông tin lớp và thanh toán luôn nhé:\n\n📍 Lớp Offline Cầm Tay Chỉ Việc (2 ngày Thứ 7 & CN tuần này, 19 – 20/09):\n- Thời gian: 9h00 – 17h00 tại Hà Nội (khu vực gần Aeon Mall Long Biên).\n- Nội dung: Em trực tiếp nắn từng góc quay điện thoại và chỉ cách biến trải nghiệm thật thành video bán hàng, xây kênh.\n- Cam kết: Kịch bản là độc bản của riêng chị, tại lớp tự tay làm xong ít nhất 3 video hoàn chỉnh đăng bài luôn. Tặng kèm tài khoản online trọn đời tại https://video.fedu.vn để xem lại chi tiết.\n\n💳 Thông tin thanh toán học phí (3.000.000đ):\n- Số tài khoản: 4101986\n- Ngân hàng: Techcombank\n- Chủ tài khoản: NGUYEN DUC VIET\n- Số tiền: 3.000.000đ\n- Nội dung: Nhuong Gk ck offline\n\nChị chuyển khoản xong nhắn lại em để em gửi định vị chính xác và xếp chỗ lớp cho chị nhé!"
     },
     {
       "id": 4,
-      "user_message": "Khách nhắn: 'Mình mù công nghệ, trước giờ chưa từng cài hay dùng CapCut bao giờ thì có theo kịp không?'",
-      "ai_suggestion": "Phương án 1: Dạ CapCut rất dễ dùng ạ, bên em hướng dẫn từ cơ bản nhất.\nPhương án 2: Bạn yên tâm khóa học dành riêng cho người mới bắt đầu.",
-      "mentor_correction": "Sửa lại: Trấn an bằng thực tế học viên lớn tuổi, đưa quy trình 3 bước bấm màn hình cực mộc.",
-      "approved_reply": "Khóa này mình thiết kế riêng cho người chưa biết gì. Các anh chị 50-60 tuổi học bên mình vẫn cắt ghép mượt mà. Toàn bộ thao tác CapCut mình quay cận cảnh ngón tay chạm màn hình: bấm nút nào, kéo đoạn nào, thêm chữ ở đâu. Chị cứ mở máy lên làm theo từng nhịp là xong."
+      "customer_name": "Chị Hà Thị Liên",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Khách nhắn trên Fanpage: 'Mình hỏi khoá học làm xây kênh'",
+      "ai_suggestion": "Phương án 1 (AI draft ban đầu): Chào bạn, khóa học bên mình gồm 30 bài giảng dạy về thuật toán TikTok, cách bắt trend và tăng follow nhanh chóng.\nPhương án 2: Dạ bên em có lớp offline 3 triệu dạy toàn bộ từ cơ bản đến nâng cao.",
+      "mentor_correction": "Anh Việt nhắc chấn chỉnh trực tiếp: 'Viết lại, hỏi xây kênh thì trả lời về xây kênh. Quan trọng nhất của xây kênh là kĩ thuật quay cho hấp dẫn, và nội dung tạo niềm tin sau sự hấp dẫn đó. Có hết trong khóa offline lần này.'",
+      "approved_reply": "Dạ em chào chị Liên! Em là Việt (người trực tiếp hướng dẫn lớp) đây ạ.\nVề xây kênh, điều quan trọng nhất chỉ nằm ở 2 thứ cốt lõi này thôi chị:\n1. Kỹ thuật quay cho thật hấp dẫn (để giữ chân người xem ngay từ những giây đầu tiên).\n2. Nội dung tạo được niềm tin sau sự hấp dẫn đó (để người ta tin tưởng và mua hàng của mình).\n\nToàn bộ 2 điều này em đều đúc kết và hướng dẫn trọn vẹn trong lớp Offline thực chiến cầm tay chỉ việc 2 ngày Thứ 7 & Chủ Nhật tuần này (19 – 20/09, từ 9h00 đến 17h00) tại Hà Nội (khu vực gần Aeon Mall Long Biên).\n\nTại lớp em trực tiếp nắn từng góc quay điện thoại và lên kịch bản ĐỘC BẢN CỦA RIÊNG CHỊ.\nĐặc biệt em cam kết: Không để chị về tay không, sau 2 ngày chị sẽ tự tay làm xong ít nhất 3 sản phẩm video hoàn chỉnh theo đúng các định dạng hiệu quả nhất hiện nay để đăng bài luôn.\n\nHọc phí trọn gói 2 ngày là 3.000.000đ (được tặng kèm tài khoản học online trọn đời tại https://video.fedu.vn để về nhà xem lại chi tiết những phần trên lớp không đủ thời gian nói hết).\n\nHiện tại chị Liên đang định xây kênh về mảng hay sản phẩm gì thế ạ? Nếu chị cần hỏi chi tiết hơn cứ nhắn qua 0934688632 (Zalo cá nhân của em) hoặc để lại số điện thoại em gọi lại tư vấn cho chị nhé!"
     },
     {
       "id": 5,
-      "user_message": "Khách hỏi: 'Điện thoại mình đời cũ (iPhone 11/Samsung đời cũ) camera không nét thì quay video có bị mờ xấu không?'",
-      "ai_suggestion": "Phương án 1: Dạ iPhone 11 quay vẫn rất nét ạ, chỉ cần đủ ánh sáng.\nPhương án 2: Thiết bị không quan trọng bằng nội dung bạn nhé.",
-      "mentor_correction": "Sửa lại: Khẳng định điện thoại bình thường là đủ, chia sẻ mẹo tận dụng ánh sáng tự nhiên và lau camera.",
-      "approved_reply": "iPhone 11 quay thừa đẹp rồi bạn. Bí quyết video nét không nằm ở máy xịn mà ở 2 thứ: lau sạch camera trước khi bấm máy và chọn góc đón ánh sáng tự nhiên (cửa sổ hoặc đèn bàn). Trong bài 1 mình chỉ đúng góc đặt điện thoại là hình ảnh sáng trong veo ngay."
+      "customer_name": "Em Nguyễn Ngọc",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Khách nhắn trên Fanpage: 'E muôn học ạ'",
+      "ai_suggestion": "Phương án 1 (AI draft ban đầu): Dạ em chào anh/chị Ngọc ạ! Khóa học đào tạo thực chiến từ con số 0...\nPhương án 2: Chào bạn, bạn muốn học online hay offline?",
+      "mentor_correction": "Anh Việt nhắc chấn chỉnh trực tiếp: 'Khách nói là e, thì mình phải xưng anh, viết lại. Và thêm cam kết là kịch bản sẽ là độc bản của riêng em.'",
+      "approved_reply": "Chào em! Anh là Việt (người trực tiếp hướng dẫn lớp) đây.\nBên anh có lớp Offline thực chiến cầm tay chỉ việc trong 2 ngày Thứ 7 & Chủ Nhật tuần này (19 – 20/09, từ 9h00 đến 17h00) tại Hà Nội (khu vực gần Aeon Mall Long Biên).\n\nLớp này anh trực tiếp nắn từng góc quay điện thoại và hướng dẫn em cách biến đúng trải nghiệm thật của mình thành video tạo niềm tin để bán hàng và xây kênh.\n\nĐặc biệt anh cam kết: Không để em về tay không, kịch bản sẽ là ĐỘC BẢN CỦA RIÊNG EM, và sau 2 ngày tại lớp em sẽ tự tay làm xong ít nhất 3 sản phẩm video hoàn chỉnh theo đúng các định dạng hiệu quả nhất hiện nay để đăng bài luôn.\n\nHọc phí trọn gói 2 ngày là 3.000.000đ (được tặng kèm tài khoản học online trọn đời tại https://video.fedu.vn để về nhà xem lại chi tiết những phần trên lớp không đủ thời gian nói hết).\n\nHiện tại em đang muốn làm video cho ngành nghề/sản phẩm gì? Nếu cần hỏi chi tiết hơn thì nhắn qua 0934688632 (Zalo cá nhân của anh) hoặc để lại số điện thoại anh gọi lại tư vấn cho em nhé!"
     },
     {
       "id": 6,
-      "user_message": "Khách nhắn: 'Mình bị giọng địa phương/nói hơi ngọng, sợ thu âm lên video người ta cười'",
-      "ai_suggestion": "Phương án 1: Dạ giọng địa phương giờ đang là trend mộc mạc đấy ạ.\nPhương án 2: Bên em có hướng dẫn dùng AI đổi giọng nói nếu bạn tự ti.",
-      "mentor_correction": "Sửa lại: Biến nhược điểm thành nét duyên nhận diện thương hiệu, kết hợp giải pháp phụ đề to rõ.",
-      "approved_reply": "Giọng địa phương thật thà mộc mạc giờ người xem lại thích hơn giọng phát thanh viên bạn ạ. Khán giả ở lại vì sự chân thành và thông tin hữu ích. Trong khóa mình hướng dẫn bạn bật phụ đề tự động chữ to rõ ràng, người xem vừa nghe vừa đọc chữ là hiểu 100%."
+      "customer_name": "Em Xuyên Huỳnh",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Diễn biến trực tiếp: Anh Việt nhắn: 'hi em em muốn học offline hay online' -> Khách trả lời: 'Học off ạ' -> 'Hình thức học như thế nào a' -> 'Và giá học phí sao ạ?'",
+      "ai_suggestion": "Phương án 1 (AI draft ban đầu): Dạ em chào chị Xuyên, học phí là 3 triệu ạ. Lớp học tại Hà Nội trong 2 ngày cuối tuần.\nPhương án 2: Chào bạn, khóa học offline có nhiều ưu đãi...",
+      "mentor_correction": "Anh Việt nhắc chấn chỉnh trực tiếp: 'Khách này xưng anh gọi em, tôi vừa tư vấn một chút, check lại mới nhất và soạn lại. Xưng anh - gọi em chuẩn xác.'",
+      "approved_reply": "Học phí trọn gói 2 ngày là 3.000.000đ em nhé. Lớp mình học vào Thứ 7 & Chủ Nhật tuần này (19 – 20/09, từ 9h00 đến 17h00) tại Hà Nội (khu vực gần Aeon Mall Long Biên).\n\nVề hình thức học: Lớp này anh trực tiếp cầm tay chỉ việc, nắn từng góc quay trên chính điện thoại của em và hướng dẫn cách biến đúng trải nghiệm thật của mình thành video tạo niềm tin để bán hàng và xây kênh.\n\nĐặc biệt anh cam kết: Không để em về tay không, sau 2 ngày tại lớp em sẽ tự tay làm xong ít nhất 3 sản phẩm video hoàn chỉnh theo đúng các định dạng hiệu quả nhất hiện nay để đăng bài luôn.\n\nNgoài 2 ngày tại lớp, em được tặng kèm tài khoản học online trọn đời tại https://video.fedu.vn để về nhà xem lại chi tiết những phần trên lớp không đủ thời gian nói hết.\n\nEm cho anh xin số điện thoại hoặc nhắn qua 0934688632 (Zalo cá nhân của anh) để anh trao đổi cụ thể hơn cho em nhé!"
     },
     {
       "id": 7,
-      "user_message": "Khách hỏi: 'Mình rất hay bị bí ý tưởng, ngồi trước máy cả tiếng không biết nói câu gì'",
-      "ai_suggestion": "Phương án 1: Dạ khóa học có tặng kho ý tưởng 30 ngày cho bạn dùng sẵn.\nPhương án 2: Mình sẽ dạy bạn công thức viết kịch bản thần tốc bằng AI.",
-      "mentor_correction": "Sửa lại: Đưa phương pháp Bóc tách đời sống - biến câu chuyện khách hàng hỏi ban ngày thành kịch bản tối quay.",
-      "approved_reply": "Bí ý tưởng là vì bạn đang cố 'sáng tạo' cái không có thật. Cách của mình là: Ban ngày khách hàng hỏi bạn câu gì, tối bạn cầm máy trả lời đúng câu đó thành 1 video 45 giây. Khóa học có sẵn công thức kịch bản 3 tầng, bạn chỉ cần điền câu chuyện thật của mình vào là xong kịch bản trong 5 phút."
+      "customer_name": "Em Ngọc Quỳnh",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Khách bấm 'Bắt đầu' từ quảng cáo trên Facebook.",
+      "ai_suggestion": "Phương án 1 (AI draft ban đầu): Đưa toàn bộ lộ trình dài 50 dòng kèm học phí 3 triệu và cam kết vào tin nhắn đầu tiên.\nPhương án 2: Chào bạn, bạn đang quan tâm khóa học nào của bên mình ạ?",
+      "mentor_correction": "Anh Việt nhắc chấn chỉnh trực tiếp: 'Từ từ tôi cần tư vấn thông tin cho Quỳnh em Quỳnh, gửi thông tin khóa off, không tặng kèm gì cả. Không cần thông tin luôn. Không phải giới thiệu, vào thông tin khóa học luôn. Mở lời ngắn gọn 1 câu tự nhiên.'",
+      "approved_reply": "Chào Quỳnh! Em đang muốn làm video xây kênh cho mảng hay sản phẩm gì thế em?"
     },
     {
       "id": 8,
-      "user_message": "Khách nhắn: 'Mình bận đi làm cả ngày, chỉ rảnh buổi tối 30 phút thì có học và làm video được không?'",
-      "ai_suggestion": "Phương án 1: Dạ khóa học online xem lúc nào cũng được, không giới hạn thời gian.\nPhương án 2: Mỗi bài học chỉ 5-10 phút rất phù hợp người bận rộn.",
-      "mentor_correction": "Sửa lại: Định khung thời gian thực chiến: 15 phút quay thô + 15 phút cắt dựng.",
-      "approved_reply": "Rất hợp bạn nhé. Các bài giảng mình chia nhỏ 5–7 phút đúng 1 thao tác thực hành. Quy trình sản xuất video bên mình tối ưu để bạn chỉ mất 15 phút quay lặt vặt trong sinh hoạt và 15 phút dựng trên CapCut là có video hoàn chỉnh đăng kênh trước khi đi ngủ."
+      "customer_name": "Em Nguyễn Tài",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Khách nhắn trên Fanpage: 'E tham gia khoa hoc 30 ngay lam noi dung'",
+      "ai_suggestion": "Phương án 1 (AI draft ban đầu): Chào em! Anh là Việt đây. Bên anh có lớp offline thực chiến cầm tay chỉ việc trong 2 ngày Thứ 7 & CN tuần này...",
+      "mentor_correction": "Anh Việt nhắc chấn chỉnh trực tiếp: 'Viết lại, nếu em hỏi khóa offline thì anh nói qua thông tin nhé. Khóa offline là tuần này đây em... sửa lại mở đầu tự nhiên, đúng giọng anh em trao đổi.'",
+      "approved_reply": "Chào em! Anh là Việt (người trực tiếp hướng dẫn lớp) đây.\nNếu em hỏi khóa offline thì anh nói qua thông tin nhé. Khóa offline là tuần này đây em, diễn ra trong 2 ngày Thứ 7 & Chủ Nhật (19 – 20/09, từ 9h00 đến 17h00) tại Hà Nội (khu vực gần Aeon Mall Long Biên).\n\nLớp này anh trực tiếp nắn từng góc quay trên chính điện thoại của em và hướng dẫn cách biến đúng trải nghiệm thật của mình thành video tạo niềm tin để bán hàng và xây kênh.\n\nĐặc biệt anh cam kết: Không để em về tay không, kịch bản sẽ là ĐỘC BẢN CỦA RIÊNG EM, và sau 2 ngày tại lớp em sẽ tự tay làm xong ít nhất 3 sản phẩm video hoàn chỉnh theo đúng các định dạng hiệu quả nhất hiện nay để đăng bài luôn.\n\nHọc phí trọn gói 2 ngày là 3.000.000đ (được tặng kèm tài khoản học online trọn đời tại https://video.fedu.vn để về nhà xem lại chi tiết những phần trên lớp không đủ thời gian nói hết).\n\nHiện tại Tài đang làm video cho ngành nghề hay sản phẩm gì? Nếu em cần hỏi chi tiết hơn thì nhắn qua 0934688632 (Zalo cá nhân của anh) hoặc để lại số điện thoại anh gọi lại trao đổi trực tiếp với em nhé!"
     },
     {
       "id": 9,
-      "user_message": "Khách nhắn: 'Mình từng mua 2 khóa học video trên mạng rồi mà về bỏ xó vì lý thuyết suông quá'",
-      "ai_suggestion": "Phương án 1: Dạ khóa này bên em thực chiến 100% không lý thuyết ạ.\nPhương án 2: Khóa bên em cam kết khác biệt hoàn toàn thị trường.",
-      "mentor_correction": "Sửa lại: Đồng cảm nỗi đau mua khóa vứt xó, đưa giải pháp học theo dự án thực tế và xem bài mẫu trước.",
-      "approved_reply": "Mình hiểu cảm giác này vì rất nhiều học viên tìm đến mình sau khi mất tiền oan cho các khóa lý thuyết học thuật. Ở đây mình dạy như cầm tay chỉ việc: mở app lên, cho bạn xem luôn timeline dự án thật mình vừa dựng triệu view, chỉ bạn từng nhát cắt. Bạn xem bài giảng mẫu trên https://video.fedu.vn để tự đánh giá trước nhé."
+      "customer_name": "Chị Nguyễn Kim Phượng",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Khách hỏi: 'Hoc ntn vây bạn' -> Page hỏi: 'dạ chị học offline hay online ạ' -> Khách yêu cầu: 'Tư vấn cả 2 nhé'",
+      "ai_suggestion": "Phương án 1 (AI draft ban đầu): Dạ khóa online học phí 599k còn offline là 3 triệu. Chị học cái nào cũng được ạ.\nPhương án 2: So sánh sơ sài không nêu bật được ưu điểm của từng loại.",
+      "mentor_correction": "Anh Việt chốt chuẩn: So sánh rõ 2 hình thức: Online học qua video chi tiết xem trọn đời + zoom hàng tuần; Offline cầm tay chỉ việc 2 ngày nắn từng góc máy và tặng kèm luôn khóa Online trọn đời (đăng ký Offline được sở hữu cả 2).",
+      "approved_reply": "Dạ em chào chị Phượng! Em là Việt (người trực tiếp hướng dẫn lớp) đây ạ.\nBên em có 2 hình thức:\n\n1. Khóa Online: Học qua hệ thống video bài giảng chi tiết (3–5 phút/video) xem lại trọn đời bất cứ lúc nào, kèm cộng đồng hỗ trợ sửa bài.\n2. Lớp Offline (Nhiều anh chị chọn nhất): Thực chiến cầm tay chỉ việc trong 2 ngày Thứ 7 & Chủ Nhật tuần này (19 – 20/09, từ 9h00 đến 17h00) tại Hà Nội (khu vực gần Aeon Mall Long Biên).\n- Lớp này em trực tiếp nắn từng góc quay điện thoại và hướng dẫn chị cách biến đúng trải nghiệm thật của mình thành video tạo niềm tin để bán hàng và xây kênh.\n- Đặc biệt em cam kết: Không để chị về tay không, kịch bản sẽ là ĐỘC BẢN CỦA RIÊNG CHỊ, và sau 2 ngày tại lớp chị sẽ tự tay làm xong ít nhất 3 sản phẩm video hoàn chỉnh theo đúng các định dạng hiệu quả nhất hiện nay để đăng bài luôn.\n\nĐặc biệt: Học phí Offline là 3.000.000đ trọn gói 2 ngày và ĐÃ ĐƯỢC TẶNG KÈM LUÔN tài khoản khóa Online trọn đời tại https://video.fedu.vn (nghĩa là đăng ký Offline là chị được sở hữu trọn vẹn cả 2).\n\nHiện tại chị Phượng đang định làm video cho mảng hay sản phẩm gì thế ạ? Nếu chị cần hỏi chi tiết hơn thì nhắn qua 0934688632 (Zalo cá nhân của em) hoặc để lại số điện thoại em gọi lại tư vấn cho chị nhé!"
     },
     {
       "id": 10,
-      "user_message": "Khách hỏi: 'Mình năm nay 54 tuổi rồi, liệu học có theo kịp các bạn trẻ không chú?'",
-      "ai_suggestion": "Phương án 1: Dạ tuổi tác không quan trọng đâu cô/chú, học là làm được.\nPhương án 2: Cháu có nhiều học viên lớn tuổi vẫn làm kênh rất tốt ạ.",
-      "mentor_correction": "Sửa lại: Xưng hô lễ phép, tôn trọng vốn sống từng trải của người lớn tuổi, cam kết hỗ trợ chậm rãi từng bước.",
-      "approved_reply": "Dạ em chào chị ạ! Học viên lớp em rất nhiều anh chị ngoài 50 tuổi. Lợi thế lớn nhất của anh chị là vốn sống và trải nghiệm thật - cái mà người trẻ không thể diễn được. Em hướng dẫn bằng tốc độ chậm rãi, kẹt nút nào chị cứ chụp màn hình gửi Zalo em chỉ lại từng bước, chị hoàn toàn yên tâm nhé."
+      "customer_name": "Chị Hoàng Kim Trúc",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Khách xưng 'C' - gọi 'em': 'Bắt đầu' -> 'Hi em' -> 'C muốn học làm video' (Khách làm ngành Phun Xăm Thẩm Mỹ & Phong Thủy Chân Mày)",
+      "ai_suggestion": "Phương án 1 (AI draft ban đầu): Dạ em chào chị, ngành phun xăm cần quay nhiều mẫu đẹp, chị tham khảo khóa học bên em nhé.\nPhương án 2: Tư vấn chung chung không nhắc đến ngành nghề cụ thể của khách.",
+      "mentor_correction": "Anh Việt chốt chuẩn: Nhận diện xưng hô 'C - em' -> xưng Em gọi Chị. Định hướng riêng cho ngành phun xăm: cách quay cận cảnh góc máy bàn tay làm việc và chia sẻ triết lý làm đẹp tạo niềm tin.",
+      "approved_reply": "Dạ em chào chị Trúc! Em là Việt (người trực tiếp hướng dẫn lớp) đây ạ.\nVới ngành thẩm mỹ/phun xăm làm đẹp, điều giữ chân khách hàng mạnh nhất là những góc quay cận cảnh chi tiết tay nghề và câu chuyện chuyên môn thật của mình để tạo niềm tin tuyệt đối.\n\nBên em có lớp Offline thực chiến cầm tay chỉ việc trong 2 ngày Thứ 7 & Chủ Nhật tuần này (19 – 20/09, từ 9h00 đến 17h00) tại Hà Nội (khu vực gần Aeon Mall Long Biên).\nLớp này em trực tiếp nắn từng góc quay điện thoại trên chính thao tác làm nghề của chị, và lên kịch bản ĐỘC BẢN CỦA RIÊNG CHỊ.\n\nCam kết sau 2 ngày chị tự tay quay và hoàn thiện ít nhất 3 video chuẩn đẹp để đăng kênh hút khách luôn.\nHọc phí trọn gói 2 ngày là 3.000.000đ (tặng kèm khóa online trọn đời tại https://video.fedu.vn).\n\nChị Trúc nhắn qua 0934688632 (Zalo cá nhân của em) để em xem qua kênh hiện tại và trao đổi cụ thể cho chị nhé!"
     },
     {
       "id": 11,
-      "user_message": "Khách nhắn: 'Mình ko biết quay dựng nên đang cần tìm khoá off. Bạn có lớp off rồi à?' (Đặng Lý)",
-      "ai_suggestion": "Phương án 1: Dạ bên em có lớp offline đào tạo 4 tầng nhận thức chuyên sâu.\nPhương án 2: Lớp offline cuối tuần này học 2 ngày tại Hà Nội học phí 3 triệu ạ.",
-      "mentor_correction": "Sửa lại: Bỏ cụm 4 tầng. Vào thẳng bản chất lớp offline 2 ngày, nắn góc quay thực tế và xin số Zalo.",
-      "approved_reply": "Chào chị Lý, mình là Việt. Đúng rồi chị, cuối tuần này (19 – 20/09) em có lớp Offline 2 ngày tại Hà Nội (gần Aeon Mall Long Biên). Lớp này em trực tiếp cầm tay nắn từng góc quay điện thoại và kịch bản cho chị. Chị cho em xin số Zalo em gửi chi tiết địa điểm và lịch trình nhé!"
+      "customer_name": "Chị Lien Phuong Nguyen",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Khách xưng 'Chị' - gọi 'em': 'Bắt đầu' -> 'Chào em' -> 'Chị muốn tìm hiẻu khóa học ủa mình 😊'",
+      "ai_suggestion": "Phương án 1: Dạ chào chị Phương, khóa học bên em dạy từ A đến Z ạ.\nPhương án 2: Chào bạn, bạn học online hay offline?",
+      "mentor_correction": "Anh Việt chốt chuẩn: Xưng Em gọi Chị lễ phép, giới thiệu lớp Offline 2 ngày tuần này kèm cam kết độc bản.",
+      "approved_reply": "Dạ em chào chị Phương! Em là Việt (người trực tiếp hướng dẫn lớp) đây ạ.\nBên em có lớp Offline thực chiến cầm tay chỉ việc trong 2 ngày Thứ 7 & Chủ Nhật tuần này (19 – 20/09, từ 9h00 đến 17h00) tại Hà Nội (khu vực gần Aeon Mall Long Biên).\n\nLớp này em trực tiếp nắn từng góc quay điện thoại và hướng dẫn chị cách biến đúng trải nghiệm thật của mình thành video tạo niềm tin để bán hàng và xây kênh.\n\nĐặc biệt em cam kết: Không để chị về tay không, kịch bản sẽ là ĐỘC BẢN CỦA RIÊNG CHỊ, và sau 2 ngày tại lớp chị sẽ tự tay làm xong ít nhất 3 sản phẩm video hoàn chỉnh theo đúng các định dạng hiệu quả nhất hiện nay để đăng bài luôn.\n\nHọc phí trọn gói 2 ngày là 3.000.000đ (được tặng kèm tài khoản học online trọn đời tại https://video.fedu.vn để về nhà xem lại chi tiết những phần trên lớp không đủ thời gian nói hết).\n\nHiện tại chị Phương đang làm video cho lĩnh vực gì thế ạ? Nếu chị cần trao đổi trực tiếp thì nhắn qua 0934688632 (Zalo cá nhân của em) hoặc để lại số điện thoại em gọi lại tư vấn cho chị nhé!"
     },
     {
       "id": 12,
-      "user_message": "Khách hỏi: 'Mình ở Sài Gòn/TP.HCM thì khi nào có lớp Offline trong này?' (Nghiem Hong Nhung)",
-      "ai_suggestion": "Phương án 1: Dạ hiện tại lớp offline chỉ có ở Hà Nội thôi ạ.\nPhương án 2: Sắp tới bên em sẽ mở lớp ở TP.HCM, bạn để lại sđt khi nào có em báo.",
-      "mentor_correction": "Sửa lại: Giải thích chân thành lịch mở lớp, tư vấn học khóa Online trước để nắm vững gốc, khi vào SG sẽ thông báo.",
-      "approved_reply": "Chào Nhung nhé! Hiện tại lịch đứng lớp trực tiếp của anh đang tập trung ở Hà Nội. Trong Sài Gòn anh dự kiến sang tháng tới mới tổ chức được 1 đợt. Nếu em muốn làm kênh ngay, em cứ học trước bộ Online trên https://video.fedu.vn để nắm chắc máy móc kịch bản. Khi nào anh vào Sài Gòn mở lớp anh sẽ nhắn em ưu tiên xếp chỗ nhé."
+      "customer_name": "Bạn Lương Thị Thanh Hương",
+      "channel": "Fanpage Nguyễn Đức Việt",
+      "user_message": "Khách cũ đã đăng ký khóa học đồ họa, nhắn hỏi link tải bài giảng và tài liệu học tập.",
+      "ai_suggestion": "Phương án 1 (AI draft ban đầu): Dạ em chào chị Hương, chị check email bên em đã gửi link rồi ạ.\nPhương án 2: Chào bạn, bạn vui lòng cung cấp mã đơn hàng để bên mình hỗ trợ.",
+      "mentor_correction": "Anh Việt nhắc chấn chỉnh trực tiếp: 'Viết lại, em gửi chị link tải khóa học https://drive.google.com/drive/folders/11U0JNCCRJbV835bUC5HLCHYiUZruu4M1?usp=drive_link. Gửi trực tiếp, nhanh gọn, không vòng vo.'",
+      "approved_reply": "Dạ em gửi chị link tải khoá học đồ hoạ của mình đây ạ:\nhttps://drive.google.com/drive/folders/11U0JNCCRJbV835bUC5HLCHYiUZruu4M1?usp=drive_link\n\nChị vào tải và xem bài giảng nhé ạ!"
     },
     {
       "id": 13,
-      "user_message": "Khách hỏi: 'Khóa Offline khác gì khóa Online vậy anh? Em nên học cái nào?'",
-      "ai_suggestion": "Phương án 1: Dạ khóa offline học trực tiếp còn online xem video ạ.\nPhương án 2: Offline thì tương tác cao hơn và được anh Việt sửa bài trực tiếp.",
-      "mentor_correction": "Sửa lại: Phân định rạch ròi: Online dành cho người tự học tốt, Offline dành cho người cần nắn dáng quay và ép ra sản phẩm ngay.",
-      "approved_reply": "Chào bạn, khóa Online là toàn bộ bài giảng đóng gói từ A-Z để bạn chủ động học mọi lúc mọi nơi. Còn lớp Offline 2 ngày là dành cho ai cần 'ép tiến độ': có mặt tại lớp, mình trực tiếp nắn góc đứng cầm máy, bẻ kịch bản theo đúng ngành nghề của bạn và bắt buộc làm ra ít nhất 3 video hoàn chỉnh đăng ngay tại lớp."
+      "customer_name": "Anh Trịnh Chí Đại",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Khách đã trao đổi dở dang từ trước đó về việc đăng ký học.",
+      "ai_suggestion": "Phương án 1 (AI draft ban đầu): Đưa ra kịch bản chào hỏi lại từ đầu như khách mới tinh.",
+      "mentor_correction": "Anh Việt nhắc chấn chỉnh trực tiếp: 'Chưa được, khách Đại này tôi đã tư vấn, hãy load lại cần bổ sung thêm 3 tin nhắn gần nhất đã nói chuyện với nhau để tôi hiểu bối cảnh. Không chào lại như người lạ.'",
+      "approved_reply": "Dạ chào anh Đại! Em Việt đây ạ. Hôm trước anh em mình đang trao đổi dở về phần thiết bị quay và định dạng video cho mảng của anh. Anh đã thu xếp được thời gian cho 2 ngày Thứ 7 & CN tuần này chưa để em chốt danh sách và giữ chỗ cho anh tại lớp nhé!"
     },
     {
       "id": 14,
-      "user_message": "Khách hỏi: 'Lớp Offline học 2 ngày xong về nhà có được hỗ trợ tiếp không hay tự bơi?' (Bui Thoa)",
-      "ai_suggestion": "Phương án 1: Dạ học xong bên em hỗ trợ trọn đời trong group Zalo ạ.\nPhương án 2: Anh Việt sẽ theo sát kênh của chị sau khóa học.",
-      "mentor_correction": "Sửa lại: Nói rõ: Khóa học trực tiếp 2 ngày, còn đồng hành dài hạn là qua cộng đồng và khóa Online tặng kèm.",
-      "approved_reply": "Khóa học trực tiếp trên lớp là 2 ngày chị Thoa nhé. Sau đó về nhà, chị được tặng kèm trọn đời khóa Online để xem lại bài giảng bất cứ lúc nào, cùng với nhóm Zalo học viên riêng. Quá trình làm video chị dựng xong cứ gửi vào nhóm, em và cộng sự vẫn xem và góp ý chỉnh sửa cho chị."
+      "customer_name": "Bạn An Bảo",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Khách vừa nhắn lúc 05:59 sáng hỏi về khóa học.",
+      "ai_suggestion": "Phương án 1 (AI draft ban đầu): Bị đẩy xuống cuối hàng đợi do thuật toán quét cũ.",
+      "mentor_correction": "Anh Việt nhắc chấn chỉnh trực tiếp: 'Khách mới nhất là An Bảo sao ko load toàn load cái lâu lắm rồi? Load lại mới nhất, ưu tiên khách vừa nhắn nóng hổi lên đầu.'",
+      "approved_reply": "Dạ chào bạn, mình là Việt. Bạn đang quan tâm đến khóa học quay dựng video thực chiến bằng điện thoại để xây kênh bán hàng hay phát triển thương hiệu cá nhân? Bạn chia sẻ thêm mảng của mình để mình tư vấn sát nhất nhé!"
     },
     {
       "id": 15,
-      "user_message": "Khách nhắn: 'Địa chỉ cụ thể lớp Offline ở đâu và học những khung giờ nào bạn?'",
-      "ai_suggestion": "Phương án 1: Dạ lớp học tại Long Biên Hà Nội từ 9h đến 17h ạ.\nPhương án 2: Thông tin lớp học em gửi qua link cho chị xem nhé.",
-      "mentor_correction": "Sửa lại: Cung cấp thông tin địa điểm rõ ràng, khung giờ chuẩn và lưu ý ăn trưa/nghỉ ngơi.",
-      "approved_reply": "Lớp học từ 9h00 đến 17h00 (Thứ 7 & Chủ Nhật) tại phòng studio khu vực gần Aeon Mall Long Biên, Hà Nội. Buổi trưa lớp có nghỉ ngơi và ăn trưa giao lưu cùng nhau. Không gian có sẵn máy lạnh, ánh sáng và bối cảnh mẫu để mọi người thực hành quay dựng tại chỗ luôn bạn nhé."
+      "customer_name": "Anh Đỗ Thanh Tâm",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Khách tương tác: 'Bắt đầu -> Nhận ưu đãi (Get offers)'",
+      "ai_suggestion": "Phương án 1: Dạ mã ưu đãi của anh là DISCOUNT20 giảm 20% hôm nay ạ.\nPhương án 2: Chào bạn, nhanh tay đăng ký kẻo hết hạn.",
+      "mentor_correction": "Anh Việt chốt chuẩn: Bỏ kiểu tặng mã giảm giá thúc giục con buôn. Giới thiệu thẳng lớp Offline 2 ngày T7-CN tại Hà Nội kèm cam kết 3 sản phẩm video ra lò.",
+      "approved_reply": "Dạ em chào anh Tâm! Em là Việt (người trực tiếp hướng dẫn lớp) đây ạ.\nBên em có lớp Offline thực chiến cầm tay chỉ việc trong 2 ngày Thứ 7 & Chủ Nhật tuần này (19 – 20/09, từ 9h00 đến 17h00) tại Hà Nội (khu vực gần Aeon Mall Long Biên).\n\nLớp này em trực tiếp nắn từng góc quay điện thoại và hướng dẫn anh cách biến đúng trải nghiệm thật của mình thành video tạo niềm tin để bán hàng và xây kênh.\n\nĐặc biệt em cam kết: Không để anh về tay không, kịch bản sẽ là ĐỘC BẢN CỦA RIÊNG ANH, và sau 2 ngày tại lớp anh sẽ tự tay làm xong ít nhất 3 sản phẩm video hoàn chỉnh theo đúng các định dạng hiệu quả nhất hiện nay để đăng bài luôn.\n\nHọc phí trọn gói 2 ngày là 3.000.000đ (được tặng kèm tài khoản học online trọn đời tại https://video.fedu.vn để về nhà xem lại chi tiết những phần trên lớp không đủ thời gian nói hết).\n\nNếu anh cần hỏi chi tiết hơn thì nhắn qua 0934688632 (Zalo cá nhân của em) hoặc để lại số điện thoại em gọi lại tư vấn cho anh nhé!"
     },
     {
       "id": 16,
-      "user_message": "Khách hỏi: 'Em đã mua khóa Online 599k rồi, giờ muốn đăng ký học lớp Offline thì có được trừ tiền không?'",
-      "ai_suggestion": "Phương án 1: Dạ được bạn nhé, bạn chỉ cần đóng thêm phần chênh lệch.\nPhương án 2: Chính sách bên em hỗ trợ khấu trừ 100% học phí online ạ.",
-      "mentor_correction": "Sửa lại: Xác nhận rõ ràng và hỗ trợ ngay, thể hiện sự trân trọng học viên cũ.",
-      "approved_reply": "Hoàn toàn được em nhé! Anh luôn trân trọng các bạn đã chủ động học Online trước. Em chỉ cần thanh toán phần chênh lệch (học phí Offline trừ đi 599k em đã đóng). Em nhắn tên và số điện thoại đã đăng ký để anh cập nhật danh sách lớp cuối tuần này cho em nhé."
+      "customer_name": "Bạn Hanh Nguyen",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Khách nhắn ngắn gọn: 'Bn 1 khóa ak'",
+      "ai_suggestion": "Phương án 1: Dạ khóa học đang giảm giá còn 599k ạ.\nPhương án 2: Chào bạn, khóa học quay dựng video có giá 599k, học online trọn đời.",
+      "mentor_correction": "Anh Việt nhắc chấn chỉnh trực tiếp: 'Bỏ chữ Dạ. Không báo giá cộc lốc. Gửi luôn link landing page để họ tự xem lộ trình và bài học mẫu trước xem có đúng nhu cầu không.'",
+      "approved_reply": "Chào bạn, mình là Việt.\nKhóa học quay & dựng video bằng điện thoại hiện đang có học phí ưu đãi là 599.000đ. Khóa học online qua video xem lại trọn đời và được em cập nhật thêm bài học thực chiến mới liên tục hàng tuần.\n\n👉 Bạn xem trước chi tiết lộ trình và các bài học mẫu ở đây nhé: https://video.fedu.vn\n\nHiện tại bạn đang muốn học làm video cho ngành nghề/sản phẩm gì, và mình đã từng quay thử video nào chưa hay đang bắt đầu từ số 0 ạ?"
     },
     {
       "id": 17,
-      "user_message": "Khách hỏi: 'Bên anh có nhận kèm 1-1 riêng không, học phí kèm riêng thế nào?'",
-      "ai_suggestion": "Phương án 1: Dạ bên em có gói coaching 1-1 giá 15 triệu ạ.\nPhương án 2: Anh Việt có nhận đào tạo riêng theo yêu cầu doanh nghiệp.",
-      "mentor_correction": "Sửa lại: Định hướng vào lớp Offline trước vì lớp sĩ số nhỏ (dưới 15 người) chất lượng như kèm 1-1 mà tiết kiệm chi phí.",
-      "approved_reply": "Chào bạn, lớp Offline cuối tuần của mình giới hạn tối đa 12–15 học viên để mình nắn từng người như kèm 1-1 rồi. Bạn nên tham gia lớp này trước để vừa tiết kiệm chi phí, vừa được làm việc trực tiếp với mình. Nếu sau đó bạn muốn triển khai dự án doanh nghiệp sâu hơn thì mình trao đổi gói riêng sau nhé."
+      "customer_name": "Chị Cẩm Nguyễn",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Khách hỏi: 'Mình thấy lớp khóa học 999k gồm 4 khóa tạo video, vậy với người không biết gì thì có được hỗ trợ hỏi đáp hay hỗ trợ gì không ạ? Sợ xem video vẫn không làm được'",
+      "ai_suggestion": "Phương án 1: Dạ chị yên tâm, khóa học có group Zalo hỗ trợ trọn đời.\nPhương án 2: Khóa học thiết kế rất dễ hiểu, bảo đảm học xong làm được ngay.",
+      "mentor_correction": "Anh Việt nhắc chấn chỉnh trực tiếp: 'Bỏ văn mẫu cam kết suông. Xóa tan nỗi sợ người mới bằng cách đưa số điện thoại Zalo cá nhân 0934688632 hỗ trợ trực tiếp từng video nắn góc máy/nhịp cắt.'",
+      "approved_reply": "Dạ chị hoàn toàn yên tâm nhé, khóa học thiết kế từng bước cực kỳ chi tiết cho người mới bắt đầu từ con số 0.\n\nNgoài video bài giảng xem lại trọn đời, trong lúc quay hay dựng có chỗ nào vướng hoặc làm xong video muốn em nhận xét góc máy/nhịp cắt, chị cứ gửi thẳng qua Zalo cá nhân cho em (0934 688 632) hoặc đăng lên nhóm cộng đồng để em hỗ trợ trực tiếp từng video cho chị nhé!"
     },
     {
       "id": 18,
-      "user_message": "Khách hỏi: 'Học lớp Offline 2 ngày có đảm bảo tự quay dựng được video không anh?'",
-      "ai_suggestion": "Phương án 1: Dạ cam kết 100% học xong là làm được video ạ.\nPhương án 2: Nếu không làm được bên em sẽ hoàn lại học phí.",
-      "mentor_correction": "Sửa lại: Bỏ chữ cam kết sáo rỗng. Đưa ra chỉ số hành động cụ thể: Tự tay làm xong 3 video tại lớp.",
-      "approved_reply": "Tại lớp học mình không dạy lý thuyết trình chiếu. Mình bắt tay chỉ việc: sáng học góc máy - chiều cầm điện thoại quay luôn; sáng học kịch bản - chiều cắt dựng xong video hoàn chỉnh. Mục tiêu bắt buộc của 2 ngày là bạn tự tay xuất xưởng ít nhất 3 video chuẩn chỉnh đăng lên kênh của chính bạn."
+      "customer_name": "Chị Lê Bạch Kim",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Khách hỏi học online hay video -> Page trả lời học video -> Khách nhắn tiếp: 'Cho mình thêm chi tiết lớp học nhé'",
+      "ai_suggestion": "Phương án 1: Gửi 1 đoạn link và bảo khách tự xem.\nPhương án 2: Liệt kê danh sách 30 bài học lý thuyết dài dằng dặc.",
+      "mentor_correction": "Anh Việt chốt chuẩn: Bóc tách rõ 3 khâu thực chiến người mới cần nhất: Tư duy kịch bản dòng đơn, Kỹ thuật quay góc máy điện thoại, và Cắt dựng CapCut thực tế.",
+      "approved_reply": "Dạ em gửi mình chi tiết lộ trình khóa học nhé ạ:\n\nKhóa học tập trung giải quyết 3 khâu thực chiến nhất để mình tự làm được video:\n1. Tư duy kịch bản dòng đơn: Cách chọn chủ đề, viết kịch bản dạng câu ngắn (1 dòng) nhìn lướt qua là nói được ngay, không sợ quên bài.\n2. Kỹ thuật quay bằng điện thoại: Cách lấy nét, đo sáng, các cỡ cảnh cận - trung - toàn để video trông sáng rõ và chuyên nghiệp.\n3. Cắt dựng CapCut thực tế: Hướng dẫn bấm từng nút trên màn hình, ghép nhạc, chèn chữ phụ đề tự động và nhịp cắt dứt khoát.\n\n👉 Chi tiết toàn bộ bài giảng chị có thể xem trước tại: https://video.fedu.vn"
     },
     {
       "id": 19,
-      "user_message": "Khách hỏi: 'Công ty mình muốn cử 3 bạn nhân viên marketing đi học thì có xuất hóa đơn và ưu đãi gì không?'",
-      "ai_suggestion": "Phương án 1: Dạ bên em có xuất hóa đơn đỏ và giảm 10% khi đăng ký nhóm ạ.\nPhương án 2: Nhóm 3 người bên em có chính sách học phí doanh nghiệp.",
-      "mentor_correction": "Sửa lại: Nhận diện khách doanh nghiệp, xuất hóa đơn VAT hợp lệ, ưu đãi theo nhóm rõ ràng.",
-      "approved_reply": "Chào anh/chị, bên em có xuất hóa đơn VAT đầy đủ cho công ty. Đăng ký nhóm 3 bạn nhân sự bên em có chính sách hỗ trợ giảm 10% tổng học phí. Anh/Chị gửi em thông tin công ty và Zalo người phụ trách để em gửi hợp đồng đào tạo và lộ trình nhé."
+      "customer_name": "Anh Chinh Lê",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Khách làm Bất Động Sản hỏi tư vấn cách làm video xây kênh bán nhà đất.",
+      "ai_suggestion": "Phương án 1: Khuyên khách bỏ tiền chạy quảng cáo Facebook.\nPhương án 2: Tư vấn chung chung về làm video ngắn TikTok.",
+      "mentor_correction": "Anh Việt chốt chuẩn: Đưa ra 3 định dạng video BĐS thực chiến tạo niềm tin cao nhất: Talking Head giải thích pháp lý, B-roll nhà đất quay cận chi tiết, và Walk & Talk dẫn khách trải nghiệm thực tế.",
+      "approved_reply": "Chào anh Chinh, với ngành Bất Động Sản, người mua chỉ xuống tiền khi họ thực sự tin tưởng người tư vấn. Em đề xuất anh tập trung vào 3 định dạng thực chiến nhất:\n1. Talking Head (Ngồi nói trực diện): Chia sẻ kinh nghiệm chọn đất, pháp lý sổ đỏ, cách tránh bẫy quy hoạch (định vị chuyên gia).\n2. B-roll Nhà Đất: Cầm điện thoại quay cận cảnh chi tiết không gian, ánh sáng, ngõ vào kết hợp thu âm voice-over lồng tiếng giải thích.\n3. Walk & Talk (Vừa đi vừa nói): Dẫn người xem đi thực tế hiện trường khu đất, nói chuyện tự nhiên như đang dẫn khách thật.\n\nTrong khóa em hướng dẫn cụ thể cách quay từng định dạng này bằng đúng chiếc điện thoại của anh nhé!"
     },
     {
       "id": 20,
-      "user_message": "Khách nhắn: 'Cuối tuần này mình bận mất ngày Chủ Nhật, chỉ học được Thứ 7 thì có tham gia được không?'",
-      "ai_suggestion": "Phương án 1: Dạ được chị nhé, buổi Chủ Nhật chị học bù khóa sau.\nPhương án 2: Chị học 1 ngày rồi hôm sau xem video bù ạ.",
-      "mentor_correction": "Sửa lại: Khuyên chân thành nên để sang khóa sau học liền mạch 2 ngày để không bị gãy kiến thức.",
-      "approved_reply": "Khuyên thật lòng là chị nên chờ khóa tháng sau học liền mạch cả 2 ngày Thứ 7 & CN cho trọn vẹn chị ạ. Vì ngày 1 là gốc quay dựng cơ bản, ngày 2 mới là lúc ráp kịch bản và xuất bản video. Chị để lại số Zalo, đợt sau có lịch trước 1 tuần em sẽ báo chị đăng ký sớm nhé."
+      "customer_name": "Chị Lê Xuân Hoàng Vy",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Khách hỏi cách làm video xây kênh Review Sách và Tài Chính Cá Nhân.",
+      "ai_suggestion": "Phương án 1: Tải video của người khác về cắt ghép lồng tiếng AI.\nPhương án 2: Học thuộc lòng cả cuốn sách rồi quay trước máy quay.",
+      "mentor_correction": "Anh Việt chốt chuẩn: Tách hình và tiếng: Quay B-roll lật giở trang sách dưới ánh đèn bàn ấm áp, lồng tiếng Voice-over trích dẫn 1 câu nói đắt nhất, không cần lộ mặt.",
+      "approved_reply": "Chào chị Vy, làm kênh review sách hay tài chính không nhất thiết phải lộ mặt nếu chị ngại ống kính. Cách làm hiệu quả và thẩm mỹ nhất hiện nay là:\n1. Hình ảnh (B-roll): Đặt điện thoại quay cận cảnh góc bàn làm việc, cốc cà phê, tay lật giở những dòng sách được gạch chân highlight.\n2. Âm thanh (Voice-over): Chị ngồi nơi yên tĩnh đọc lại 1 bài học đắt nhất rút ra từ chương sách đó (dùng kịch bản dòng đơn ngắn gọn 45-60s).\n3. Phụ đề: Bật chữ chạy to rõ ràng trên CapCut để người xem vừa ngắm cảnh vừa đọc chữ.\n\nCách này làm rất thư thái, không áp lực mà giữ chân người xem cực kỳ lâu chị nhé!"
     },
     {
       "id": 21,
-      "user_message": "Khách hỏi: 'Combo 4 khóa 999k cụ thể là gồm những khóa nào vậy shop?'",
-      "ai_suggestion": "Phương án 1: Dạ combo gồm khóa quay dựng, khóa AI, khóa kịch bản và khóa xây kênh ạ.\nPhương án 2: Bạn xem chi tiết trong link này nhé https://video.fedu.vn",
-      "mentor_correction": "Sửa lại: Liệt kê rõ ràng 4 học phần liền mạch từ con số 0 đến ra đơn hàng.",
-      "approved_reply": "Chào bạn, Combo 999k là trọn bộ quy trình làm video gồm 4 phần: 1. Kỹ thuật quay bằng điện thoại (góc máy, ánh sáng, B-roll); 2. Cắt dựng CapCut thực chiến (chèn nhạc, chữ chạy tự động, hiệu ứng); 3. Cấu trúc kịch bản 3 tầng bán hàng; 4. Ứng dụng AI viết kịch bản và lồng tiếng tự động. Bạn xem demo chi tiết tại: https://video.fedu.vn"
+      "customer_name": "Chị Nghiem Hong Nhung",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Khách nhắn: 'Chào anh! Em muốn học làm video nhưng em ở Sài Gòn, xin anh tư vấn ạ'",
+      "ai_suggestion": "Phương án 1: Dạ bên em chỉ dạy ở Hà Nội thôi ạ, khi nào vào Sài Gòn em báo.\nPhương án 2: Chị bay ra Hà Nội học 2 ngày cuối tuần nhé.",
+      "mentor_correction": "Anh Việt chốt chuẩn: Hướng dẫn vào khóa Online học qua video có sẵn xem trọn đời tại video.fedu.vn kết hợp cộng đồng sửa bài từ xa qua Zalo/Zoom hàng tuần.",
+      "approved_reply": "Dạ chào chị Nhung! Nếu chị ở Sài Gòn thì chị tham gia khóa Online bên em là cực kỳ thuận tiện ạ.\nKhóa học gồm hệ thống video bài giảng chi tiết từng thao tác quay và dựng trên điện thoại, chị có thể đăng nhập vào học bất cứ lúc nào rảnh tại: https://video.fedu.vn\n\nQuan trọng nhất: Trong quá trình học, chị làm video đến đâu gửi qua Zalo cá nhân (0934688632) cho em hoặc đăng lên nhóm cộng đồng, em sẽ xem và nắn góc máy, sửa nhịp cắt trực tiếp cho chị từng bài một từ xa nhé ạ!"
     },
     {
       "id": 22,
-      "user_message": "Khách nhắn: '599k là học phí trọn đời hay phải gia hạn theo tháng/năm?'",
-      "ai_suggestion": "Phương án 1: Dạ trọn đời bạn nhé, không phát sinh chi phí gì nữa.\nPhương án 2: Bạn đóng 1 lần học mãi mãi ạ.",
-      "mentor_correction": "Sửa lại: Khẳng định trọn đời + cam kết cập nhật bài giảng mới liên tục không thu thêm phí.",
-      "approved_reply": "599.000đ là chi phí đóng 1 lần và học trọn đời bạn nhé. Toàn bộ các bài học cập nhật tính năng mới của CapCut hay công cụ AI mới sau này bạn đều được học miễn phí, không phát sinh bất kỳ khoản phí gia hạn nào cả."
+      "customer_name": "Anh Đức Huy",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Khách bấm 'Bắt đầu' từ quảng cáo nhưng chưa để lại câu hỏi cụ thể.",
+      "ai_suggestion": "Phương án 1: Chào bạn! Cảm ơn bạn đã quan tâm đến Fedu. Vui lòng để lại số điện thoại.\nPhương án 2: Chào bạn, bạn muốn học khóa nào?",
+      "mentor_correction": "Anh Việt chốt chuẩn: Đánh trúng tâm lý người mới: thường sợ nhất là ngại ống kính và không biết nói gì, mở lời chân thành giúp họ thoải mái chia sẻ.",
+      "approved_reply": "Dạ em chào anh Huy ạ! Người mới bắt đầu làm video thường ngại nhất 2 điều: sợ đứng trước camera bị ngượng và không biết nói câu gì để giữ chân người xem.\n\nKhóa học bên em tập trung gỡ đúng 2 nút thắt đó bằng kỹ thuật kịch bản 1 dòng và phương pháp quay B-roll đời thường rất tự nhiên.\n\nHiện tại anh Huy đang muốn làm video để phát triển công việc kinh doanh hay xây kênh cá nhân thế ạ?"
     },
     {
       "id": 23,
-      "user_message": "Khách hỏi: 'Có giảm giá thêm không bạn, mình bớt chút lộc đầu tháng đi'",
-      "ai_suggestion": "Phương án 1: Dạ giá 599k bên em là giá ưu đãi kịch sàn rồi ạ.\nPhương án 2: Bên em không giảm giá được nữa bạn thông cảm nhé.",
-      "mentor_correction": "Sửa lại: Giữ giá chắc nịch, khẳng định giá trị kiến thức thực chiến vượt xa 599k, tặng thêm quà tài nguyên.",
-      "approved_reply": "Giá 599k là mức ưu đãi tốt nhất bên mình để ai cũng có thể tiếp cận được nghề video rồi bạn ạ. Thay vì bớt tiền, mình tặng thêm bạn bộ Kho 100+ âm thanh Viral và Font chữ bản quyền độc quyền bên mình dùng trong các video triệu view nhé."
+      "customer_name": "Chị Hương Rừng",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Khách click quảng cáo đêm qua, để lại quan tâm về sản phẩm đặc sản vùng miền / nông sản.",
+      "ai_suggestion": "Phương án 1: Bắn ngay link đăng ký khóa học online 599k.\nPhương án 2: Hỏi xin số điện thoại để sale gọi lại.",
+      "mentor_correction": "Anh Việt chốt chuẩn: Hỏi thăm mảng nông sản đặc sản, gợi ý cách quay cảnh đóng gói hàng và cảnh thiên nhiên đời sống thật mộc mạc để khách tin.",
+      "approved_reply": "Chào bạn! Với các sản phẩm nông sản, đặc sản vùng miền thì video càng mộc mạc, quay cận cảnh khâu thu hoạch và đóng gói bao bì sạch sẽ lại càng bán chạy.\n\nBên mình có hướng dẫn cách dùng điện thoại bắt trọn ánh sáng tự nhiên và thu âm thanh thực tế (tiếng đóng hộp, tiếng dao cắt) để tạo video kích thích vị giác và niềm tin của khách.\n\nHiện tại bên bạn đang phân phối những mặt hàng nào thế ạ?"
     },
     {
       "id": 24,
-      "user_message": "Khách hỏi: 'Tại sao khóa học thực chiến mà giá lại rẻ thế (599k), có cắt bớt bài không?'",
-      "ai_suggestion": "Phương án 1: Dạ bên em muốn lan tỏa giá trị đến cộng đồng ạ.\nPhương án 2: Giá rẻ vì đây là chương trình trợ giá của bên em.",
-      "mentor_correction": "Sửa lại: Trả lời thẳng thắn: Mục đích khóa Online là tạo phễu cộng đồng lớn, ai học tốt có thể đồng hành khóa sâu hơn.",
-      "approved_reply": "Mình chia sẻ thật: Mức giá 599k là để xây dựng cộng đồng học viên lớn ban đầu. Mình muốn ai cầm điện thoại lên cũng tự làm được video sạch sẽ, không bị bỡ ngỡ. Sau này khi bạn làm kênh phát triển tốt, bạn có thể tham gia các lớp Offline chuyên sâu cùng mình sau."
+      "customer_name": "Em Nguyễn Thành Châu",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Khách trẻ tuổi click quảng cáo tối qua hỏi: 'Khóa học này dạy những gì vậy shop?'",
+      "ai_suggestion": "Phương án 1: Chào shop, khóa học dạy CapCut và TikTok.\nPhương án 2: Dạ em chào anh Châu ạ...",
+      "mentor_correction": "Anh Việt chốt chuẩn: Xưng Anh - gọi Em, không xưng 'shop'. Nói rõ 2 ngày thực chiến tại lớp nắn góc máy trực tiếp trên điện thoại của em, kịch bản độc bản riêng em.",
+      "approved_reply": "Chào em! Anh là Việt đây, không phải bot hay nhân viên trực chat đâu nhé.\nKhóa học bên anh tập trung vào thực chiến: nắn từng góc quay điện thoại, hướng dẫn cách viết kịch bản câu ngắn nói tự nhiên không cần học vẹt, và cắt dựng trên CapCut.\n\nCuối tuần này anh có lớp Offline 2 ngày tại Hà Nội (gần Aeon Mall Long Biên) cầm tay chỉ việc, làm xong ít nhất 3 video chuẩn chỉnh đăng kênh luôn.\n\nHiện tại Châu đang tính xây kênh về chủ đề gì thế em?"
     },
     {
       "id": 25,
-      "user_message": "Khách hỏi: 'Mình là sinh viên/mẹ bỉm sữa khó khăn có được hỗ trợ học phí không?'",
-      "ai_suggestion": "Phương án 1: Dạ bên em có chính sách học bổng cho sinh viên ạ.\nPhương án 2: Bạn gửi thẻ sinh viên bên em giảm 50k nhé.",
-      "mentor_correction": "Sửa lại: Động viên chân thành, tạo điều kiện hỗ trợ bằng hình thức chia sẻ hoặc tặng thêm tài nguyên.",
-      "approved_reply": "Chào em, tinh thần tự học làm video để tự chủ thu nhập là rất đáng quý. Anh tặng riêng em mã ưu đãi sinh viên/mẹ bỉm còn 499.000đ trọn bộ. Em cố gắng học kỹ từng bài và thực hành đều đặn, kẹt chỗ nào nhắn anh chỉ dẫn trực tiếp nhé."
-    },
-    {
-      "id": 26,
-      "user_message": "Khách hỏi: 'Hai vợ chồng mình cùng học chung 1 tài khoản được không shop?'",
-      "ai_suggestion": "Phương án 1: Dạ mỗi người nên có 1 tài khoản để theo dõi tiến độ ạ.\nPhương án 2: Được bạn nhé, 1 tài khoản đăng nhập được trên 2 thiết bị.",
-      "mentor_correction": "Sửa lại: Cởi mở và ủng hộ việc vợ chồng cùng làm kênh kinh doanh gia đình.",
-      "approved_reply": "Được chứ bạn ơi, hai vợ chồng cùng học và hỗ trợ nhau làm video bán hàng là tuyệt vời nhất rồi. Tài khoản bạn có thể đăng nhập trên máy tính và điện thoại của cả 2 vợ chồng để cùng xem và làm bài nhé."
-    },
-    {
-      "id": 27,
-      "user_message": "Khách hỏi: 'Nhiều khóa trên Facebook bán 100k - 200k, khóa bên bạn có gì khác biệt?'",
-      "ai_suggestion": "Phương án 1: Dạ khóa bên em chất lượng cao hơn nhiều ạ.\nPhương án 2: Khóa rẻ tiền là video trôi nổi copy trên mạng thôi bạn.",
-      "mentor_correction": "Sửa lại: Chỉ ra điểm khác biệt cốt lõi: Khóa rẻ là video cóp nhặt không hỗ trợ; ở đây có người thật hướng dẫn và sửa lỗi 1-1.",
-      "approved_reply": "Khóa 100-200k trên mạng đa số là video cóp nhặt trôi nổi, mua xong không biết hỏi ai. Điểm khác biệt lớn nhất ở khóa bên mình là: Toàn bộ bài giảng là kinh nghiệm thực chiến do chính mình quay dựng triệu view, và quan trọng nhất là bạn có Zalo cá nhân của mình để hỏi đáp, sửa lỗi từng video."
-    },
-    {
-      "id": 28,
-      "user_message": "Khách nhắn: 'Mình muốn mua riêng khóa CapCut trên máy tính (PC) có được không?'",
-      "ai_suggestion": "Phương án 1: Dạ bên em bán trọn bộ chứ không bán lẻ ạ.\nPhương án 2: Khóa học có đủ cả CapCut PC và điện thoại bạn nhé.",
-      "mentor_correction": "Sửa lại: Làm rõ: Khóa học bao gồm cả lộ trình điện thoại và CapCut PC, mua 1 được toàn bộ.",
-      "approved_reply": "Trong gói khóa học này đã tích hợp sẵn cả hướng dẫn CapCut trên điện thoại lẫn CapCut trên máy tính PC rồi bạn nhé. Bạn làm quen trên điện thoại trước rồi chuyển sang máy tính thao tác nâng cao là mượt mà ngay."
-    },
-    {
-      "id": 29,
-      "user_message": "Khách hỏi: 'Khóa học thanh toán xong thì nhận bài giảng qua đâu?'",
-      "ai_suggestion": "Phương án 1: Dạ bên em sẽ gửi tài khoản đăng nhập web qua email ạ.\nPhương án 2: Bạn sẽ được add vào nhóm kín để nhận link học.",
-      "mentor_correction": "Sửa lại: Quy trình nhận bài ngay lập tức trong 1 phút qua web học chuyên nghiệp và link Drive.",
-      "approved_reply": "Sau khi chuyển khoản, trong vòng 1 phút hệ thống sẽ tự động kích hoạt tài khoản học trực tiếp trên website https://video.fedu.vn và gửi link thư mục Google Drive dự phòng vào Zalo/Email cho bạn. Bạn có thể mở ra học ngay lập tức trên máy tính hoặc điện thoại."
-    },
-    {
-      "id": 30,
-      "user_message": "Khách hỏi: 'Sau bao lâu thì hết hạn khóa học, có được xem lại nhiều lần không?'",
-      "ai_suggestion": "Phương án 1: Dạ xem lại thoải mái không giới hạn ạ.\nPhương án 2: Khóa học có giá trị vĩnh viễn bạn nhé.",
-      "mentor_correction": "Sửa lại: Trả lời dứt khoát: Trọn đời, xem đi xem lại lúc nào quên thì mở ra xem.",
-      "approved_reply": "Khóa học mở trọn đời bạn nhé, không giới hạn số lần xem. Bạn rảnh lúc nào thì mở máy lúc đó, làm đến bước nào quên thao tác thì tua lại xem đúng đoạn đó là làm theo được ngay."
-    },
-    {
-      "id": 31,
-      "user_message": "Khách hỏi: 'Gửi cho mình số tài khoản chuyển khoản khóa học nhé' (Chị Nhường Gk)",
-      "ai_suggestion": "Phương án 1: Dạ số tài khoản bên em là Techcombank 4101986 Nguyen Duc Viet ạ.\nPhương án 2: Chị chuyển khoản theo cú pháp Tên + SĐT nhé.",
-      "mentor_correction": "Sửa lại: Cung cấp thông tin chuyển khoản rõ ràng kèm cú pháp nhận diện tự động.",
-      "approved_reply": "Dạ em gửi chị thông tin tài khoản đăng ký khóa học:\n💳 Số tài khoản: 4101986\n🏛 Ngân hàng: Techcombank\n👤 Chủ tài khoản: NGUYEN DUC VIET\n📝 Nội dung CK: [Tên của bạn] + [Số điện thoại]\nChuyển khoản xong chị chụp ảnh màn hình gửi lại đây em kích hoạt tài khoản cho chị ngay nhé!"
-    },
-    {
-      "id": 32,
-      "user_message": "Khách gửi ảnh bill chuyển khoản thành công và nhắn: 'Mình chuyển rồi nhé shop'",
-      "ai_suggestion": "Phương án 1: Dạ em đã nhận được tiền, cảm ơn chị nhiều ạ.\nPhương án 2: Em kích hoạt tài khoản cho chị ngay đây.",
-      "mentor_correction": "Sửa lại: Xác nhận đã nhận chuẩn xác, gửi ngay link đăng nhập và dặn kết nối Zalo trực tiếp.",
-      "approved_reply": "Em đã nhận được học phí của chị rồi nhé! Em vừa kích hoạt quyền truy cập khóa học cho số điện thoại của chị. Chị bấm vào link này để vào lớp học ngay nhé: https://video.fedu.vn. Chị kết bạn Zalo em 0934.688.632 để em gửi thêm bộ tài nguyên và đồng hành cùng chị nhé!"
-    },
-    {
-      "id": 33,
-      "user_message": "Khách chuyển khoản nhưng ghi nội dung: 'chuyen tien' (không có tên và SĐT)",
-      "ai_suggestion": "Phương án 1: Dạ chị ơi chị ghi sai nội dung rồi ạ.\nPhương án 2: Chị cho em xin lại số điện thoại để em tra soát trên hệ thống.",
-      "mentor_correction": "Sửa lại: Nhẹ nhàng đối soát số tiền và giờ chuyển, xin số điện thoại để kích hoạt thủ công ngay.",
-      "approved_reply": "Em đã nhận được bill chuyển tiền rồi ạ. Do nội dung chuyển tiền chưa có số điện thoại nên hệ thống chưa tự kích hoạt được. Chị nhắn giúp em Họ tên + Số điện thoại của chị ở đây, em vào duyệt kích hoạt tài khoản cho chị luôn trong 30 giây nhé!"
-    },
-    {
-      "id": 34,
-      "user_message": "Khách hỏi: 'Mình muốn đặt cọc trước 1 triệu để giữ chỗ lớp Offline cuối tuần này có được không?'",
-      "ai_suggestion": "Phương án 1: Dạ được chị nhé, chị cọc 1 triệu còn lại đến lớp đóng nốt.\nPhương án 2: Chị chuyển cọc theo số tài khoản Techcombank 4101986 nhé.",
-      "mentor_correction": "Sửa lại: Đồng ý giữ chỗ, nêu rõ quyền lợi giữ suất học giới hạn và dặn chuẩn bị trước.",
-      "approved_reply": "Được chị nhé! Lớp giới hạn sĩ số nên chị cọc trước 1.000.000đ để em chốt danh sách và giữ chỗ cho chị. Phần học phí còn lại đến ngày học chị hoàn tất tại lớp sau cũng được. Em gửi chị STK Techcombank 4101986 (NGUYEN DUC VIET) nhé."
-    },
-    {
-      "id": 35,
-      "user_message": "Khách hỏi: 'Mình ở nước ngoài (Nhật Bản/Mỹ/Hàn Quốc) thì thanh toán học phí qua kênh nào?'",
-      "ai_suggestion": "Phương án 1: Dạ bên em có nhận Paypal hoặc thẻ visa quốc tế ạ.\nPhương án 2: Bạn nhờ người thân ở Việt Nam chuyển khoản giúp nhé.",
-      "mentor_correction": "Sửa lại: Hướng dẫn 2 cách: Chuyển khoản qua người thân/app kiều hối, hoặc qua thẻ Visa/Paypal.",
-      "approved_reply": "Chào bạn, học viên ở nước ngoài bên mình thường chuyển theo 2 cách: 1. Nhờ người thân ở Việt Nam chuyển khoản ngân hàng nội địa (nhanh nhất); 2. Bạn chuyển qua thẻ Visa/Mastercard hoặc tài khoản Paypal. Bạn nhắn mình xem bạn đang ở nước nào để mình gửi kênh thanh toán tiện nhất cho bạn nhé."
-    },
-    {
-      "id": 36,
-      "user_message": "Khách nhắn: 'Mình đã cọc lớp Offline rồi, hôm đi học cần mang theo những thiết bị gì?'",
-      "ai_suggestion": "Phương án 1: Dạ chị mang theo điện thoại và sạc dự phòng ạ.\nPhương án 2: Mang theo sản phẩm của mình đến để thực hành quay nhé.",
-      "mentor_correction": "Sửa lại: Dặn dò chu đáo 4 món: Điện thoại dọn bộ nhớ, sạc dự phòng, sản phẩm thật, trang phục lịch sự.",
-      "approved_reply": "Chào chị, hôm đi học chị chỉ cần chuẩn bị giúp em 4 thứ: 1. Chiếc điện thoại quen dùng (nhớ xóa bớt ảnh cũ để trống khoảng 10-15GB bộ nhớ); 2. Cục sạc dự phòng; 3. Mang theo 1–2 mẫu sản phẩm chị đang kinh doanh để thực hành quay trực tiếp; 4. Mặc trang phục chỉn chu một chút để lên hình đẹp luôn chị nhé!"
-    },
-    {
-      "id": 37,
-      "user_message": "Khách hỏi: 'Mình đã đóng tiền lớp Offline nhưng tuần này gia đình có việc bận đột xuất, có được bảo lưu sang khóa sau không?'",
-      "ai_suggestion": "Phương án 1: Dạ được bảo lưu trong vòng 3 tháng chị nhé.\nPhương án 2: Chị báo trước 24h bên em chuyển sang khóa sau cho chị.",
-      "mentor_correction": "Sửa lại: Thấu hiểu việc gia đình, đồng ý bảo lưu sang khóa tiếp theo 100% không mất phí.",
-      "approved_reply": "Chị yên tâm, việc gia đình đột xuất là bất khả kháng. Em sẽ bảo lưu toàn bộ học phí và suất học sang khóa gần nhất tháng sau cho chị. Khi nào sắp xếp xong việc chị chỉ cần nhắn em trước 3 ngày để em xếp danh sách lớp mới cho chị nhé."
-    },
-    {
-      "id": 38,
-      "user_message": "Khách nhắn: 'Mình muốn học thử buổi đầu tiên rồi mới thanh toán có được không?'",
-      "ai_suggestion": "Phương án 1: Dạ bên em không có chính sách học thử ạ.\nPhương án 2: Khóa học cam kết chất lượng nên không cần học thử bạn nhé.",
-      "mentor_correction": "Sửa lại: Giải thích văn minh: Khóa Offline chuẩn bị tài liệu và chỗ ngồi giới hạn, gợi ý xem bài mẫu Online trước.",
-      "approved_reply": "Dạ lớp Offline bên em chuẩn bị chỗ ngồi, tài liệu và thực hành sản phẩm cá nhân hóa cho từng người nên không tổ chức học thử được ạ. Nhưng chị có thể xem trước các video bài giảng mẫu và phong cách hướng dẫn của em trên kênh TikTok/Fanpage hoặc web https://video.fedu.vn để cảm nhận trước khi quyết định nhé."
-    },
-    {
-      "id": 39,
-      "user_message": "Khách nhắn: 'Mình chuyển khoản bị dư tiền (chuyển thừa 1 triệu), hỗ trợ mình với'",
-      "ai_suggestion": "Phương án 1: Dạ chị gửi lại STK bên em hoàn lại tiền thừa ạ.\nPhương án 2: Em kiểm tra và đối soát ngay đây.",
-      "mentor_correction": "Sửa lại: Trấn an ngay, kiểm tra sao kê và chuyển khoản hoàn lại tiền thừa trong 5 phút.",
-      "approved_reply": "Dạ chị yên tâm hoàn toàn nhé, tài khoản chính chủ của em nên em kiểm tra được ngay. Chị nhắn giúp em Số tài khoản + Tên ngân hàng + Tên chủ tài khoản của chị, em chuyển khoản trả lại phần tiền thừa cho chị ngay bây giờ nhé!"
-    },
-    {
-      "id": 40,
-      "user_message": "Khách hỏi: 'Thanh toán xong có được cấp hóa đơn hoặc giấy chứng nhận tham gia khóa học không?'",
-      "ai_suggestion": "Phương án 1: Dạ khóa học có cấp chứng nhận online sau khi hoàn thành ạ.\nPhương án 2: Bên em có gửi hóa đơn điện tử cho bạn.",
-      "mentor_correction": "Sửa lại: Khẳng định có chứng nhận hoàn thành khóa học và xuất hóa đơn VAT theo yêu cầu.",
-      "approved_reply": "Có bạn nhé. Hoàn thành xong khóa học bạn sẽ được cấp chứng nhận điện tử chứng nhận hoàn thành kỹ năng sản xuất video thực chiến. Nếu bạn cần hóa đơn VAT cho công ty thì bên mình xuất đầy đủ gửi qua email cho bạn nhé."
-    },
-    {
-      "id": 41,
-      "user_message": "Khách nhắn: 'A ơi Cái web em học cách đây 2 tuần Skool giờ em vào ko đc ạ' (Nguyễn Tấn Phong)",
-      "ai_suggestion": "Phương án 1: Dạ em kiểm tra lại link skool bên em gửi trong mail nhé.\nPhương án 2: Bạn gửi email đăng ký để mình reset mật khẩu.",
-      "mentor_correction": "Sửa lại: Hỗ trợ tức thì, kiểm tra trạng thái tài khoản trên Skool và gửi lại đường link trực tiếp.",
-      "approved_reply": "Chào Phong nhé! Em bấm vào link trực tiếp này rồi đăng nhập lại bằng email em đã đăng ký lúc đầu nhé: https://video.fedu.vn (hoặc vào thẳng Skool). Nếu vẫn kẹt báo lỗi gì, em chụp màn hình gửi qua đây anh cấp lại mật khẩu cho em trong 1 phút là vào học bình thường nhé."
-    },
-    {
-      "id": 42,
-      "user_message": "Khách nhắn: 'Mình quên mật khẩu đăng nhập web học rồi shop ơi, lấy lại thế nào?'",
-      "ai_suggestion": "Phương án 1: Dạ bạn bấm vào nút Quên mật khẩu trên web để lấy lại ạ.\nPhương án 2: Gửi email cho mình để mình hỗ trợ cấp lại.",
-      "mentor_correction": "Sửa lại: Chủ động reset mật khẩu về mặc định dễ nhớ cho khách và hướng dẫn đăng nhập lại.",
-      "approved_reply": "Chị nhắn giúp em địa chỉ email chị đã dùng để đăng ký nhé. Em vào hệ thống reset lại mật khẩu mặc định (ví dụ: fedu123456) cho chị luôn để chị vào học ngay, không cần phải chờ nhận mã xác nhận rườm rà qua email nữa ạ."
-    },
-    {
-      "id": 43,
-      "user_message": "Khách nhắn: 'Gửi lại giúp mình link thư mục Google Drive tải tài liệu và âm thanh nhé' (Thanh Hương)",
-      "ai_suggestion": "Phương án 1: Dạ link drive bên em gửi trong bài 1 của khóa học ạ.\nPhương án 2: Em gửi lại link drive cho chị đây.",
-      "mentor_correction": "Sửa lại: Gửi thẳng link Drive không bắt khách phải đi tìm, kèm hướng dẫn lưu về máy.",
-      "approved_reply": "Em gửi chị link Google Drive tổng hợp trọn bộ tài liệu, font chữ bản quyền và kho nhạc nền thực chiến nhé: https://drive.google.com/drive/folders/11U0JNCCRJbV835bUC5HLCHYiUZruu4M1?usp=drive_link. Chị bấm vào nút 'Thêm vào Drive của tôi' để tiện mở ra dùng mỗi khi dựng video nhé!"
-    },
-    {
-      "id": 44,
-      "user_message": "Khách hỏi: 'CapCut của mình bắt nâng cấp bản Pro mới cho xuất video thì xử lý thế nào?'",
-      "ai_suggestion": "Phương án 1: Dạ bạn nâng cấp bản Pro mất phí vài chục nghìn/tháng ạ.\nPhương án 2: Bạn xóa các hiệu ứng có chữ Pro đi là xuất được miễn phí.",
-      "mentor_correction": "Sửa lại: Chỉ rõ mẹo kiểm tra: Khách vô tình dùng tính năng có icon 'Pro' (chữ, nhạc, hiệu ứng), xóa đoạn đó là xuất miễn phí 100%.",
-      "approved_reply": "Chị không cần tốn tiền mua Pro đâu nhé! Lý do bị đòi tiền là vì trên timeline chị vô tình chọn trúng 1 hiệu ứng chuyển cảnh, font chữ hoặc bộ lọc có chữ 'Pro'. Chị nhìn lại thanh timeline xem chỗ nào có icon Pro màu vàng, chị xóa cái hiệu ứng đó đi và thay bằng hiệu ứng miễn phí bên cạnh là xuất video nét căng 1080p hoàn toàn miễn phí nhé."
-    },
-    {
-      "id": 45,
-      "user_message": "Khách hỏi: 'Font chữ Fedu tải về điện thoại iPhone/Android cài vào CapCut như thế nào?'",
-      "ai_suggestion": "Phương án 1: Dạ xem video hướng dẫn cài font trong bài 3 nhé.\nPhương án 2: Bạn mở CapCut chọn Tải font lên rồi chọn file font.",
-      "mentor_correction": "Sửa lại: Hướng dẫn quy trình 3 bước cực mộc: Mở CapCut -> Thêm chữ -> Tải font lên.",
-      "approved_reply": "Rất đơn giản bạn nhé: 1. Bạn tải file font (.otf hoặc .ttf) về máy; 2. Mở CapCut lên, bấm vào phần 'Văn bản' -> Chọn 'Phông chữ'; 3. Bấm vào dấu cộng (+) 'Thêm phông chữ' -> Chọn file font vừa tải về là xong. Từ đó về sau chữ trên video của bạn sẽ hiển thị chuẩn font thiết kế, không bao giờ bị lỗi dấu tiếng Việt."
-    },
-    {
-      "id": 46,
-      "user_message": "Khách nhắn: 'Video mình xuất ra từ CapCut đăng lên TikTok/Facebook bị mờ căm, vỡ nét là do đâu?'",
-      "ai_suggestion": "Phương án 1: Dạ do mạng của bạn yếu hoặc cài đặt xuất file thấp ạ.\nPhương án 2: Bạn cần chỉnh thông số xuất video lên 2K/4K.",
-      "mentor_correction": "Sửa lại: Bắt bệnh đúng kỹ thuật: Không xuất 4K (nền tảng nén sẽ vỡ), xuất chuẩn 1080p 60fps và bật tính năng 'Tải lên chất lượng cao' trên TikTok/FB.",
-      "approved_reply": "Video bị mờ thường do 2 lỗi này bạn nhé: 1. Khi xuất CapCut đừng chọn 4K, hãy chọn đúng chuẩn 1080p - 30fps (hoặc 60fps) và kéo thanh Bitrate ở mức Khuyến nghị; 2. Trước khi đăng bài, bạn vào Cài đặt của app TikTok/Facebook, bật mục 'Tải lên chất lượng cao nhất' lên. Làm đúng 2 bước này video sẽ nét căng y như xem trong máy."
-    },
-    {
-      "id": 47,
-      "user_message": "Khách hỏi: 'Mình chèn nhạc vào video đăng lên Facebook Reels bị tắt tiếng do bản quyền thì làm sao?'",
-      "ai_suggestion": "Phương án 1: Dạ bạn nên dùng nhạc trong kho của Facebook ạ.\nPhương án 2: Lấy nhạc trong kho nhạc không bản quyền bên em tặng.",
-      "mentor_correction": "Sửa lại: Mẹo lách bản quyền thực chiến: Dùng kho nhạc thương mại của Meta, hoặc chèn nhạc nền âm lượng nhỏ 5-8% rồi ghim âm thanh trực tiếp trên nền tảng.",
-      "approved_reply": "Để không bao giờ bị tắt tiếng, bạn áp dụng mẹo này nhé: Khi dựng trong CapCut, bạn để nhạc nền ở mức âm lượng rất nhỏ (khoảng 3–5%). Khi bấm đăng lên Facebook Reels hoặc TikTok, bạn bấm vào nút 'Thêm âm thanh' của chính nền tảng đó và chọn 1 bài hát đang trend, kéo âm lượng bài đó xuống 5%. Video vừa có nhạc trend đẩy xu hướng, vừa không bao giờ bị quét bản quyền."
-    },
-    {
-      "id": 48,
-      "user_message": "Khách hỏi: 'Bộ công cụ AI tặng kèm trong khóa học có được dùng vĩnh viễn không hay phải trả phí hàng tháng?'",
-      "ai_suggestion": "Phương án 1: Dạ các công cụ AI miễn phí thì dùng mãi mãi ạ.\nPhương án 2: Bên em hướng dẫn dùng bản free không tốn phí duy trì.",
-      "mentor_correction": "Sửa lại: Làm rõ: Toàn bộ quy trình AI trong khóa đều ưu tiên phiên bản miễn phí (Free Tier) đủ dùng cho cá nhân.",
-      "approved_reply": "Toàn bộ quy trình AI mình hướng dẫn trong khóa học (từ viết kịch bản, tạo giọng nói, đến tạo ảnh) đều tối ưu trên các công cụ MIỄN PHÍ hoặc có gói dùng thử lâu dài. Bạn không cần phải bỏ ra tiền triệu mỗi tháng mua tài khoản đắt đỏ mà vẫn tạo ra sản phẩm chất lượng cao."
-    },
-    {
-      "id": 49,
-      "user_message": "Khách nhắn: 'Mình dựng xong video đầu tiên rồi, muốn gửi thầy xem góp ý thì gửi vào đâu?'",
-      "ai_suggestion": "Phương án 1: Dạ bạn gửi link video vào group Zalo nhé.\nPhương án 2: Gửi thẳng vào tin nhắn fanpage này em chuyển thầy xem.",
-      "mentor_correction": "Sửa lại: Mời gửi thẳng Zalo cá nhân, khen ngợi tinh thần hành động ngay lập tức.",
-      "approved_reply": "Chúc mừng bạn đã xuất xưởng video đầu tiên! Đây là bước quan trọng nhất. Bạn xuất file video ra rồi gửi thẳng vào Zalo cá nhân của mình: 0934.688.632 (Nguyễn Việt). Mình sẽ mở xem trực tiếp và gửi voice note góp ý cho bạn từ góc quay, nhịp cắt đến câu mở đầu nhé!"
-    },
-    {
-      "id": 50,
-      "user_message": "Khách hỏi: 'Mình muốn tải bài giảng về điện thoại để đi máy bay/về quê không có mạng vẫn xem được'",
-      "ai_suggestion": "Phương án 1: Dạ web học có hỗ trợ tải về trên app điện thoại ạ.\nPhương án 2: Bạn xem trên link Google Drive tải về máy tính được nhé.",
-      "mentor_correction": "Sửa lại: Hướng dẫn mở link thư mục Google Drive tải các video bài giảng cốt lõi về máy.",
-      "approved_reply": "Được bạn nhé! Trong thư mục Google Drive bài giảng mình gửi trong Zalo, bạn chỉ cần bấm vào nút 3 chấm ở từng video bài học và chọn 'Tải xuống' (hoặc 'Cung cấp ngoại tuyến'). Khi đi máy bay hoặc về quê không có wifi, bạn chỉ cần mở mục Tệp trên điện thoại là xem học bình thường."
-    },
-    {
-      "id": 51,
-      "user_message": "Khách hỏi: 'Mình làm môi giới Bất động sản thì khóa học này có kịch bản mẫu và cách quay nhà đất không?'",
-      "ai_suggestion": "Phương án 1: Dạ bên em có bài học riêng cho ngành Bất động sản ạ.\nPhương án 2: Kịch bản 3 tầng áp dụng bán BĐS rất hiệu quả.",
-      "mentor_correction": "Sửa lại: Đưa giải pháp chuyên biệt ngành BĐS: Bỏ kiểu quay review khoe nhà khoe sổ, quay kiểu 'Giải phẫu pháp lý/Quy hoạch thực tế' để tạo niềm tin.",
-      "approved_reply": "Chào bạn, học viên ngành BĐS bên mình rất đông. Sai lầm lớn nhất của môi giới là suốt ngày cầm máy đi quay review căn nhà rao bán (người xem lướt qua ngay). Trong khóa mình dạy bạn làm dạng video 'Giải mã quy hoạch' và 'Bóc góc khuất phong thủy/pháp lý'. Người xem thấy bạn có chuyên môn sâu sẽ tự động nhắn tin nhờ bạn tìm nhà/đất."
-    },
-    {
-      "id": 52,
-      "user_message": "Khách hỏi: 'Mình mở tiệm Spa/Nha khoa/Thẩm mỹ viện thì làm video dạng nào thu hút khách đặt lịch?'",
-      "ai_suggestion": "Phương án 1: Dạ dạng video trước và sau khi làm dịch vụ (Before/After) rất hút khách ạ.\nPhương án 2: Bạn quay quy trình chăm sóc khách hàng và phản hồi thực tế.",
-      "mentor_correction": "Sửa lại: Cảnh báo chính sách cấm Before/After của nền tảng, đưa công thức: Chia sẻ ca khó + Trải nghiệm khách hàng thật.",
-      "approved_reply": "Với ngành Spa/Nha khoa, bạn tuyệt đối tránh đăng ảnh Before-After cận cảnh vì nền tảng sẽ bóp tương tác do vi phạm chính sách y tế. Cách làm đúng là dạng 'Nhật ký xử lý ca khó': Quay cảnh khách hàng bước vào với nỗi lo lắng, bác sĩ phân tích nguyên nhân và quá trình tư vấn nhẹ nhàng. Video vừa chân thực, vừa tôn vinh tay nghề mà không bị quét vi phạm."
-    },
-    {
-      "id": 53,
-      "user_message": "Khách hỏi: 'Mình bán quần áo thời trang nữ thì có bài dạy quay phối đồ và bắt trend không?'",
-      "ai_suggestion": "Phương án 1: Dạ có hướng dẫn quay lookbook thời trang và ghép nhạc trend ạ.\nPhương án 2: Bạn sẽ học cách làm video chuyển cảnh biến hình thời trang.",
-      "mentor_correction": "Sửa lại: Chuyển hướng từ khoe dáng người mẫu sang giải quyết vấn đề hình thể cho người mua (che bắp tay, tôn dáng nấm lùn).",
-      "approved_reply": "Thời trang giờ nếu chỉ thuê mẫu xinh về nhún nhảy theo nhạc thì chuyển đổi rất kém bạn nhé. Khóa học sẽ hướng dẫn bạn làm video giải quyết nỗi đau của khách: 'Gợi ý 3 cách phối đồ cho người bắp tay to', 'Cách mặc hack chân dài cho bạn 1m50'. Khi video đánh trúng khuyết điểm người xem muốn che, họ sẽ bấm vào giỏ hàng mua ngay."
-    },
-    {
-      "id": 54,
-      "user_message": "Khách hỏi: 'Mình kinh doanh Quán ăn/Cafe (F&B) thì quay thế nào để khách thèm muốn đến quán ăn?'",
-      "ai_suggestion": "Phương án 1: Dạ quay cận cảnh đồ ăn nóng hổi (Food Porn) và âm thanh xèo xèo ạ.\nPhương án 2: Kết hợp quay không gian quán đẹp mắt để khách đến check-in.",
-      "mentor_correction": "Sửa lại: Kỹ thuật quay ASMR âm thanh nấu nướng + Kể câu chuyện nguồn gốc nguyên liệu sạch.",
-      "approved_reply": "Ngành F&B ăn nhau ở 2 thứ: Âm thanh cơ học (tiếng dao thái lách cách, tiếng xào nấu xèo xèo) và Sự kỹ tính của chủ quán. Trong khóa mình chỉ bạn kỹ thuật quay macro cận cảnh làn khói bốc lên và kể câu chuyện bạn thức dậy từ 4h sáng đi chợ chọn nguyên liệu tươi. Khách xem xong họ cảm nhận được sự sạch sẽ và thèm hương vị đó, quán sẽ đông nghịt khách."
-    },
-    {
-      "id": 55,
-      "user_message": "Khách hỏi: 'Mình là Bác sĩ/Dược sĩ muốn làm kênh chia sẻ kiến thức sức khỏe có bị phạt chính sách không?'",
-      "ai_suggestion": "Phương án 1: Dạ dùng từ ngữ chuẩn y khoa và mặc áo blouse trắng để tăng uy tín ạ.\nPhương án 2: Tránh nói tên thuốc cụ thể là không bị phạt.",
-      "mentor_correction": "Sửa lại: Nắm chắc luật nền tảng: Bỏ từ ngữ cấm trị bệnh dứt điểm, dùng từ vựng trung tính và kịch bản đời thường hóa thuật ngữ y khoa.",
-      "approved_reply": "Chào bác sĩ/dược sĩ, ngành y tế bị nền tảng kiểm duyệt rất gắt gao. Trong khóa học mình có sẵn danh sách các 'Từ ngữ cấm' cần né (chữa khỏi hoàn toàn, cam kết 100%, tên biệt dược kê đơn...). Mình hướng dẫn bạn cách dịch các thuật ngữ y khoa khô khan thành ví dụ đời thường để bà con dễ hiểu, video vừa an toàn kênh vừa có lượng xem cao."
-    },
-    {
-      "id": 56,
-      "user_message": "Khách hỏi: 'Mình là Giáo viên/Gia sư muốn xây kênh dạy học và bán khóa học thì bắt đầu từ đâu?'",
-      "ai_suggestion": "Phương án 1: Dạ bạn làm các video mẹo giải bài tập nhanh 30 giây ạ.\nPhương án 2: Xây dựng hình ảnh thầy cô giáo thân thiện trên mạng xã hội.",
-      "mentor_correction": "Sửa lại: Dạng video 'Bóc bẫy sai lầm học sinh hay mắc' + Phương pháp micro-teaching 45 giây.",
-      "approved_reply": "Với thầy cô giáo, cách làm video hiệu quả nhất không phải là đứng giảng bài như trên lớp mà là dạng 'Bẫy sai lầm': '90% học sinh mất điểm ở câu này', 'Mẹo nhớ 10 từ vựng tiếng Anh trong 1 câu chuyện'. Khóa học sẽ hướng dẫn bạn băm nhỏ kiến thức thành từng lát cắt 45 giây cực kỳ thu hút học sinh và phụ huynh."
-    },
-    {
-      "id": 57,
-      "user_message": "Khách hỏi: 'Dân văn phòng làm việc 8 tiếng hành chính thì chọn chủ đề gì để làm kênh kiếm thêm thu nhập?'",
-      "ai_suggestion": "Phương án 1: Dạ bạn có thể làm dạng vlog một ngày làm việc của dân văn phòng ạ.\nPhương án 2: Chia sẻ kỹ năng tin học văn phòng hoặc làm affiliate kiếm tiền.",
-      "mentor_correction": "Sửa lại: Gợi ý dạng 'Daily Vlog chữa lành' hoặc 'Review đồ dùng bàn làm việc tiện ích' kết hợp Affiliate.",
-      "approved_reply": "Dân văn phòng có 1 lợi thế rất lớn là bối cảnh bàn làm việc góc máy rất sạch. Bạn có thể làm dạng video 'Chữa lành góc làm việc' (setup bàn, ly cafe sáng, sổ tay) hoặc 'Review đồ công nghệ/tiện ích văn phòng' gắn link tiếp thị liên kết (Affiliate). Khóa học chỉ bạn cách quay những lát cắt ngắn này trong 10 phút giờ nghỉ trưa."
-    },
-    {
-      "id": 58,
-      "user_message": "Khách hỏi: 'Mình bán đồ gia dụng/tiện ích thông minh thì quay sao để không giống video quảng cáo bán hàng nhàm chán?'",
-      "ai_suggestion": "Phương án 1: Dạ quay video giải quyết vấn đề phiền toái trong gia đình ạ.\nPhương án 2: So sánh đồ cũ và đồ mới tiện ích hơn thế nào.",
-      "mentor_correction": "Sửa lại: Công thức: Đặt khách vào tình huống ức chế (tắc cống, bừa bộn) -> Sản phẩm xuất hiện như giải pháp cứu cánh.",
-      "approved_reply": "Đừng mở đầu bằng việc khoe tính năng sản phẩm bạn nhé. Hãy mở đầu bằng đúng 'Tình huống ức chế' của người nội trợ (ví dụ: bồn rửa bát bị nghẹt nước bốc mùi, dây điện lòng thòng bừa bộn). 3 giây đầu cho họ thấy sự khó chịu đó, sau đó chiếc máy/dụng cụ của bạn xuất hiện giải quyết êm ru trong 5 giây. Khách thấy sướng mắt là bấm mua ngay."
-    },
-    {
-      "id": 59,
-      "user_message": "Khách hỏi: 'Ngành Xây dựng/Thiết kế nội thất thì quay video công trình thế nào cho đẳng cấp?'",
-      "ai_suggestion": "Phương án 1: Dạ quay timelapse tiến độ thi công và quay nhà hoàn thiện ạ.\nPhương án 2: Bác giải thích chi phí vật tư và công năng sử dụng.",
-      "mentor_correction": "Sửa lại: Kỹ thuật quay chi tiết cơ học: Lát cắt vật liệu, đường nét hoàn thiện và tâm sự về cái tâm của người làm nghề.",
-      "approved_reply": "Xây dựng và nội thất khách hàng sợ nhất là bị bớt xén vật tư và hoàn thiện ẩu. Bạn hãy cầm máy quay cận cảnh: đường chỉ gạch khít thẳng tắp, mối ghép gỗ không tì vết, tiếng đóng mở bản lề êm ru. Vừa quay vừa tâm sự thật thà về việc tại sao chỗ này phải làm kỹ như vậy. Video toát lên sự chỉn chu sẽ kéo về toàn khách nhà phố, biệt thự cao cấp."
-    },
-    {
-      "id": 60,
-      "user_message": "Khách hỏi: 'Mình làm tư vấn Bảo hiểm/Tài chính cá nhân thì làm video kiểu gì để không bị ghét?'",
-      "ai_suggestion": "Phương án 1: Dạ bạn đừng nhắc đến việc mua bảo hiểm mà hãy chia sẻ quản lý chi tiêu ạ.\nPhương án 2: Kể các câu chuyện bồi thường thực tế có thật.",
-      "mentor_correction": "Sửa lại: Tuyệt đối không dọa nạt rủi ro/bệnh tật. Hãy chia sẻ câu chuyện tài chính thực tế và bóc tách các điều khoản hợp đồng giúp khách không bị mất tiền oan.",
-      "approved_reply": "Người ta ghét bảo hiểm vì người bán hay dọa nạt rủi ro hoặc vẽ ra màu hồng. Bạn hãy đổi góc nhìn: Đi bóc tách các điều khoản lắt léo giúp khách hàng: '3 trường hợp bảo hiểm từ chối bồi thường mà đại lý không nói cho bạn', 'Cách đọc hợp đồng để không mất tiền oan'. Khi bạn đứng về phía quyền lợi của khách, khách sẽ chủ động tìm bạn để nhờ tư vấn hợp đồng."
-    },
-    {
-      "id": 61,
-      "user_message": "Khách bảo: 'Để mình suy nghĩ thêm nhé shop' (Khách lưỡng lự sau khi hỏi lộ trình)",
-      "ai_suggestion": "Phương án 1: Dạ vâng chị cứ suy nghĩ khi nào muốn học thì nhắn em nhé.\nPhương án 2: Chị ơi ưu đãi chỉ còn hôm nay thôi chị đăng ký sớm đi ạ.",
-      "mentor_correction": "Sửa lại: Tôn trọng quyết định của khách, không ép mua dồn dập, gieo 1 bài tập nhỏ hoặc link xem mẫu để giữ kết nối.",
-      "approved_reply": "Dạ hoàn toàn thoải mái chị nhé! Chị cứ tham khảo kỹ xem lộ trình có đúng nhu cầu của mình không. Em gửi chị link này có sẵn 3 bài học mẫu về góc quay cơ bản để chị xem thử trước: https://video.fedu.vn. Khi nào chị sắp xếp được thời gian muốn bắt tay vào làm kênh thì nhắn lại em hỗ trợ chị nhé."
-    },
-    {
-      "id": 62,
-      "user_message": "Khách nhắn: 'Đắt quá, mình thấy trên mạng có chỗ bán khóa học có 199k'",
-      "ai_suggestion": "Phương án 1: Dạ tiền nào của nấy chị ơi, chỗ 199k lừa đảo đấy ạ.\nPhương án 2: Khóa bên em là khóa thực chiến chứ không phải lý thuyết.",
-      "mentor_correction": "Sửa lại: Phân tích bình tĩnh: 199k mua file về tự xem không ai sửa; 599k mua cả người đồng hành sửa bài trực tiếp.",
-      "approved_reply": "Dạ em hiểu tâm lý so sánh giá của chị ạ. 199k thường là mua một tệp video tải sẵn trên mạng về, chị kẹt ở thao tác nào hay bí kịch bản thì không biết hỏi ai rồi lại bỏ xó. Còn ở đây là chị có người thật đồng hành: quay video xong gửi thẳng Zalo em xem và sửa từng nhát cắt cho chị. 599k là chi phí chị mua sự yên tâm và tiết kiệm thời gian mò mẫm cả năm trời đấy ạ."
-    },
-    {
-      "id": 63,
-      "user_message": "Khách hỏi: 'Học xong khóa này có chắc chắn lên xu hướng triệu view không bạn?'",
-      "ai_suggestion": "Phương án 1: Dạ cam kết làm theo đúng hướng dẫn là lên triệu view ạ.\nPhương án 2: Bên em có nhiều học viên đạt triệu view lắm rồi bạn.",
-      "mentor_correction": "Sửa lại: Bác bỏ tư duy ảo tưởng triệu view: Triệu view mà không ra đơn thì vô nghĩa. Hướng tới video đúng tệp và chuyển đổi đơn hàng.",
-      "approved_reply": "Mình chia sẻ thật lòng: Nếu ai hứa với bạn học xong chắc chắn 100% triệu view thì là nói quá. Quan điểm làm kênh của mình là: 'Triệu view mà không ra đơn thì vô nghĩa, chỉ cần 2.000 view mà đúng tệp khách hàng mua hàng thì giá trị gấp trăm lần'. Khóa học này dạy bạn cách làm video chuẩn xác để hút đúng khách hàng tiềm năng và chuyển đổi ra doanh thu thực tế."
-    },
-    {
-      "id": 64,
-      "user_message": "Khách hỏi: 'Bên bạn có nhận làm dịch vụ trọn gói (quay, dựng, xây kênh từ A-Z) không?'",
-      "ai_suggestion": "Phương án 1: Dạ bên em có dịch vụ xây kênh trọn gói giá từ 20 triệu/tháng ạ.\nPhương án 2: Bên em chỉ tập trung đào tạo chứ không làm dịch vụ ngoài.",
-      "mentor_correction": "Sửa lại: Khuyên thật: Thuê ngoài rất tốn kém mà mất chất riêng; tự chủ kỹ năng vẫn là bền vững nhất, nếu cần tư vấn dịch vụ thì xin thông tin.",
-      "approved_reply": "Bên mình có nhận các dự án trọn gói cho doanh nghiệp, nhưng chi phí thường khá cao (vài chục triệu/tháng). Lời khuyên chân thành của mình: Kênh cá nhân thì chính bạn xuất hiện và nói câu chuyện của bạn mới là bền vững và chạm tới khách hàng nhất. Bạn cứ học lớp Online/Offline để nắm gốc trước, sau này cần thuê đội ngũ về hỗ trợ bạn vẫn là người kiểm soát được chất lượng."
-    },
-    {
-      "id": 65,
-      "user_message": "Khách hỏi: 'Khóa này có dạy chạy quảng cáo Facebook Ads hay TikTok Ads không shop?'",
-      "ai_suggestion": "Phương án 1: Dạ khóa này chỉ dạy quay dựng và kịch bản chứ không dạy ads ạ.\nPhương án 2: Có hướng dẫn cơ bản về chạy quảng cáo video bạn nhé.",
-      "mentor_correction": "Sửa lại: Khẳng định vai trò: Video hay là gốc rễ của mọi chiến dịch Ads rẻ, khóa học chuyên sâu sản xuất video chuyển đổi cao để phục vụ chạy Ads.",
-      "approved_reply": "Khóa học này tập trung 100% vào việc sản xuất 'Nội dung video chuyển đổi cao'. Bây giờ chạy Ads mà video dở, không giữ chân được người xem thì đốt bao nhiêu tiền cũng lỗ. Khóa học giúp bạn tạo ra những video hấp dẫn, giữ chân người xem tự nhiên. Khi bạn cầm video này đi chạy Ads thì chi phí ra tin nhắn/đơn hàng sẽ rẻ hơn rất nhiều lần."
-    },
-    {
-      "id": 66,
-      "user_message": "Khách xem xong báo giá/lộ trình rồi im lặng (Seen không trả lời trong 24h)",
-      "ai_suggestion": "Phương án 1: Chị ơi chị còn quan tâm khóa học không ạ?\nPhương án 2: Em gửi chị thêm bài giảng mẫu để chị tham khảo nhé.",
-      "mentor_correction": "Sửa lại: Không hỏi han dồn dập 'còn quan tâm không'. Gửi tặng 1 tài liệu giá trị cao hoặc 1 câu chuyện học viên ngành tương tự làm thành công.",
-      "approved_reply": "Em chào chị! Hôm qua em thấy chị có tìm hiểu về cách làm video cho mảng của mình. Tiện đây em vừa đóng gói xong bảng '10 Mẫu Câu Mở Đầu Video Giữ Chân Người Xem 3 Giây Đầu', em gửi tặng chị lưu về tham khảo nhé: https://video.fedu.vn/qua-tang. Chúc chị một ngày làm việc hiệu quả ạ!"
-    },
-    {
-      "id": 67,
-      "user_message": "Khách nhắn vào Fanpage lúc 1h30 sáng: 'Tư vấn cho mình khóa học với'",
-      "ai_suggestion": "Phương án 1: Dạ chào bạn hiện tại đang ngoài giờ làm việc sáng mai bên em hỗ trợ ạ.\nPhương án 2: Gửi tin nhắn tự động hàng loạt.",
-      "mentor_correction": "Sửa lại: Phản hồi tự động ấm áp, xin số Zalo để sáng mai liên hệ sớm không làm phiền giấc ngủ.",
-      "approved_reply": "Chào bạn! Hiện tại đã khuya nên đội ngũ hỗ trợ sợ gọi điện sẽ làm phiền giấc ngủ của bạn. Bạn cứ để lại Số điện thoại hoặc Zalo ở đây nhé, sáng mai đúng 8h30 mình sẽ trực tiếp nhắn tin gửi lộ trình chi tiết và tư vấn cụ thể cho bạn nhé. Chúc bạn ngủ ngon!"
-    },
-    {
-      "id": 68,
-      "user_message": "Khách để lại số điện thoại nhưng khi Sale bốc máy gọi thì thuê bao/bận",
-      "ai_suggestion": "Phương án 1: Gửi SMS thông báo không liên lạc được.\nPhương án 2: Nhắn tin lại trên Fanpage báo bạn kiểm tra máy.",
-      "mentor_correction": "Sửa lại: Nhắn tin Messenger lịch sự thông báo vừa gọi nhỡ, gửi kèm link Zalo để khách chủ động bấm vào kết nối.",
-      "approved_reply": "Dạ em chào chị ạ! Em là Việt bên khóa học video đây ạ. Em vừa gọi vào số điện thoại ...xxx của chị nhưng thấy máy báo bận. Chắc chị đang bận công việc hoặc họp. Em nhắn lại đây để chị tiện đọc. Khi nào chị rảnh chị cứ nhắn qua Zalo em (https://zalo.me/0934688632) để em gửi thông tin cho chị xem nhé!"
-    },
-    {
-      "id": 69,
-      "user_message": "Khách hỏi: 'Học xong bên bạn có giới thiệu việc làm hay nhận vào làm editor cho công ty không?'",
-      "ai_suggestion": "Phương án 1: Dạ bên em có giới thiệu việc làm cho học viên xuất sắc ạ.\nPhương án 2: Có mạng lưới đối tác tuyển dụng editor bạn nhé.",
-      "mentor_correction": "Sửa lại: Trả lời thực tế: Khóa học tập trung đào tạo để bạn tự làm kênh kinh doanh hoặc làm freelance, các học viên làm bài tập xuất sắc được ưu tiên kết nối đối tác.",
-      "approved_reply": "Mục tiêu chính của khóa là đào tạo để bạn tự tay làm video xây kênh cho chính công việc kinh doanh của bạn hoặc nhận việc tự do (Freelancer). Tuy nhiên, bên mình có cộng đồng đối tác doanh nghiệp liên tục tìm kiếm bạn dựng video ngắn. Những bạn học viên nộp bài tập đầy đủ và dựng video tốt bên mình luôn ưu tiên kết nối việc làm trực tiếp."
-    },
-    {
-      "id": 70,
-      "user_message": "Khách hỏi: 'Khóa học có dạy làm video hoạt hình 2D/3D hay review phim không?'",
-      "ai_suggestion": "Phương án 1: Dạ bên em có hướng dẫn dùng AI tạo video hoạt hình cơ bản ạ.\nPhương án 2: Khóa này chuyên về video người thật bán hàng bạn nhé.",
-      "mentor_correction": "Sửa lại: Làm rõ trọng tâm: Chuyên sâu về Video Người thật + B-roll bán hàng thực chiến; nếu muốn làm phim AI thì có học phần AI hỗ trợ.",
-      "approved_reply": "Trọng tâm 90% của khóa học là 'Video người thật, cảnh thật để bán hàng và xây dựng thương hiệu cá nhân'. Bên mình có 1 học phần ứng dụng AI để tạo ảnh nhân vật và chuyển động hoạt hình cơ bản, nhưng nếu mục đích chính của bạn là làm phim hoạt hình 3D chuyên nghiệp hay review phim thì khóa này không phù hợp với bạn nhé."
-    },
-    {
-      "id": 71,
-      "user_message": "Khách trẻ tuổi nhắn: 'E muốn học ạ, a tư vấn cho e với' (Nguyễn Ngọc)",
-      "ai_suggestion": "Phương án 1: Dạ em chào bạn bên mình có các khóa học sau ạ...\nPhương án 2: Chào em, em muốn học online hay offline?",
-      "mentor_correction": "Sửa lại: Khách xưng 'E' thì mình xưng Anh - gọi Em ngay. Thêm cam kết kịch bản độc bản dành riêng cho em.",
-      "approved_reply": "Chào em nhé! Anh là Việt đây. Để anh tư vấn nhanh cho em: Nếu em ở Hà Nội, cuối tuần này anh có lớp Offline 2 ngày cầm tay chỉ việc, anh trực tiếp nắn góc quay và viết kịch bản độc bản riêng cho lĩnh vực của em. Còn nếu ở xa em học bộ Online trên web xem trọn đời. Em đang dự định làm video cho mảng gì thế?"
-    },
-    {
-      "id": 72,
-      "user_message": "Khách lớn tuổi danh xưng Chị nhắn: 'Em tư vấn khóa học cho chị nhé' (Chị Liên)",
-      "ai_suggestion": "Phương án 1: Dạ chị ơi bên em có khóa học video 30 ngày ạ.\nPhương án 2: Chào chị Liên, chị đang kinh doanh mặt hàng gì ạ?",
-      "mentor_correction": "Sửa lại: Xưng Em - gọi Chị lễ phép, tôn trọng thể diện, điềm đạm và mộc mạc.",
-      "approved_reply": "Dạ em chào chị Liên! Em là Việt, người trực tiếp đứng lớp hướng dẫn chị đây ạ. Với các chị em bận rộn kinh doanh gia đình, khóa học bên em tập trung vào sự tinh gọn: quay dựng nhanh bằng điện thoại, không cần học thuộc kịch bản phức tạp. Chị Liên đang muốn phát triển video cho sản phẩm gì để em tư vấn lộ trình sát nhất cho chị ạ?"
-    },
-    {
-      "id": 73,
-      "user_message": "Khách nhắn tin trao đổi dở dang trên Facebook Messenger muốn chuyển sang Zalo",
-      "ai_suggestion": "Phương án 1: Dạ số Zalo em là 0934688632 chị kết bạn nhé.\nPhương án 2: Cho em xin số điện thoại em add Zalo chị.",
-      "mentor_correction": "Sửa lại: Gửi link Zalo 1-chạm https://zalo.me/0934688632 để khách bấm là vào thẳng khung chat Zalo.",
-      "approved_reply": "Dạ trên Messenger gửi ảnh và video dễ bị mờ và trôi tin nhắn. Chị bấm thẳng vào link Zalo cá nhân này của em: https://zalo.me/0934688632 (Nguyễn Việt) rồi nhắn 'Chào em' nhé. Em gửi tài liệu chất lượng cao và trao đổi trực tiếp với chị bên Zalo cho tiện theo dõi ạ!"
-    },
-    {
-      "id": 74,
-      "user_message": "Khách vừa đăng ký lớp Offline xong, hỏi chuẩn bị tinh thần và trang phục thế nào",
-      "ai_suggestion": "Phương án 1: Dạ chị mặc đồ thoải mái là được ạ.\nPhương án 2: Mang theo tinh thần học tập hết mình chị nhé.",
-      "mentor_correction": "Sửa lại: Lời dặn dò chân thành, ấm áp, tạo cảm giác an tâm trước ngày khai giảng.",
-      "approved_reply": "Chị chuẩn bị một tinh thần thật thoải mái và cởi mở nhé, lớp học bên em không khí như anh em một nhà cùng làm việc, không có áp lực gì đâu ạ. Chị chọn bộ trang phục nào chị thấy tự tin nhất khi lên hình, mang theo điện thoại và sản phẩm của mình. Mọi việc từ góc máy, kịch bản đến cắt dựng đã có em và cộng sự đứng cạnh nắn từng chút một cho chị rồi nhé!"
-    },
-    {
-      "id": 75,
-      "user_message": "Học viên cũ nhắn sau 1 tuần hoàn thành khóa học: 'Thầy ơi video đầu tiên em đăng lên được 15.000 view và có 3 khách nhắn mua hàng rồi ạ!'",
-      "ai_suggestion": "Phương án 1: Dạ chúc mừng bạn nhé, kết quả tuyệt vời quá!\nPhương án 2: Cố gắng phát huy ra thêm nhiều video nữa nhé.",
-      "mentor_correction": "Sửa lại: Bỏ văn mẫu chúc mừng sáo rỗng. Khích lệ tinh thần thực chiến, nhắc nhở giữ nhịp ra video đều đặn.",
-      "approved_reply": "Tuyệt vời quá em ơi! Đúng công thức: video chân thực, đánh trúng nhu cầu là khách tự động tìm đến hỏi mua ngay. 15.000 view ban đầu là bảo chứng cho việc em đã làm đúng hướng. Giữ vững nhịp này nhé: tuần làm đều 3–4 video theo kịch bản đã duyệt. Video tiếp theo kẹt chỗ nào cứ gửi anh xem trước khi đăng bài nhé!"
+      "customer_name": "Khách hỏi về Thiết bị & Đời máy điện thoại",
+      "channel": "Fanpage 30 Ngày Học Làm Nội Dung Viral",
+      "user_message": "Khách nhắn: 'Điện thoại mình đời cũ (iPhone 11/Samsung đời cũ) camera không nét thì quay video có bị mờ xấu không?'",
+      "ai_suggestion": "Phương án 1: Dạ iPhone 11 quay vẫn rất nét ạ, chỉ cần đủ ánh sáng.\nPhương án 2: Bạn nên nâng cấp lên iPhone 15 Pro Max để quay cho đẹp.",
+      "mentor_correction": "Anh Việt chốt chuẩn: Khẳng định điện thoại bình thường là thừa sức làm video viral. Bí quyết nằm ở 2 việc: lau sạch ống kính trước khi quay và đứng đón nguồn sáng tự nhiên.",
+      "approved_reply": "iPhone 11 hay các dòng máy tầm trung hiện nay quay thừa nét để đăng TikTok/Reels rồi bạn nhé. Bản thân nền tảng video ngắn họ cũng tự động nén dung lượng video lại.\n\nBí quyết để video sáng trong veo chỉ nằm ở 2 mẹo cực đơn giản:\n1. Luôn dùng khăn mềm lau sạch camera trước khi bấm máy (ống kính điện thoại rất hay bị bám vân tay mờ mịt).\n2. Đứng đối diện nguồn sáng tự nhiên (cửa sổ hoặc ban công) thay vì quay ngược sáng.\n\nTrong buổi học mình sẽ chỉ bạn cách khóa sáng (AE/AF Lock) trên điện thoại là hình ảnh nét căng ngay lập tức."
     }
   ]
 }

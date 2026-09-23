@@ -815,6 +815,13 @@ const AITrainingTab = ({showToast}) => {
 
       {data.samples && data.samples.map((sample) => (
       <div key={sample.id} className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 mb-5">
+         <div className="flex justify-between items-center mb-3">
+             <div className="flex items-center gap-2">
+                 <span className="font-bold text-gray-900 text-sm">{sample.customer_name || 'Khách hàng'}</span>
+                 {sample.channel && <span className="text-[10px] font-mono px-2 py-0.5 bg-gray-100 text-gray-600 rounded-md font-semibold">{sample.channel}</span>}
+             </div>
+             <span className="text-xs font-mono font-bold text-gray-400">#{sample.id}</span>
+         </div>
          <div className="mb-4 bg-gray-50 p-4 rounded-xl text-sm border border-gray-200 text-gray-900">
              <strong className="text-gray-500 font-mono uppercase tracking-wider text-xs block mb-1">
                 <BrandIcon name="user-single" className="w-3.5 h-3.5 text-gray-600 inline mr-1" /> Bối cảnh khách hỏi:
