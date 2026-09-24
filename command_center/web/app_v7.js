@@ -844,7 +844,7 @@ const AITrainingTab = ({showToast}) => {
                  <BrandIcon name="check-circle" className="w-3.5 h-3.5 text-green-600" />
                  <span>Kịch bản Anh Việt đã chốt:</span>
                </h4>
-               <div className="bg-green-50/70 p-3.5 rounded-xl text-sm border border-green-200 text-green-950 font-medium cl-body">
+               <div className="bg-green-50/70 p-3.5 rounded-xl text-sm border border-green-200 text-green-950 font-medium cl-body whitespace-pre-wrap">
                  {sample.approved_reply}
                </div>
                
