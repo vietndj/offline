@@ -2,26 +2,49 @@ import os
 import time
 import sqlite3
 import argparse
+from datetime import datetime
+import subprocess
 import requests
 import re
-from datetime import datetime, timedelta
+import sys
+sys.path.append("/Users/vietmac/Documents/CODE/antigravity-config-backup/config/skills/facebook-inbox-audit/scripts")
+try:
+    from phone_lead_dispatcher import check_phone_in_stu_and_called
+except:
+    check_phone_in_stu_and_called = None
 
-from fedu_command_db import get_connection, get_vn_time
 
-# Apple Epoch is 2001-01-01 00:00:00 Z
-APPLE_EPOCH_OFFSET = 978307200
+def guess_gender(name):
+    name = str(name).strip().upper()
+    parts = name.split()
+    if not parts: return "chị"
+    last_word = parts[-1]
+    female = {"TRANG", "THU", "HOA", "LINH", "THỦY", "THUY", "HƯƠNG", "HUONG", "MAI", "PHƯƠNG", "PHUONG", "NHUNG", "YẾN", "YEN", "NGỌC", "NGOC", "THẢO", "THAO", "VY", "HÀ", "HA", "LAN", "ANH", "MY", "NGA", "QUỲNH", "QUYNH", "THANH", "TRÂM", "TRAM", "TUYẾT", "TUYET", "UYÊN", "UYEN", "VÂN", "VAN", "XUÂN", "XUAN", "LY", "HIỀN", "HIEN", "NHI", "TRINH", "THI", "HẰNG", "HANG", "LOAN", "OANH", "DIỆP", "DIEP", "GIANG", "HÂN", "HAN", "TIÊN", "TIEN", "TRÀ", "TRA", "HUYỀN", "HUYEN", "THƠ", "THO", "THUẬN"}
+    male = {"HÙNG", "HUNG", "SƠN", "SON", "TÙNG", "TUNG", "LONG", "CƯỜNG", "CUONG", "TUẤN", "TUAN", "HOÀNG", "HOANG", "HẢI", "HAI", "QUANG", "DŨNG", "DUNG", "THÀNH", "THANH", "ĐỨC", "DUC", "HUY", "NAM", "PHONG", "PHÚC", "PHUC", "THẮNG", "THANG", "BÌNH", "BINH", "ĐẠT", "DAT", "HIẾU", "HIEU", "MINH", "BẢO", "BAO", "LÂM", "LAM", "SANG", "VINH", "KIÊN", "KIEN", "TÀI", "TAI", "TRỌNG", "TRONG", "TRÍ", "TRI", "VŨ", "VU", "BÁCH", "BACH", "CÔNG", "CONG", "ĐÔNG", "DONG", "HÀO", "HAO", "KHOA", "TOÀN", "TOAN", "VIỆT", "VIET"}
+    if last_word in female: return "chị"
+    if last_word in male: return "anh"
+    if "THỊ " in name or " THỊ" in name: return "chị"
+    if "VĂN " in name or " VĂN" in name: return "anh"
+    return "chị"
 
-def get_apple_created_at(last_24h=True):
-    now_unix = time.time()
-    if last_24h:
-        now_unix -= 86400
-    return now_unix - APPLE_EPOCH_OFFSET
-
-def broadcast_refresh():
+def alert_telegram_new_lead(phone, name, text):
     try:
-        requests.get("http://localhost:9000/api/health") # trigger refresh via SSE eventually
-    except:
-        pass
+        # 1. BẮT BUỘC KIỂM TRA STU GATEKEEPER TRƯỚC KHI BẮN TELEGRAM
+        if check_phone_in_stu_and_called:
+            is_called, reason = check_phone_in_stu_and_called(phone, name)
+            if is_called:
+                print(f"🛑 [STU-Gatekeeper] Chặn alert cho {name} ({phone}) vì: {reason}")
+                return # BỎ QUA KHÔNG BẮN ALERT
+
+        # 2. Nếu chưa gọi -> Bắn alert
+        print(f"✅ [STU-Gatekeeper] SĐT mới tinh chưa gọi: {phone} -> Đang bắn Telegram...")
+        token = "7991600422:AAHNmZ9ixcQtf_pTVQewadrnYZ0apOEvxgk"
+        chat_id = "2050406425"
+        url = f"https://api.telegram.org/bot{token}/sendMessage"
+        msg = f"🔔 KHÁCH ĐỂ LẠI SĐT TRÊN PAGE\n👤 {name}\n📱 {phone}\n\n💬 Lịch sử 5 tin gần nhất:\n{text}\n\n👉 Zalo 1 chạm: https://zalo.me/{phone}"
+        requests.post(url, json={"chat_id": chat_id, "text": msg})
+    except Exception as e:
+        print(f"Lỗi gửi Telegram alert: {e}")
 
 def scan_calls():
     print(f"[{datetime.now()}] Bắt đầu quét CallHistory...")
@@ -139,7 +162,7 @@ def scan_facebook():
         TOKEN = "EAAegdQqWEkwBSQxUkVrG1rHI2DmOaH2JPlUi6WMfQmjZBaVEmheVnXXC4etBFtxiA0od4qS3YAs8Dph2MxlXBAGx5bgAqOmZBgjJVKxv6559xhx0aw6B6ld6NmzE8wlFJZCUzAisoKFg2QwwSVY3eDK11vK07jmSRggQyXuoVHkU71YT0EY04ydQWQpYZBUUOEWZCeWYofP5naLsf2bcZD"
         
         print(f"[{get_vn_time()}] Bắt đầu quét Fanpage Facebook...")
-        url = f"https://graph.facebook.com/v21.0/{PAGE_ID}/conversations?fields=id,updated_time,messages.limit(1){{message,from,created_time}}&limit=10&access_token={TOKEN}"
+        url = f"https://graph.facebook.com/v21.0/{PAGE_ID}/conversations?fields=id,updated_time,messages.limit(10){{message,from,created_time}}&limit=10&access_token={TOKEN}"
         
         resp = requests.get(url)
         if resp.status_code != 200:
@@ -161,49 +184,129 @@ def scan_facebook():
                 continue
                 
             last_msg = messages[0]
-            text = last_msg.get('message', '')
             sender = last_msg.get('from', {})
             sender_id = sender.get('id', '')
             sender_name = sender.get('name', 'Khách FB')
             created_time = last_msg.get('created_time')
-            
-            # Simple check if sender is the page itself
             direction = "outbound" if sender_id == PAGE_ID else "inbound"
             
-            # Extract phone if any
+            combined_texts = []
             extracted_phone = None
-            if direction == "inbound" and text:
-                phones = phone_regex.findall(text)
-                if phones:
-                    # Normalize the first found phone
-                    raw_p = phones[0]
-                    p_digits = re.sub(r'\D', '', raw_p)
-                    if p_digits.startswith('84'):
-                        p_digits = '0' + p_digits[2:]
-                    elif len(p_digits) == 9 and not p_digits.startswith('0'):
-                        p_digits = '0' + p_digits
-                    if len(p_digits) == 10:
-                        extracted_phone = p_digits
             
-            # If we found a phone, we match/create contact
-            if extracted_phone:
-                # Upsert contact
-                c_local.execute("SELECT id FROM contacts WHERE phone=?", (extracted_phone,))
-                contact = c_local.fetchone()
+            for m in messages:
+                msg_text = m.get('message', '')
+                m_sender = m.get('from', {}).get('id', '')
+                if m_sender != PAGE_ID and msg_text and not extracted_phone:
+                    phones = phone_regex.findall(msg_text)
+                    if phones:
+                        raw_p = phones[0]
+                        p_digits = __import__('re').sub(r'\D', '', raw_p)
+                        if p_digits.startswith('84'): p_digits = '0' + p_digits[2:]
+                        elif len(p_digits) == 9 and not p_digits.startswith('0'): p_digits = '0' + p_digits
+                        if len(p_digits) == 10:
+                            extracted_phone = p_digits
+
+            for m in reversed(messages[:5]):
+                msg_text = m.get('message', '')
+                m_sender = m.get('from', {}).get('id', '')
+                prefix = "👤 " if m_sender != PAGE_ID else "🤖 "
+                if msg_text:
+                    combined_texts.append(f"{prefix}{msg_text}")
                 
-                if not contact:
+                if False: # Dummy to keep the regex block matching below
+                    if phones:
+                        raw_p = phones[0]
+                        p_digits = re.sub(r'\D', '', raw_p)
+                        if p_digits.startswith('84'): p_digits = '0' + p_digits[2:]
+                        elif len(p_digits) == 9 and not p_digits.startswith('0'): p_digits = '0' + p_digits
+                        if len(p_digits) == 10:
+                            extracted_phone = p_digits
+
+            text = "\n".join(combined_texts)
+            contact_phone = extracted_phone if extracted_phone else f"FB_{sender_id}"
+            
+            c_local.execute("SELECT id FROM contacts WHERE phone=?", (contact_phone,))
+            contact = c_local.fetchone()
+            
+            if not contact and extracted_phone:
+                # Try to upgrade existing FB contact
+                c_local.execute("SELECT id FROM contacts WHERE phone=?", (f"FB_{sender_id}",))
+                fb_contact = c_local.fetchone()
+                if fb_contact:
+                    c_local.execute("UPDATE contacts SET phone=? WHERE id=?", (extracted_phone, fb_contact['id']))
+                    contact_id = fb_contact['id']
+                    alert_telegram_new_lead(extracted_phone, sender_name, text)
+                else:
                     now = get_vn_time()
                     c_local.execute("INSERT INTO contacts (phone, name, source, stage, created_at, updated_at) VALUES (?, ?, 'facebook', 'new', ?, ?)",
                                    (extracted_phone, sender_name, now, now))
                     contact_id = c_local.lastrowid
-                else:
-                    contact_id = contact["id"]
+                    alert_telegram_new_lead(extracted_phone, sender_name, text)
+            elif not contact:
+                now = get_vn_time()
+                c_local.execute("INSERT INTO contacts (phone, name, source, stage, created_at, updated_at) VALUES (?, ?, 'facebook', 'new', ?, ?)",
+                               (contact_phone, sender_name, now, now))
+                contact_id = c_local.lastrowid
+            else:
+                contact_id = contact["id"]
                 
-                # Check if this exact message is already saved (by fb_conversation_id or just time+content)
-                c_local.execute("SELECT id FROM conversations WHERE contact_id=? AND created_at=? AND channel='facebook'", (contact_id, created_time))
-                if not c_local.fetchone():
-                    c_local.execute("INSERT INTO conversations (contact_id, channel, direction, content, created_at, fb_conversation_id) VALUES (?, 'facebook', ?, ?, ?, ?)",
-                                   (contact_id, direction, text, created_time, conv['id']))
+                # If they previously didn't have a phone, and now they do, we might want to update it
+                # But for simplicity, we just use the existing one. Or we could update it.
+            
+            # Insert into conversations
+            c_local.execute("SELECT id FROM conversations WHERE contact_id=? AND created_at=? AND channel='facebook'", (contact_id, created_time))
+            if not c_local.fetchone():
+                d_name = sender_name.split()[-1] if sender_name else "bạn"
+                # Phát hiện đại từ hoặc tự đoán
+                text_lower = text.lower()
+                if re.search(r'\b(chị|c)\b', text_lower):
+                    p_khach, p_minh = "chị", "em Việt"
+                elif re.search(r'\b(anh|a)\b', text_lower):
+                    p_khach, p_minh = "anh", "em Việt"
+                elif re.search(r'\b(em|e)\b', text_lower):
+                    p_khach, p_minh = "em", "anh Việt"
+                else:
+                    p_khach = guess_gender(sender_name)
+                    p_minh = "em Việt"
+                
+                # Viết hoa chữ đầu câu
+                P_khach = p_khach.capitalize()
+
+                if extracted_phone:
+                    ai_reply = f"Chào {p_khach} {d_name}, {p_minh} đây.\n\nEm thấy {p_khach} vừa để lại SĐT {extracted_phone}. {P_khach} có đang tiện máy khoảng 2 phút không, em gọi qua trao đổi thẳng vào việc xem lớp video bên em có đúng thứ {p_khach} đang cần không nhé, cho đỡ mất thời gian."
+                else:
+                    ai_reply = f"Chào {p_khach} {d_name}, {p_minh} đây. Cảm ơn {p_khach} đã quan tâm lớp làm video bên em nhé.\n\n{P_khach} cứ để lại SĐT (hoặc Zalo) ở đây, lúc nào rảnh em gọi qua trao đổi thẳng vào việc luôn cho nhanh, xem có đúng thứ {p_khach} đang cần không nhé."
+                
+                # Fix pronoun inside string if p_khach == 'em' and p_minh == 'anh Việt'
+                if p_minh == "anh Việt":
+                    ai_reply = ai_reply.replace(" em ", " anh ").replace("Em thấy", "Anh thấy")
+                
+                c_local.execute("INSERT INTO conversations (contact_id, channel, direction, content, ai_suggested_reply, created_at, fb_conversation_id) VALUES (?, 'facebook', ?, ?, ?, ?, ?)",
+                               (contact_id, direction, text, ai_reply, created_time, conv['id']))
+                
+                # CẬP NHẬT GHI CHÚ BỐI CẢNH (3 TIN NHẮN CUỐI CÙNG)
+                last_3_msgs = []
+                for m in reversed(messages[:3]):
+                    msg_text = m.get('message', '')
+                    m_sender = m.get('from', {}).get('id', '')
+                    prefix = "👤 Học viên: " if m_sender != PAGE_ID else "🤖 Mình (Page): "
+                    if msg_text:
+                        last_3_msgs.append(f"{prefix}{msg_text}")
+                
+                chat_context = "\n".join(last_3_msgs)
+                if chat_context:
+                    note_append = f"[Lịch sử Chat FB gần nhất]\n{chat_context}"
+                    c_local.execute("SELECT notes FROM contacts WHERE id=?", (contact_id,))
+                    row = c_local.fetchone()
+                    existing_notes = row['notes'] if row and row['notes'] else ""
+                    
+                    if "[Lịch sử Chat FB gần nhất]" in existing_notes:
+                        import re
+                        new_notes = re.sub(r'\[Lịch sử Chat FB gần nhất\].*', note_append, existing_notes, flags=re.DOTALL)
+                    else:
+                        new_notes = f"{existing_notes}\n\n{note_append}".strip()
+                        
+                    c_local.execute("UPDATE contacts SET notes=?, updated_at=? WHERE id=?", (new_notes, get_vn_time(), contact_id))
                     
         conn_local.commit()
         conn_local.close()
