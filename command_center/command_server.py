@@ -4,12 +4,13 @@ import json
 import asyncio
 from datetime import datetime
 from typing import Optional, List, Dict, Any
-from fastapi import FastAPI, HTTPException, BackgroundTasks, Request
+from fastapi import FastAPI, HTTPException, BackgroundTasks, Request, UploadFile, File
 from fastapi.responses import StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import httpx
+import shutil
 
 from fedu_command_db import init_db, get_connection
 
@@ -22,6 +23,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+UPLOADS_DIR = os.path.join(os.path.dirname(__file__), "uploads")
+os.makedirs(UPLOADS_DIR, exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=UPLOADS_DIR), name="uploads")
 
 # --- SSE Setup ---
 sse_clients = set()
@@ -160,15 +165,20 @@ def add_note(id: int, data: NoteData):
 def list_inbox(contact_id: Optional[int] = None, channel: Optional[str] = None, limit: int = 50, offset: int = 0):
     conn = get_connection()
     c = conn.cursor()
-    query = "SELECT * FROM conversations WHERE 1=1"
+    query = """
+        SELECT conv.*, c.name AS contact_name, c.phone AS contact_phone 
+        FROM conversations conv
+        LEFT JOIN contacts c ON conv.contact_id = c.id
+        WHERE conv.direction = 'inbound'
+    """
     params = []
     if contact_id:
-        query += " AND contact_id = ?"
+        query += " AND conv.contact_id = ?"
         params.append(contact_id)
     if channel:
-        query += " AND channel = ?"
+        query += " AND conv.channel = ?"
         params.append(channel)
-    query += " ORDER BY created_at DESC LIMIT ? OFFSET ?"
+    query += " ORDER BY conv.created_at DESC LIMIT ? OFFSET ?"
     params.extend([limit, offset])
     c.execute(query, params)
     rows = c.fetchall()
@@ -221,7 +231,7 @@ async def send_report_trigger():
     return {"success": True}
 
 async def send_telegram_alert_raw(text):
-    token = "8392893959:AAF79Uc6dI4rliweE0BvhnBJ06eV5EJdi-Y"
+    token = "7991600422:AAHNmZ9ixcQtf_pTVQewadrnYZ0apOEvxgk"
     chat_id = "2050406425"
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     try:
@@ -245,7 +255,7 @@ def training_accuracy():
 
 # --- Webhook ---
 async def send_telegram_alert(name, phone, occupation, reason):
-    token = "8392893959:AAF79Uc6dI4rliweE0BvhnBJ06eV5EJdi-Y"
+    token = "7991600422:AAHNmZ9ixcQtf_pTVQewadrnYZ0apOEvxgk"
     chat_id = "2050406425"
     now_str = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     msg = f"🔔 LEAD MỚI ĐĂNG KÝ\n👤 {name}\n📱 {phone}\n💼 {occupation}\n📝 {reason}\n⏰ {now_str}\n\n🔗 Zalo: https://offline.fedu.vn/zalo?phone={phone}"
@@ -362,6 +372,7 @@ async def sync_apple_contact(contact_id: int, req: AppleSyncRequest):
 class NoteRequest(BaseModel):
     text: str
     author: str
+    attachments: Optional[List[str]] = []
 
 @app.post("/api/contacts/{contact_id}/notes")
 async def add_contact_note(contact_id: int, req: NoteRequest):
@@ -388,7 +399,8 @@ async def add_contact_note(contact_id: int, req: NoteRequest):
         "text": req.text,
         "source": "telesale",
         "author": req.author,
-        "timestamp": now_str
+        "timestamp": now_str,
+        "attachments": req.attachments or []
     })
     
     # Update DB
@@ -397,6 +409,20 @@ async def add_contact_note(contact_id: int, req: NoteRequest):
     conn.close()
     return {"status": "success", "notes": notes}
 
+@app.post("/api/upload-image")
+async def upload_image_endpoint(file: UploadFile = File(...)):
+    try:
+        timestamp = int(time.time() * 1000)
+        ext = file.filename.split('.')[-1] if '.' in file.filename else 'png'
+        filename = f"{timestamp}.{ext}"
+        filepath = os.path.join(UPLOADS_DIR, filename)
+        
+        with open(filepath, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+            
+        return {"success": True, "url": f"/uploads/{filename}"}
+    except Exception as e:
+        return {"success": False, "error": str(e)}
 
 @app.get("/api/ai/training-data")
 async def get_ai_training_data():

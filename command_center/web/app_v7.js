@@ -173,9 +173,28 @@ const App = () => {
 // --- Contact Drawer (Global) ---
 const ContactDrawer = ({ contact, onClose, showToast, onShare, salesIdentity }) => {
     const [newNoteText, setNewNoteText] = useState('');
+    const [newNoteAttachments, setNewNoteAttachments] = useState([]);
     const [isSavingNote, setIsSavingNote] = useState(false);
     const [isEditingApple, setIsEditingApple] = useState(false);
     
+    const handleImageUpload = async (files) => {
+        if (!files || !files.length) return;
+        showToast("Đang tải ảnh lên...", "⏳");
+        const newAtts = [...newNoteAttachments];
+        for (const file of Array.from(files)) {
+            if (!file.type.startsWith('image/')) continue;
+            const formData = new FormData();
+            formData.append("file", file);
+            try {
+                const res = await fetch('/api/upload-image', { method: 'POST', body: formData });
+                const data = await res.json();
+                if (data.success) newAtts.push(data.url);
+            } catch (err) { console.error("Upload error", err); }
+        }
+        setNewNoteAttachments(newAtts);
+        showToast("Đã tải ảnh lên!", "✅");
+    };
+
     let initialAppleName = contact.name || "";
     try {
         if (contact.radar_override) {
@@ -362,6 +381,13 @@ const ContactDrawer = ({ contact, onClose, showToast, onShare, salesIdentity }) 
                            </span>
                        </div>
                        {renderContext(note.text)}
+                       {note.attachments && note.attachments.length > 0 && (
+                         <div className="flex flex-wrap gap-2 mt-2">
+                           {note.attachments.map((url, idx) => (
+                             <img key={idx} src={url} className="w-20 h-20 object-cover rounded-lg border shadow-sm cursor-pointer" onClick={() => window.open(url, '_blank')} />
+                           ))}
+                         </div>
+                       )}
                      </div>
                    ))}
                  </div>
@@ -373,8 +399,57 @@ const ContactDrawer = ({ contact, onClose, showToast, onShare, salesIdentity }) 
                  <BrandIcon name="edit-pencil" className="w-4 h-4 text-indigo-500" />
                  <h4 className="font-bold text-gray-900 text-base">Thêm Ghi Chú Mới</h4>
                </div>
-               <textarea value={newNoteText} onChange={e => setNewNoteText(e.target.value)} className="w-full border border-gray-300 rounded-xl p-3.5 text-sm mb-3 outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 shadow-sm transition resize-none cl-body" rows="3" placeholder={`Nhập tóm tắt cuộc gọi (Ghi nhận dưới tên: ${salesIdentity || 'Chưa định danh'})...`}></textarea>
-               <button disabled={isSavingNote || !newNoteText.trim()} className="w-full btn-fedu btn-fedu-primary py-3 rounded-xl font-bold shadow-md transition flex justify-center items-center gap-2 text-sm disabled:opacity-50" 
+               
+               <div 
+                 className="relative mb-3"
+                 onDragOver={e => { e.preventDefault(); e.currentTarget.classList.add('ring-2', 'ring-indigo-500'); }}
+                 onDragLeave={e => { e.preventDefault(); e.currentTarget.classList.remove('ring-2', 'ring-indigo-500'); }}
+                 onDrop={e => {
+                   e.preventDefault();
+                   e.currentTarget.classList.remove('ring-2', 'ring-indigo-500');
+                   if (e.dataTransfer?.files) handleImageUpload(e.dataTransfer.files);
+                 }}
+               >
+                 <textarea 
+                   value={newNoteText} 
+                   onChange={e => setNewNoteText(e.target.value)} 
+                   onPaste={e => {
+                     const items = e.clipboardData?.items;
+                     if (!items) return;
+                     const files = [];
+                     for (let i = 0; i < items.length; i++) {
+                       if (items[i].type.startsWith('image/')) files.push(items[i].getAsFile());
+                     }
+                     if (files.length > 0) {
+                       e.preventDefault();
+                       handleImageUpload(files);
+                     }
+                   }}
+                   className="w-full border border-gray-300 rounded-xl p-3.5 text-sm outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 shadow-sm transition resize-none cl-body mb-0 pb-10" 
+                   rows="3" 
+                   placeholder={`Nhập tóm tắt cuộc gọi (Ghi nhận dưới tên: ${salesIdentity || 'Chưa định danh'}). Hỗ trợ Paste/Kéo thả ảnh...`}
+                 ></textarea>
+                 
+                 <div className="absolute bottom-2 left-2 flex items-center gap-2">
+                   <label className="cursor-pointer bg-gray-100 hover:bg-gray-200 text-gray-700 px-2 py-1 rounded text-xs border border-gray-300 flex items-center gap-1 transition">
+                     <span>📎 Ảnh</span>
+                     <input type="file" accept="image/*" multiple className="hidden" onChange={e => handleImageUpload(e.target.files)} />
+                   </label>
+                 </div>
+               </div>
+
+               {newNoteAttachments.length > 0 && (
+                 <div className="flex flex-wrap gap-2 mb-3">
+                   {newNoteAttachments.map((url, idx) => (
+                     <div key={idx} className="relative group">
+                       <img src={url} className="w-16 h-16 object-cover rounded-lg border shadow-sm cursor-pointer" onClick={() => window.open(url, '_blank')} />
+                       <button onClick={() => setNewNoteAttachments(newNoteAttachments.filter((_, i) => i !== idx))} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] hidden group-hover:flex">✕</button>
+                     </div>
+                   ))}
+                 </div>
+               )}
+
+               <button disabled={isSavingNote || (!newNoteText.trim() && newNoteAttachments.length === 0)} className="w-full btn-fedu btn-fedu-primary py-3 rounded-xl font-bold shadow-md transition flex justify-center items-center gap-2 text-sm disabled:opacity-50" 
                        onClick={async () => {
                            if (!salesIdentity) {
                                showToast('Vui lòng chọn người trực trước khi ghi chú!');
@@ -385,12 +460,13 @@ const ContactDrawer = ({ contact, onClose, showToast, onShare, salesIdentity }) 
                                const res = await fetch('/api/contacts/'+contact.id+'/notes', {
                                    method: 'POST',
                                    headers: {'Content-Type': 'application/json'},
-                                   body: JSON.stringify({text: newNoteText, author: salesIdentity})
+                                   body: JSON.stringify({text: newNoteText, author: salesIdentity, attachments: newNoteAttachments})
                                });
                                if (res.ok) {
                                    const data = await res.json();
                                    contact.notes = data.notes;
                                    setNewNoteText('');
+                                   setNewNoteAttachments([]);
                                    showToast('Đã lưu ghi chú thành công!');
                                } else { showToast('Lỗi lưu ghi chú'); }
                            } catch(e) { showToast('Lỗi kết nối máy chủ'); }
