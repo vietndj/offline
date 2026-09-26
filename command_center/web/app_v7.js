@@ -320,12 +320,20 @@ const ContactDrawer = ({ contact, onClose, showToast, onShare, salesIdentity }) 
 
                {/* Quick Actions */}
                <div className="grid grid-cols-2 gap-3 mb-6">
-                 <a href={"zalo://conversation?phone="+contact.phone} className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-xl font-bold transition text-center shadow-sm flex items-center justify-center gap-2 text-sm">
-                    <BrandIcon name="brand-zalo" className="w-4 h-4" /> Chat Zalo
-                 </a>
-                 <a href={"sms:"+contact.phone} className="bg-sky-600 hover:bg-sky-700 text-white p-3 rounded-xl font-bold transition text-center shadow-sm flex items-center justify-center gap-2 text-sm">
-                    <BrandIcon name="message-sms" className="w-4 h-4" /> iMessage / SMS
-                 </a>
+                 {contact.phone && contact.phone.startsWith('FB_') ? (
+                     <a href={"https://business.facebook.com/latest/inbox/all?selected_item_id=" + contact.phone.replace('FB_', '')} target="_blank" className="col-span-2 bg-blue-700 hover:bg-blue-800 text-white p-3 rounded-xl font-bold transition text-center shadow-sm flex items-center justify-center gap-2 text-sm">
+                        <BrandIcon name="brand-facebook" className="w-4 h-4" /> Mở Inbox FB Page
+                     </a>
+                 ) : (
+                     <>
+                         <a href={"zalo://conversation?phone="+contact.phone} className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-xl font-bold transition text-center shadow-sm flex items-center justify-center gap-2 text-sm">
+                            <BrandIcon name="brand-zalo" className="w-4 h-4" /> Chat Zalo
+                         </a>
+                         <a href={"sms:"+contact.phone} className="bg-sky-600 hover:bg-sky-700 text-white p-3 rounded-xl font-bold transition text-center shadow-sm flex items-center justify-center gap-2 text-sm">
+                            <BrandIcon name="message-sms" className="w-4 h-4" /> iMessage / SMS
+                         </a>
+                     </>
+                 )}
                  
                  {socials.map((s, idx) => (
                      <a key={idx} href={s.url} target="_blank" className="col-span-2 bg-gray-900 hover:bg-black text-white p-3 rounded-xl font-bold transition text-center shadow-sm flex justify-center items-center gap-2 text-sm">
@@ -675,10 +683,17 @@ const InboxTab = ({showToast}) => {
                   <BrandIcon name={msg.channel === 'facebook' ? 'brand-facebook' : 'message-sms'} className="w-3 h-3" />
                   {msg.channel}
                 </span>
+                {msg.contact_phone && !msg.contact_phone.startsWith('FB_') && (
+                  <span className="badge badge-red ml-2 border border-red-500 shadow-sm animate-pulse">
+                    <BrandIcon name="phone" className="w-3 h-3" /> {msg.contact_phone}
+                  </span>
+                )}
               </h3>
               <span className="text-xs font-mono text-gray-500">{new Date(msg.created_at).toLocaleString('vi-VN')}</span>
            </div>
-           <p className="text-gray-800 mb-4 bg-gray-50/80 p-3.5 rounded-xl cl-body whitespace-pre-wrap border border-gray-100">{msg.content}</p>
+           <p className={`text-gray-800 mb-4 bg-gray-50/80 p-3.5 rounded-xl cl-body whitespace-pre-wrap border border-gray-100 ${!msg.content ? 'italic text-gray-400' : ''}`}>
+             {msg.content || '[Khách hàng gửi Hình ảnh / Tệp đính kèm / Sticker]'}
+           </p>
            
            {msg.ai_suggested_reply && (
              <div className="bg-blue-50/70 border border-blue-200/80 rounded-xl p-3.5 mb-4">
