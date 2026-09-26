@@ -1311,6 +1311,7 @@
       const l = allLeads.find(item => item.phone === phone);
       if (!l) return;
       focusedLeadPhone = phone;
+      currentFocusedAttachments = l.attachments ? [...l.attachments] : [];
 
       const body = document.getElementById("focusDrawerBody");
       const footer = document.getElementById("focusDrawerFooter");
@@ -1572,10 +1573,23 @@
           <textarea
             id="focusDrawerNoteInput"
             rows="3"
-            placeholder="Nhập ghi chú cuộc gọi... (tự đồng bộ sang danh bạ iPhone)"
+            placeholder="Nhập ghi chú cuộc gọi... (Có thể Paste hoặc Kéo/Thả ảnh bill, chat trực tiếp vào đây...)"
             class="w-full text-xs p-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-1 focus:ring-indigo-500 text-slate-800 resize-none"
           >${l.note || ''}</textarea>
-          <div class="flex justify-end">
+          
+          <!-- Image Attachment Area -->
+          <div class="flex items-center gap-2 mt-1">
+             <label class="cursor-pointer text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-1 rounded border border-slate-300 transition flex items-center gap-1">
+               <span>📎 Đính kèm ảnh</span>
+               <input type="file" id="focusDrawerImageInput" accept="image/*" multiple class="hidden" onchange="handleImageUpload(event)" />
+             </label>
+             <span class="text-[9px] text-slate-400 italic">Hỗ trợ Paste (Ctrl+V) / Kéo thả ảnh</span>
+          </div>
+          <div id="focusDrawerImagePreview" class="flex flex-wrap gap-2 mt-1 empty:hidden">
+             <!-- Render uploaded images here -->
+          </div>
+
+          <div class="flex justify-end mt-1">
             <button
               onclick="saveFocusDrawerNote()"
               class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-lg shadow-2xs transition"
@@ -1643,12 +1657,92 @@
 
       document.getElementById("focusDrawerBackdrop").classList.remove("hidden");
       document.getElementById("focusDrawer").classList.remove("translate-x-full");
+
+      // Render existing attachments if any
+      renderFocusDrawerAttachments();
+
+      // Attach Paste event listener to Note Input
+      const noteInput = document.getElementById("focusDrawerNoteInput");
+      if (noteInput) {
+         noteInput.addEventListener("paste", async (e) => {
+           const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+           const imageFiles = [];
+           for (const item of items) {
+             if (item.type.indexOf("image") === 0) {
+               imageFiles.push(item.getAsFile());
+             }
+           }
+           if (imageFiles.length > 0) {
+             e.preventDefault(); // Prevent pasting image data url into textarea if supported
+             handleImageUpload({ target: { files: imageFiles } });
+           }
+         });
+         
+         // Attach drop event listener
+         noteInput.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            noteInput.classList.add("ring-2", "ring-indigo-500", "bg-indigo-50");
+         });
+         noteInput.addEventListener("dragleave", (e) => {
+            e.preventDefault();
+            noteInput.classList.remove("ring-2", "ring-indigo-500", "bg-indigo-50");
+         });
+         noteInput.addEventListener("drop", (e) => {
+            e.preventDefault();
+            noteInput.classList.remove("ring-2", "ring-indigo-500", "bg-indigo-50");
+            if (e.dataTransfer && e.dataTransfer.files) {
+               handleImageUpload({ target: { files: e.dataTransfer.files } });
+            }
+         });
+      }
     }
 
     function closeFocusDrawer() {
       document.getElementById("focusDrawerBackdrop").classList.add("hidden");
       document.getElementById("focusDrawer").classList.add("translate-x-full");
       focusedLeadPhone = null;
+    }
+
+    let currentFocusedAttachments = [];
+
+    async function handleImageUpload(e) {
+      if (!focusedLeadPhone) return;
+      const files = Array.from(e.target.files || e.dataTransfer?.files || []);
+      if (!files.length) return;
+      
+      showToast("Đang tải ảnh lên...", "⏳", false);
+      for (const file of files) {
+        if (!file.type.startsWith('image/')) continue;
+        const formData = new FormData();
+        formData.append("file", file);
+        try {
+          const res = await fetch('/api/leads/upload-image', { method: 'POST', body: formData });
+          const data = await res.json();
+          if (data.success) {
+             currentFocusedAttachments.push(data.url);
+          }
+        } catch (err) {
+          console.error("Upload error", err);
+        }
+      }
+      renderFocusDrawerAttachments();
+      showToast("Đã tải ảnh lên!", "✅", false);
+    }
+
+    function renderFocusDrawerAttachments() {
+      const container = document.getElementById("focusDrawerImagePreview");
+      if (!container) return;
+      container.innerHTML = currentFocusedAttachments.map((url, idx) => `
+        <div class="relative group">
+          <img src="${url}" class="h-16 w-16 object-cover rounded-lg border border-slate-200 shadow-sm cursor-pointer" onclick="window.open('${url}', '_blank')" />
+          <button onclick="removeFocusedAttachment(${idx})" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] hidden group-hover:flex">✕</button>
+        </div>
+      `).join('');
+    }
+
+    function removeFocusedAttachment(idx) {
+      currentFocusedAttachments.splice(idx, 1);
+      renderFocusDrawerAttachments();
     }
 
     async function saveFocusDrawerNote() {
@@ -1661,12 +1755,19 @@
         const res = await fetch('/api/leads/update', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ phone: focusedLeadPhone, note: noteVal })
+          body: JSON.stringify({ 
+            phone: focusedLeadPhone, 
+            note: noteVal,
+            attachments: currentFocusedAttachments
+          })
         });
         const data = await res.json();
         if (data.success) {
           showToast("Đã lưu Note thành công vào iPhone!", "✅", false);
-          if (target) target.note = noteVal;
+          if (target) {
+             target.note = noteVal;
+             target.attachments = currentFocusedAttachments;
+          }
           renderUI();
         }
       } catch (err) {

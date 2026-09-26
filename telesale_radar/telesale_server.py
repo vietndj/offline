@@ -19,14 +19,20 @@ import subprocess
 from datetime import datetime, timezone, timedelta
 from typing import List, Dict, Any, Optional
 
-from fastapi import FastAPI, Request, BackgroundTasks
+from fastapi import FastAPI, Request, BackgroundTasks, UploadFile, File
 from fastapi.responses import HTMLResponse, StreamingResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
+import shutil
 
 import telesale_engine as engine
 
 app = FastAPI(title="LED Hub", version="1.1.0")
+
+UPLOADS_DIR = os.path.join(os.path.dirname(__file__), "uploads")
+os.makedirs(UPLOADS_DIR, exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=UPLOADS_DIR), name="uploads")
 
 app.add_middleware(
     CORSMiddleware,
@@ -204,6 +210,7 @@ class UpdateLeadRequest(BaseModel):
     note: Optional[str] = None
     tags: Optional[List[str]] = None
     name: Optional[str] = None
+    attachments: Optional[List[str]] = None
 
 
 @app.post("/api/leads/update")
@@ -216,10 +223,27 @@ async def update_lead_endpoint(req: UpdateLeadRequest, background_tasks: Backgro
         req.status,
         req.note,
         req.tags,
-        req.name
+        req.name,
+        req.attachments
     )
     background_tasks.add_task(broadcast_event, "lead_updated", {"phone": req.phone, "status": req.status})
     return res
+
+
+@app.post("/api/leads/upload-image")
+async def upload_image_endpoint(file: UploadFile = File(...)):
+    try:
+        timestamp = int(time.time() * 1000)
+        ext = file.filename.split('.')[-1] if '.' in file.filename else 'png'
+        filename = f"{timestamp}.{ext}"
+        filepath = os.path.join(UPLOADS_DIR, filename)
+        
+        with open(filepath, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+            
+        return {"success": True, "url": f"/uploads/{filename}"}
+    except Exception as e:
+        return {"success": False, "error": str(e)}
 
 
 class SaveContactRequest(BaseModel):

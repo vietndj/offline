@@ -1387,7 +1387,8 @@ def update_lead(
     status: Optional[str] = None,
     note: Optional[str] = None,
     tags: Optional[List[str]] = None,
-    name: Optional[str] = None
+    name: Optional[str] = None,
+    attachments: Optional[List[str]] = None
 ) -> Dict[str, Any]:
     clean_phone = normalize_phone(phone)
     if not clean_phone:
@@ -1405,6 +1406,8 @@ def update_lead(
         cache[clean_phone]['tags'] = tags
     if name:
         cache[clean_phone]['name'] = name
+    if attachments is not None:
+        cache[clean_phone]['attachments'] = attachments
 
     cache[clean_phone]['updated_at'] = datetime.now(VN_TZ).strftime("%d/%m/%Y %H:%M:%S")
     save_local_cache(cache)
