@@ -162,22 +162,47 @@ def add_note(id: int, data: NoteData):
 
 # --- Inbox API ---
 @app.get("/api/inbox")
-def list_inbox(contact_id: Optional[int] = None, channel: Optional[str] = None, limit: int = 50, offset: int = 0):
+def list_inbox(status: str = "pending", channel: Optional[str] = None, limit: int = 50, offset: int = 0):
+    """
+    status: pending (chưa xử lý), replied (đã xử lý), all
+    Gộp theo contact — chỉ hiện tin nhắn inbound MỚI NHẤT của mỗi contact.
+    """
     conn = get_connection()
     c = conn.cursor()
+
+    # Auto-dismiss: đánh dấu tin xác nhận ngắn ("ok", "oki", "vâng", "cảm ơn"...)
+    auto_dismiss_patterns = ['ok', 'oki', 'oki r', 'okie', 'vâng', 'vâng ạ', 'cảm ơn', 'cám ơn',
+                             'dạ', 'dạ vâng', 'ok ạ', 'được', 'dc', 'có', 'rồi', 'xong', 'em cảm ơn']
+    c.execute("SELECT id, content FROM conversations WHERE direction = 'inbound' AND replied_at IS NULL AND content IS NOT NULL")
+    for row in c.fetchall():
+        content_stripped = (row[1] or '').strip().lower().rstrip('.!?')
+        if content_stripped in auto_dismiss_patterns:
+            c.execute("UPDATE conversations SET replied_at = ?, replied_by = 'auto_dismiss' WHERE id = ?",
+                      (datetime.now().isoformat(), row[0]))
+    conn.commit()
+
+    # Build main query — only latest inbound per contact
     query = """
-        SELECT conv.*, c.name AS contact_name, c.phone AS contact_phone 
+        SELECT conv.*, c.name AS contact_name, c.phone AS contact_phone
         FROM conversations conv
         LEFT JOIN contacts c ON conv.contact_id = c.id
         WHERE conv.direction = 'inbound'
+          AND conv.id = (
+              SELECT MAX(sub.id) FROM conversations sub
+              WHERE sub.contact_id = conv.contact_id AND sub.direction = 'inbound'
+          )
     """
     params = []
-    if contact_id:
-        query += " AND conv.contact_id = ?"
-        params.append(contact_id)
+
+    if status == "pending":
+        query += " AND conv.replied_at IS NULL"
+    elif status == "replied":
+        query += " AND conv.replied_at IS NOT NULL"
+
     if channel:
         query += " AND conv.channel = ?"
         params.append(channel)
+
     query += " ORDER BY conv.created_at DESC LIMIT ? OFFSET ?"
     params.extend([limit, offset])
     c.execute(query, params)
@@ -185,15 +210,140 @@ def list_inbox(contact_id: Optional[int] = None, channel: Optional[str] = None, 
     conn.close()
     return {"conversations": [dict(r) for r in rows]}
 
+
+class SendMessageRequest(BaseModel):
+    conversation_id: int
+    phone: Optional[str] = None
+    channel: str = "imessage"
+    message: str = ""
+
+
+@app.post("/api/inbox/{conversation_id}/dismiss")
+def dismiss_conversation(conversation_id: int):
+    """Đánh dấu đã xử lý (ẩn khỏi inbox pending)."""
+    conn = get_connection()
+    c = conn.cursor()
+    c.execute("UPDATE conversations SET replied_at = ?, replied_by = 'manual' WHERE id = ?",
+              (datetime.now().isoformat(), conversation_id))
+    conn.commit()
+    conn.close()
+    broadcast_sse("refresh")
+    return {"success": True}
+
+
+@app.post("/api/inbox/send")
+def send_inbox_reply(req: SendMessageRequest):
+    """Gửi reply trực tiếp từ LED Hub qua iMessage hoặc Facebook."""
+    import subprocess
+
+    conn = get_connection()
+    c = conn.cursor()
+
+    # Get conversation info
+    c.execute("""
+        SELECT conv.*, c.phone, c.name FROM conversations conv
+        LEFT JOIN contacts c ON conv.contact_id = c.id
+        WHERE conv.id = ?
+    """, (req.conversation_id,))
+    conv = c.fetchone()
+    if not conv:
+        conn.close()
+        raise HTTPException(status_code=404, detail="Conversation not found")
+
+    phone = req.phone or conv['phone'] or ''
+    channel = req.channel or conv['channel']
+    message = req.message
+    sent = False
+    error_msg = ""
+
+    if channel == 'imessage' and phone and not phone.startswith('FB_'):
+        # Send via iMessage using osascript
+        try:
+            script = f'''
+            tell application "Messages"
+                set targetService to 1st account whose service type = iMessage
+                set targetBuddy to participant "{phone}" of targetService
+                send "{message}" to targetBuddy
+            end tell
+            '''
+            subprocess.run(['osascript', '-e', script], capture_output=True, timeout=10)
+            sent = True
+        except Exception as e:
+            error_msg = str(e)
+            # Fallback: try SMS
+            try:
+                subprocess.run(['osascript', '-e',
+                    f'tell application "Messages" to send "{message}" to buddy "{phone}" of service "SMS"'],
+                    capture_output=True, timeout=10)
+                sent = True
+            except:
+                pass
+
+    elif channel == 'facebook' and conv.get('fb_conversation_id'):
+        # Send via Facebook Graph API
+        try:
+            from scanner_daemon import PAGE_ID, TOKEN
+            import requests as req_lib
+            url = f"https://graph.facebook.com/v21.0/{conv['fb_conversation_id']}/messages"
+            resp = req_lib.post(url, json={"message": message}, params={"access_token": TOKEN})
+            sent = resp.status_code == 200
+            if not sent:
+                error_msg = resp.text[:200]
+        except Exception as e:
+            error_msg = str(e)
+
+    # Mark as replied
+    if sent:
+        c.execute("UPDATE conversations SET replied_at = ?, replied_by = 'led_hub', human_approved_reply = ? WHERE id = ?",
+                  (datetime.now().isoformat(), message, req.conversation_id))
+        # Log outbound touchpoint
+        c.execute("INSERT INTO conversations (contact_id, channel, direction, content, created_at) VALUES (?, ?, 'outbound', ?, ?)",
+                  (conv['contact_id'], channel, message, datetime.now().isoformat()))
+        conn.commit()
+
+        # Sync to Customer Hub DB
+        try:
+            import sys
+            sys.path.insert(0, "/Users/vietmac/Documents/CODE/offline")
+            from customer_hub.hub_sync import sync_lead_update
+            sync_lead_update(phone=phone, note=f"[LED Hub Reply] {message[:100]}")
+        except:
+            pass
+
+    conn.close()
+    broadcast_sse("refresh")
+    return {"success": sent, "error": error_msg, "channel": channel}
+
+
+@app.post("/api/inbox/refresh")
+async def refresh_inbox(background_tasks: BackgroundTasks):
+    """Trigger scan Facebook + CallHistory ngay lập tức."""
+    def do_scan():
+        try:
+            from scanner_daemon import scan_facebook, scan_calls, scan_messages
+            scan_facebook()
+            scan_calls()
+            scan_messages()
+            broadcast_sse("refresh")
+        except Exception as e:
+            print(f"Refresh scan error: {e}")
+
+    background_tasks.add_task(do_scan)
+    return {"success": True, "message": "Đang quét tin nhắn mới..."}
+
+
 @app.post("/api/inbox/{conversation_id}/approve")
 def approve_draft(conversation_id: int):
-    # Dummy implementation for training draft
     return {"success": True}
 
 @app.get("/api/inbox/unread-count")
 def unread_count():
-    # Mock logic for unread count
-    return {"count": 0}
+    conn = get_connection()
+    c = conn.cursor()
+    c.execute("SELECT COUNT(*) FROM conversations WHERE direction = 'inbound' AND replied_at IS NULL")
+    count = c.fetchone()[0]
+    conn.close()
+    return {"count": count}
 
 # --- Reports API ---
 @app.get("/api/reports/today")

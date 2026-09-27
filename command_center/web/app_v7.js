@@ -710,9 +710,17 @@ const StudentHubTab = ({showToast, contacts, onSelectContact}) => {
 const InboxTab = ({showToast}) => {
   const [inbox, setInbox] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [filter, setFilter] = useState('pending'); // pending | replied | all
+  const [channelFilter, setChannelFilter] = useState(''); // '' | facebook | imessage
+  const [editingReply, setEditingReply] = useState({}); // {[id]: text}
+  const [sending, setSending] = useState({}); // {[id]: true}
 
-  useEffect(() => {
-    fetch('/api/inbox?limit=50')
+  const loadInbox = (statusFilter, channelF) => {
+    setLoading(true);
+    let url = `/api/inbox?status=${statusFilter || filter}&limit=50`;
+    if (channelF || channelFilter) url += `&channel=${channelF || channelFilter}`;
+    fetch(url)
       .then(res => res.json())
       .then(data => {
         setInbox(data.conversations || []);
@@ -722,15 +730,127 @@ const InboxTab = ({showToast}) => {
         console.error(err);
         setLoading(false);
       });
-  }, []);
+  };
+
+  useEffect(() => { loadInbox(); }, []);
+
+  const handleRefresh = () => {
+    setRefreshing(true);
+    showToast('Đang quét tin nhắn mới từ Facebook & iMessage...');
+    fetch('/api/inbox/refresh', { method: 'POST' })
+      .then(() => {
+        // Wait a bit for scan to complete
+        setTimeout(() => {
+          loadInbox();
+          setRefreshing(false);
+          showToast('✅ Đã quét xong!');
+        }, 5000);
+      })
+      .catch(() => {
+        setRefreshing(false);
+        showToast('❌ Lỗi khi quét');
+      });
+  };
+
+  const handleDismiss = (convId) => {
+    fetch(`/api/inbox/${convId}/dismiss`, { method: 'POST' })
+      .then(res => res.json())
+      .then(() => {
+        setInbox(prev => prev.filter(m => m.id !== convId));
+        showToast('✅ Đã đánh dấu xong');
+      });
+  };
+
+  const handleSend = (msg) => {
+    const text = editingReply[msg.id] || msg.ai_suggested_reply || '';
+    if (!text.trim()) {
+      showToast('Chưa có nội dung để gửi');
+      return;
+    }
+    setSending(prev => ({...prev, [msg.id]: true}));
+    fetch('/api/inbox/send', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        conversation_id: msg.id,
+        phone: msg.contact_phone,
+        channel: msg.channel,
+        message: text
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        setSending(prev => ({...prev, [msg.id]: false}));
+        if (data.success) {
+          setInbox(prev => prev.filter(m => m.id !== msg.id));
+          showToast(`✅ Đã gửi qua ${msg.channel === 'facebook' ? 'Facebook' : 'iMessage'}!`);
+        } else {
+          showToast(`❌ Lỗi gửi: ${data.error || 'Unknown'}`);
+        }
+      })
+      .catch(() => {
+        setSending(prev => ({...prev, [msg.id]: false}));
+        showToast('❌ Lỗi kết nối server');
+      });
+  };
+
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
+    loadInbox(newFilter, channelFilter);
+  };
+
+  const handleChannelChange = (ch) => {
+    setChannelFilter(ch);
+    loadInbox(filter, ch);
+  };
 
   return (
     <div className="p-5 max-w-4xl mx-auto cl-zebra--light">
-      <div className="flex justify-between items-center mb-5">
+      {/* Header with Refresh + Filters */}
+      <div className="flex justify-between items-center mb-5 flex-wrap gap-3">
         <h2 className="text-2xl font-bold title-short flex items-center gap-2.5">
            <BrandIcon name="message-sms" className="w-6 h-6 text-indigo-600" />
            <span>Inbox Hub</span>
+           {inbox.length > 0 && (
+             <span className="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full animate-pulse">{inbox.length}</span>
+           )}
         </h2>
+        <div className="flex items-center gap-2">
+          {/* Channel filter */}
+          <select 
+            className="text-xs border border-gray-300 rounded-lg px-2 py-1.5 bg-white font-semibold"
+            value={channelFilter} 
+            onChange={e => handleChannelChange(e.target.value)}
+          >
+            <option value="">Tất cả kênh</option>
+            <option value="facebook">Facebook</option>
+            <option value="imessage">iMessage</option>
+            <option value="call">Cuộc gọi</option>
+          </select>
+          {/* Status filter */}
+          <div className="flex bg-gray-100 rounded-lg p-0.5 text-xs font-bold">
+            {[
+              {key: 'pending', label: 'Chờ xử lý'},
+              {key: 'replied', label: 'Đã xong'},
+              {key: 'all', label: 'Tất cả'}
+            ].map(f => (
+              <button 
+                key={f.key}
+                className={`px-3 py-1.5 rounded-md transition ${filter === f.key ? 'bg-white shadow-sm text-indigo-700' : 'text-gray-600 hover:text-gray-900'}`}
+                onClick={() => handleFilterChange(f.key)}
+              >{f.label}</button>
+            ))}
+          </div>
+          {/* Refresh button */}
+          <button 
+            className={`btn-fedu bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-sm ${refreshing ? 'opacity-60' : ''}`}
+            onClick={handleRefresh}
+            disabled={refreshing}
+          >
+            <BrandIcon name="refresh" className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin' : ''}`} />
+            {refreshing ? 'Đang quét...' : 'Quét Mới'}
+          </button>
+        </div>
       </div>
       
       {loading && (
@@ -745,13 +865,13 @@ const InboxTab = ({showToast}) => {
 
       {!loading && inbox.length === 0 && (
         <div className="bg-white rounded-2xl shadow-sm border p-12 text-center text-gray-500">
-           <BrandIcon name="check-circle" className="w-10 h-10 text-gray-400 mx-auto mb-3" />
-           <p className="font-semibold">Hộp thư trống. Không có tin nhắn chưa đọc.</p>
+           <BrandIcon name="check-circle" className="w-10 h-10 text-green-500 mx-auto mb-3" />
+           <p className="font-semibold">{filter === 'pending' ? '🎉 Hộp thư sạch! Không có tin nhắn chờ xử lý.' : 'Không có tin nhắn nào.'}</p>
         </div>
       )}
 
       {!loading && inbox.map(msg => (
-        <div key={msg.id} className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 mb-4">
+        <div key={msg.id} className={`bg-white rounded-2xl shadow-sm border border-gray-200 p-5 mb-4 ${msg.replied_at ? 'opacity-60' : ''}`}>
            <div className="flex justify-between items-center mb-3">
               <h3 className="font-bold text-base flex items-center gap-2">
                 <span>{msg.contact_name || 'Khách Hàng'}</span> 
@@ -760,9 +880,12 @@ const InboxTab = ({showToast}) => {
                   {msg.channel}
                 </span>
                 {msg.contact_phone && !msg.contact_phone.startsWith('FB_') && (
-                  <span className="badge badge-red ml-2 border border-red-500 shadow-sm animate-pulse">
+                  <span className="badge badge-red ml-2 border border-red-500 shadow-sm">
                     <BrandIcon name="phone" className="w-3 h-3" /> {msg.contact_phone}
                   </span>
+                )}
+                {msg.replied_at && (
+                  <span className="badge bg-green-100 text-green-700 text-xs ml-2">✅ Đã xử lý</span>
                 )}
               </h3>
               <span className="text-xs font-mono text-gray-500">{new Date(msg.created_at).toLocaleString('vi-VN')}</span>
@@ -771,20 +894,47 @@ const InboxTab = ({showToast}) => {
              {msg.content || '[Khách hàng gửi Hình ảnh / Tệp đính kèm / Sticker]'}
            </p>
            
-           {msg.ai_suggested_reply && (
+           {msg.ai_suggested_reply && !msg.replied_at && (
              <div className="bg-blue-50/70 border border-blue-200/80 rounded-xl p-3.5 mb-4">
-                <div className="text-xs font-bold font-mono uppercase tracking-wider text-blue-800 mb-1 flex items-center gap-1.5">
-                   <BrandIcon name="sparkles-ai" className="w-3.5 h-3.5 text-blue-600" />
-                   <span>AI Gợi Ý Trả Lời:</span>
+                <div className="text-xs font-bold font-mono uppercase tracking-wider text-blue-800 mb-2 flex items-center justify-between">
+                   <span className="flex items-center gap-1.5">
+                     <BrandIcon name="sparkles-ai" className="w-3.5 h-3.5 text-blue-600" />
+                     AI Gợi Ý Trả Lời:
+                   </span>
+                   <button className="text-blue-600 hover:text-blue-800 text-xs normal-case" 
+                     onClick={() => setEditingReply(prev => ({...prev, [msg.id]: prev[msg.id] !== undefined ? undefined : msg.ai_suggested_reply}))}>
+                     {editingReply[msg.id] !== undefined ? '✕ Hủy sửa' : '✏️ Sửa'}
+                   </button>
                 </div>
-                <p className="text-sm text-blue-950 cl-body whitespace-pre-wrap">{msg.ai_suggested_reply}</p>
+                {editingReply[msg.id] !== undefined ? (
+                  <textarea
+                    className="w-full text-sm text-blue-950 bg-white border border-blue-300 rounded-lg p-2.5 min-h-[80px] focus:ring-2 focus:ring-blue-400 outline-none"
+                    value={editingReply[msg.id]}
+                    onChange={e => setEditingReply(prev => ({...prev, [msg.id]: e.target.value}))}
+                  />
+                ) : (
+                  <p className="text-sm text-blue-950 cl-body whitespace-pre-wrap">{msg.ai_suggested_reply}</p>
+                )}
              </div>
            )}
            
            <div className="flex flex-wrap gap-2.5">
+              {/* Send button - primary action */}
+              {!msg.replied_at && msg.contact_phone && !msg.contact_phone.startsWith('FB_') && (
+                <button 
+                  className={`btn-fedu bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-sm ${sending[msg.id] ? 'opacity-60' : ''}`}
+                  onClick={() => handleSend(msg)}
+                  disabled={sending[msg.id]}
+                >
+                  <BrandIcon name="send" className="w-3.5 h-3.5" />
+                  {sending[msg.id] ? 'Đang gửi...' : '📤 Gửi Ngay'}
+                </button>
+              )}
+
+              {/* External links */}
               {msg.channel === 'facebook' && (
-                <a href="https://business.facebook.com/latest/inbox/all" target="_blank" className="btn-fedu bg-gray-100 hover:bg-gray-200 text-gray-800 border border-gray-300 rounded-xl text-xs font-bold" onClick={() => showToast('Đang mở Meta Business Suite...')}>
-                   <BrandIcon name="brand-facebook" className="w-3.5 h-3.5 text-blue-600" /> Mở Chat Meta Suite
+                <a href="https://business.facebook.com/latest/inbox/all" target="_blank" className="btn-fedu bg-gray-100 hover:bg-gray-200 text-gray-800 border border-gray-300 rounded-xl text-xs font-bold">
+                   <BrandIcon name="brand-facebook" className="w-3.5 h-3.5 text-blue-600" /> Mở Meta Suite
                 </a>
               )}
               {msg.channel === 'imessage' && (
@@ -792,16 +942,29 @@ const InboxTab = ({showToast}) => {
                    <BrandIcon name="message-sms" className="w-3.5 h-3.5 text-green-600" /> Mở iMessage
                 </a>
               )}
+
+              {/* Copy button */}
               <button className="btn-fedu bg-gray-100 hover:bg-gray-200 text-gray-800 border border-gray-300 rounded-xl text-xs font-bold" onClick={() => {
-                  if (msg.ai_suggested_reply) {
-                      navigator.clipboard.writeText(msg.ai_suggested_reply);
+                  const text = editingReply[msg.id] || msg.ai_suggested_reply;
+                  if (text) {
+                      navigator.clipboard.writeText(text);
                       showToast('Đã copy gợi ý trả lời');
                   } else {
                       showToast('Không có nội dung gợi ý để copy');
                   }
               }}>
-                 <BrandIcon name="copy-clipboard" className="w-3.5 h-3.5" /> Copy Kịch Bản
+                 <BrandIcon name="copy-clipboard" className="w-3.5 h-3.5" /> Copy
               </button>
+
+              {/* Dismiss button */}
+              {!msg.replied_at && (
+                <button 
+                  className="btn-fedu bg-gray-100 hover:bg-gray-200 text-gray-800 border border-gray-300 rounded-xl text-xs font-bold"
+                  onClick={() => handleDismiss(msg.id)}
+                >
+                  ✅ Đánh dấu xong
+                </button>
+              )}
            </div>
         </div>
       ))}
