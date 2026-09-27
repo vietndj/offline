@@ -5,3 +5,8 @@ dist
 .DS_Store
 *.log
 
+uploads/
+customer_hub/fedu_customer_hub.db
+customer_hub/fedu_customer_hub.db-wal
+customer_hub/fedu_customer_hub.db-shm
+customer_hub/_fb_checkpoint.json
