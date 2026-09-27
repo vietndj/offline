@@ -1485,13 +1485,28 @@ def update_lead(
         except Exception:
             pass
 
+    # 4. ĐỒNG BỘ SANG CUSTOMER HUB DB
+    hub_synced = False
+    try:
+        from customer_hub.hub_sync import sync_lead_update
+        sync_lead_update(
+            phone=clean_phone, status=status, note=note_to_sync,
+            tags=tags, name=full_name,
+            class_name=cache[clean_phone].get('class_name', ''),
+            industry=cache[clean_phone].get('industry', '')
+        )
+        hub_synced = True
+    except Exception:
+        pass
+
     return {
         "success": True,
         "phone": clean_phone,
         "status": status,
         "apple_contact_synced": contact_updated,
         "google_sheet_synced": sheet_updated,
-        "student_hub_synced": stu_updated
+        "student_hub_synced": stu_updated,
+        "customer_hub_synced": hub_synced
     }
 
 

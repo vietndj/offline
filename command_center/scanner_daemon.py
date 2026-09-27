@@ -36,12 +36,31 @@ def alert_telegram_new_lead(phone, name, text):
                 print(f"🛑 [STU-Gatekeeper] Chặn alert cho {name} ({phone}) vì: {reason}")
                 return # BỎ QUA KHÔNG BẮN ALERT
 
-        # 2. Nếu chưa gọi -> Bắn alert
+        # 2. SYNC VÀO CUSTOMER HUB DB + LẤY CONTEXT CARD
+        context_msg = ""
+        try:
+            sys.path.insert(0, "/Users/vietmac/Documents/CODE/offline")
+            from customer_hub.hub_sync import sync_new_lead, format_telegram_context
+            ctx = sync_new_lead(
+                phone=phone, name=name, source="facebook_inbox",
+                message_text=text
+            )
+            if ctx and not ctx.get('error'):
+                context_msg = format_telegram_context(ctx)
+        except Exception as hub_err:
+            print(f"⚠️  Hub sync error (non-blocking): {hub_err}")
+
+        # 3. BẮN TELEGRAM VỚI CONTEXT CARD (hoặc fallback basic)
         print(f"✅ [STU-Gatekeeper] SĐT mới tinh chưa gọi: {phone} -> Đang bắn Telegram...")
         token = "7991600422:AAHNmZ9ixcQtf_pTVQewadrnYZ0apOEvxgk"
         chat_id = "2050406425"
         url = f"https://api.telegram.org/bot{token}/sendMessage"
-        msg = f"🔔 KHÁCH ĐỂ LẠI SĐT TRÊN PAGE\n👤 {name}\n📱 {phone}\n\n💬 Lịch sử 5 tin gần nhất:\n{text}\n\n👉 Zalo 1 chạm: https://zalo.me/{phone}"
+
+        if context_msg:
+            msg = context_msg + f"\n\n👉 Zalo 1 chạm: https://zalo.me/{phone}"
+        else:
+            msg = f"🔔 KHÁCH ĐỂ LẠI SĐT TRÊN PAGE\n👤 {name}\n📱 {phone}\n\n💬 Lịch sử 5 tin gần nhất:\n{text}\n\n👉 Zalo 1 chạm: https://zalo.me/{phone}"
+
         requests.post(url, json={"chat_id": chat_id, "text": msg})
     except Exception as e:
         print(f"Lỗi gửi Telegram alert: {e}")
