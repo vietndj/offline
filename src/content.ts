@@ -1759,7 +1759,7 @@ export const CONTENT: ContentData = {
     headlinePrefix: "Biến kiến thức của bạn thành ",
     headlineHighlight: "Video Marketing & doanh số thật",
     meta: {
-      time: { label: "THỜI GIAN", value: "19–20/09/2026", desc: "2 ngày offline thực chiến" },
+      time: { label: "THỜI GIAN", value: "30/10 - 1/11/2026", desc: "2 ngày offline thực chiến" },
       location: { label: "ĐỊA ĐIỂM", value: "Hà Nội", desc: "Chi tiết cập nhật trong nhóm Zalo" },
       scale: { label: "QUY MÔ", value: "Tối đa 40 người", desc: "Để đảm bảo chất lượng thực hành" }
     },
