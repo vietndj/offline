@@ -1663,7 +1663,7 @@ export const CONTENT: ContentData = {
       {
         id: "morning-teabreak",
         title: "Cafe, trà và bánh ngọt ăn nhẹ",
-        desc: "Sáng nào lớp cũng có sẵn cafe phin, trà thơm và bánh ngọt phục vụ hoàn toàn miễn phí (free). Anh chị cứ đến sớm nhâm nhi nạp năng lượng, tỉnh táo học và thực hành suốt cả ngày.",
+        desc: "• Phục vụ sẵn cafe phin, trà thơm\n• Bánh ngọt nạp năng lượng đầu giờ\n• Hoàn toàn miễn phí (Free 100%)",
         tag: "Free mỗi sáng",
         icon: "Coffee",
         image: "/assets/venue/perk_teabreak.jpg",
@@ -1672,7 +1672,7 @@ export const CONTENT: ContentData = {
       {
         id: "lunch-buffet",
         title: "Buffet trưa nóng sốt cả 2 ngày",
-        desc: "Trưa cả 2 ngày, lớp phục vụ tiệc buffet nóng sốt hoàn toàn miễn phí (Free 100%) ngay tại chỗ. Anh chị em học xong cứ thong thả ngồi lại dùng bữa cùng nhau, vừa nạp năng lượng vừa tiện nghỉ ngơi giao lưu, không phải bận tâm chuyện ăn uống hay đội nắng ra ngoài tìm quán.",
+        desc: "• Tiệc buffet nóng sốt ngay tại lớp\n• Phục vụ suốt 2 ngày học\n• Nghỉ ngơi giao lưu thong thả",
         tag: "Free trưa 2 ngày",
         icon: "Utensils",
         image: "/assets/venue/perk_buffet.jpg",
@@ -1681,7 +1681,7 @@ export const CONTENT: ContentData = {
       {
         id: "dinner-bbq",
         title: "Tiệc nướng BBQ tối ngày 1 (Lựa chọn mở)",
-        desc: "Học xong ngày 1, lớp có buổi tiệc nướng ngoài trời để anh em ngồi lại giao lưu. Đây là lựa chọn mở hoàn toàn: kết thúc buổi học đầu tiên mình sẽ hỏi trực tiếp mọi người xem ai tiện tham gia theo nhu cầu (chi phí chia đều). Anh chị nào bận việc gia đình hay phải về sớm cứ thoải mái về, không câu nệ; ai nán lại được thì cùng nâng chén bia chén trà, tâm sự chuyện làm nghề.",
+        desc: "• Tiệc nướng ngoài trời tối thứ 7\n• Giao lưu tâm sự chuyện làm nghề\n• Lựa chọn tham gia tự do (chia đều chi phí)",
         tag: "Tối thứ Bảy · Tuỳ chọn",
         icon: "Flame",
         image: "/assets/venue/perk_bbq.jpg",
@@ -1690,7 +1690,7 @@ export const CONTENT: ContentData = {
       {
         id: "hotel-stay",
         title: "Khách sạn gần chỗ học (400k – 500k/đêm)",
-        desc: "Anh chị ở xa về có phòng khách sạn sạch sẽ, thoáng mát ngay sát bên. Khuyên anh chị nên ghép 2 người một phòng (chia ra chỉ 200k–250k) để vừa tiết kiệm, vừa tiện thức khuya tâm sự nghề.",
+        desc: "• Phòng sạch sẽ, thoáng mát sát bên\n• Tiện lợi nghỉ ngơi, qua đêm\n• Gợi ý ghép 2 người để tiết kiệm (200-250k)",
         tag: "Nghỉ qua đêm",
         icon: "Bed",
         image: "/assets/venue/venue_hotel.png",
@@ -1699,7 +1699,7 @@ export const CONTENT: ContentData = {
       {
         id: "kids-friendly",
         title: "Có chỗ riêng cho các bé 'xem iPad'",
-        desc: "Anh chị bận con nhỏ cuối tuần cứ dắt theo. Bên ngoài phòng học có khuôn viên rộng rãi, thoáng mát để các bé ngồi chơi, xem iPad hoặc làm bánh, bố mẹ hoàn toàn yên tâm ngồi học.",
+        desc: "• Khuôn viên thoáng mát bên ngoài\n• Không gian cho bé ngồi chơi, xem iPad\n• Bố mẹ hoàn toàn yên tâm ngồi học",
         tag: "Thân thiện gia đình",
         icon: "Baby",
         image: "/assets/venue/perk_kids.jpg"

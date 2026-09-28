@@ -166,7 +166,7 @@ export const VenueSection: React.FC<VenueSectionProps> = () => {
                       <h4 className="font-sans text-xl font-bold text-white mb-3 leading-snug">
                         {perk.title}
                       </h4>
-                      <p className="font-sans text-base sm:text-[17px] text-zinc-200 leading-relaxed">
+                      <p className="font-sans text-base sm:text-[17px] text-zinc-200 leading-relaxed whitespace-pre-line">
                         {perk.desc}
                       </p>
                     </div>
