@@ -741,7 +741,7 @@ window.STATIC_LEADS = [{"phone": "0948310388", "name": "Hồng Vân", "status": 
 
       try {
         const [leadsRes, statsRes] = await Promise.all([
-          Promise.resolve({json: () => Promise.resolve(window.STATIC_LEADS)}),
+          Promise.resolve({json: () => Promise.resolve({leads: window.STATIC_LEADS})}),
           Promise.resolve({json: () => Promise.resolve({new:0, contacted:0, called:0, paid:0, considering:0})})
         ]);
 
@@ -884,8 +884,8 @@ window.STATIC_LEADS = [{"phone": "0948310388", "name": "Hồng Vân", "status": 
           if (!isToday) return false;
         } else {
           // Ở các filter khác ("all", "callback", "contacted", "called"):
-          // Ẩn lead sale cũ (trừ khi lead mới đăng ký lại hôm nay)
-          if (isSale && !isToday) return false;
+          // Ẩn lead sale cũ (trừ khi lead mới đăng ký lại hôm nay) - TẮT CHO BẢN SAO LƯU (ALL)
+          if (currentPriorityFilter !== 'all' && isSale && !isToday) return false;
 
           if (currentPriorityFilter === 'callback') {
             const isCb = l.status === 'considering' || (l.note && l.note.toLowerCase().includes('hẹn'));
@@ -1047,14 +1047,15 @@ window.STATIC_LEADS = [{"phone": "0948310388", "name": "Hồng Vân", "status": 
         : `<span class="inline-flex items-center gap-0.5 text-[10px] font-medium text-slate-500">📅 ${regInfo.badge}</span>`;
 
       // Cuộc gọi
-      const totalCalls = l.call_info.total_calls;
-      const lastDur = l.call_info.last_call_duration;
-      const lastCallTime = l.call_info.last_call_time || "";
+      const callInfo = l.call_info || {};
+      const totalCalls = callInfo.total_calls || 0;
+      const lastDur = callInfo.last_call_duration || 0;
+      const lastCallTime = callInfo.last_call_time || "";
       let callBadge = "";
       if (totalCalls > 0 && lastDur > 0) {
         callBadge = `
-          <span class="inline-flex items-center gap-0.5 text-[10px] font-bold px-1.5 py-0.2 rounded bg-indigo-50 text-indigo-700 border border-indigo-200" title="Đã trao đổi ${l.call_info.last_call_formatted} lúc ${lastCallTime}">
-            📞 ${l.call_info.last_call_formatted}
+          <span class="inline-flex items-center gap-0.5 text-[10px] font-bold px-1.5 py-0.2 rounded bg-indigo-50 text-indigo-700 border border-indigo-200" title="Đã trao đổi ${callInfo.last_call_formatted} lúc ${lastCallTime}">
+            📞 ${callInfo.last_call_formatted}
           </span>
         `;
       } else if (totalCalls > 0 && lastDur === 0) {
@@ -1080,7 +1081,7 @@ window.STATIC_LEADS = [{"phone": "0948310388", "name": "Hồng Vân", "status": 
           contactAction = `<span title="Đã lưu danh bạ iPhone: ${l.apple_contact_name || ''}" class="text-emerald-700 font-bold text-[10px] bg-emerald-50 border border-emerald-300 px-1 py-0.2 rounded">🍏 Đã lưu</span>`;
         }
       } else {
-        contactAction = `<button onclick="saveContactToPhone('${l.phone}', '${l.name.replace(/'/g, "\\'")}')" class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 hover:bg-amber-200 border border-amber-300 transition shadow-2xs">🍏 +Lưu DB</button>`;
+        contactAction = `<button onclick="saveContactToPhone('${l.phone}', '${(l.name || '').replace(/'/g, "\\'")}')" class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 hover:bg-amber-200 border border-amber-300 transition shadow-2xs">🍏 +Lưu DB</button>`;
       }
 
       // Huy hiệu ĐÃ CỌC
@@ -1155,7 +1156,7 @@ window.STATIC_LEADS = [{"phone": "0948310388", "name": "Hồng Vân", "status": 
         <div class="flex items-start justify-between gap-1.5">
           <div class="min-w-0 flex items-center gap-1.5 flex-wrap">
             <h3 class="font-extrabold text-xs text-slate-900 hover:text-indigo-600 transition truncate cursor-pointer" onclick="openFocusDrawer('${l.phone}')" title="Bấm để mở Chế độ Gọi Tập Trung">
-              ${l.name}
+              ${l.name || '<i>(Chưa có tên)</i>'}
             </h3>
             <span
               onclick="copyPhoneNumber('${l.phone}', event)"
