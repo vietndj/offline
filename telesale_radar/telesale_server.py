@@ -161,14 +161,6 @@ async def serve_sale_ui():
     return HTMLResponse(content="<h1>Danh sách sale đang được tải...</h1>")
 
 
-@app.get("/cu.html", response_class=HTMLResponse)
-async def serve_cu_ui():
-    cu_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), "public", "cu.html")
-    if os.path.exists(cu_file):
-        with open(cu_file, "r", encoding="utf-8") as f:
-            return HTMLResponse(content=f.read())
-    return HTMLResponse(content="<h1>Không tìm thấy bản sao lưu cũ.</h1>")
-
 @app.get("/api/leads")
 async def get_all_leads():
     loop = asyncio.get_event_loop()
