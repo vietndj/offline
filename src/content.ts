@@ -1418,6 +1418,17 @@ export const CONTENT: ContentData = {
         feedback: "Em thấy phần nói của chị rất hấp dẫn. Và nó bù đắp hoàn toàn cho phần kĩ thuật. Tuy nhiên nếu mà mình xử lý kĩ thuật tốt hơn nữa thì sẽ có cảm giác xịn hơn chị ạ. Có thể tạo ra một tiêu chuẩn video mới vừa chuyên nghiệp vừa hấp dẫn về mặt thoại . Cụ thể em nói từng cái. Phần đầu tiên 3 giây đầu chỉ làm cảnh cận nói, gương mặt sắc nét chỉnh chu hấp dẫn người xem phần này là phần tốt em cảm nhận rõ về sự kinh nghiệm của chị qua 3 giây đầu. Các phần sau về đổi cảnh khi nói.\n\nBản chất của cái kiểu vừa đi vừa nói là duy trì một động năng di chuyển để hấp dẫn giữ chân người xem một cách tự nhiên. Cho nên mình phải tập dần thuật chuyển cảnh, em nhắc lại một chút về kĩ thuật chuyển cảnh tiêu chuẩn. Thứ nhất khi chuyển thì các góc cận phải lớn hơn 30 độ, thứ hai khi chuyển phải đổi cỡ cảnh thứ ba hướng máy có thể thay đổi (chúc xuống, hướng lên, nghiêng, hoặc các kiểu hướng sáng tạo như là để máy ở trong tủ lạnh mở ra, để máy ở trong túi mở ra.... Cái đấy là sáng tạo biến) , thứ tư là phải có mồi cảnh. Em sẽ phân tích dựa trên bốn yếu tố này chị nhé. Ở đây thứ tám dây thứ 11 và dây thứ 15, mình đang không áp dụng đủ. Tức là ở cuối cảnh là phải có một cái động năng nhẹ để hướng dẫn cho mắt hiểu là sau nó sẽ có một cái động năng tương tự như vậy hoặc là chỉ dùng các hành động để chuyển cảnh ví dụ như vung tay quay người và ở cảnh sau thì mình cũng phải làm lại cái hành động đấy để nối với cảnh trước cho mượt mà về mặt thị giác tự nhiên. Sau đó phải đổi cả góc thì cảnh nó mới đổi nhiều, và đổi cả cỡ cảnh từ rộng sang cận chẳng hạn thì mắt người xem mới thấy có rất nhiều thay đổi và sự chú ý sẽ tăng lên rất nhiều. Kèm theo một sự ưa thích nhất định khi thị giác biến đổi. Tiếp theo chỉ cần phải xử lý phần chữ chuyên nghiệp có nghĩa là tiết kiệm băng thông não cho người xem việc chữ nó cứ nháy liên tục từ trên đúng dưới và không cố định ở một vị trí làm cho mắt người xem phải dò quét liên tục rất mệt mỏi. Tiếp theo về mặt chữ thì 80% người xem không có nhiều cơ hội để bật tiếng họ sẽ ở môi trường tắt tiếng cho nên mình cần có phụ đề nhỏ để hỗ trợ người ta hiểu được nội dung mà không cần phải bật tiếng.\n\nĐể chuyên nghiệp hơn các tiêu đề cần phải ở một cố định vị trí xác định vị trí đó đi để mình không cần phải thay đổi nhiều phần phụ đề này nó đã xử lý cho mình tự động nên mình chỉ cần để Ý là được ạ chọn một kiểu kiểu chữ và mình thích."
       },
       {
+        id: "tang-xinh-review",
+        title: "Review khóa học Video Marketing Thực Chiến",
+        author: "Tâng Xinh",
+        role: "Học viên",
+        desc: "Cảm nhận của học viên sau 2 ngày tham gia khóa học.",
+        poster: "https://img.youtube.com/vi/_6tSCzLc9u0/hqdefault.jpg",
+        youtubeUrl: "https://youtu.be/_6tSCzLc9u0",
+        category: "expert_talkinghead",
+        categoryLabel: "Chia Sẻ / Review"
+      },
+      {
         id: "vu-hai-long",
         title: "Tâm sự làm nghề: Thà mất thêm giờ còn hơn để khách hối hận",
         author: "Vũ Hải Long",
