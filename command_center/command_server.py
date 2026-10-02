@@ -381,12 +381,17 @@ async def send_report_trigger():
     return {"success": True}
 
 async def send_telegram_alert_raw(text):
-    token = "7991600422:AAHNmZ9ixcQtf_pTVQewadrnYZ0apOEvxgk"
-    chat_id = "2050406425"
+    import os
+    from dotenv import load_dotenv
+    load_dotenv('/Users/vietmac/Documents/CODE/offline/.env')
+    token = os.environ.get('TELEGRAM_BOT_TOKEN', '7991600422:AAHNmZ9ixcQtf_pTVQewadrnYZ0apOEvxgk')
+    chat_ids_str = os.environ.get('TELEGRAM_CHAT_ID', '2050406425')
+    chat_ids = [cid.strip() for cid in chat_ids_str.split(',') if cid.strip()]
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     try:
         async with httpx.AsyncClient() as client:
-            await client.post(url, json={"chat_id": chat_id, "text": text, "parse_mode": "HTML"})
+            for cid in chat_ids:
+                await client.post(url, json={"chat_id": cid, "text": text, "parse_mode": "HTML"})
     except Exception:
         pass
 
@@ -405,15 +410,21 @@ def training_accuracy():
 
 # --- Webhook ---
 async def send_telegram_alert(name, phone, occupation, reason):
-    token = "7991600422:AAHNmZ9ixcQtf_pTVQewadrnYZ0apOEvxgk"
-    chat_id = "2050406425"
+    import os
+    from dotenv import load_dotenv
+    load_dotenv('/Users/vietmac/Documents/CODE/offline/.env')
+    token = os.environ.get('TELEGRAM_BOT_TOKEN', '7991600422:AAHNmZ9ixcQtf_pTVQewadrnYZ0apOEvxgk')
+    chat_ids_str = os.environ.get('TELEGRAM_CHAT_ID', '2050406425')
+    chat_ids = [cid.strip() for cid in chat_ids_str.split(',') if cid.strip()]
+    
     now_str = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     msg = f"🔔 LEAD MỚI ĐĂNG KÝ\n👤 {name}\n📱 {phone}\n💼 {occupation}\n📝 {reason}\n⏰ {now_str}\n\n🔗 Zalo: https://offline.fedu.vn/zalo?phone={phone}"
     
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     try:
         async with httpx.AsyncClient() as client:
-            await client.post(url, json={"chat_id": chat_id, "text": msg})
+            for cid in chat_ids:
+                await client.post(url, json={"chat_id": cid, "text": msg})
     except Exception as e:
         print(f"Error sending telegram alert: {e}")
 

@@ -3,7 +3,7 @@ import requests
 import argparse
 from datetime import datetime
 
-BOT_TOKEN = "8392893959:AAF79Uc6dI4rliweE0BvhnBJ06eV5EJdi-Y"
+BOT_TOKEN = "7991600422:AAHNmZ9ixcQtf_pTVQewadrnYZ0apOEvxgk"
 CHAT_ID = "2050406425"
 
 def send_telegram_report(text):

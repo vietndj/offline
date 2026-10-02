@@ -686,7 +686,7 @@ export const CONTENT: ContentData = {
       "AI TỰ ĐỘNG HÓA"
     ],
     meta: [
-      { id: "time", label: "THỜI GIAN", value: "2 Ngày Thực Chiến", desc: "Thứ 7 & Chủ Nhật (09:00 - 17:00)" },
+      { id: "time", label: "THỜI GIAN", value: "2 Ngày Thực Chiến", desc: "Thứ 3 & Thứ 4 (09:00 - 17:00)" },
       { id: "location", label: "ĐỊA ĐIỂM", value: "Hà Nội", desc: "Phòng Studio tiêu chuẩn chuyên nghiệp" },
       { id: "capacity", label: "QUY MÔ", value: "≤ 40 Học Viên", desc: "Kèm cặp 1-1 ra sản phẩm ngay tại lớp" }
     ],
@@ -1681,8 +1681,8 @@ export const CONTENT: ContentData = {
       {
         id: "dinner-bbq",
         title: "Tiệc nướng BBQ tối ngày 1 (Lựa chọn mở)",
-        desc: "• Tiệc nướng ngoài trời tối thứ 7\n• Giao lưu tâm sự chuyện làm nghề\n• Lựa chọn tham gia tự do (chia đều chi phí)",
-        tag: "Tối thứ Bảy · Tuỳ chọn",
+        desc: "• Tiệc nướng ngoài trời tối thứ 3\n• Giao lưu tâm sự chuyện làm nghề\n• Lựa chọn tham gia tự do (chia đều chi phí)",
+        tag: "Tối thứ Ba · Tuỳ chọn",
         icon: "Flame",
         image: "/assets/venue/perk_bbq.jpg",
         highlight: "Hỏi nhu cầu cuối ngày 1"
@@ -1759,7 +1759,7 @@ export const CONTENT: ContentData = {
     headlinePrefix: "Biến kiến thức của bạn thành ",
     headlineHighlight: "Video Marketing & doanh số thật",
     meta: {
-      time: { label: "THỜI GIAN", value: "30/10 - 1/11/2026", desc: "2 ngày offline thực chiến" },
+      time: { label: "THỜI GIAN", value: "03/11 - 04/11/2026", desc: "2 ngày offline thực chiến" },
       location: { label: "ĐỊA ĐIỂM", value: "Hà Nội", desc: "Chi tiết cập nhật trong nhóm Zalo" },
       scale: { label: "QUY MÔ", value: "Tối đa 40 người", desc: "Để đảm bảo chất lượng thực hành" }
     },
@@ -1809,7 +1809,7 @@ export const CONTENT: ContentData = {
       },
       {
         q: "Lớp học tổ chức ở đâu và vào thời gian nào?",
-        a: "Lớp học diễn ra trong 2 ngày Thứ 7 & Chủ Nhật (09:00 - 17:00) tại phòng Studio tiêu chuẩn chuyên nghiệp tại Hà Nội. Địa chỉ chi tiết sẽ được gửi qua Zalo/Email ngay sau khi bạn hoàn tất đăng ký giữ chỗ."
+        a: "Lớp học diễn ra trong 2 ngày Thứ 3 & Thứ 4 (09:00 - 17:00) tại phòng Studio tiêu chuẩn chuyên nghiệp tại Hà Nội. Địa chỉ chi tiết sẽ được gửi qua Zalo/Email ngay sau khi bạn hoàn tất đăng ký giữ chỗ."
       },
       {
         q: "Sau 2 ngày học offline, tôi có được hỗ trợ tiếp không?",
@@ -1879,7 +1879,7 @@ export const CONTENT: ContentData = {
     headline: "Chào mừng bạn đến với khóa học video marketing!",
     description: "Thông tin đăng ký của bạn đã được ghi nhận vào hệ thống. Đội ngũ tổ chức khóa học sẽ liên hệ qua Zalo/Điện thoại trong vòng 24h để gửi tài liệu chuẩn bị và xác nhận lịch học.",
     summary: {
-      time: { label: "Thời gian: ", value: "2 Ngày Thứ 7 & Chủ Nhật (09:00 - 17:00)" },
+      time: { label: "Thời gian: ", value: "2 Ngày Thứ 3 & Thứ 4 (09:00 - 17:00)" },
       location: { label: "Địa điểm: ", value: "Studio Chuyên Nghiệp Hà Nội", note: " (Địa chỉ chi tiết gửi qua Zalo)" },
       scale: { label: "Quy mô: ", value: "Sĩ số giới hạn ≤ 40 học viên" }
     },

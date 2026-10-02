@@ -711,9 +711,9 @@ async function dispatchToTelegramNova(
   config: SpreadsheetConfig
 ): Promise<{ success: boolean; error?: string }> {
   const botToken = process.env.TELEGRAM_BOT_TOKEN || DEFAULT_TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID || DEFAULT_TELEGRAM_CHAT_ID;
+  const chatIds = (process.env.TELEGRAM_CHAT_ID || DEFAULT_TELEGRAM_CHAT_ID).split(',').map(id => id.trim()).filter(Boolean);
 
-  if (!botToken || !chatId) {
+  if (!botToken || chatIds.length === 0) {
     console.warn('[Telegram] Missing bot token or chat ID');
     return { success: false, error: 'Telegram unconfigured' };
   }
@@ -760,18 +760,31 @@ async function dispatchToTelegramNova(
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 6000);
 
-    const res = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text,
-        parse_mode: 'HTML',
-        disable_web_page_preview: true,
-        reply_markup: replyMarkup,
-      }),
-      signal: controller.signal,
-    });
+    let allSuccess = true;
+    for (const id of chatIds) {
+      try {
+        const fetchController = new AbortController();
+        const timeout = setTimeout(() => fetchController.abort(), 6000);
+        const res = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: id,
+            text,
+            parse_mode: 'HTML',
+            disable_web_page_preview: true,
+            reply_markup: replyMarkup,
+          }),
+          signal: fetchController.signal,
+        });
+        clearTimeout(timeout);
+        if (!res.ok) allSuccess = false;
+      } catch (e) {
+        console.error(`[Telegram] Error sending to ${id}:`, e);
+        allSuccess = false;
+      }
+    }
+    const res = { ok: allSuccess }; // Mock res for the rest of the code
 
     clearTimeout(timeoutId);
 
