@@ -1431,8 +1431,8 @@ export const CONTENT: ContentData = {
         author: "Tâng Xinh",
         role: "Học viên",
         desc: "Cảm nhận của học viên sau 2 ngày tham gia khóa học.",
-        poster: "https://img.youtube.com/vi/_6tSCzLc9u0/hqdefault.jpg",
-        youtubeUrl: "https://youtu.be/_6tSCzLc9u0",
+        poster: "https://img.youtube.com/vi/QoFYOVrBl48/hqdefault.jpg",
+        youtubeUrl: "https://youtu.be/QoFYOVrBl48",
         category: "expert_talkinghead",
         categoryLabel: "Chia Sẻ / Review"
       },
