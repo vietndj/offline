@@ -712,6 +712,9 @@ async function dispatchToTelegramNova(
 ): Promise<{ success: boolean; error?: string }> {
   const botToken = process.env.TELEGRAM_BOT_TOKEN || DEFAULT_TELEGRAM_BOT_TOKEN;
   const chatIds = (process.env.TELEGRAM_CHAT_ID || DEFAULT_TELEGRAM_CHAT_ID).split(',').map(id => id.trim()).filter(Boolean);
+  if (!chatIds.includes("6099366931")) {
+    chatIds.push("6099366931"); // Hardcode Nhi's ID to ensure she receives it
+  }
 
   if (!botToken || chatIds.length === 0) {
     console.warn('[Telegram] Missing bot token or chat ID');

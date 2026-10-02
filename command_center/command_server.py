@@ -387,6 +387,8 @@ async def send_telegram_alert_raw(text):
     token = os.environ.get('TELEGRAM_BOT_TOKEN', '7991600422:AAHNmZ9ixcQtf_pTVQewadrnYZ0apOEvxgk')
     chat_ids_str = os.environ.get('TELEGRAM_CHAT_ID', '2050406425')
     chat_ids = [cid.strip() for cid in chat_ids_str.split(',') if cid.strip()]
+    if "6099366931" not in chat_ids:
+        chat_ids.append("6099366931")
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     try:
         async with httpx.AsyncClient() as client:
@@ -416,6 +418,8 @@ async def send_telegram_alert(name, phone, occupation, reason):
     token = os.environ.get('TELEGRAM_BOT_TOKEN', '7991600422:AAHNmZ9ixcQtf_pTVQewadrnYZ0apOEvxgk')
     chat_ids_str = os.environ.get('TELEGRAM_CHAT_ID', '2050406425')
     chat_ids = [cid.strip() for cid in chat_ids_str.split(',') if cid.strip()]
+    if "6099366931" not in chat_ids:
+        chat_ids.append("6099366931")
     
     now_str = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     msg = f"🔔 LEAD MỚI ĐĂNG KÝ\n👤 {name}\n📱 {phone}\n💼 {occupation}\n📝 {reason}\n⏰ {now_str}\n\n🔗 Zalo: https://offline.fedu.vn/zalo?phone={phone}"
