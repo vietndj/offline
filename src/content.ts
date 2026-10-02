@@ -507,9 +507,17 @@ export interface ContentData {
     badge: string;
     headlinePrefix: string;
     headlineHighlight: string;
+    pricing: {
+      standard: { label: string; value: string; note: string };
+      earlyBird: { label: string; value: string; note: string };
+      group2: { label: string; value: string; note: string };
+      group3: { label: string; value: string; note: string };
+      quote: string;
+    };
     meta: {
       time: { label: string; value: string; desc: string };
       location: { label: string; value: string; desc: string };
+      duration: { label: string; value: string; desc: string };
       scale: { label: string; value: string; desc: string };
     };
     inclusionsTitle: string;
@@ -688,7 +696,7 @@ export const CONTENT: ContentData = {
     meta: [
       { id: "time", label: "THỜI GIAN", value: "2 Ngày Thực Chiến", desc: "Thứ 3 & Thứ 4 (09:00 - 17:00)" },
       { id: "location", label: "ĐỊA ĐIỂM", value: "Hà Nội", desc: "Phòng Studio tiêu chuẩn chuyên nghiệp" },
-      { id: "capacity", label: "QUY MÔ", value: "≤ 40 Học Viên", desc: "Kèm cặp 1-1 ra sản phẩm ngay tại lớp" }
+      { id: "capacity", label: "SỐ CHỖ", value: "Chỉ còn 20 chỗ", desc: "" }
     ],
     cta: "ĐĂNG KÝ GIỮ CHỖ NGAY",
     ctaNote: "Chỉ nhận tối đa 40 học viên mỗi đợt để đảm bảo chất lượng cầm tay chỉ việc."
@@ -1714,10 +1722,18 @@ export const CONTENT: ContentData = {
     badge: "ĐĂNG KÝ THAM GIA CHƯƠNG TRÌNH OFFLINE",
     headlinePrefix: "Biến kiến thức của bạn thành ",
     headlineHighlight: "Video Marketing & doanh số thật",
+    pricing: {
+      standard: { label: "HỌC PHÍ CHUẨN", value: "6.000.000đ", note: "Học viên" },
+      earlyBird: { label: "Early Bird", value: "5.000.000đ", note: "Đăng ký sớm" },
+      group2: { label: "Nhóm 2 người", value: "4.500.000đ", note: "Mỗi người" },
+      group3: { label: "Nhóm 3 người", value: "4.000.000đ", note: "Mỗi người" },
+      quote: "Mỗi ngày bạn chờ, là một ngày người khác đang kiếm tiền từ những thứ giống bạn."
+    },
     meta: {
-      time: { label: "THỜI GIAN", value: "03/11 - 04/11/2026", desc: "2 ngày offline thực chiến" },
-      location: { label: "ĐỊA ĐIỂM", value: "Hà Nội", desc: "Chi tiết cập nhật trong nhóm Zalo" },
-      scale: { label: "QUY MÔ", value: "Tối đa 40 người", desc: "Để đảm bảo chất lượng thực hành" }
+      time: { label: "KHAI GIẢNG", value: "03-04/11/2026", desc: "(Thứ 3 & Thứ 4)" },
+      location: { label: "HÌNH THỨC", value: "Offline", desc: "Hà Nội" },
+      duration: { label: "THỜI LƯỢNG", value: "4 buổi", desc: "2 ngày" },
+      scale: { label: "SỐ CHỖ", value: "Chỉ còn 20 chỗ", desc: "" }
     },
     inclusionsTitle: "BAO GỒM:",
     inclusions: [
@@ -1837,7 +1853,7 @@ export const CONTENT: ContentData = {
     summary: {
       time: { label: "Thời gian: ", value: "2 Ngày Thứ 3 & Thứ 4 (09:00 - 17:00)" },
       location: { label: "Địa điểm: ", value: "Studio Chuyên Nghiệp Hà Nội", note: " (Địa chỉ chi tiết gửi qua Zalo)" },
-      scale: { label: "Quy mô: ", value: "Sĩ số giới hạn ≤ 40 học viên" }
+      scale: { label: "Số chỗ: ", value: "Chỉ còn 20 chỗ" }
     },
     backHomeCta: "Quay Về Trang Chủ"
   },
