@@ -74,6 +74,10 @@ const App = () => {
              </div>
           </div>
           <div className="flex items-center gap-4 text-xs">
+             <a href="https://fedu.vn/course/qr.html" target="_blank" className="bg-amber-500/20 hover:bg-amber-500/40 border border-amber-500/30 px-3.5 py-1.5 rounded-full cursor-pointer transition flex items-center gap-2 font-semibold text-amber-300 shadow-sm">
+                 <BrandIcon name="qr-code" className="w-3.5 h-3.5" />
+                 <span>Mã QR Nghiệm Thu</span>
+             </a>
              <div className="bg-white/10 hover:bg-white/20 border border-white/15 px-3.5 py-1.5 rounded-full cursor-pointer transition flex items-center gap-2 font-semibold text-white shadow-sm" onClick={() => setShowIdentityModal(true)}>
                  <BrandIcon name="user-single" className="w-3.5 h-3.5 text-amber-400" />
                  <span>{salesIdentity || 'Chọn người trực'}</span>

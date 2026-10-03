@@ -681,25 +681,22 @@ export const CONTENT: ContentData = {
   hero: {
     badge: "GẶP MẶT TRỰC TIẾP · HÀ NỘI · SĨ SỐ GIỚI HẠN",
     headline: "Biến chuyên môn của bạn thành video marketing đắt giá",
-    subheadline: "Khóa học offline 2 ngày thực chiến (từ sáng đến chiều), cầm tay chỉ việc giúp chủ doanh nghiệp, người làm chuyên môn, đào tạo và dịch vụ làm chủ toàn bộ quy trình sản xuất video từ A–Z. Không cần rành công nghệ hay giỏi kỹ thuật từ trước.",
+    subheadline: "Cầm tay chỉ việc 1-1 trong 2 ngày. Bạn tự quay, tự dựng, ra 3 video ngay tại lớp — bằng chính chiếc điện thoại.",
     tags: [
       "KỊCH BẢN CHUYỂN ĐỔI",
       "TALKING HEAD CHUYÊN GIA",
       "VOICE OVER AFFILIATE",
       "STORYTELLING CHẠM CẢM XÚC",
       "SETUP 2 GÓC ĐIỆN THOẠI",
-      "CHUYỂN CẢNH ĐỘC BẢN",
-      "DỰNG CAPCUT CHUẨN ĐIỆN ẢNH",
-      "ĐÓNG GÓI QUY TRÌNH",
-      "AI TỰ ĐỘNG HÓA"
+      "DỰNG CAPCUT CHUẨN ĐIỆN ẢNH"
     ],
     meta: [
-      { id: "time", label: "THỜI GIAN", value: "2 Ngày Thực Chiến", desc: "Thứ 3 & Thứ 4 (09:00 - 17:00)" },
+      { id: "time", label: "THỜI GIAN", value: "2 Ngày Thực Chiến", desc: "Thứ 7 & Chủ Nhật (09:00 - 17:00)" },
       { id: "location", label: "ĐỊA ĐIỂM", value: "Hà Nội", desc: "Phòng Studio tiêu chuẩn chuyên nghiệp" },
       { id: "capacity", label: "SỐ CHỖ", value: "Chỉ còn 20 chỗ", desc: "" }
     ],
     cta: "ĐĂNG KÝ GIỮ CHỖ NGAY",
-    ctaNote: "Chỉ nhận tối đa 40 học viên mỗi đợt để đảm bảo chất lượng cầm tay chỉ việc."
+    ctaNote: "Sĩ số giới hạn 40 người • Kèm cặp 1-1"
   },
 
   // 5. Proof Section (Dữ Liệu Đối Soát Meta Suite & Showcase)
@@ -709,7 +706,7 @@ export const CONTENT: ContentData = {
     revenue: "6.000.000+ Lượt Xem · 50.800+ Click Link",
     timeline: "3.642 Khách Hàng Nhắn Tin Tư Vấn",
     dailyPeak: "428 Số ĐT Để Lại Mua Khóa Học",
-    description: "Toàn bộ số liệu được đối soát trực tiếp từ Meta Business Suite của Fanpage '30 Ngày Học Làm Nội Dung Viral'. Không chạy tool, không mua follow ảo — toàn bộ 6 triệu lượt xem và 50.800 lượt click liên kết đều đến từ các video ngắn có cấu trúc chuyển đổi.",
+    description: "Số liệu đối soát trực tiếp từ Meta Business Suite. Không tool, không follow ảo.",
     dashboardImg: "/assets/meta_suite_6m_growth.png",
     weeklyImg: "/assets/meta_weekly_1post_108inbox.png",
     leadsImg: "/assets/facebook_real_page_dashboard.png",
@@ -1003,7 +1000,7 @@ export const CONTENT: ContentData = {
   metaphors: {
     badge: "4 ĐỊNH DẠNG VIDEO MARKETING THỰC CHIẾN",
     headline: "Làm chủ 4 định dạng video giúp ra đơn bền vững",
-    subheadline: "Không cần kỹ xảo phức tạp hay studio đắt tiền. Bạn chỉ cần chọn đúng 1 trong 4 định dạng phù hợp với tính cách và lĩnh vực của mình để bắt đầu quay ngay.",
+    subheadline: "Chọn 1 trong 4 định dạng phù hợp với bạn. Quay ngay tại lớp.",
     formatPrefix: "ĐỊNH DẠNG 0",
     labels: {
       output: "Output Chuyển Đổi",
@@ -1074,7 +1071,7 @@ export const CONTENT: ContentData = {
   // 9. Pain Points Section (4 Bottlenecks)
   painPoints: {
     badge: "BẠN ĐANG GẶP PHẢI ĐIỀU NÀY?",
-    headline: "Tháo gỡ 4 nút thắt khiến video của bạn không có chuyển đổi",
+    headline: "Bạn đang mắc kẹt ở đâu?",
     subheadline: "Hầu hết mọi người bỏ cuộc không phải vì thiếu chuyên môn, mà vì mắc kẹt ở 4 cạm bẫy kỹ thuật và tư duy làm video sai cách.",
     tabPrefix: "VƯỚNG MẮC 0",
     sectionTag: "VƯỚNG MẮC THỰC TẾ & CÁCH THẦY TRÒ CÙNG LÀM",
@@ -1404,7 +1401,7 @@ export const CONTENT: ContentData = {
   // 12. Student Showcase Section
   showcase: {
     badge: "THÀNH PHẨM THỰC TẾ HỌC VIÊN",
-    headline: "Xem video do chính học viên sản xuất sau khóa học",
+    headline: "Sản phẩm thật — do học viên tự quay tại lớp",
     subheadline: "Từ những người chưa từng biết cầm máy hay edit, đây là những video thành phẩm được quay và dựng hoàn chỉnh 100%.",
     categories: [
       { id: "all", label: "Tất Cả Thành Phẩm" },
@@ -1620,7 +1617,7 @@ export const CONTENT: ContentData = {
   // 15.5. Venue & Logistics Section
   venue: {
     badge: "📍 KHÔNG GIAN HỌC & ĂN NGHỈ",
-    headline: "Không gian xanh, yên tĩnh tại Hà Nội",
+    headline: "Học ở đâu? Ăn ở thế nào?",
     description: "Chỗ học nhiều cây xanh, thoáng đãng để anh chị thoải mái cầm máy quay thực hành, không bị gò bó trong 4 bức tường văn phòng.",
     note: "Địa chỉ cụ thể sẽ gửi riêng trong nhóm Zalo lớp để đảm bảo không gian riêng tư tối đa cho anh chị em.",
     perks: [
@@ -1646,7 +1643,7 @@ export const CONTENT: ContentData = {
         id: "dinner-bbq",
         title: "Tiệc nướng BBQ tối ngày 1 (Lựa chọn mở)",
         desc: "• Tiệc nướng ngoài trời tối thứ 3\n• Giao lưu tâm sự chuyện làm nghề\n• Lựa chọn tham gia tự do (chia đều chi phí)",
-        tag: "Tối thứ Ba · Tuỳ chọn",
+        tag: "Tối thứ Bảy · Tuỳ chọn",
         icon: "Flame",
         image: "/assets/venue/perk_bbq.jpg",
         highlight: "Hỏi nhu cầu cuối ngày 1"
@@ -1730,7 +1727,7 @@ export const CONTENT: ContentData = {
       quote: "Mỗi ngày bạn chờ, là một ngày người khác đang kiếm tiền từ những thứ giống bạn."
     },
     meta: {
-      time: { label: "KHAI GIẢNG", value: "03-04/11/2026", desc: "(Thứ 3 & Thứ 4)" },
+      time: { label: "KHAI GIẢNG", value: "31/10 - 01/11/2026", desc: "(Thứ 7 & Chủ Nhật)" },
       location: { label: "HÌNH THỨC", value: "Offline", desc: "Hà Nội" },
       duration: { label: "THỜI LƯỢNG", value: "4 buổi", desc: "2 ngày" },
       scale: { label: "SỐ CHỖ", value: "Chỉ còn 20 chỗ", desc: "" }
@@ -1781,7 +1778,7 @@ export const CONTENT: ContentData = {
       },
       {
         q: "Lớp học tổ chức ở đâu và vào thời gian nào?",
-        a: "Lớp học diễn ra trong 2 ngày Thứ 3 & Thứ 4 (09:00 - 17:00) tại phòng Studio tiêu chuẩn chuyên nghiệp tại Hà Nội. Địa chỉ chi tiết sẽ được gửi qua Zalo/Email ngay sau khi bạn hoàn tất đăng ký giữ chỗ."
+        a: "Lớp học diễn ra trong 2 ngày Thứ 7 & Chủ Nhật (09:00 - 17:00) tại phòng Studio tiêu chuẩn chuyên nghiệp tại Hà Nội. Địa chỉ chi tiết sẽ được gửi qua Zalo/Email ngay sau khi bạn hoàn tất đăng ký giữ chỗ."
       },
       {
         q: "Sau 2 ngày học offline, tôi có được hỗ trợ tiếp không?",
@@ -1851,7 +1848,7 @@ export const CONTENT: ContentData = {
     headline: "Chào mừng bạn đến với khóa học video marketing!",
     description: "Thông tin đăng ký của bạn đã được ghi nhận vào hệ thống. Đội ngũ tổ chức khóa học sẽ liên hệ qua Zalo/Điện thoại trong vòng 24h để gửi tài liệu chuẩn bị và xác nhận lịch học.",
     summary: {
-      time: { label: "Thời gian: ", value: "2 Ngày Thứ 3 & Thứ 4 (09:00 - 17:00)" },
+      time: { label: "Thời gian: ", value: "2 Ngày Thứ 7 & Chủ Nhật (09:00 - 17:00)" },
       location: { label: "Địa điểm: ", value: "Studio Chuyên Nghiệp Hà Nội", note: " (Địa chỉ chi tiết gửi qua Zalo)" },
       scale: { label: "Số chỗ: ", value: "Chỉ còn 20 chỗ" }
     },

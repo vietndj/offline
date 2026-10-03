@@ -18,6 +18,7 @@ import { StickyBottomCta } from './components/StickyBottomCta';
 import { RegisterModal } from './components/RegisterModal';
 import { SuccessPage } from './pages/SuccessPage';
 import { BannerCta } from './sections/BannerCta';
+import { TestimonialSection } from './sections/TestimonialSection';
 import { initScrollReveal } from './utils/scrollReveal';
 
 export function App() {
@@ -55,12 +56,13 @@ export function App() {
       <main>
         <HeroSection onOpenRegister={() => setModalOpen(true)} />
         <ProofSection />
-        <DefinitionSection onOpenRegister={() => setModalOpen(true)} />
-        <GrowthChartSection />
+        {/* <DefinitionSection onOpenRegister={() => setModalOpen(true)} /> */}
+        {/* <GrowthChartSection /> */}
         <MetaphorsSection onOpenRegister={() => setModalOpen(true)} />
         <PainSection />
         <CurriculumSection onOpenRegister={() => setModalOpen(true)} />
         <BannerCta onOpenRegister={() => setModalOpen(true)} />
+        <TestimonialSection />
         <ShowcaseSection />
         <TargetSection />
         <InstructorSection />

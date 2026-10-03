@@ -337,10 +337,17 @@ def check_address_book():
     if os.path.exists(path):
         print(f"[{datetime.now()}] Đã kiểm tra Apple Contacts thay đổi.")
 
+from sync_sheets_to_led import sync_sheets_to_led
+
 def run_loop(interval):
     print(f"Khởi động Scanner Daemon (Interval: {interval}s)")
     fb_counter = 0
     while True:
+        try:
+            sync_sheets_to_led()
+        except Exception as e:
+            print(f"Error syncing sheets: {e}")
+            
         scan_calls()
         scan_imessages()
         check_address_book()
@@ -348,7 +355,6 @@ def run_loop(interval):
         if fb_counter % 3 == 0: # Every 15 mins if interval is 5 mins
             scan_facebook()
             
-        broadcast_refresh()
         fb_counter += 1
         time.sleep(interval)
 
