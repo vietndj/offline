@@ -1640,13 +1640,13 @@ export const CONTENT: ContentData = {
         priceBadge: "FREE 100%"
       },
       {
-        id: "dinner-bbq",
-        title: "Tiệc nướng BBQ tối ngày 1 (Lựa chọn mở)",
-        desc: "• Tiệc nướng ngoài trời tối thứ 3\n• Giao lưu tâm sự chuyện làm nghề\n• Lựa chọn tham gia tự do (chia đều chi phí)",
-        tag: "Tối thứ Bảy · Tuỳ chọn",
-        icon: "Flame",
-        image: "/assets/venue/perk_bbq.jpg",
-        highlight: "Hỏi nhu cầu cuối ngày 1"
+        id: "afternoon-tea",
+        title: "Tiệc trà chiều giao lưu (Sau bế giảng)",
+        desc: "• Trà chiều, bánh ngọt, cà phê sau buổi học cuối\n• Giao lưu tâm sự chuyện làm nghề, kết nối học viên\n• Không gian thư giãn chia sẻ kinh nghiệm",
+        tag: "Chiều Chủ Nhật · Kết nối",
+        icon: "Coffee",
+        image: "/assets/venue/perk_teabreak.jpg",
+        highlight: "Giao lưu cuối khóa"
       },
       {
         id: "hotel-stay",
