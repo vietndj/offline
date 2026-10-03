@@ -4,7 +4,8 @@ import { ChevronDown, HelpCircle, ArrowRight } from 'lucide-react';
 
 export const FaqSection: React.FC = () => {
   const { faqSection, site } = CONTENT;
-  const [openIdx, setOpenIdx] = useState<number | null>(0);
+  // Mặc định đóng hết accordion để rút ngắn chiều cao trên mobile
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
 
   const toggle = (idx: number) => {
     setOpenIdx(openIdx === idx ? null : idx);
@@ -18,33 +19,33 @@ export const FaqSection: React.FC = () => {
   };
 
   return (
-    <section id="faq" className="py-24 px-4 bg-white text-zinc-900 border-y border-zinc-200/80 relative">
-      <div className="max-w-6xl mx-auto px-2 sm:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+    <section id="faq" className="py-12 md:py-20 px-4 bg-white text-zinc-900 border-y border-zinc-200/80 relative">
+      <div className="max-w-6xl mx-auto px-0 sm:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start">
           {/* Left Column: Title & Subtle Support (5 Cols) */}
-          <div className="lg:col-span-5 lg:sticky lg:top-28 space-y-6 reveal reveal-left">
+          <div className="lg:col-span-5 lg:sticky lg:top-28 space-y-4 sm:space-y-6 reveal reveal-left">
             <div>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-amber-300 bg-amber-50 text-amber-900 text-xs sm:text-sm font-mono font-bold uppercase tracking-widest mb-4 shadow-xs">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-amber-300 bg-amber-50 text-amber-900 text-xs sm:text-sm font-mono font-bold uppercase tracking-widest mb-3 sm:mb-4 shadow-xs">
                 <HelpCircle className="w-4 h-4 text-amber-600" />
                 <span>{faqSection.badge}</span>
               </div>
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-[#09090b] mb-4 leading-[1.18] [text-wrap:balance]">
+              <h2 className="font-serif text-2xl sm:text-4xl md:text-5xl font-medium tracking-tight text-[#09090b] mb-2 sm:mb-4 leading-[1.18] [text-wrap:balance]">
                 {faqSection.headline}
               </h2>
-              <p className="font-sans text-base sm:text-lg text-zinc-700 leading-relaxed [text-wrap:balance]">
+              <p className="font-sans text-sm sm:text-lg text-zinc-700 leading-relaxed [text-wrap:balance]">
                 {faqSection.description}
               </p>
             </div>
 
-            {/* Compact Subtle Grey Zalo Card */}
-            <div className="pt-1">
-              <div className="inline-flex items-center gap-3 p-2.5 sm:p-3 rounded-2xl bg-zinc-100/90 border border-zinc-200/80 shadow-2xs max-w-sm">
+            {/* Compact Subtle Grey Zalo Card — 1 hàng gọn */}
+            <div className="pt-0 sm:pt-1">
+              <div className="flex sm:inline-flex w-full sm:w-auto items-center gap-3 p-2.5 sm:p-3 rounded-2xl bg-zinc-100/90 border border-zinc-200/80 shadow-2xs max-w-full sm:max-w-sm">
                 <img
                   src={support.avatarUrl || "/assets/viet_avatar.png"}
                   alt="Thầy Việt"
                   className="w-10 h-10 rounded-full object-cover border border-zinc-300 shadow-2xs shrink-0"
                 />
-                <div className="text-left min-w-0 pr-1">
+                <div className="text-left min-w-0 pr-1 flex-1 sm:flex-initial">
                   <div className="text-[12px] sm:text-[13px] font-sans font-semibold text-zinc-800 leading-tight">
                     {support.title || "Nhắn riêng cho mình (Nguyễn Đức Việt)"}
                   </div>
@@ -85,13 +86,13 @@ export const FaqSection: React.FC = () => {
           </div>
 
           {/* Right Column: Numbered Accordion List (7 Cols) */}
-          <div className="lg:col-span-7 space-y-4 reveal reveal-right delay-100">
+          <div className="lg:col-span-7 space-y-2 sm:space-y-4 reveal reveal-right delay-100">
             {faqSection.items.map((faq, idx) => {
               const isOpen = openIdx === idx;
               return (
                 <div
                   key={idx}
-                  className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
+                  className={`rounded-xl sm:rounded-2xl border transition-all duration-200 overflow-hidden ${
                     isOpen
                       ? 'border-amber-500/90 bg-amber-50/50 shadow-md ring-1 ring-amber-500/30'
                       : 'border-zinc-200 bg-[#f8fafc] hover:border-zinc-300 hover:bg-white'
@@ -99,11 +100,12 @@ export const FaqSection: React.FC = () => {
                 >
                   <button
                     onClick={() => toggle(idx)}
-                    className="w-full p-5 sm:p-6 text-left flex items-start justify-between gap-4 cursor-pointer group"
+                    aria-expanded={isOpen}
+                    className="w-full p-3 sm:p-6 text-left flex items-center sm:items-start justify-between gap-3 sm:gap-4 cursor-pointer group"
                   >
-                    <div className="flex items-start gap-3.5 sm:gap-4">
+                    <div className="flex items-center sm:items-start gap-2.5 sm:gap-4">
                       <span
-                        className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-xs sm:text-sm font-mono font-bold flex items-center justify-center shrink-0 transition-all ${
+                        className={`w-7 h-7 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl text-[11px] sm:text-sm font-mono font-bold flex items-center justify-center shrink-0 transition-all ${
                           isOpen
                             ? 'bg-amber-500 text-zinc-950 font-black shadow-xs'
                             : 'bg-zinc-900 text-white font-bold group-hover:bg-black shadow-2xs'
@@ -111,24 +113,24 @@ export const FaqSection: React.FC = () => {
                       >
                         {String(idx + 1).padStart(2, '0')}
                       </span>
-                      <span className="font-sans font-bold text-[#09090b] text-base sm:text-lg md:text-xl leading-snug pt-1 sm:pt-1.5">
+                      <span className="font-sans font-bold text-[#09090b] text-sm sm:text-lg md:text-xl leading-snug sm:pt-1.5">
                         {faq.q}
                       </span>
                     </div>
 
                     <div
-                      className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shrink-0 transition-all ${
+                      className={`w-7 h-7 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shrink-0 transition-all ${
                         isOpen
                           ? 'bg-amber-500 text-zinc-950 rotate-180 shadow-xs'
                           : 'bg-zinc-900 text-white group-hover:bg-black shadow-2xs'
                       }`}
                     >
-                      <ChevronDown className={`w-5 h-5 transition-colors ${isOpen ? 'text-zinc-950' : 'text-white'}`} />
+                      <ChevronDown className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors ${isOpen ? 'text-zinc-950' : 'text-white'}`} />
                     </div>
                   </button>
 
                   {isOpen && (
-                    <div className="px-6 pb-6 pt-2 text-base sm:text-lg text-zinc-900 leading-relaxed border-t border-amber-200 font-sans pl-[60px] sm:pl-[66px]">
+                    <div className="px-3 sm:px-6 pb-3.5 sm:pb-6 pt-2 text-sm sm:text-lg text-zinc-900 leading-relaxed border-t border-amber-200 font-sans pl-[48px] sm:pl-[66px]">
                       {faq.a}
                     </div>
                   )}

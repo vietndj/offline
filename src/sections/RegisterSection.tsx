@@ -128,6 +128,17 @@ export const RegisterSection: React.FC = () => {
               </div>
             </div>
 
+            {/* Cam kết hoàn tiền */}
+            {register.guarantee && (
+              <div className="mb-6 p-4 sm:p-5 rounded-2xl border border-emerald-500/40 bg-emerald-950/20 flex items-start gap-3">
+                <span className="text-xl leading-none shrink-0" aria-hidden="true">🛡️</span>
+                <div>
+                  <div className="text-sm sm:text-base font-bold text-emerald-400 mb-1">Cam kết hoàn tiền</div>
+                  <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">{register.guarantee}</p>
+                </div>
+              </div>
+            )}
+
             {/* Metadata Grid */}
             <div className="grid grid-cols-2 gap-3 mb-6">
               <div className="p-3.5 rounded-xl border border-zinc-800 bg-zinc-900/30">
@@ -183,6 +194,12 @@ export const RegisterSection: React.FC = () => {
                   </div>
                 ))}
               </div>
+              {register.logistics && (
+                <p className="mt-4 text-xs sm:text-sm text-zinc-400 leading-relaxed flex items-start gap-2">
+                  <span aria-hidden="true" className="shrink-0">🍱</span>
+                  <span>{register.logistics}</span>
+                </p>
+              )}
             </div>
           </div>
 
@@ -235,11 +252,11 @@ export const RegisterSection: React.FC = () => {
                   </div>
                   <div>
                     <label className="block text-xs sm:text-sm font-sans font-medium text-zinc-200 mb-1.5">
-                      {register.form.fields.email.label} <span className="text-orange-500">*</span>
+                      {register.form.fields.email.label}{' '}
+                      <span className="text-zinc-500 text-xs">(tuỳ chọn)</span>
                     </label>
                     <input
                       type="email"
-                      required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder={register.form.fields.email.placeholder}

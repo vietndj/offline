@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CONTENT } from '../content';
-import { Sparkles, Quote } from 'lucide-react';
+import { Sparkles, Quote, ChevronDown, ShieldCheck } from 'lucide-react';
 
 export const InstructorSection: React.FC = () => {
-  const { instructor } = CONTENT;
+  const { instructor, proof } = CONTENT;
+  const [bioExpanded, setBioExpanded] = useState(false);
+  const [proofOpen, setProofOpen] = useState(false);
 
   const mainRole = instructor.mainRole || instructor.role;
   const subRole = instructor.subRole;
+
+  // Màu chữ số theo variant của reportCard (gộp từ ProofSection)
+  const statColor = (variant: 'normal' | 'amber' | 'emerald') =>
+    variant === 'amber' ? 'text-amber-600' : variant === 'emerald' ? 'text-emerald-600' : 'text-zinc-900';
 
   return (
     <section id="instructor" className="py-24 px-4 bg-[#f8fafc] text-zinc-900 border-y border-zinc-200/80 relative scroll-mt-20">
@@ -53,8 +59,20 @@ export const InstructorSection: React.FC = () => {
             <div className="md:col-span-7 lg:col-span-8 flex flex-col justify-center reveal reveal-right delay-200">
               <div className="space-y-3.5 text-base sm:text-lg text-zinc-800 leading-relaxed mb-6 font-sans">
                 {instructor.bio.map((p, idx) => (
-                  <p key={idx}>{p}</p>
+                  <p key={idx} className={idx > 0 && !bioExpanded ? 'hidden md:block' : ''}>
+                    {p}
+                  </p>
                 ))}
+                {instructor.bio.length > 1 && !bioExpanded && (
+                  <button
+                    type="button"
+                    onClick={() => setBioExpanded(true)}
+                    className="md:hidden inline-flex items-center gap-1 text-sm font-bold text-orange-600 hover:text-orange-700 cursor-pointer"
+                  >
+                    Đọc thêm
+                    <ChevronDown className="w-4 h-4" />
+                  </button>
+                )}
               </div>
 
               {/* Quote Box */}
@@ -82,6 +100,74 @@ export const InstructorSection: React.FC = () => {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Proof Block (gộp từ ProofSection): Số liệu đối soát từ Meta Business Suite */}
+          <div className="mt-8 pt-8 border-t border-zinc-200">
+            <div className="flex items-center justify-center gap-2 mb-4 text-center">
+              <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 shrink-0" />
+              <h3 className="text-xs sm:text-sm font-mono font-bold uppercase tracking-widest text-zinc-700">
+                Số liệu đối soát từ Meta Business Suite
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center">
+              {proof.reportCard.stats.map((st, idx) => (
+                <div
+                  key={idx}
+                  className="px-1.5 py-3 sm:p-5 rounded-2xl bg-white border border-zinc-200/90 shadow-2xs flex flex-col items-center justify-center"
+                >
+                  <div className="text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider text-zinc-500 mb-1">
+                    {st.label}
+                  </div>
+                  <div className={`font-sans text-lg sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight sm:whitespace-nowrap ${statColor(st.variant)}`}>
+                    {st.value}
+                  </div>
+                  <div className="text-[10px] sm:text-xs font-sans font-semibold text-emerald-700 mt-1 leading-snug">
+                    {st.growth}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Toggle ảnh đối soát */}
+            {proof.tabs.length > 0 && (
+              <div className="mt-5 text-center">
+                <button
+                  type="button"
+                  onClick={() => setProofOpen((v) => !v)}
+                  aria-expanded={proofOpen}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-zinc-300 bg-white hover:border-orange-400 hover:text-orange-700 text-sm font-bold text-zinc-700 transition-colors cursor-pointer"
+                >
+                  <span>{proofOpen ? 'Thu gọn ảnh đối soát' : 'Xem ảnh đối soát'}</span>
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${proofOpen ? 'rotate-180' : ''}`} />
+                </button>
+              </div>
+            )}
+
+            {proofOpen && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
+                {proof.tabs.map((tab) => (
+                  <figure
+                    key={tab.id}
+                    className="rounded-2xl overflow-hidden border border-zinc-200/90 bg-white shadow-2xs flex flex-col"
+                  >
+                    <a href={tab.image} target="_blank" rel="noopener noreferrer" className="block bg-zinc-100">
+                      <img
+                        src={tab.image}
+                        alt={tab.title}
+                        loading="lazy"
+                        className="w-full h-auto object-contain"
+                      />
+                    </a>
+                    <figcaption className="p-3.5">
+                      <div className="text-sm font-bold text-zinc-900 leading-snug mb-1">{tab.title}</div>
+                      <div className="text-xs text-zinc-600 leading-relaxed">{tab.caption}</div>
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

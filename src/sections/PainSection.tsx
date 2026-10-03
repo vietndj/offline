@@ -64,24 +64,24 @@ export const PainSection: React.FC = () => {
   };
 
   return (
-    <section id="pain-points" className="py-24 px-4 bg-[#09090b] border-y border-zinc-800/80 text-white relative">
-      <div className="max-w-6xl mx-auto px-2 sm:px-6">
+    <section id="pain-points" className="py-12 md:py-20 px-4 bg-[#09090b] border-y border-zinc-800/80 text-white relative">
+      <div className="max-w-6xl mx-auto px-0 sm:px-6">
         {/* Section Header */}
-        <div className="text-center max-w-4xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs sm:text-sm font-mono font-bold uppercase tracking-widest mb-4 shadow-sm">
+        <div className="text-center max-w-4xl mx-auto mb-6 sm:mb-12">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs sm:text-sm font-mono font-bold uppercase tracking-widest mb-3 sm:mb-4 shadow-sm">
             <Sparkles className="w-4 h-4 text-amber-400" />
             <span>{painPoints.badge}</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white mb-4 leading-[1.18] [text-wrap:balance]">
+          <h2 className="font-serif text-2xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white mb-3 sm:mb-4 leading-[1.18] [text-wrap:balance]">
             {painPoints.headline}
           </h2>
-          <p className="font-sans text-lg sm:text-xl text-zinc-300 leading-relaxed max-w-3xl mx-auto [text-wrap:balance]">
+          <p className="font-sans text-base sm:text-xl text-zinc-300 leading-relaxed max-w-3xl mx-auto [text-wrap:balance]">
             {painPoints.subheadline}
           </p>
         </div>
 
-        {/* 4 Tabs Selector */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {/* 4 Tabs Selector — mobile: lưới 2x2 nút gọn */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 mb-4 sm:mb-8">
           {painPoints.tabs.map((tab, idx) => {
             const isActive = tab.id === activeTab;
             return (
@@ -89,30 +89,30 @@ export const PainSection: React.FC = () => {
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
-                className={`p-5 sm:p-6 rounded-2xl text-left cursor-pointer border-2 flex flex-col justify-between outline-none focus:outline-none focus-visible:outline-none transition-colors duration-150 select-none ${
+                className={`p-3 sm:p-6 rounded-xl sm:rounded-2xl text-left cursor-pointer border-2 flex flex-col justify-between outline-none focus:outline-none focus-visible:outline-none transition-colors duration-150 select-none ${
                   isActive
                     ? 'bg-amber-500/20 border-amber-500 text-white shadow-xl shadow-amber-500/10'
                     : 'bg-zinc-900/90 border-zinc-700/80 text-zinc-300 hover:border-zinc-500 hover:text-white'
                 }`}
               >
                 <div>
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className={`w-8 h-8 rounded-full text-sm font-mono font-black flex items-center justify-center shrink-0 border transition-colors duration-150 ${
+                  <div className="flex items-center gap-2 sm:gap-3 mb-1.5 sm:mb-3">
+                    <span className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full text-[11px] sm:text-sm font-mono font-black flex items-center justify-center shrink-0 border transition-colors duration-150 ${
                       isActive
                         ? 'bg-amber-400 text-zinc-950 border-amber-400 shadow-md'
                         : 'bg-zinc-800 text-zinc-300 border-zinc-700'
                     }`}>
                       {String(idx + 1).padStart(2, '0')}
                     </span>
-                    <span className={`text-xs font-mono font-bold uppercase tracking-wider transition-colors duration-150 ${isActive ? 'text-amber-300' : 'text-zinc-400'}`}>
+                    <span className={`text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider transition-colors duration-150 ${isActive ? 'text-amber-300' : 'text-zinc-400'}`}>
                       {painPoints.tabPrefix}0{idx + 1}
                     </span>
                   </div>
-                  <div className={`text-lg sm:text-xl font-sans font-bold leading-snug transition-colors duration-150 ${isActive ? 'text-white' : 'text-zinc-100'}`}>
+                  <div className={`text-sm sm:text-xl font-sans font-bold leading-snug transition-colors duration-150 ${isActive ? 'text-white' : 'text-zinc-100'}`}>
                     {tab.title}
                   </div>
                 </div>
-                <div className={`text-sm sm:text-base font-sans leading-snug mt-3 pt-3 border-t transition-colors duration-150 ${
+                <div className={`hidden sm:block text-sm sm:text-base font-sans leading-snug mt-3 pt-3 border-t transition-colors duration-150 ${
                   isActive ? 'border-amber-500/30 text-amber-200' : 'border-zinc-800 text-zinc-400'
                 }`}>
                   {tab.subtitle}
@@ -123,34 +123,34 @@ export const PainSection: React.FC = () => {
         </div>
 
         {/* Tab Detail Content */}
-        <div className="p-6 sm:p-10 rounded-3xl border border-zinc-700/80 bg-[#121216] shadow-2xl min-h-[560px]">
+        <div className="p-4 sm:p-10 rounded-2xl sm:rounded-3xl border border-zinc-700/80 bg-[#121216] shadow-2xl lg:min-h-[560px]">
           <div key={activeTab} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Left Content (7 Cols) */}
             <div className="lg:col-span-7 flex flex-col justify-between">
               <div>
-                <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono font-bold text-amber-400 uppercase tracking-wider mb-3">
+                <div className="inline-flex items-center gap-2 text-[11px] sm:text-sm font-mono font-bold text-amber-400 uppercase tracking-wider mb-2 sm:mb-3">
                   <AlertCircle className="w-4 h-4" />
                   <span>{painPoints.sectionTag}</span>
                 </div>
                 
-                <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 leading-snug">
+                <h3 className="font-serif text-xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 leading-snug">
                   {currentTab.title}
                 </h3>
                 
                 {/* Empathy Callout Lead Box */}
-                <div className="p-4 sm:p-5 rounded-2xl bg-amber-500/10 border-l-4 border-amber-400 text-amber-100 text-base sm:text-lg font-sans font-medium leading-relaxed mb-6">
+                <div className="p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-amber-500/10 border-l-4 border-amber-400 text-amber-100 text-sm sm:text-lg font-sans font-medium leading-relaxed mb-4 sm:mb-6">
                   {currentTab.subtitle}
                 </div>
 
                 {/* Points List */}
-                <div className="space-y-4 my-6">
+                <div className="space-y-2.5 sm:space-y-4 my-4 sm:my-6">
                   {currentTab.points.map((point, idx) => {
                     const colonIndex = point.indexOf(':');
                     const boldPrefix = colonIndex !== -1 ? point.substring(0, colonIndex + 1) : '';
                     const restText = colonIndex !== -1 ? point.substring(colonIndex + 1) : point;
                     return (
-                      <div key={idx} className="flex items-start gap-3.5 text-base sm:text-lg text-zinc-100 font-sans">
-                        <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400 shrink-0 mt-0.5" />
+                      <div key={idx} className="flex items-start gap-2.5 sm:gap-3.5 text-sm sm:text-lg text-zinc-100 font-sans">
+                        <CheckCircle2 className="w-4 h-4 sm:w-6 sm:h-6 text-emerald-400 shrink-0 mt-0.5" />
                         <span className="leading-relaxed font-normal">
                           {boldPrefix && <strong className="text-white font-bold">{boldPrefix}</strong>}
                           {restText}
@@ -161,24 +161,24 @@ export const PainSection: React.FC = () => {
                 </div>
 
                 {/* Outcome Box */}
-                <div className="p-5 sm:p-6 rounded-2xl border-2 border-emerald-500/40 bg-emerald-950/40 text-emerald-100 text-base sm:text-lg font-sans mb-6 leading-relaxed shadow-lg">
+                <div className="p-3.5 sm:p-6 rounded-xl sm:rounded-2xl border-2 border-emerald-500/40 bg-emerald-950/40 text-emerald-100 text-sm sm:text-lg font-sans mb-4 sm:mb-6 leading-relaxed shadow-lg">
                   {painPoints.outcomePrefix} <strong>{currentTab?.outcome || ''}</strong>
                 </div>
               </div>
 
-              {/* 2 Sub-Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-zinc-800">
+              {/* 2 Sub-Cards — gọn: 2 cột, chữ nhỏ */}
+              <div className="grid grid-cols-2 gap-2 sm:gap-4 pt-4 sm:pt-6 border-t border-zinc-800">
                 {currentTab.cards.map((c, idx) => (
-                  <div key={idx} className="p-4 sm:p-5 rounded-2xl border border-zinc-700 bg-zinc-900/90">
-                    <div className="font-mono text-base sm:text-lg font-bold text-amber-300 mb-1.5">{c.title}</div>
-                    <div className="text-sm sm:text-base text-zinc-200 leading-relaxed font-sans">{c.desc}</div>
+                  <div key={idx} className="p-3 sm:p-5 rounded-xl sm:rounded-2xl border border-zinc-700 bg-zinc-900/90">
+                    <div className="font-mono text-xs sm:text-lg font-bold text-amber-300 mb-1 sm:mb-1.5 leading-snug">{c.title}</div>
+                    <div className="text-xs sm:text-base text-zinc-200 leading-snug sm:leading-relaxed font-sans line-clamp-4 sm:line-clamp-none">{c.desc}</div>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Right Media Preview (5 Cols) */}
-            <div className="lg:col-span-5 flex flex-col items-center">
+            {/* Right Media Preview (5 Cols) — ẩn trên mobile/tablet để rút ngắn chiều cao, chỉ hiện từ lg */}
+            <div className="hidden lg:flex lg:col-span-5 flex-col items-center">
               {activeTab === 'tab-1' ? (
                 /* Tab 1: Interactive B-Roll Bank Showcase */
                 <div className="w-full max-w-[380px] space-y-4">
@@ -197,6 +197,7 @@ export const PainSection: React.FC = () => {
                     <img
                       src={activeBrollVideo.poster}
                       alt={activeBrollVideo.title}
+                      loading="lazy"
                       className="w-full h-full object-cover transform group-hover:scale-103 transition-transform duration-500"
                     />
                     
@@ -243,7 +244,7 @@ export const PainSection: React.FC = () => {
                           }`}
                         >
                           <div className="w-full h-12 rounded-lg overflow-hidden shrink-0 border border-zinc-700/80 relative">
-                            <img src={bv.poster} alt={bv.title} className="w-full h-full object-cover" />
+                            <img src={bv.poster} alt={bv.title} className="w-full h-full object-cover" loading="lazy" />
                             {isSelected && (
                               <div className="absolute inset-0 bg-amber-500/30 flex items-center justify-center">
                                 <Play className="w-3 h-3 text-white fill-white" />
@@ -276,6 +277,7 @@ export const PainSection: React.FC = () => {
                     <img
                       src={activeScriptVideo.poster}
                       alt={activeScriptVideo.title}
+                      loading="lazy"
                       className="w-full h-full object-cover transform group-hover:scale-103 transition-transform duration-500"
                     />
                     
@@ -322,7 +324,7 @@ export const PainSection: React.FC = () => {
                           }`}
                         >
                           <div className="w-full h-12 rounded-lg overflow-hidden shrink-0 border border-zinc-700/80 relative">
-                            <img src={sv.poster} alt={sv.title} className="w-full h-full object-cover" />
+                            <img src={sv.poster} alt={sv.title} className="w-full h-full object-cover" loading="lazy" />
                             {isSelected && (
                               <div className="absolute inset-0 bg-amber-500/30 flex items-center justify-center">
                                 <Play className="w-3 h-3 text-white fill-white" />
@@ -354,6 +356,7 @@ export const PainSection: React.FC = () => {
                     <img
                       src={activeLightVideo.poster}
                       alt={activeLightVideo.title}
+                      loading="lazy"
                       className="w-full h-full object-cover transform group-hover:scale-103 transition-transform duration-500"
                     />
                     
@@ -400,7 +403,7 @@ export const PainSection: React.FC = () => {
                           }`}
                         >
                           <div className="w-10 h-14 rounded-lg overflow-hidden shrink-0 border border-zinc-700/80 relative">
-                            <img src={lv.poster} alt={lv.title} className="w-full h-full object-cover" />
+                            <img src={lv.poster} alt={lv.title} className="w-full h-full object-cover" loading="lazy" />
                             {isSelected && (
                               <div className="absolute inset-0 bg-amber-500/30 flex items-center justify-center">
                                 <Play className="w-3.5 h-3.5 text-white fill-white" />
@@ -435,6 +438,7 @@ export const PainSection: React.FC = () => {
                     <img
                       src={activeProcessVideo.poster}
                       alt={activeProcessVideo.title}
+                      loading="lazy"
                       className="w-full h-full object-cover transform group-hover:scale-103 transition-transform duration-500"
                     />
                     
@@ -524,7 +528,7 @@ export const PainSection: React.FC = () => {
                           }`}
                         >
                           <div className="w-full h-12 rounded-lg overflow-hidden shrink-0 border border-zinc-700/80 relative">
-                            <img src={pv.poster} alt={pv.title} className="w-full h-full object-cover" />
+                            <img src={pv.poster} alt={pv.title} className="w-full h-full object-cover" loading="lazy" />
                             {isSelected && (
                               <div className="absolute inset-0 bg-amber-500/30 flex items-center justify-center">
                                 <Play className="w-3 h-3 text-white fill-white" />

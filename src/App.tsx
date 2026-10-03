@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './sections/HeroSection';
-import { ProofSection } from './sections/ProofSection';
-import { DefinitionSection } from './sections/DefinitionSection';
-import { GrowthChartSection } from './sections/GrowthChartSection';
+// Ẩn theo phương án K4 — ProofSection gộp vào InstructorSection, Venue rút vào Register + FAQ
+// import { ProofSection } from './sections/ProofSection';
+// import { DefinitionSection } from './sections/DefinitionSection';
+// import { GrowthChartSection } from './sections/GrowthChartSection';
 import { MetaphorsSection } from './sections/MetaphorsSection';
 import { PainSection } from './sections/PainSection';
 import { CurriculumSection } from './sections/CurriculumSection';
 import { ShowcaseSection } from './sections/ShowcaseSection';
 import { TargetSection } from './sections/TargetSection';
 import { InstructorSection } from './sections/InstructorSection';
-import { VenueSection } from './sections/VenueSection';
+// import { VenueSection } from './sections/VenueSection';
 import { RegisterSection } from './sections/RegisterSection';
 import { FaqSection } from './sections/FaqSection';
 import { Footer } from './components/Footer';
 import { StickyBottomCta } from './components/StickyBottomCta';
 import { RegisterModal } from './components/RegisterModal';
 import { SuccessPage } from './pages/SuccessPage';
-import { BannerCta } from './sections/BannerCta';
+// import { BannerCta } from './sections/BannerCta';
 import { TestimonialSection } from './sections/TestimonialSection';
 import { initScrollReveal } from './utils/scrollReveal';
 
@@ -55,20 +56,21 @@ export function App() {
       
       <main>
         <HeroSection onOpenRegister={() => setModalOpen(true)} />
-        <ProofSection />
-        {/* <DefinitionSection onOpenRegister={() => setModalOpen(true)} /> */}
-        {/* <GrowthChartSection /> */}
-        <MetaphorsSection onOpenRegister={() => setModalOpen(true)} />
-        <PainSection />
-        <CurriculumSection onOpenRegister={() => setModalOpen(true)} />
-        <BannerCta onOpenRegister={() => setModalOpen(true)} />
         <TestimonialSection />
+        <PainSection />
+        <MetaphorsSection onOpenRegister={() => setModalOpen(true)} />
+        <CurriculumSection onOpenRegister={() => setModalOpen(true)} />
         <ShowcaseSection />
-        <TargetSection />
         <InstructorSection />
-        <VenueSection onOpenRegister={() => setModalOpen(true)} />
+        <TargetSection />
         <RegisterSection />
         <FaqSection />
+        {/* Ẩn theo phương án K4 — ProofSection gộp vào InstructorSection, Venue rút vào Register + FAQ */}
+        {/* <ProofSection /> */}
+        {/* <DefinitionSection onOpenRegister={() => setModalOpen(true)} /> */}
+        {/* <GrowthChartSection /> */}
+        {/* <BannerCta onOpenRegister={() => setModalOpen(true)} /> */}
+        {/* <VenueSection onOpenRegister={() => setModalOpen(true)} /> */}
       </main>
 
       <Footer />

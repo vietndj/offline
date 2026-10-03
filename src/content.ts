@@ -58,6 +58,8 @@ export interface ContentData {
     }[];
     cta: string;
     ctaNote: string;
+    priceStrip?: { label: string; value: string }[];
+    video?: { src?: string; youtubeId?: string; poster: string; label: string };
   };
 
   // 5. Proof Section (Meta Business Suite Audit & Channels)
@@ -509,6 +511,8 @@ export interface ContentData {
     badge: string;
     headlinePrefix: string;
     headlineHighlight: string;
+    guarantee?: string;
+    logistics?: string;
     pricing: {
       standard: { label: string; value: string; note: string };
       earlyBird: { label: string; value: string; note: string };
@@ -695,10 +699,16 @@ export const CONTENT: ContentData = {
     meta: [
       { id: "time", label: "THỜI GIAN", value: "2 Ngày Thực Chiến", desc: "Thứ 7 & Chủ Nhật (09:00 - 17:00)" },
       { id: "location", label: "ĐỊA ĐIỂM", value: "Hà Nội", desc: "Phòng Studio tiêu chuẩn chuyên nghiệp" },
-      { id: "capacity", label: "SỐ CHỖ", value: "Chỉ còn 20 chỗ", desc: "" }
+      { id: "capacity", label: "SỐ CHỖ", value: "Tối đa 35 người", desc: "" }
     ],
     cta: "ĐĂNG KÝ GIỮ CHỖ NGAY",
-    ctaNote: "Sĩ số giới hạn 40 người • Kèm cặp 1-1"
+    ctaNote: "Tối đa 35 người/lớp • Kèm cặp 1-1",
+    priceStrip: [
+      { label: "KHAI GIẢNG", value: "07–08/11 · Thứ 7 & CN" },
+      { label: "ĐỊA ĐIỂM", value: "Hà Nội" },
+      { label: "HỌC PHÍ", value: "Từ 4tr/người" }
+    ],
+    video: { youtubeId: "gDuOQuP-Sek", poster: "/assets/hero/qc-offline-9-poster.jpg", label: "Xem video giới thiệu 2 phút" }
   },
 
   // 5. Proof Section (Dữ Liệu Đối Soát Meta Suite & Showcase)
@@ -1023,7 +1033,7 @@ export const CONTENT: ContentData = {
         poster: "/assets/formats/voiceover_poster.jpg",
         youtubeId: "tjetAj9A-Ps",
         youtubeUrl: "https://youtube.com/shorts/tjetAj9A-Ps",
-        output: "Định dạng phổ biến & dễ ăn đề xuất nhất trên TikTok/Shopee. Giữ chân người xem >68% nhờ nhịp cắt 1.5s, tỷ lệ click vào giỏ hàng/affiliate tăng 250%.",
+        output: "Không cần lộ mặt vẫn ra video bán hàng. Định dạng dễ làm nhất cho review sản phẩm và affiliate.",
         relief: "Không cần lộ mặt, không cần nói hay trước cam. Chỉ cần quay cận cảnh thao tác tay/sản phẩm rồi thu voice tâm sự hoặc ghép giọng đọc đè lên.",
         application: "Video review sản phẩm, Affiliate TikTok Shop/Shopee, unbox quà tặng, quy trình làm việc."
       },
@@ -1036,7 +1046,7 @@ export const CONTENT: ContentData = {
         poster: "/assets/formats/walktalk_poster.jpg",
         youtubeId: "VCLHRm_3d-k",
         youtubeUrl: "https://www.youtube.com/watch?v=VCLHRm_3d-k",
-        output: "45 giây đi dạo là xong 1 clip. Khung cảnh chuyển động kéo thời lượng xem tăng 240%, tăng 300% lượt comment tranh luận.",
+        output: "45 giây đi dạo là xong 1 clip. Khung cảnh chuyển động giúp người xem ở lại lâu hơn.",
         relief: "Không cần studio hay kịch bản chi tiết. Cầm điện thoại đi dạo nói 1 góc nhìn ngắn như đang nói chuyện với bạn thân.",
         application: "Bàn luận chủ đề nóng, góc nhìn kinh doanh, chia sẻ trải nghiệm, gỡ rối cho khách."
       },
@@ -1049,8 +1059,8 @@ export const CONTENT: ContentData = {
         poster: "/assets/formats/talkinghead_poster.jpg",
         youtubeId: "bHzSw0csp3g",
         youtubeUrl: "https://www.youtube.com/watch?v=bHzSw0csp3g",
-        output: "Tăng 400% uy tín chuyên gia từ 3s đầu. Khách hàng tin tưởng chủ động chốt các gói dịch vụ giá trị cao từ 10tr – 50tr+.",
-        relief: "Không cần học thuộc lòng, nói từng câu 5s theo kịch bản chuyển đổi. Nói vấp chỉ cần đổi góc máy là che 100% lỗi.",
+        output: "Xây uy tín chuyên gia ngay từ 3 giây đầu — hợp với dịch vụ giá trị cao.",
+        relief: "Không cần học thuộc lòng, nói từng câu 5s theo kịch bản chuyển đổi. Nói vấp chỉ cần đổi góc máy là che được lỗi.",
         application: "Bác sĩ, chủ doanh nghiệp, tư vấn tài chính, BĐS, khóa học & dịch vụ chuyên gia."
       },
       {
@@ -1062,7 +1072,7 @@ export const CONTENT: ContentData = {
         poster: "/assets/formats/storytelling_poster.jpg",
         youtubeId: "hkumWP1gLmo",
         youtubeUrl: "https://www.youtube.com/watch?v=hkumWP1gLmo",
-        output: "Dễ dàng cán mốc 100K – 500K views hữu cơ. Tỷ lệ chuyển đổi người xem thành khách hàng thực tế đạt 15% – 20%.",
+        output: "Khách thấy chính mình trong câu chuyện và tự tìm đến — không cần chào mời.",
         relief: "Khách hàng tự nhìn thấy nỗi đau của chính mình trong câu chuyện và tự tìm đến mua, bạn không phải nài ép hay chào mời.",
         application: "Tâm sự khởi nghiệp, case study khách hàng trước & sau, bán sản phẩm giá trị cao."
       }
@@ -1088,7 +1098,7 @@ export const CONTENT: ContentData = {
           "Nói vấp liên tục, quay đi quay lại cả chục lần vẫn không ưng ý.",
           "Mất hàng giờ đồng hồ chỉ để hoàn thành 1 đoạn video ngắn ngủi 30 giây."
         ],
-        outcome: "Phương pháp kịch bản chuyển đổi ngắt nhịp 5s + Kỹ thuật B-roll Bank (chèn cảnh trám 2-3s đè timeline) giúp bạn nói tự nhiên, che 100% lỗi nói vấp và mắt đơ.",
+        outcome: "Phương pháp kịch bản chuyển đổi ngắt nhịp 5s + Kỹ thuật B-roll Bank (chèn cảnh trám 2-3s đè timeline) giúp bạn nói tự nhiên, che lỗi nói vấp và mắt đơ.",
         media: "/assets/formats/voiceover_poster.jpg",
         cards: [
           { title: "Kịch bản chuyển đổi", desc: "Chỉ nhìn 1 từ khóa cốt lõi cho mỗi ý, nói chuyện như đang tâm sự với 1 người bạn thân." },
@@ -1100,20 +1110,20 @@ export const CONTENT: ContentData = {
         title: "Lan man khi viết kịch bản",
         subtitle: "Khán giả bỏ đi không phải vì máy ảnh cùi — mà vì 3s đầu bạn mải khoe thứ bạn có, chứ chưa chạm vào thứ họ đang đau",
         points: [
-          "Tầng 1 (Chào hỏi bề nổi): 3s đầu mải chào hỏi xã giao và khoe thứ mình có, khiến 68% người xem quẹt qua ngay lập tức.",
+          "Tầng 1 (Chào hỏi bề nổi): 3s đầu mải chào hỏi xã giao và khoe thứ mình có, khiến người xem quẹt qua ngay.",
           "Tầng 2 (Cố gồng nói mệt nghỉ): Nhồi nhét từ ngữ chuyên môn suốt cả clip, đến lúc kêu gọi hành động thì chẳng còn ai nghe chốt đơn.",
           "Tầng 3 (Sự thật ngượng miệng): Khán giả chỉ dừng lại khi bạn đâm trúng nỗi bế tắc giấu kín mà họ không dám thừa nhận công khai."
         ],
-        outcome: "Kịch bản 3 Tầng + Kỹ thuật ngắt nhịp 5 giây: Lọc sạch văn mẫu sáo rỗng, nói chuyện mộc mạc như tâm sự chén trà mà vẫn giữ chân 88% khán giả và chuyển đổi ra đơn gấp 11.6 lần.",
+        outcome: "Kịch bản 3 Tầng + Kỹ thuật ngắt nhịp 5 giây: Lọc sạch văn mẫu sáo rỗng, nói chuyện mộc mạc như tâm sự chén trà mà vẫn giữ người xem đến câu chốt.",
         media: "/assets/showcase/ai_miss_vlog_poster.jpg",
         cards: [
           {
             title: "Kịch bản 3 Tầng chạm đáy tâm lý",
-            desc: "Đâm thẳng vào nỗi đau Tầng 3 ngay từ giây thứ 3, giữ chân 88% khán giả xem trọn vẹn clip mà không cần gồng."
+            desc: "Đâm thẳng vào nỗi đau Tầng 3 ngay từ giây thứ 3, giữ người xem ở lại hết clip mà không cần gồng."
           },
           {
             title: "Kỹ thuật ngắt nhịp 5 giây",
-            desc: "Bẻ nhỏ câu thoại theo từng nhịp thở tự nhiên, nói chuyện như tâm sự ngoài đời, tăng tỷ lệ chuyển đổi ra đơn gấp 11.6 lần."
+            desc: "Bẻ nhỏ câu thoại theo từng nhịp thở tự nhiên, nói chuyện như tâm sự ngoài đời, người xem nghe lọt tai đến câu chốt đơn."
           }
         ]
       },
@@ -1124,13 +1134,13 @@ export const CONTENT: ContentData = {
         points: [
           "Góc máy chính diện đơn điệu như camera an ninh, người xem nhìn 3 giây là chán.",
           "Mặt bị bóng dầu hoặc tối sầm vì không biết cách mượn ánh sáng tự nhiên và đèn cơ bản.",
-          "Âm thanh lẫn tạp âm, tiếng vọng phòng làm giảm 80% độ uy tín của chuyên gia."
+          "Âm thanh lẫn tạp âm, tiếng vọng phòng làm mất uy tín chuyên gia."
         ],
         outcome: "Kỹ thuật setup 2 góc quay điện thoại (Góc chính diện + Góc cận 45 độ) tạo chiều sâu điện ảnh kết hợp lọc âm trong vắt.",
         media: "/assets/lighting/light_talkinghead.jpg",
         cards: [
           { title: "Setup 2 cam điện thoại", desc: "Tận dụng ngay 2 chiếc smartphone có sẵn để tạo hiệu ứng chuyển góc như talkshow truyền hình." },
-          { title: "Ánh sáng & Lọc tạp âm", desc: "Kỹ thuật đánh sáng 3 điểm tối giản và lọc âm AI khử 100% tiếng ồn phòng." }
+          { title: "Ánh sáng & Lọc tạp âm", desc: "Kỹ thuật đánh sáng 3 điểm tối giản và lọc âm AI khử tiếng ồn phòng." }
         ]
       },
       {
@@ -1605,13 +1615,13 @@ export const CONTENT: ContentData = {
     avatar: "/assets/image_1781192246239-Dsb4zlhm.png",
     bio: [
       "15+ năm trực tiếp giảng dạy và đào tạo thiết kế, mỹ thuật đa phương tiện, lập trình và video marketing tại FPT Arena Multimedia và các hệ thống giáo dục hàng đầu.",
-      "Người sáng lập Fanpage '30 Ngày Học Làm Nội Dung Viral' sở hữu hơn 38.850+ người theo dõi và chuỗi video Reels chạm mốc hơn 3,4 triệu lượt xem hoàn toàn tự nhiên, mang về hơn 3.600 khách hàng nhắn tin chuyển đổi.",
+      "Người sáng lập Fanpage '30 Ngày Học Làm Nội Dung Viral' sở hữu hơn 39.500 người theo dõi và chuỗi video Reels chạm mốc hơn 6 triệu lượt xem hoàn toàn tự nhiên, mang về hơn 3.600 khách hàng nhắn tin chuyển đổi.",
       "Trực tiếp đồng hành và kèm cặp học viên từ người chưa từng biết cầm máy đến khi tự tay sản xuất video marketing sắc nét, có cấu trúc và thu hút khách hàng đều đặn mỗi ngày."
     ],
     stats: [
       { number: "15+", label: "Năm Đào Tạo Multimedia" },
-      { number: "38.850+", label: "Follower Kênh Tự Nhiên" },
-      { number: "3,4 Triệu+", label: "Lượt Xem Video Reels" },
+      { number: "39.500+", label: "Follower Kênh Tự Nhiên" },
+      { number: "6 Triệu+", label: "Lượt Xem Video Reels" },
       { number: "100%", label: "Cầm Tay Chỉ Việc 1-1" }
     ],
     quote: "Làm video marketing không phải là phô diễn kỹ xảo đắt tiền, mà là dùng hình ảnh và âm thanh chân thật để bóc đúng nỗi đau khách hàng và trao giải pháp tốt nhất."
@@ -1733,7 +1743,7 @@ export const CONTENT: ContentData = {
       time: { label: "KHAI GIẢNG", value: "07-08/11/2026", desc: "(Thứ 7 & Chủ Nhật)" },
       location: { label: "HÌNH THỨC", value: "Offline", desc: "Hà Nội" },
       duration: { label: "THỜI LƯỢNG", value: "4 buổi", desc: "2 ngày" },
-      scale: { label: "SỐ CHỖ", value: "Chỉ còn 20 chỗ", desc: "" }
+      scale: { label: "SỐ CHỖ", value: "Tối đa 35 người", desc: "" }
     },
     inclusionsTitle: "BAO GỒM:",
     inclusions: [
@@ -1742,17 +1752,19 @@ export const CONTENT: ContentData = {
       "Thực hành quay/edit video trực tiếp",
       "Cộng đồng hỗ trợ sau khóa học"
     ],
+    guarantee: "Hoàn 100% học phí nếu sau ngày học đầu tiên bạn thấy không áp dụng được — không hỏi lý do.",
+    logistics: "Teabreak + buffet trưa 2 ngày. Học viên ở xa được gợi ý khách sạn gần lớp qua Zalo.",
     form: {
       title: "Điền thông tin để giữ chỗ",
-      subtitle: "Team TopExpert sẽ liên hệ xác nhận lịch học, học phí và hướng dẫn chuẩn bị trước khóa qua điện thoại/Zalo.",
+      subtitle: "Em Việt sẽ gọi/Zalo trực tiếp để xác nhận lịch học, học phí và hướng dẫn chuẩn bị trước khóa.",
       fields: {
         fullName: { label: "Họ và tên", placeholder: "Nguyễn Văn A", required: true },
         phone: { label: "Số điện thoại", placeholder: "09xx xxx xxx", required: true },
-        email: { label: "Email", placeholder: "email@example.com", required: true },
-        occupation: { label: "Nghề nghiệp / Lĩnh vực", placeholder: "VD: Giảng viên, Coach, Chủ trung tâm...", optionalLabel: "(tuỳ chọn)", required: false },
-        reason: { label: "Lý do bạn muốn tham gia?", placeholder: "Bạn đang gặp khó khăn gì trong việc xây nhân hiệu?", optionalLabel: "(tuỳ chọn)", required: false }
+        email: { label: "Email", placeholder: "email@example.com", required: false },
+        occupation: { label: "Nghề nghiệp / Lĩnh vực", placeholder: "VD: Spa, bán hàng online, BĐS, giáo dục, F&B...", optionalLabel: "(tuỳ chọn)", required: false },
+        reason: { label: "Bạn đang kẹt ở đâu?", placeholder: "VD: Ngại lên hình / Không biết viết kịch bản / Quay dựng mất quá nhiều thời gian", optionalLabel: "(tuỳ chọn)", required: false }
       },
-      disclaimerTag: "⚠️ [Lưu ý]",
+      disclaimerTag: "[Lưu ý]",
       disclaimer: "Đây không phải chương trình miễn phí. Bạn sẽ được tư vấn học phí trước khi xác nhận chỗ.",
       cta: "ĐĂNG KÝ GIỮ CHỖ",
       ctaSubmitting: "Đang gửi thông tin...",
@@ -1772,6 +1784,10 @@ export const CONTENT: ContentData = {
     description: "Tất cả những thắc mắc phổ biến nhất của học viên trước khi tham gia khóa học offline 2 ngày tại Hà Nội.",
     items: [
       {
+        q: "Tôi đã có khóa online rồi, học offline có khác gì?",
+        a: "Khóa online cho bạn kiến thức. Offline là nơi bạn cầm máy quay ngay, được sửa từng câu kịch bản, từng giây video tại chỗ và mang về thành phẩm. Chị Tâng Xinh (học viên K3) chia sẻ: ‘Mình đã mua khóa online rồi nhưng về cứ loay hoay, đến khi học offline mình mới vỡ ra rất nhiều điều.’ Học viên offline được tặng kèm khóa online để xem lại."
+      },
+      {
         q: "Tôi chưa từng biết quay dựng video hay dùng CapCut bao giờ, có học được không?",
         a: "Hoàn toàn học được. Khóa học được thiết kế từ con số 0 dành riêng cho người không chuyên. Thầy và đội ngũ trợ giảng sẽ kèm cặp 1-1 từng thao tác bấm máy, cắt ghép ngay trên chính chiếc điện thoại của bạn."
       },
@@ -1784,20 +1800,24 @@ export const CONTENT: ContentData = {
         a: "Lớp học diễn ra trong 2 ngày Thứ 7 & Chủ Nhật (09:00 - 17:00) tại phòng Studio tiêu chuẩn chuyên nghiệp tại Hà Nội. Địa chỉ chi tiết sẽ được gửi qua Zalo/Email ngay sau khi bạn hoàn tất đăng ký giữ chỗ."
       },
       {
+        q: "Tôi ở tỉnh, ăn ở thế nào?",
+        a: "Lớp có teabreak sáng và buffet trưa cả 2 ngày. Việt gửi danh sách khách sạn gần lớp (khoảng 400–500k/đêm) qua Zalo và hỗ trợ ghép phòng nếu bạn cần. Có chỗ riêng cho bé nếu bạn đưa con theo."
+      },
+      {
         q: "Sau 2 ngày học offline, tôi có được hỗ trợ tiếp không?",
         a: "Có. Bạn sẽ được tham gia nhóm Zalo kèm cặp riêng của lớp, được thầy sửa bài tập thực tế trong 30 ngày tiếp theo và nhận trọn bộ tài liệu, slide bài giảng, preset màu và kho âm thanh bản quyền."
       },
       {
         q: "Tôi rất ngại nói trước ống kính, khóa học có giúp tôi tự tin hơn không?",
-        a: "Đây chính là vấn đề 90% học viên gặp phải. Với phương pháp kịch bản chuyển đổi và kỹ thuật quay ngắt câu 5 giây, bạn sẽ thấy việc đứng trước ống kính nhẹ nhàng như đang nói chuyện với một người bạn."
+        a: "Đây chính là vấn đề hầu hết học viên đều gặp lúc đầu. Với phương pháp kịch bản chuyển đổi và kỹ thuật quay ngắt câu 5 giây, bạn sẽ thấy việc đứng trước ống kính nhẹ nhàng như đang nói chuyện với một người bạn."
       },
       {
         q: "Học phí và chính sách hoàn tiền như thế nào?",
-        a: "Khóa học cam kết: Nếu sau ngày học đầu tiên bạn cảm thấy nội dung không thực tế hoặc không thể áp dụng được, ban tổ chức sẽ hoàn lại 100% học phí mà không hỏi thêm bất kỳ câu hỏi nào."
+        a: "Khóa học cam kết: Nếu sau ngày học đầu tiên bạn cảm thấy nội dung không thực tế hoặc không thể áp dụng được, Việt sẽ hoàn lại 100% học phí mà không hỏi thêm bất kỳ câu hỏi nào."
       },
       {
         q: "Sĩ số lớp là bao nhiêu học viên?",
-        a: "Để đảm bảo chất lượng cầm tay chỉ việc và mọi học viên đều có sản phẩm video mang về, mỗi lớp được giới hạn nghiêm ngặt tối đa không quá 40 học viên."
+        a: "Để đảm bảo chất lượng cầm tay chỉ việc và mọi học viên đều có sản phẩm video mang về, mỗi lớp được giới hạn nghiêm ngặt tối đa không quá 35 học viên."
       }
     ],
     supportBox: {
@@ -1820,7 +1840,7 @@ export const CONTENT: ContentData = {
   // 19. Mobile Sticky Floating CTA
   stickyBottomCta: {
     badge: "OFFLINE HÀ NỘI",
-    subtitle: "Giới hạn ≤ 40 Học Viên",
+    subtitle: "Giới hạn ≤ 35 Học Viên",
     cta: "GIỮ CHỖ"
   },
 
@@ -1853,7 +1873,7 @@ export const CONTENT: ContentData = {
     summary: {
       time: { label: "Thời gian: ", value: "2 Ngày Thứ 7 & Chủ Nhật (09:00 - 17:00)" },
       location: { label: "Địa điểm: ", value: "Studio Chuyên Nghiệp Hà Nội", note: " (Địa chỉ chi tiết gửi qua Zalo)" },
-      scale: { label: "Số chỗ: ", value: "Chỉ còn 20 chỗ" }
+      scale: { label: "Số chỗ: ", value: "Tối đa 35 người" }
     },
     backHomeCta: "Quay Về Trang Chủ"
   },
@@ -1863,7 +1883,7 @@ export const CONTENT: ContentData = {
     brand: "VIDEO MARKETING",
     description: "Khóa học offline 2 ngày cầm tay chỉ việc giúp chuyên gia, chủ doanh nghiệp và người làm dịch vụ làm chủ quy trình kịch bản, setup 2 góc quay và edit video chuyên nghiệp.",
     policyTitle: "QUY ĐỊNH & CAM KẾT",
-    policyContent: "Khóa học giới hạn sĩ số ≤ 40 học viên mỗi khóa để đảm bảo chất lượng hướng dẫn 1-1 và mọi học viên đều có thành phẩm video mang về.",
+    policyContent: "Khóa học giới hạn sĩ số ≤ 35 học viên mỗi khóa để đảm bảo chất lượng hướng dẫn 1-1 và mọi học viên đều có thành phẩm video mang về.",
     copyright: "© 2026 VIDEO MARKETING — Khóa Học Video Marketing Thực Chiến Đứng Lớp Trực Tiếp Bởi Nguyễn Đức Việt."
   }
 };
