@@ -175,14 +175,14 @@ export function evaluateDirectSubmission(data: RegistrationPayload): {
     const hint = hasNoDetails ? 'Không có mã UTM tracking + Bỏ trống nghề nghiệp & nút thắt' : 'Truy cập trực tiếp (Không có mã UTM tracking)';
     return {
       isDirect: true,
-      warningText: 'Nghi vấn Sale tự điền sau khi chốt / Truy cập trực tiếp',
-      courseSource: `${url} [⚠️ Nghi vấn điền hộ - Check lại]`,
-      courseStatus: 'Chờ tư vấn [⚠️ Check nguồn]',
-      masterStatus: 'Mới đăng ký [⚠️ Nghi vấn điền hộ]',
-      telegramBadge: ' <b>⚠️ (Trực tiếp - Nghi vấn điền hộ)</b>',
+      warningText: 'Khách vào trực tiếp',
+      courseSource: `${url} [Khách vào trực tiếp]`,
+      courseStatus: 'Chờ tư vấn',
+      masterStatus: 'Mới đăng ký [Khách vào trực tiếp]',
+      telegramBadge: ' <b>⚠️ (Trực tiếp)</b>',
       telegramAlertBlock:
-        `⚠️ <b>CẢNH BÁO NGUỒN (NGHI VẤN ĐIỀN HỘ):</b>\n` +
-        `<code>Khách vào trực tiếp (${hint}). Khả năng cao là Trinh/Sale tự điền sau khi chốt hoặc khách tự gõ web — Anh Việt cần đối soát lại với Sale!</code>\n` +
+        `⚠️ <b>CẢNH BÁO NGUỒN:</b>\n` +
+        `<code>Khách vào trực tiếp (${hint}).</code>\n` +
         `━━━━━━━━━━━━━━━━━━━━\n`,
     };
   }
@@ -281,19 +281,36 @@ async function appendToGoogleSheet(
   };
 
   const executeAppend = async (spreadsheetId: string, sheetName: string, values: any[], rangeCol: string): Promise<boolean> => {
-    const appendPromise = sheets.spreadsheets.values.append({
-      spreadsheetId,
-      range: `'${sheetName}'!${rangeCol}`,
-      valueInputOption: 'USER_ENTERED',
-      insertDataOption: 'INSERT_ROWS',
-      requestBody: { values: [values] },
-    });
+    const prependPromise = (async () => {
+      const meta = await sheets.spreadsheets.get({ spreadsheetId });
+      const sheet = meta.data.sheets?.find(s => s.properties?.title === sheetName);
+      const sheetId = sheet?.properties?.sheetId || 0;
+
+      await sheets.spreadsheets.batchUpdate({
+        spreadsheetId,
+        requestBody: {
+          requests: [{
+            insertDimension: {
+              range: { sheetId, dimension: 'ROWS', startIndex: 1, endIndex: 2 },
+              inheritFromBefore: false
+            }
+          }]
+        }
+      });
+
+      await sheets.spreadsheets.values.update({
+        spreadsheetId,
+        range: `'${sheetName}'!A2`,
+        valueInputOption: 'USER_ENTERED',
+        requestBody: { values: [values] }
+      });
+    })();
 
     const timeoutPromise = new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error(`Timeout appending to sheet ${spreadsheetId} after 7000ms`)), 7000)
+      setTimeout(() => reject(new Error(`Timeout prepending to sheet ${spreadsheetId} after 7000ms`)), 7000)
     );
 
-    await Promise.race([appendPromise, timeoutPromise]);
+    await Promise.race([prependPromise, timeoutPromise]);
     return true;
   };
 
