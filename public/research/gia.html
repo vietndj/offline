@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giá các sản phẩm hiện tại?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="font-bold text-xl text-blue-400">FEDU Research</a>
+                </div>
+                <div class="flex flex-wrap">
+                    <div class="ml-4 md:ml-10 flex items-baseline space-x-2 md:space-x-4">
+                        <a href="san-pham.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Sản Phẩm</a>
+                        <a href="khoa-hoc.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Khóa Học</a>
+                        <a href="giang-vien.html" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Giảng Viên</a>
+                        <a href="gia.html" class="bg-gray-700 px-3 py-2 rounded-md text-sm font-medium text-white">Bảng Giá</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <header class="mb-8 border-b border-gray-700 pb-4">
+            <h1 class="text-3xl font-bold text-blue-400">Giá các sản phẩm hiện tại?</h1>
+        </header>
+
+        <div class="space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Online -->
+                <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden flex flex-col">
+                    <div class="p-6 border-b border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-2">Khóa Online</h3>
+                        <div class="text-3xl font-bold text-green-400">599K</div>
+                        <p class="text-sm text-gray-400 mt-2">Sản phẩm phễu đầu vào</p>
+                    </div>
+                    <div class="p-6 flex-1 bg-gray-800/50">
+                        <ul class="space-y-3 text-sm text-gray-300">
+                            <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Học mọi lúc mọi nơi</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Giá mềm, dễ tiếp cận</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 30 Ngày Viral -->
+                <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden flex flex-col">
+                    <div class="p-6 border-b border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-2">30 Ngày Viral</h3>
+                        <div class="text-3xl font-bold text-yellow-400">999K</div>
+                        <p class="text-sm text-gray-400 mt-2">Khóa học thử thách</p>
+                    </div>
+                    <div class="p-6 flex-1 bg-gray-800/50">
+                        <ul class="space-y-3 text-sm text-gray-300">
+                            <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Cam kết hành động 30 ngày</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Kỷ luật tạo kết quả</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Offline -->
+                <div class="bg-gray-800 rounded-xl border-2 border-blue-500 overflow-hidden flex flex-col relative transform md:-translate-y-2 shadow-xl">
+                    <div class="absolute top-0 right-0 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
+                        SẢN PHẨM CHÍNH
+                    </div>
+                    <div class="p-6 border-b border-gray-700 bg-gray-750">
+                        <h3 class="text-xl font-bold text-white mb-2">Khóa Offline</h3>
+                        <div class="text-3xl font-bold text-blue-400">Thay đổi</div>
+                        <p class="text-sm text-gray-400 mt-2">Tùy theo từng đợt mở lớp</p>
+                    </div>
+                    <div class="p-6 flex-1 bg-gray-800">
+                        <ul class="space-y-3 text-sm text-gray-200">
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-blue-400 mr-2 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> 
+                                <span>2 ngày học trực tiếp tại Hà Nội</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-blue-400 mr-2 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> 
+                                <span class="font-bold text-yellow-300">Đặc quyền: Tặng kèm Online trọn đời</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 p-8 rounded-xl border border-gray-700 shadow-lg mt-8">
+                <h2 class="text-2xl font-bold text-white mb-6">Chiến lược Giá & Phễu</h2>
+                
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="bg-gray-700 p-6 rounded-lg text-center flex-1 w-full relative">
+                        <h3 class="text-lg font-bold text-green-400 mb-2">Đầu vào (Phễu)</h3>
+                        <p class="text-gray-300 text-sm">Các khóa Online giá mềm giúp tiếp cận số lượng lớn học viên tiềm năng.</p>
+                    </div>
+                    
+                    <div class="hidden md:block text-gray-500">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </div>
+                    <div class="md:hidden text-gray-500">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3"></path></svg>
+                    </div>
+
+                    <div class="bg-blue-900 bg-opacity-30 p-6 rounded-lg text-center flex-1 w-full border border-blue-800">
+                        <h3 class="text-lg font-bold text-blue-400 mb-2">Sản phẩm chính</h3>
+                        <p class="text-gray-300 text-sm">Khóa Offline giá cao, mang lại doanh thu chính và trải nghiệm học viên tốt nhất.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
