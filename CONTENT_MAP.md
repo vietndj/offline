@@ -39,7 +39,7 @@
 ## 2. Hướng Dẫn Thao Tác Chỉnh Sửa Trong 5 Giây
 
 ### Trường Hợp 1: Cập nhật Lịch học Khóa Mới (Thời gian, Sĩ số, Địa điểm)
-Khi mở khóa học đợt tiếp theo (ví dụ: ngày 26–27/09/2026 tại TP.HCM thay vì 31/10 - 01/11/2026 tại Hà Nội):
+Khi mở khóa học đợt tiếp theo (ví dụ: ngày 26–27/09/2026 tại TP.HCM thay vì 07-08/11/2026 tại Hà Nội):
 1. Mở file `src/content.ts`.
 2. Tìm khối `hero.meta`:
    ```typescript
@@ -52,7 +52,7 @@ Khi mở khóa học đợt tiếp theo (ví dụ: ngày 26–27/09/2026 tại T
 3. Tìm khối `register.meta`:
    ```typescript
    meta: {
-     time: { label: "THỜI GIAN", value: "31/10 - 01/11/2026", desc: "2 ngày offline thực chiến" },
+     time: { label: "THỜI GIAN", value: "07-08/11/2026", desc: "2 ngày offline thực chiến" },
      location: { label: "ĐỊA ĐIỂM", value: "Hà Nội", desc: "Chi tiết cập nhật trong nhóm Zalo" },
      scale: { label: "QUY MÔ", value: "Tối đa 40 người", desc: "Để đảm bảo chất lượng thực hành" }
    }

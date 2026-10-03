@@ -1730,7 +1730,7 @@ export const CONTENT: ContentData = {
       quote: "Mỗi ngày bạn chờ, là một ngày người khác đang kiếm tiền từ những thứ giống bạn."
     },
     meta: {
-      time: { label: "KHAI GIẢNG", value: "31/10 - 01/11/2026", desc: "(Thứ 7 & Chủ Nhật)" },
+      time: { label: "KHAI GIẢNG", value: "07-08/11/2026", desc: "(Thứ 7 & Chủ Nhật)" },
       location: { label: "HÌNH THỨC", value: "Offline", desc: "Hà Nội" },
       duration: { label: "THỜI LƯỢNG", value: "4 buổi", desc: "2 ngày" },
       scale: { label: "SỐ CHỖ", value: "Chỉ còn 20 chỗ", desc: "" }
