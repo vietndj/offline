@@ -80,65 +80,6 @@ export const RegisterSection: React.FC = () => {
               </h2>
             </div>
 
-            {/* Pricing Packages */}
-            <div className="space-y-3 mb-6">
-              {/* Standard Price */}
-              <div className="p-4 sm:p-5 rounded-2xl border border-orange-500/30 bg-orange-950/10 flex justify-between items-center">
-                <div>
-                  <div className="text-[11px] font-bold text-orange-500 tracking-wider mb-1 uppercase">{register.pricing.standard.label}</div>
-                  <div className="text-3xl sm:text-4xl font-black text-orange-500">{register.pricing.standard.value}</div>
-                </div>
-                <div className="text-right text-zinc-400 text-xs sm:text-sm flex flex-col items-end">
-                  <span>VNĐ</span>
-                  <span>{register.pricing.standard.note}</span>
-                </div>
-              </div>
-
-              {/* Early Bird */}
-              <div className="p-4 sm:p-5 rounded-2xl border border-zinc-800 bg-zinc-900/50 flex justify-between items-center">
-                <div>
-                  <div className="text-sm sm:text-base font-bold text-white mb-0.5">{register.pricing.earlyBird.label}</div>
-                  <div className="text-xs text-zinc-400">{register.pricing.earlyBird.note}</div>
-                </div>
-                <div className="text-right">
-                  <div className="text-lg sm:text-xl font-bold text-orange-500">{register.pricing.earlyBird.value}</div>
-                </div>
-              </div>
-
-              {/* Group 2 */}
-              <div className="p-4 sm:p-5 rounded-2xl border border-zinc-800 bg-zinc-900/50 flex justify-between items-center">
-                <div>
-                  <div className="text-sm sm:text-base font-bold text-white mb-0.5">{register.pricing.group2.label}</div>
-                  <div className="text-xs text-zinc-400">{register.pricing.group2.note}</div>
-                </div>
-                <div className="text-right">
-                  <div className="text-lg sm:text-xl font-bold text-orange-500">{register.pricing.group2.value}</div>
-                </div>
-              </div>
-
-              {/* Group 3 */}
-              <div className="p-4 sm:p-5 rounded-2xl border border-zinc-800 bg-zinc-900/50 flex justify-between items-center">
-                <div>
-                  <div className="text-sm sm:text-base font-bold text-white mb-0.5">{register.pricing.group3.label}</div>
-                  <div className="text-xs text-zinc-400">{register.pricing.group3.note}</div>
-                </div>
-                <div className="text-right">
-                  <div className="text-lg sm:text-xl font-bold text-orange-500">{register.pricing.group3.value}</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Cam kết hoàn tiền */}
-            {register.guarantee && (
-              <div className="mb-6 p-4 sm:p-5 rounded-2xl border border-emerald-500/40 bg-emerald-950/20 flex items-start gap-3">
-                <span className="text-xl leading-none shrink-0" aria-hidden="true">🛡️</span>
-                <div>
-                  <div className="text-sm sm:text-base font-bold text-emerald-400 mb-1">Cam kết hoàn tiền</div>
-                  <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">{register.guarantee}</p>
-                </div>
-              </div>
-            )}
-
             {/* Metadata Grid */}
             <div className="grid grid-cols-2 gap-3 mb-6">
               <div className="p-3.5 rounded-xl border border-zinc-800 bg-zinc-900/30">
@@ -174,15 +115,8 @@ export const RegisterSection: React.FC = () => {
               </div>
             </div>
 
-            {/* Quote Block */}
-            <div className="mb-8 p-5 rounded-2xl border border-zinc-800 bg-zinc-900/30 text-center">
-              <p className="text-sm sm:text-base font-bold text-white leading-relaxed">
-                Mỗi ngày bạn chờ, là một ngày <span className="text-orange-500">người khác đang kiếm tiền</span> từ những thứ giống bạn.
-              </p>
-            </div>
-
             {/* Inclusions */}
-            <div className="pt-6 border-t border-zinc-800/80">
+            <div className="mb-6 p-5 rounded-2xl border border-zinc-800/80 bg-zinc-900/40">
               <div className="text-xs uppercase font-mono font-bold text-zinc-400 tracking-wider mb-3.5">
                 {register.inclusionsTitle}
               </div>
@@ -195,11 +129,29 @@ export const RegisterSection: React.FC = () => {
                 ))}
               </div>
               {register.logistics && (
-                <p className="mt-4 text-xs sm:text-sm text-zinc-400 leading-relaxed flex items-start gap-2">
+                <p className="mt-4 text-xs sm:text-sm text-zinc-400 leading-relaxed flex items-start gap-2 pt-4 border-t border-zinc-800/80">
                   <span aria-hidden="true" className="shrink-0">🍱</span>
                   <span>{register.logistics}</span>
                 </p>
               )}
+            </div>
+
+            {/* Cam kết hoàn tiền */}
+            {register.guarantee && (
+              <div className="mb-6 p-4 sm:p-5 rounded-2xl border border-emerald-500/40 bg-emerald-950/20 flex items-start gap-3">
+                <span className="text-xl leading-none shrink-0" aria-hidden="true">🛡️</span>
+                <div>
+                  <div className="text-sm sm:text-base font-bold text-emerald-400 mb-1">Cam kết hoàn tiền</div>
+                  <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">{register.guarantee}</p>
+                </div>
+              </div>
+            )}
+
+            {/* Quote Block */}
+            <div className="mt-auto p-5 rounded-2xl border border-zinc-800 bg-zinc-900/30 text-center">
+              <p className="text-sm sm:text-base font-bold text-white leading-relaxed">
+                Mỗi ngày bạn chờ, là một ngày <span className="text-orange-500">người khác đang kiếm tiền</span> từ những thứ giống bạn.
+              </p>
             </div>
           </div>
 
