@@ -705,8 +705,7 @@ export const CONTENT: ContentData = {
     ctaNote: "Tối đa 35 người/lớp • Kèm cặp 1-1",
     priceStrip: [
       { label: "KHAI GIẢNG", value: "07–08/11 · Thứ 7 & CN" },
-      { label: "ĐỊA ĐIỂM", value: "Hà Nội" },
-      { label: "HỌC PHÍ", value: "Từ 4tr/người" }
+      { label: "ĐỊA ĐIỂM", value: "Hà Nội" }
     ],
     video: { youtubeId: "gDuOQuP-Sek", poster: "/assets/hero/qc-offline-9-poster.jpg", label: "Xem video giới thiệu 2 phút" }
   },
@@ -1733,9 +1732,9 @@ export const CONTENT: ContentData = {
     headlinePrefix: "Biến kiến thức của bạn thành ",
     headlineHighlight: "Video Marketing & doanh số thật",
     pricing: {
-      standard: { label: "HỌC PHÍ CHUẨN", value: "6.000.000đ", note: "Học viên" },
-      earlyBird: { label: "Early Bird", value: "5.000.000đ", note: "Đăng ký sớm" },
-      group2: { label: "Nhóm 2 người", value: "4.500.000đ", note: "Mỗi người" },
+      standard: { label: "HỌC PHÍ CHUẨN", value: "5.000.000đ", note: "Học viên" },
+      earlyBird: { label: "Đăng ký sớm", value: "4.500.000đ", note: "Đi 1 mình" },
+      group2: { label: "Nhóm 2 người", value: "4.000.000đ", note: "Mỗi người" },
       group3: { label: "Nhóm 3 người", value: "4.000.000đ", note: "Mỗi người" },
       quote: "Mỗi ngày bạn chờ, là một ngày người khác đang kiếm tiền từ những thứ giống bạn."
     },
@@ -1745,12 +1744,12 @@ export const CONTENT: ContentData = {
       duration: { label: "THỜI LƯỢNG", value: "4 buổi", desc: "2 ngày" },
       scale: { label: "SỐ CHỖ", value: "Tối đa 35 người", desc: "" }
     },
-    inclusionsTitle: "BAO GỒM:",
+    inclusionsTitle: "2 NGÀY THỰC CHIẾN, BẠN MANG VỀ:",
     inclusions: [
-      "Tài liệu & template thực hành",
-      "Source video mẫu để edit tại lớp",
-      "Thực hành quay/edit video trực tiếp",
-      "Cộng đồng hỗ trợ sau khóa học"
+      "4 buổi thực hành tại Studio Hà Nội (≤ 35 học viên) — Có video mang về ngay",
+      "Bộ 3 Trợ lý AI độc quyền + Kho 500+ âm thanh & B-roll mẫu",
+      "30 ngày đồng hành sửa bài trực tiếp sau khóa học",
+      "Bao trọn gói Buffet trưa & Teabreak cả 2 ngày"
     ],
     guarantee: "Hoàn 100% học phí nếu sau ngày học đầu tiên bạn thấy không áp dụng được — không hỏi lý do.",
     logistics: "Teabreak + buffet trưa 2 ngày. Học viên ở xa được gợi ý khách sạn gần lớp qua Zalo.",
@@ -1764,8 +1763,8 @@ export const CONTENT: ContentData = {
         occupation: { label: "Nghề nghiệp / Lĩnh vực", placeholder: "VD: Spa, bán hàng online, BĐS, giáo dục, F&B...", optionalLabel: "(tuỳ chọn)", required: false },
         reason: { label: "Bạn đang kẹt ở đâu?", placeholder: "VD: Ngại lên hình / Không biết viết kịch bản / Quay dựng mất quá nhiều thời gian", optionalLabel: "(tuỳ chọn)", required: false }
       },
-      disclaimerTag: "[Lưu ý]",
-      disclaimer: "Đây không phải chương trình miễn phí. Bạn sẽ được tư vấn học phí trước khi xác nhận chỗ.",
+      disclaimerTag: "[Học phí đầu tư]:",
+      disclaimer: "Tiêu chuẩn 5.000.000đ → Ưu đãi đăng ký sớm: 4.500.000đ/học viên · Đi nhóm 2 người: 4.000.000đ/người (Trọn gói 2 ngày tại Studio, Buffet trưa & Bộ 3 Trợ lý AI). Chưa cần thanh toán ngay — Việt sẽ gọi trực tiếp để tư vấn trước khi xác nhận chỗ.",
       cta: "ĐĂNG KÝ GIỮ CHỖ",
       ctaSubmitting: "Đang gửi thông tin...",
       securityNote: "Thông tin của bạn được bảo mật tuyệt đối.",
@@ -1813,7 +1812,7 @@ export const CONTENT: ContentData = {
       },
       {
         q: "Học phí và chính sách hoàn tiền như thế nào?",
-        a: "Khóa học cam kết: Nếu sau ngày học đầu tiên bạn cảm thấy nội dung không thực tế hoặc không thể áp dụng được, Việt sẽ hoàn lại 100% học phí mà không hỏi thêm bất kỳ câu hỏi nào."
+        a: "Học phí tiêu chuẩn cho trọn gói 2 ngày thực chiến tại Studio Hà Nội là 5.000.000đ (đã bao gồm Buffet trưa & Teabreak 2 ngày, Bộ 3 Trợ lý AI độc quyền, kho tài nguyên và 30 ngày kèm cặp sửa bài sau khóa). Hiện đang có mức ưu đãi Đăng ký sớm 4.500.000đ/học viên (đi 1 mình) hoặc 4.000.000đ/người khi đăng ký theo nhóm từ 2 người. Cam kết hoàn tiền: Kết thúc Ngày 1, nếu bạn thấy nội dung không thực tế hoặc không áp dụng được vào công việc, Việt hoàn lại 100% học phí ngay lập tức mà không hỏi lý do."
       },
       {
         q: "Sĩ số lớp là bao nhiêu học viên?",

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, ArrowRight, Loader2, Sparkles } from 'lucide-react';
 import { CONTENT } from '../content';
 import { trackPurchase } from '../utils/pixel';
+import { getSubmitUrl } from '../utils/utm';
 
 interface ModalProps {
   isOpen: boolean;
@@ -32,7 +33,7 @@ export const RegisterModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     setErrorMsg('');
 
     try {
-      const currentUrl = typeof window !== 'undefined' ? window.location.href : 'https://offline.fedu.vn';
+      const currentUrl = getSubmitUrl();
       const res = await fetch('/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -42,8 +43,9 @@ export const RegisterModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
           email: email.trim(),
           occupation: occupation.trim(),
           reason: reason.trim(),
-          source: 'offline.fedu.vn (Modal)',
+          source: "offline.fedu.vn (Modal)",
           url: currentUrl,
+
         })
       });
 
@@ -168,6 +170,14 @@ export const RegisterModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               placeholder={registerModal.fields.reason.placeholder}
               className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 focus:border-amber-500 text-sm text-white placeholder-zinc-500 outline-none resize-none"
             />
+          </div>
+
+          {/* Box lưu ý học phí Cách B */}
+          <div className="p-3 rounded-xl bg-amber-950/30 border border-amber-500/30 text-xs text-zinc-300 flex items-start gap-2">
+            <span className="text-amber-400 shrink-0 font-bold">💡</span>
+            <span className="leading-relaxed">
+              <strong className="text-amber-400">Học phí ưu đãi:</strong> Đăng ký sớm <strong className="text-white">4.500.000đ</strong> · Đi nhóm 2 người: <strong className="text-amber-400">4.000.000đ/người</strong> <span className="text-zinc-400">(Gốc 5.000.000đ · Trọn gói 2 ngày Studio, Buffet trưa &amp; Bộ 3 AI · Hoàn 100% sau Ngày 1 nếu không áp dụng được)</span>.
+            </span>
           </div>
 
           <button
