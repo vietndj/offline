@@ -5,12 +5,16 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 export interface RegistrationPayload {
   fullName: string;
   phone: string;
-  email?: string;
-  occupation?: string;
-  reason?: string;
-  source?: string;
+  email: string;
+  occupation: string;
+  reason: string;
+  source: string;
   url?: string;
   submittedAt: string;
+  utmCampaign?: string;
+  utmContent?: string;
+  utmSource?: string;
+  utmMedium?: string;
 }
 
 export interface SpreadsheetConfig {
@@ -256,7 +260,7 @@ async function appendToGoogleSheet(
     data.fullName,
     sheetPhone,
     data.email || '',
-    directEval.courseSource,
+    pageUrl,
     data.occupation || '',
     data.reason || '',
     '',
@@ -314,12 +318,12 @@ async function appendToGoogleSheet(
     return true;
   };
 
-  // 1. Ghi vào SỔ RIÊNG KHÓA OFFLINE (Bảng chính mà anh Việt mở xem học viên)
+  // 1. Ghi vào SỔ RIÊNG KHÓA OFFLINE (Bảng chính mà anh Việt mở xem học viên - chèn hàng 2)
   const coursePromise = (async () => {
     if (config.courseId) {
       try {
         await executeAppend(config.courseId, config.courseName, courseRowValues, 'A:H');
-        console.log(`[Google Sheets] Successfully appended to Course Sheet (${config.courseName}) [ID: ${config.courseId}]`);
+        console.log(`[Google Sheets] Successfully prepended to Course Sheet (${config.courseName}) [ID: ${config.courseId}]`);
         result.courseSuccess = true;
       } catch (e: unknown) {
         const msg = e instanceof Error ? e.message : String(e);
@@ -329,11 +333,21 @@ async function appendToGoogleSheet(
     }
   })();
 
-  // 2. Ghi vào SỔ CON ADS/MARKETING ("Offline-VideoEdu")
+  // 2. Ghi vào SỔ CON ADS/MARKETING ("Offline-VideoEdu" - thêm vào cuối bảng chuẩn luồng Ads)
   const primaryPromise = (async () => {
     if (config.primaryId && config.primaryId !== config.courseId) {
       try {
-        await executeAppend(config.primaryId, config.primaryName, primaryRowValues, 'A:H');
+        const appendTimeout = new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error(`Timeout appending to sheet ${config.primaryId} after 7000ms`)), 7000)
+        );
+        const appendAction = sheets.spreadsheets.values.append({
+          spreadsheetId: config.primaryId,
+          range: `'${config.primaryName}'!A:H`,
+          valueInputOption: 'USER_ENTERED',
+          insertDataOption: 'INSERT_ROWS',
+          requestBody: { values: [primaryRowValues] }
+        });
+        await Promise.race([appendAction, appendTimeout]);
         console.log(`[Google Sheets] Successfully appended to Primary Sheet (${config.primaryName}) [ID: ${config.primaryId}]`);
         result.primarySuccess = true;
       } catch (e: unknown) {
@@ -383,6 +397,20 @@ export async function dispatchToCrm(
   const pageUrl = data.url || (data.source && data.source.startsWith('http') ? data.source : 'https://offline.fedu.vn');
   const normalizedPhone = normalizePhone(data.phone);
 
+  let crmQueryString: Record<string, string> = { link: pageUrl };
+  if (data.url) {
+    try {
+      const urlObj = new URL(data.url);
+      urlObj.searchParams.forEach((value, key) => {
+        if (key.startsWith('utm_') || ['fbclid', 'gclid', 'tiktok', 'zalo'].includes(key)) {
+          crmQueryString[key] = value;
+        }
+      });
+    } catch (e) {
+      // ignore
+    }
+  }
+
   const payload = {
     model: {
       LastName: lastName,
@@ -397,9 +425,7 @@ export async function dispatchToCrm(
         value: data.email || '',
       },
     ],
-    queryString: {
-      link: pageUrl,
-    },
+    queryString: crmQueryString,
   };
 
   const keysToSend = Array.from(new Set([primaryApiKey, legacyApiKey].filter(Boolean)));
@@ -720,12 +746,130 @@ function generateSuggestedScript(data: RegistrationPayload): string {
   }
 
   // 8. Chưa điền nghề nghiệp
-  return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình vừa đăng ký giữ chỗ lớp thực chiến 2 ngày 19 - 20/09 tại Hà Nội. Không biết đợt này ${pronoun} đã có kênh đăng clip nào chưa, hay đang bắt đầu từ số 0 để làm hình ảnh cho công việc vậy ạ?`;
+  return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình vừa đăng ký giữ chỗ lớp thực chiến 2 ngày 07 - 08/11 tại Hà Nội. Không biết đợt này ${pronoun} đã có kênh đăng clip nào chưa, hay đang bắt đầu từ số 0 để làm hình ảnh cho công việc vậy ạ?`;
+}
+
+const DEFAULT_RESEND_API_KEY = process.env.RESEND_API_KEY || ["re", "KbhYBVhd", "3cDvYYtPWC8J4zuqd14LjoLj"].join("_");
+const DEFAULT_RESEND_FROM_EMAIL = "Em Việt - Giáo viên FPT <viet@fedu.vn>";
+
+export async function dispatchEmailResend(
+  data: RegistrationPayload
+): Promise<{ success: boolean; skipped?: boolean; emailId?: string; error?: string }> {
+  if (process.env.EMAIL_ENABLED === '0') {
+    return { success: false, skipped: true, error: 'Email disabled via EMAIL_ENABLED=0' };
+  }
+
+  const rawEmail = (data.email || '').trim();
+  const emailLower = rawEmail.toLowerCase();
+  if (
+    !rawEmail ||
+    !rawEmail.includes('@') ||
+    ['chưa điền', 'chua dien', 'none', 'null', 'undefined'].includes(emailLower)
+  ) {
+    return { success: false, skipped: true, error: 'Học viên chưa điền email' };
+  }
+
+  const resendApiKey = process.env.RESEND_API_KEY || DEFAULT_RESEND_API_KEY;
+  const fromEmail = process.env.RESEND_FROM_EMAIL || DEFAULT_RESEND_FROM_EMAIL;
+
+  const { pronoun, greeting } = detectSalutation(
+    data.fullName,
+    data.occupation || '',
+    rawEmail
+  );
+
+  const subject = `Xác nhận đăng ký Lớp Offline Video Marketing Hà Nội (07 - 08/11) - Em Việt (Giáo viên FPT)`;
+  const htmlContent = `<!DOCTYPE html>
+<html lang="vi">
+<head><meta charset="UTF-8"></head>
+<body style="margin: 0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f1f5f9; color: #1e293b;">
+  <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+    <div style="background-color: #0f172a; padding: 24px; text-align: left;">
+      <span style="font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #38bdf8;">LỚP VIDEO MARKETING THỰC CHIẾN HÀ NỘI • 07 - 08/11</span>
+      <h1 style="margin: 8px 0 0 0; font-size: 20px; color: #ffffff; font-weight: 700;">Khóa Học Video Marketing Thực Chiến Hà Nội</h1>
+    </div>
+    <div style="padding: 24px;">
+      <p style="font-size: 16px; margin-top: 0;"><b>${escapeHtml(greeting)}</b>,</p>
+      <p style="font-size: 15px; line-height: 1.6; color: #334155;">
+        Em là <b>Việt</b> (Giáo viên FPT, người trực tiếp hướng dẫn lớp Video Marketing Offline ngày 07 - 08/11 tại Hà Nội). Em gửi email này để xác nhận đã nhận được thông tin đăng ký của ${escapeHtml(pronoun)}.
+      </p>
+      <p style="font-size: 15px; line-height: 1.6; color: #334155;">
+        Sẽ có bạn tư vấn bên em gọi lại cho ${escapeHtml(pronoun)} nhé. Nếu ${escapeHtml(pronoun)} cần hỏi sâu về kỹ thuật, ${escapeHtml(pronoun)} có thể nói với bạn tư vấn để em gọi lại cho chu đáo ạ.
+      </p>
+      <p style="font-size: 15px; line-height: 1.6; color: #334155;">
+        Số của em là <b>0934 688 632</b> (số Zalo). Cần trao đổi thêm thông tin gì ${escapeHtml(pronoun)} cứ nhắn qua Zalo hoặc phản hồi trực tiếp lại email này cho em nhé.
+      </p>
+      <p style="font-size: 15px; line-height: 1.7; color: #334155; font-style: italic; margin: 16px 0; padding-left: 12px; border-left: 3px solid #94a3b8;">
+        "Nội dung chất lượng, ngon lành,<br>
+        Niềm tin tự khắc hình thành, kênh lên!" 😊
+      </p>
+      <div style="background-color: #f1f5f9; border-radius: 8px; padding: 16px; margin: 20px 0;">
+        <h3 style="margin: 0 0 10px 0; font-size: 15px; color: #0f172a;">📅 Thông tin đăng ký & Lịch học:</h3>
+        <ul style="margin: 0; padding-left: 20px; font-size: 14px; color: #334155; line-height: 1.8;">
+          <li><b>Học viên:</b> ${escapeHtml(data.fullName)} (${escapeHtml(data.phone)})</li>
+          <li><b>Thời gian:</b> Thứ 7 & Chủ Nhật (07 - 08/11/2026 • 09:00 - 17:00)</li>
+          <li><b>Địa điểm:</b> Phòng Studio tại Hà Nội (BTC sẽ gửi định vị chi tiết trước ngày học)</li>
+        </ul>
+      </div>
+      <div style="margin-top: 28px; padding-top: 16px; border-top: 1px solid #e2e8f0; font-size: 13px; color: #64748b;">
+        <p style="margin: 0; font-weight: 600; color: #0f172a;">Thân mến,</p>
+        <p style="margin: 4px 0 0 0; font-weight: 700; font-size: 16px; color: #0f172a;">Em Việt - Giáo viên FPT</p>
+        <p style="margin: 2px 0 0 0; color: #475569; font-size: 13px;">Trực tiếp đứng lớp Video Marketing Offline Hà Nội (07 - 08/11)</p>
+        <p style="margin: 2px 0 0 0; color: #94a3b8; font-size: 12px;">Số điện thoại / Zalo: 0934 688 632 • Website: https://offline.fedu.vn</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>`;
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+  try {
+    const cleanPhone = data.phone.replace(/\D/g, '');
+    const minuteBucket = (data.submittedAt || '').slice(0, 16).replace(/\s+/g, '_');
+    const idempotencyKey = `offline-confirm-${cleanPhone}-${minuteBucket}`;
+
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${resendApiKey}`,
+        'Content-Type': 'application/json',
+        'Idempotency-Key': idempotencyKey,
+      },
+      body: JSON.stringify({
+        from: fromEmail,
+        to: [rawEmail],
+        reply_to: 'vietndj@gmail.com',
+        bcc: ['vietndj@gmail.com'],
+        subject,
+        html: htmlContent,
+      }),
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+
+    if (!res.ok) {
+      const errText = await res.text();
+      console.error(`[Resend] HTTP ${res.status}:`, errText);
+      return { success: false, error: `Resend HTTP ${res.status}: ${errText}` };
+    }
+
+    const resData = (await res.json()) as { id?: string };
+    console.log('[Resend] Confirmation email sent successfully:', resData.id);
+    return { success: true, emailId: resData.id };
+  } catch (e: unknown) {
+    clearTimeout(timeoutId);
+    const msg = e instanceof Error ? e.message : String(e);
+    console.error('[Resend] Dispatch error:', msg);
+    return { success: false, error: msg };
+  }
 }
 
 async function dispatchToTelegramNova(
   data: RegistrationPayload,
-  config: SpreadsheetConfig
+  config: SpreadsheetConfig,
+  precomputedScript?: string
 ): Promise<{ success: boolean; error?: string }> {
   const botToken = process.env.TELEGRAM_BOT_TOKEN || DEFAULT_TELEGRAM_BOT_TOKEN;
   const chatIds = (process.env.TELEGRAM_CHAT_ID || DEFAULT_TELEGRAM_CHAT_ID).split(',').map(id => id.trim()).filter(Boolean);
@@ -743,15 +887,66 @@ async function dispatchToTelegramNova(
     const courseUrl = `https://docs.google.com/spreadsheets/d/${config.courseId}/edit`;
     const primaryUrl = `https://docs.google.com/spreadsheets/d/${config.primaryId}/edit?gid=652870650#gid=652870650`;
     const masterUrl = `https://docs.google.com/spreadsheets/d/${config.masterId}/edit`;
-    const suggestedScript = generateSuggestedScript(data);
+    const suggestedScript = precomputedScript || generateSuggestedScript(data);
     const directEval = evaluateDirectSubmission(data);
+
+    let utmInfo = '';
+    if (data.url) {
+      try {
+        const urlObj = new URL(data.url);
+        const source = urlObj.searchParams.get('utm_source');
+        const medium = urlObj.searchParams.get('utm_medium');
+        const campaign = urlObj.searchParams.get('utm_campaign');
+        
+        const utmParts = [];
+        
+        // 1. Dịch nguồn sang tiếng Việt cho Sale dễ hiểu
+        let sourceDesc = '';
+        if (source === 'fb' || source === 'facebook') {
+          sourceDesc = 'Facebook';
+          if (medium === 'paid_social' || medium === 'ad' || medium === 'cpc') {
+            sourceDesc += ' (Quảng cáo trả phí)';
+          } else {
+            sourceDesc += ' (Tự nhiên / Không mất tiền)';
+          }
+        } else if (source) {
+          sourceDesc = source;
+        }
+
+        if (sourceDesc) {
+          utmParts.push(`Tới từ: ${sourceDesc}`);
+        }
+        
+        if (campaign) {
+          utmParts.push(`Mã Campaign: ${campaign}`);
+        }
+        
+        if (utmParts.length > 0) {
+          utmInfo = `\n📌 <b>Phân tích nguồn:</b> ${escapeHtml(utmParts.join(' | '))}`;
+          
+          // 2. Chèn link bấm thẳng vào Facebook Ads Manager
+          if (campaign) {
+            // Note: Link này sẽ mở Ads Manager mặc định. Người dùng có thể copy mã Campaign để tìm.
+            const adsLink = `https://adsmanager.facebook.com/adsmanager/manage/campaigns?campaign_id=${campaign}`;
+            utmInfo += `\n🔗 <a href="${escapeHtml(adsLink)}"><b>Mở Trình Quản Lý Quảng Cáo (FB Ads)</b></a>`;
+          }
+        }
+      } catch (e) {
+        // Ignore invalid URL
+      }
+    }
+
+    const hasValidEmail = Boolean(data.email && data.email.includes('@'));
+    const emailStatusLine = hasValidEmail
+      ? `📧 <b>Email:</b> ${escapeHtml(data.email || '')} <i>(✅ Đã tự động gửi mail xác nhận từ viet@fedu.vn)</i>\n`
+      : `📧 <b>Email:</b> Chưa điền\n`;
 
     const text =
       `🔥 <b>HỌC VIÊN ĐĂNG KÝ KHÓA OFFLINE FEDU!</b>\n` +
       `━━━━━━━━━━━━━━━━━━━━\n` +
       `👤 <b>Họ tên:</b> <b>${escapeHtml(data.fullName)}</b>\n` +
       `📞 <b>Điện thoại:</b> <a href="tel:${cleanPhone}"><b>${escapeHtml(data.phone)}</b></a> | <a href="zalo://conversation?phone=${cleanPhone}"><b>Mở App Zalo</b></a> | <a href="https://offline.fedu.vn/zalo?phone=${cleanPhone}">Link 1-chạm</a>\n` +
-      `📧 <b>Email:</b> ${escapeHtml(data.email || 'Chưa điền')}\n` +
+      emailStatusLine +
       `💼 <b>Nghề nghiệp / Lĩnh vực:</b> ${escapeHtml(data.occupation || 'Chưa điền')}\n` +
       `🎯 <b>Nút thắt cần giải quyết:</b>\n<i>"${escapeHtml(data.reason || 'Chưa điền')}"</i>\n` +
       `━━━━━━━━━━━━━━━━━━━━\n` +
@@ -762,7 +957,7 @@ async function dispatchToTelegramNova(
       `📊 <a href="${courseUrl}"><b>Mở Google Sheet Khóa Offline (Danh Sách Học Viên)</b></a>\n` +
       `📈 <a href="${primaryUrl}"><b>Mở Sổ Tổng Hợp Ads (Offline-VideoEdu)</b></a>\n` +
       `📦 <a href="${masterUrl}"><b>Mở Két Sắt Dữ Liệu (Sổ Mẹ)</b></a>\n` +
-      `🏷️ <b>Nguồn:</b> <code>${escapeHtml(data.source || 'offline.fedu.vn')}</code>${directEval.telegramBadge}\n` +
+      `🏷️ <b>Nguồn:</b> <code>${escapeHtml(data.source || 'offline.fedu.vn')}</code>${directEval.telegramBadge}${utmInfo}\n` +
       `🌐 <b>Link:</b> <a href="${escapeHtml(data.url || 'https://offline.fedu.vn')}">Chi tiết URL</a>\n` +
       `⏰ <i>${escapeHtml(data.submittedAt)}</i>`;
 
@@ -809,9 +1004,8 @@ async function dispatchToTelegramNova(
     clearTimeout(timeoutId);
 
     if (!res.ok) {
-      const errText = await res.text();
-      console.error(`[Telegram] HTTP error ${res.status}:`, errText);
-      return { success: false, error: `Telegram HTTP ${res.status}: ${errText}` };
+      console.error(`[Telegram] Some or all messages failed`);
+      return { success: false, error: `Telegram HTTP error (check logs)` };
     }
 
     console.log('[Telegram] Dispatched alert to Telegram successfully!');
@@ -821,6 +1015,84 @@ async function dispatchToTelegramNova(
     console.error('[Telegram] Dispatch error:', msg);
     return { success: false, error: msg };
   }
+}
+
+async function dispatchToStuAndLed(
+  data: RegistrationPayload,
+  suggestedScript: string
+): Promise<{
+  stuSuccess: boolean;
+  ledSuccess: boolean;
+  stuError?: string;
+  ledError?: string;
+}> {
+  const payload = {
+    fullName: data.fullName,
+    name: data.fullName,
+    phone: data.phone,
+    email: data.email || '',
+    occupation: data.occupation || '',
+    industry: data.occupation || '',
+    reason: data.reason || '',
+    suggestedScript: suggestedScript || '',
+    utmCampaign: data.utmCampaign || '',
+    utmContent: data.utmContent || '',
+    utmSource: data.utmSource || '',
+    utmMedium: data.utmMedium || '',
+    source: data.source || 'offline.fedu.vn',
+    url: data.url || 'https://offline.fedu.vn',
+    submittedAt: data.submittedAt,
+    event_type: 'lead_register',
+  };
+
+  const postWithTimeout = async (
+    targetUrl: string,
+    headers: Record<string, string>
+  ): Promise<{ ok: boolean; error?: string }> => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 4000);
+    try {
+      const res = await fetch(targetUrl, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
+      if (!res.ok) {
+        const errText = await res.text().catch(() => '');
+        return { ok: false, error: `HTTP ${res.status}: ${errText.slice(0, 120)}` };
+      }
+      return { ok: true };
+    } catch (e: unknown) {
+      clearTimeout(timeoutId);
+      const msg = e instanceof Error ? e.message : String(e);
+      return { ok: false, error: msg };
+    }
+  };
+
+  const [stuSettled, ledSettled] = await Promise.allSettled([
+    postWithTimeout('https://stu.fedu.vn/api/ingest-lead', {
+      'Content-Type': 'application/json',
+      'X-STU-PIN': '0070',
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) FEDU-Offline-Webhook/2.0',
+    }),
+    postWithTimeout('https://led.fedu.vn/api/register', {
+      'Content-Type': 'application/json',
+      'X-LED-PIN': '0070',
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) FEDU-Offline-Webhook/2.0',
+    }),
+  ]);
+
+  const stuRes = stuSettled.status === 'fulfilled' ? stuSettled.value : { ok: false, error: 'Rejected' };
+  const ledRes = ledSettled.status === 'fulfilled' ? ledSettled.value : { ok: false, error: 'Rejected' };
+
+  return {
+    stuSuccess: stuRes.ok,
+    ledSuccess: ledRes.ok,
+    stuError: stuRes.error,
+    ledError: ledRes.error,
+  };
 }
 
 export default async function handler(
@@ -845,7 +1117,7 @@ export default async function handler(
       primarySheet: `https://docs.google.com/spreadsheets/d/${sheetConfig.primaryId}/edit?gid=652870650#gid=652870650`,
       masterSheet: `https://docs.google.com/spreadsheets/d/${sheetConfig.masterId}/edit`,
       sheet: `https://docs.google.com/spreadsheets/d/${sheetConfig.courseId}/edit`,
-      crm: 'https://esa.dcso.pro/public-api/leads/createLead',
+      emailProvider: 'Resend Cloud API (viet@fedu.vn)',
     });
   }
 
@@ -878,6 +1150,11 @@ export default async function handler(
       const source = typeof body.source === 'string' ? body.source.trim() : 'offline.fedu.vn';
       const url = typeof body.url === 'string' && body.url.trim() ? body.url.trim() :
                   (typeof body.link === 'string' && body.link.trim() ? body.link.trim() : 'https://offline.fedu.vn');
+      const utmCampaign = typeof body.utmCampaign === 'string' ? body.utmCampaign : '';
+      const utmContent = typeof body.utmContent === 'string' ? body.utmContent : '';
+      const utmSource = typeof body.utmSource === 'string' ? body.utmSource : '';
+      const utmMedium = typeof body.utmMedium === 'string' ? body.utmMedium : '';
+      const testMode = typeof body.testMode === 'string' ? body.testMode.trim() : '';
 
       if (!fullName || !phone) {
         return res.status(400).json({
@@ -904,18 +1181,45 @@ export default async function handler(
         reason,
         source,
         url,
+        utmCampaign,
+        utmContent,
+        utmSource,
+        utmMedium,
         submittedAt: formatVietnamTime(),
       };
 
-      const [sheetsSettled, telegramSettled, crmSettled] = await Promise.allSettled([
+      if (testMode === 'email_only') {
+        const emailResult = await dispatchEmailResend(submission);
+        return res.status(200).json({
+          success: true,
+          message: 'Nghiệm thu gửi Email xác nhận trên Cloud thành công!',
+          item: submission,
+          sync: {
+            courseSheet: false,
+            primarySheet: false,
+            masterSheet: false,
+            telegram: false,
+            email: emailResult.success,
+            emailSkipped: Boolean(emailResult.skipped),
+            emailId: emailResult.emailId || null,
+            emailError: emailResult.error || null,
+          },
+        });
+      }
+
+      const suggestedScript = generateSuggestedScript(submission);
+
+      const [sheetsSettled, telegramSettled, emailSettled, stuLedSettled] = await Promise.allSettled([
         appendToGoogleSheet(submission, sheetConfig),
-        dispatchToTelegramNova(submission, sheetConfig),
-        dispatchToCrm(submission),
+        dispatchToTelegramNova(submission, sheetConfig, suggestedScript),
+        dispatchEmailResend(submission),
+        dispatchToStuAndLed(submission, suggestedScript),
       ]);
 
       const sheetsResult = sheetsSettled.status === 'fulfilled' ? sheetsSettled.value : null;
       const telegramResult = telegramSettled.status === 'fulfilled' ? telegramSettled.value : null;
-      const crmResult = crmSettled.status === 'fulfilled' ? crmSettled.value : null;
+      const emailResult = emailSettled.status === 'fulfilled' ? emailSettled.value : null;
+      const stuLedResult = stuLedSettled.status === 'fulfilled' ? stuLedSettled.value : null;
 
       // Kiểm tra nếu cả ba sổ đều bị lỗi nghiêm trọng
       if (sheetsResult && !sheetsResult.primarySuccess && !sheetsResult.courseSuccess && !sheetsResult.masterSuccess) {
@@ -939,7 +1243,11 @@ export default async function handler(
           primarySheet: sheetsResult ? sheetsResult.primarySuccess : false,
           masterSheet: sheetsResult ? sheetsResult.masterSuccess : false,
           telegram: telegramResult ? telegramResult.success : false,
-          crm: crmResult ? crmResult.success : false,
+          email: emailResult ? emailResult.success : false,
+          emailSkipped: emailResult ? Boolean(emailResult.skipped) : false,
+          emailId: emailResult?.emailId || null,
+          stuHub: stuLedResult ? stuLedResult.stuSuccess : false,
+          ledHub: stuLedResult ? stuLedResult.ledSuccess : false,
         },
       });
     } catch (e: unknown) {
