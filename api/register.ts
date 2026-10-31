@@ -677,7 +677,7 @@ function generateSuggestedScript(data: RegistrationPayload): string {
     occLower.includes('bếp') ||
     occLower.includes('nấu')
   ) {
-    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 19 - 20/09 tại Hà Nội và có ghi đang làm bên nhà hàng, ẩm thực. Đợt này ${pronoun} đang muốn quay món ăn, không gian để kéo khách tới quán hay muốn tự lên hình chia sẻ câu chuyện làm nghề ạ?`;
+    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 07 - 08/11 tại Hà Nội và có ghi đang làm bên nhà hàng, ẩm thực. Đợt này ${pronoun} đang muốn quay món ăn, không gian để kéo khách tới quán hay muốn tự lên hình chia sẻ câu chuyện làm nghề ạ?`;
   }
 
   // 2. Nhóm Bất động sản / Nhà đất / Thổ cư
@@ -690,7 +690,7 @@ function generateSuggestedScript(data: RegistrationPayload): string {
     occLower.includes('đất') ||
     occLower.includes('dự án')
   ) {
-    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 19 - 20/09 tại Hà Nội và có ghi làm bên mảng BĐS. Đợt này ${pronoun} đang đánh mảng dự án hay thổ cư, và đã từng tự quay clip nào chưa hay đang bắt đầu từ số 0 ạ?`;
+    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 07 - 08/11 tại Hà Nội và có ghi làm bên mảng BĐS. Đợt này ${pronoun} đang đánh mảng dự án hay thổ cư, và đã từng tự quay clip nào chưa hay đang bắt đầu từ số 0 ạ?`;
   }
 
   // 3. Nhóm Tóc / Salon / Barbershop
@@ -700,7 +700,7 @@ function generateSuggestedScript(data: RegistrationPayload): string {
     occLower.includes('salon') ||
     occLower.includes('barber')
   ) {
-    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 19 - 20/09 tại Hà Nội và có ghi làm salon tóc. Đợt này ${pronoun} đang muốn quay mẫu tóc thực tế để kéo khách tới tiệm hay muốn hút học viên học nghề ạ?`;
+    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 07 - 08/11 tại Hà Nội và có ghi làm salon tóc. Đợt này ${pronoun} đang muốn quay mẫu tóc thực tế để kéo khách tới tiệm hay muốn hút học viên học nghề ạ?`;
   }
 
   // 4. Nhóm Spa / Thẩm mỹ / Mỹ phẩm / Skincare / Nha khoa / Phun xăm
@@ -714,7 +714,7 @@ function generateSuggestedScript(data: RegistrationPayload): string {
     occLower.includes('nha khoa') ||
     occLower.includes('clinic')
   ) {
-    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 19 - 20/09 tại Hà Nội và có ghi làm mảng spa, làm đẹp. Đợt này ${pronoun} đang muốn quay cận cảnh quy trình chăm sóc khách hay muốn tự lên hình tư vấn ạ?`;
+    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 07 - 08/11 tại Hà Nội và có ghi làm mảng spa, làm đẹp. Đợt này ${pronoun} đang muốn quay cận cảnh quy trình chăm sóc khách hay muốn tự lên hình tư vấn ạ?`;
   }
 
   // 5. Nhóm Thời trang / May mặc / Phụ kiện
@@ -725,7 +725,7 @@ function generateSuggestedScript(data: RegistrationPayload): string {
     occLower.includes('may mặc') ||
     occLower.includes('phụ kiện')
   ) {
-    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 19 - 20/09 tại Hà Nội và có ghi làm bên thời trang. Đợt này ${pronoun} đang muốn tự quay phối đồ/sản phẩm để kéo khách, hay đang vướng khâu lên kịch bản ạ?`;
+    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 07 - 08/11 tại Hà Nội và có ghi làm bên thời trang. Đợt này ${pronoun} đang muốn tự quay phối đồ/sản phẩm để kéo khách, hay đang vướng khâu lên kịch bản ạ?`;
   }
 
   // 6. Nhóm Đào tạo / Bác sĩ / Luật sư / Chuyên gia / Bảo hiểm
@@ -737,12 +737,12 @@ function generateSuggestedScript(data: RegistrationPayload): string {
     occLower.includes('luật sư') ||
     occLower.includes('bảo hiểm')
   ) {
-    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 19 - 20/09 tại Hà Nội và có ghi làm bên ${occ}. Đợt này ${pronoun} đang muốn xây kênh chuyên gia để hút khách hàng/học viên, hay đang bắt đầu từ số 0 ạ?`;
+    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 07 - 08/11 tại Hà Nội và có ghi làm bên ${occ}. Đợt này ${pronoun} đang muốn xây kênh chuyên gia để hút khách hàng/học viên, hay đang bắt đầu từ số 0 ạ?`;
   }
 
   // 7. Có điền nghề nghiệp khác cụ thể
   if (hasRealOccupation) {
-    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 19 - 20/09 tại Hà Nội và có ghi làm bên mảng ${occ}. Đợt này ${pronoun} đã lập kênh để đăng thử video nào chưa hay đang bắt đầu từ số 0 vậy ạ?`;
+    return `${greeting}, em là Việt bên lớp video offline đây ạ. Em thấy mình đăng ký lớp thực chiến 07 - 08/11 tại Hà Nội và có ghi làm bên mảng ${occ}. Đợt này ${pronoun} đã lập kênh để đăng thử video nào chưa hay đang bắt đầu từ số 0 vậy ạ?`;
   }
 
   // 8. Chưa điền nghề nghiệp
@@ -942,7 +942,7 @@ async function dispatchToTelegramNova(
       : `📧 <b>Email:</b> Chưa điền\n`;
 
     const text =
-      `🔥 <b>HỌC VIÊN ĐĂNG KÝ KHÓA OFFLINE FEDU!</b>\n` +
+      `🔥 <b>HỌC VIÊN ĐĂNG KÝ KHÓA VIDEO OFFLINE!</b>\n` +
       `━━━━━━━━━━━━━━━━━━━━\n` +
       `👤 <b>Họ tên:</b> <b>${escapeHtml(data.fullName)}</b>\n` +
       `📞 <b>Điện thoại:</b> <a href="tel:${cleanPhone}"><b>${escapeHtml(data.phone)}</b></a> | <a href="zalo://conversation?phone=${cleanPhone}"><b>Mở App Zalo</b></a> | <a href="https://offline.fedu.vn/zalo?phone=${cleanPhone}">Link 1-chạm</a>\n` +
@@ -951,9 +951,6 @@ async function dispatchToTelegramNova(
       `🎯 <b>Nút thắt cần giải quyết:</b>\n<i>"${escapeHtml(data.reason || 'Chưa điền')}"</i>\n` +
       `━━━━━━━━━━━━━━━━━━━━\n` +
       directEval.telegramAlertBlock +
-      `💡 <b>KỊCH BẢN ĐỀ XUẤT (VIETMAC-VOICE):</b>\n` +
-      `<code>${escapeHtml(suggestedScript)}</code>\n` +
-      `━━━━━━━━━━━━━━━━━━━━\n` +
       `📊 <a href="${courseUrl}"><b>Mở Google Sheet Khóa Offline (Danh Sách Học Viên)</b></a>\n` +
       `📈 <a href="${primaryUrl}"><b>Mở Sổ Tổng Hợp Ads (Offline-VideoEdu)</b></a>\n` +
       `📦 <a href="${masterUrl}"><b>Mở Két Sắt Dữ Liệu (Sổ Mẹ)</b></a>\n` +
@@ -1080,6 +1077,7 @@ async function dispatchToStuAndLed(
     postWithTimeout('https://led.fedu.vn/api/register', {
       'Content-Type': 'application/json',
       'X-LED-PIN': '0070',
+      'X-Skip-Telegram': '1',
       'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) FEDU-Offline-Webhook/2.0',
     }),
   ]);
